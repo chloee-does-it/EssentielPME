@@ -757,3 +757,71 @@ Object.assign(DICT, {
   'Confirmer mes choix': 'Confirm my choices',
   'Gérer les témoins': 'Manage cookies',
 });
+
+/* Page Plateformes — sections enrichies */
+Object.assign(DICT, {
+  'Pourquoi ça fonctionne': 'Why it works',
+  "Formats d'annonces": 'Ad formats',
+  'Objectifs typiques': 'Typical objectives',
+  'Idéal pour': 'Ideal for',
+  // Facebook
+  "Le ciblage local le plus fin : rayon autour de votre commerce, âges, champs d'intérêt.": 'The finest local targeting: radius around your business, ages, interests.',
+  'Des formats éprouvés pour les promotions : offres, événements, catalogues de produits.': 'Proven formats for promotions: offers, events, product catalogues.',
+  "Le reciblage des visiteurs de votre site, pour rester présent jusqu'à l'achat.": 'Retargeting of your site visitors, staying present until purchase.',
+  'Image, vidéo, carrousel, Stories et Reels, événements': 'Image, video, carousel, Stories and Reels, events',
+  'Notoriété locale, achalandage, demandes de soumission, promotions': 'Local awareness, foot traffic, quote requests, promotions',
+  // Instagram
+  'La vitrine des métiers visuels : avant/après, réalisations, coulisses.': 'The showcase for visual trades: before/after, work, behind the scenes.',
+  'Stories et Reels : des formats immersifs qui créent une proximité avec votre marque.': 'Stories and Reels: immersive formats that build closeness with your brand.',
+  'Le même gestionnaire de publicités que Facebook — deux réseaux, une seule campagne.': 'The same ads manager as Facebook — two networks, one campaign.',
+  'Image, carrousel, Stories, Reels, collection': 'Image, carousel, Stories, Reels, collection',
+  'Image de marque, prises de rendez-vous, ventes en boutique et en ligne': 'Brand image, appointment bookings, in-store and online sales',
+  // LinkedIn
+  "Un ciblage par poste, industrie et taille d'entreprise : taillé pour le B2B.": 'Targeting by job title, industry and company size: built for B2B.',
+  'Le contexte professionnel donne de la crédibilité à votre firme.': 'The professional context lends credibility to your firm.',
+  'Documents et études de cas commandités : des formats pensés pour convaincre.': 'Sponsored documents and case studies: formats designed to persuade.',
+  'Image, vidéo, carrousel documentaire, messages commandités': 'Image, video, document carousel, sponsored messaging',
+  'Notoriété B2B, mandats qualifiés, recrutement': 'B2B awareness, qualified mandates, recruiting',
+  // TikTok
+  "Des coûts publicitaires encore doux au Québec — le moment d'en profiter.": 'Ad costs still gentle in Québec — the time to take advantage.',
+  'La vidéo courte authentique y performe mieux que la publicité léchée.': 'Authentic short video outperforms polished advertising there.',
+  'Un algorithme qui trouve votre public au-delà de vos abonnés.': 'An algorithm that finds your audience beyond your followers.',
+  'Vidéo courte plein écran, amplification de contenus existants (Spark Ads)': 'Full-screen short video, amplification of existing content (Spark Ads)',
+  'Notoriété, clientèles plus jeunes, lancements de produits': 'Awareness, younger audiences, product launches',
+  // YouTube
+  'La vidéo qui explique : démonstrations, témoignages, visites de projets.': 'Video that explains: demos, testimonials, project tours.',
+  'Un ciblage par intentions de recherche et par chaînes que regardent vos clients.': 'Targeting by search intent and by the channels your customers watch.',
+  'Des formats facturés seulement si votre vidéo est réellement écoutée.': 'Formats billed only when your video is actually watched.',
+  'Annonces vidéo (avant et pendant la lecture, Shorts), bannières': 'Video ads (pre-roll and in-stream, Shorts), banners',
+  'Notoriété, considération, éducation du client': 'Awareness, consideration, customer education',
+  // Pinterest
+  "Les gens y planifient leurs projets : rénovation, mariage, déco — l'achat suit.": 'People plan their projects there: renovation, weddings, decor — purchases follow.',
+  'Vos épingles continuent de travailler des mois après leur publication.': 'Your pins keep working for months after they are published.',
+  'Un public en mode découverte, ouvert aux nouvelles marques.': 'An audience in discovery mode, open to new brands.',
+  'Épingles image et vidéo, carrousels, épingles produits': 'Image and video pins, carousels, product pins',
+  'Inspiration, trafic vers la boutique, ventes en ligne': 'Inspiration, traffic to your shop, online sales',
+  // Reddit
+  'Des communautés passionnées et nichées, introuvables ailleurs.': 'Passionate niche communities you will not find anywhere else.',
+  'Un ton authentique qui rejoint les publics méfiants envers la pub classique.': 'An authentic tone that reaches audiences wary of classic advertising.',
+  'Peu de concurrence publicitaire locale : des enchères abordables.': 'Little local ad competition: affordable auctions.',
+  'Publications commanditées dans les communautés, bannières': 'Sponsored posts in communities, banners',
+  'Niches techniques, adopteurs précoces, commerce en ligne': 'Technical niches, early adopters, e-commerce',
+  // Spotify
+  'Votre message pendant les moments sans écran : auto, entraînement, cuisine.': 'Your message during screen-free moments: driving, working out, cooking.',
+  'Un ciblage par région, moment de la journée et champs d\'intérêt.': 'Targeting by region, time of day and interests.',
+  'Une production simple : un script de 30 secondes suffit pour commencer.': 'Simple production: a 30-second script is enough to get started.',
+  'Audio 15-30 secondes, vidéo, bannières compagnes': '15-30 second audio, video, companion banners',
+  'Notoriété locale et régionale, rappel de marque, promotions saisonnières': 'Local and regional awareness, brand recall, seasonal promotions',
+  // Google Ads
+  "L'intention pure : vous apparaissez au moment exact où on cherche vos services.": 'Pure intent: you appear at the exact moment people search for your services.',
+  "Recherche, Maps, Shopping, display : tout l'écosystème Google en une gestion.": 'Search, Maps, Shopping, display: the whole Google ecosystem under one management.',
+  'Une mesure fine des conversions : chaque dollar investi est attribuable.': 'Fine-grained conversion measurement: every dollar invested is attributable.',
+  'Annonces de recherche, Performance Max, Shopping, display, Maps': 'Search ads, Performance Max, Shopping, display, Maps',
+  'Demandes urgentes, soumissions, ventes, visibilité locale': 'Urgent requests, quotes, sales, local visibility',
+  // ChatGPT
+  'De plus en plus de clients demandent des recommandations aux assistants IA.': 'More and more customers ask AI assistants for recommendations.',
+  "Être cité tôt, c'est prendre position avant vos concurrents.": 'Being cited early means taking position before your competitors.',
+  'On structure votre présence en ligne pour que les IA vous trouvent et vous citent.': 'We structure your online presence so AIs find you and cite you.',
+  'Optimisation de la présence (contenus structurés, fiches, données)': 'Presence optimization (structured content, listings, data)',
+  'Visibilité émergente, recommandations, avantage de pionnier': 'Emerging visibility, recommendations, first-mover advantage',
+});

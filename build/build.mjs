@@ -1013,15 +1013,27 @@ function plateformesPage() {
         </div>
       </section>
 
-${platforms.map((p, i) => `      <section id="${p.anchor}" style="background:${i % 2 === 0 ? '#fff' : 'var(--blanc-casse)'}; padding:52px 24px;">
-        <div style="max-width:860px; margin:0 auto; display:grid; grid-template-columns:96px 1fr; gap:30px; align-items:start;">
+${platforms.map((p, i) => `      <section id="${p.anchor}" style="background:${i % 2 === 0 ? '#fff' : 'var(--blanc-casse)'}; padding:56px 24px;">
+        <div style="max-width:960px; margin:0 auto; display:grid; grid-template-columns:96px 1fr; gap:30px; align-items:start;">
           <div style="width:96px; height:96px; border-radius:22px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center;">
             <svg width="38" height="38" viewBox="${p.viewBox}" fill="var(--violet)"><path d="${p.path}"></path></svg>
           </div>
-          <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; flex-direction:column; gap:12px;">
             <h2 style="margin:0; font-size:26px;">${p.label}</h2>
             <p style="margin:0; font-size:15px; color:var(--charbon-500); line-height:1.7;">${p.desc}</p>
-            <p style="margin:0; font-size:14px; color:var(--charbon);"><strong style="color:var(--violet);">Idéal pour&nbsp;:</strong> ${p.ideal}</p>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:22px; margin-top:10px; align-items:start;">
+              <div>
+                <h3 style="margin:0 0 10px; font-size:13px; font-weight:800; letter-spacing:var(--tracking-wide); text-transform:uppercase; color:var(--violet);">Pourquoi ça fonctionne</h3>
+                <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px;">
+                  ${p.atouts.map((a) => `<li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; color:var(--charbon-500); line-height:1.6;">${check(15, 'var(--violet)', 'flex:none; margin-top:3px;')}<span>${a}</span></li>`).join('\n                  ')}
+                </ul>
+              </div>
+              <div style="background:${i % 2 === 0 ? 'var(--lavande-50)' : '#fff'}; border:1px solid var(--lavande-100); border-radius:16px; padding:20px 22px; display:flex; flex-direction:column; gap:12px; font-size:13.5px; line-height:1.6; color:var(--charbon-500);">
+                <div><strong style="display:block; color:var(--violet); font-size:12px; letter-spacing:var(--tracking-wide); text-transform:uppercase; margin-bottom:2px;">Formats d'annonces</strong>${p.formats}</div>
+                <div><strong style="display:block; color:var(--violet); font-size:12px; letter-spacing:var(--tracking-wide); text-transform:uppercase; margin-bottom:2px;">Objectifs typiques</strong>${p.objectifs}</div>
+                <div><strong style="display:block; color:var(--violet); font-size:12px; letter-spacing:var(--tracking-wide); text-transform:uppercase; margin-bottom:2px;">Idéal pour</strong>${p.ideal}</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>`).join('\n\n')}
