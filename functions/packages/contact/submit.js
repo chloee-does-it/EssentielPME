@@ -20,8 +20,29 @@ const json = (statusCode, obj) => ({
   body: JSON.stringify(obj),
 });
 
+/* Le corps de la requête peut arriver de deux façons selon la configuration
+   de la plateforme : champs déjà fusionnés dans args (web action non-raw),
+   ou JSON brut (parfois base64) dans args.__ow_body (mode raw). */
+function extractFields(args) {
+  if (args.__ow_body) {
+    const tryParse = (s) => { try { return JSON.parse(s); } catch (e) { return null; } };
+    const parsed =
+      tryParse(args.__ow_body) ||
+      tryParse(Buffer.from(String(args.__ow_body), 'base64').toString('utf8'));
+    if (parsed && typeof parsed === 'object') return { ...args, ...parsed };
+  }
+  return args;
+}
+
 async function main(args) {
-  if ((args.__ow_method || '').toLowerCase() !== 'post') {
+  const method = (args.__ow_method || '').toLowerCase();
+  const data = extractFields(args);
+  console.log(
+    'contact/submit — méthode:', method || '(absente)',
+    '| champs reçus:', Object.keys(data).filter((k) => !k.startsWith('__ow_')).join(',') || '(aucun)'
+  );
+
+  if (method !== 'post') {
     return json(405, { error: 'Méthode non permise' });
   }
 
@@ -33,7 +54,7 @@ async function main(args) {
   const to = process.env.CONTACT_TO_EMAIL || 'info@essentielpme.com';
   const from = process.env.CONTACT_FROM_EMAIL || 'Essentiel PME <formulaire@essentielpme.com>';
 
-  const field = (k) => String(args[k] || '').trim().slice(0, MAX[k]);
+  const field = (k) => String(data[k] || '').trim().slice(0, MAX[k]);
   const name = field('name');
   const biz = field('biz');
   const email = field('email');
@@ -42,8 +63,13 @@ async function main(args) {
   const message = field('message');
 
   if (!name || !biz || !EMAIL_RE.test(email) || phone.replace(/[^0-9]/g, '').length < 10) {
+    console.error('Validation échouée —',
+      'name:', !!name, '| biz:', !!biz,
+      '| email valide:', EMAIL_RE.test(email),
+      '| téléphone valide:', phone.replace(/[^0-9]/g, '').length >= 10);
     return json(400, { error: 'Champs invalides' });
   }
+  console.log('Validation OK — envoi à Resend pour', to);
 
   const row = (label, value) =>
     `<tr><td style="padding:6px 14px 6px 0; font-weight:bold; vertical-align:top; white-space:nowrap;">${label}</td><td style="padding:6px 0;">${esc(value)}</td></tr>`;
@@ -75,6 +101,7 @@ async function main(args) {
     console.error('Erreur Resend', res.status, await res.text());
     return json(502, { error: "L'envoi a échoué" });
   }
+  console.log('Courriel envoyé avec succès.');
   return json(200, { ok: true });
 }
 
