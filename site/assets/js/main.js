@@ -177,6 +177,14 @@
       })
         .then(function (res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
+          if (window.dataLayer) {
+            window.dataLayer.push({
+              event: 'lead-form_submission',
+              form_id: 'contact',
+              form_interest: payload.interest,
+              page_language: EN ? 'en' : 'fr',
+            });
+          }
           var success = document.querySelector('[data-contact-success]');
           form.style.display = 'none';
           if (success) { success.hidden = false; success.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
