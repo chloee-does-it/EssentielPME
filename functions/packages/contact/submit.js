@@ -64,6 +64,8 @@ async function main(args) {
   const phone = field('phone');
   const interest = field('interest');
   const message = field('message');
+  // Consentement LCAP/CASL aux communications (case facultative, non cochée par défaut)
+  const marketing = data.marketing === true || data.marketing === 'true';
 
   if (!name || !biz || !EMAIL_RE.test(email) || phone.replace(/[^0-9]/g, '').length < 10) {
     console.error('Validation échouée —',
@@ -86,6 +88,7 @@ async function main(args) {
       ${row('Téléphone', phone)}
       ${row('Intérêt', interest || '—')}
       ${row('Message', message || '—')}
+      ${row('Communications (LCAP)', marketing ? 'OUI — consentement exprès donné via le formulaire' : 'Non')}
     </table>`;
 
   const res = await fetch('https://api.resend.com/emails', {

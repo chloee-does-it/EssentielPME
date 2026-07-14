@@ -195,6 +195,7 @@ export const platforms = [
     key: 'facebook', anchor: 'plat-facebook', label: 'Facebook',
     viewBox: '0 0 320 512', tileW: 20,
     path: 'M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z',
+    hook: 'Là où tout le Québec passe, chaque jour.',
     desc: 'La plateforme la plus utilisée au Québec, tous âges confondus. Parfaite pour faire connaître un commerce local, promouvoir des offres et rester présent dans le quotidien de vos clients.',
     ideal: 'Restaurants, salons, commerces de quartier, entrepreneurs en construction.',
     atouts: [
@@ -209,6 +210,7 @@ export const platforms = [
     key: 'instagram', anchor: 'plat-instagram', label: 'Instagram',
     viewBox: '0 0 448 512', tileW: 28,
     path: 'M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z',
+    hook: 'Si votre travail se montre, Instagram le vend.',
     desc: 'La plateforme du visuel. Avant/après, réalisations, coulisses&nbsp;: si votre travail se montre, Instagram le vend à votre place.',
     ideal: 'Beauté et bien-être, restauration, design, boutiques.',
     atouts: [
@@ -223,6 +225,7 @@ export const platforms = [
     key: 'linkedin', anchor: 'plat-linkedin', label: 'LinkedIn',
     viewBox: '0 0 448 512', tileW: 28,
     path: 'M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 155.6z',
+    hook: "Le réseau où se prennent les décisions d'affaires.",
     desc: 'La plateforme des affaires. Pour rejoindre des décideurs, recruter et bâtir la crédibilité d’une firme de services professionnels.',
     ideal: 'Comptables, avocats, conseillers, entreprises B2B.',
     atouts: [
@@ -237,6 +240,7 @@ export const platforms = [
     key: 'tiktok', anchor: 'plat-tiktok', label: 'TikTok',
     viewBox: '0 0 448 512', tileW: 28,
     path: 'M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z',
+    hook: 'La portée publicitaire la plus abordable du moment.',
     desc: 'La vidéo courte qui rejoint un public plus jeune&nbsp; et de plus en plus tous les âges. Idéale pour bâtir une notoriété rapidement, à faible coût par vue.',
     ideal: 'Restauration, beauté, commerce en ligne.',
     atouts: [
@@ -251,6 +255,7 @@ export const platforms = [
     key: 'youtube', anchor: 'plat-youtube', label: 'YouTube',
     viewBox: '0 0 576 512', tileW: 36,
     path: 'M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z',
+    hook: 'La vidéo qui explique, rassure et convainc.',
     desc: 'La vidéo qui bâtit la confiance. Vos annonces jouent avant les vidéos que vos clients regardent déjà, sur le deuxième moteur de recherche au monde.',
     ideal: 'Notoriété régionale, services qui gagnent à être expliqués en vidéo.',
     atouts: [
@@ -265,6 +270,7 @@ export const platforms = [
     key: 'pinterest', anchor: 'plat-pinterest', label: 'Pinterest',
     viewBox: '0 0 496 512', tileW: 31,
     path: 'M496 256c0 137-111 248-248 248-25.6 0-50.2-3.9-73.4-11.1 10.1-16.5 25.2-43.5 30.8-65 3-11.6 15.4-59 15.4-59 8.1 15.4 31.7 28.5 56.8 28.5 74.8 0 128.7-68.8 128.7-154.3 0-81.9-66.9-143.2-152.9-143.2-107 0-163.9 71.8-163.9 150.1 0 36.4 19.4 81.7 50.3 96.1 4.7 2.2 7.2 1.2 8.3-3.3.8-3.4 5-20.3 6.9-28.1.6-2.5.3-4.7-1.7-7.1-10.1-12.5-18.3-35.3-18.3-56.6 0-54.7 41.4-107.6 112-107.6 60.9 0 103.6 41.5 103.6 100.9 0 67.1-33.9 113.6-78 113.6-24.3 0-42.6-20.1-36.7-44.8 7-29.5 20.5-61.3 20.5-82.6 0-19-10.2-34.9-31.4-34.9-24.9 0-44.9 25.7-44.9 60.2 0 22 7.4 36.8 7.4 36.8s-24.5 103.8-29 123.2c-5 21.4-3 51.6-.9 71.2C65.4 450.9 0 361.1 0 256 0 119 111 8 248 8s248 111 248 248z',
+    hook: 'Présent au moment où vos clients planifient.',
     desc: 'Le moteur d’inspiration. Vos produits et réalisations apparaissent au moment où les gens planifient un projet ou un achat.',
     ideal: 'Décoration, rénovation, mariage, boutiques en ligne.',
     atouts: [
@@ -279,6 +285,7 @@ export const platforms = [
     key: 'reddit', anchor: 'plat-reddit', label: 'Reddit',
     viewBox: '0 0 512 512', tileW: 32,
     path: 'M440.3 203.5c-15 0-28.2 6.2-37.9 15.9-35.7-24.7-83.8-40.6-137.1-42.3L293 52.3l88.2 19.8c0 21.6 17.6 39.2 39.2 39.2 22 0 39.7-18.1 39.7-39.7s-17.6-39.7-39.7-39.7c-15.4 0-28.7 9.3-35.3 22l-97.4-21.6c-4.9-1.3-9.7 2.2-11 7.1l-26 122.1c-52.9 2.2-100.5 18.1-136.3 42.8-9.7-10.1-23.4-16.3-38.4-16.3-55.6 0-73.8 74.6-22.9 100.1-1.8 7.9-2.6 16.3-2.6 24.7 0 83.8 94.4 151.7 210.3 151.7 116.4 0 210.8-67.9 210.8-151.7 0-8.4-.9-17.2-3.1-25.1 49.9-25.6 31.5-99.7-23.8-99.7zM129.4 308.9c0-22 17.6-39.7 39.7-39.7 21.6 0 39.2 17.6 39.2 39.7 0 21.6-17.6 39.2-39.2 39.2-22 .1-39.7-17.6-39.7-39.2zm214.3 93.5c-36.4 36.4-139.1 36.4-175.5 0-4-3.5-4-9.7 0-13.7 3.5-3.5 9.7-3.5 13.2 0 27.8 28.5 120 29 149 0 3.5-3.5 9.7-3.5 13.2 0 4.1 4 4.1 10.2.1 13.7zm-.8-54.2c-21.6 0-39.2-17.6-39.2-39.2 0-22 17.6-39.7 39.2-39.7 22 0 39.7 17.6 39.7 39.7-.1 21.5-17.7 39.2-39.7 39.2z',
+    hook: 'Des communautés passionnées, introuvables ailleurs.',
     desc: 'Des communautés de niche très engagées. Pour rejoindre des publics précis là où ils discutent déjà avec un ton authentique, sans vente forcée.',
     ideal: 'Produits spécialisés, commerce en ligne, technologies.',
     atouts: [
@@ -293,6 +300,7 @@ export const platforms = [
     key: 'spotify', anchor: 'plat-spotify', label: 'Spotify',
     viewBox: '0 0 496 512', tileW: 31,
     path: 'M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z',
+    hook: 'Votre message dans les moments sans écran.',
     desc: 'L’audio qui accompagne vos clients partout&nbsp;: vos annonces jouent pendant l’écoute, avec un ciblage par région et par champ d’intérêt.',
     ideal: 'Notoriété locale et régionale, promotions saisonnières.',
     atouts: [
@@ -307,6 +315,7 @@ export const platforms = [
     key: 'googleAds', anchor: 'plat-google-ads', label: 'Google Ads',
     viewBox: '0 0 488 512', tileW: 30,
     path: 'M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z',
+    hook: "Visible au moment exact où l'on vous cherche.",
     desc: 'L’intention de recherche à l’état pur&nbsp;: vous apparaissez au moment exact où quelqu’un cherche «&nbsp;plombier à Laval&nbsp;» ou «&nbsp;comptable près de moi&nbsp;».',
     ideal: 'Tous les secteurs de services, demandes urgentes.',
     atouts: [
@@ -321,6 +330,7 @@ export const platforms = [
     key: 'chatgpt', anchor: 'plat-chatgpt', label: 'ChatGPT',
     viewBox: '0 0 24 24', tileW: 32, tileGridColumn: 2,
     path: 'M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.073zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.0615v5.5826a4.504 4.504 0 0 1-4.4945 4.4849zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.8956zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z',
+    hook: "La nouvelle porte d'entrée de vos futurs clients.",
     desc: 'La nouvelle porte d’entrée. De plus en plus de clients demandent des recommandations aux assistants IA. On structure votre présence en ligne pour que votre entreprise y soit citée.',
     ideal: 'Toutes les entreprises qui pensent à demain.',
     atouts: [

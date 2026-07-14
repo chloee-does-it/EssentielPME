@@ -14,6 +14,29 @@ import { DICT, META_EN, norm } from './i18n-dict.mjs';
 
 const GTM_ID = 'GTM-NWFC4HHZ';
 
+/* Slugs anglais des pages (les URLs /en/ utilisent des mots anglais) */
+const EN_SLUGS = {
+  'publicite': 'advertising',
+  'plateformes': 'platforms',
+  'a-propos': 'about',
+  'contact': 'contact',
+  'blogue': 'blog',
+  'mentions-legales': 'legal',
+  'industries/construction': 'industries/construction',
+  'industries/sante': 'industries/healthcare',
+  'industries/beaute': 'industries/beauty',
+  'industries/restauration': 'industries/restaurants',
+  'industries/services-pro': 'industries/professional-services',
+  'industries/ecommerce': 'industries/ecommerce',
+};
+
+/* '/publicite/' → '/en/advertising/' ; '/' → '/en/' */
+function enPagePathOf(pagePath) {
+  const slug = pagePath.replace(/^\//, '').replace(/\/$/, '');
+  const en = EN_SLUGS[slug] !== undefined ? EN_SLUGS[slug] : slug;
+  return '/en/' + (en ? en + '/' : '');
+}
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'site');
 
@@ -36,7 +59,7 @@ const socialIcon = (key) => {
 
 /* ================= chrome ================= */
 
-function header(active, root, pagePath) {
+function header(active, root, pagePath, enPagePath) {
   const a = (k) => (active === k ? ' class="active"' : '');
   const drop = (label, href, activeCls, items) => `
         <div class="we-navdrop" style="position:relative; display:flex; align-items:center;">
@@ -70,7 +93,7 @@ ${drop('À propos', `${root}a-propos/`, active === 'aboutGroup', [
         <div class="we-lang-toggle">
           <a data-lang-link="fr" href="${pagePath}" class="active" hreflang="fr-CA">FR</a>
           <span class="sep">·</span>
-          <a data-lang-link="en" href="/en${pagePath}" hreflang="en-CA">EN</a>
+          <a data-lang-link="en" href="${enPagePath}" hreflang="en-CA">EN</a>
         </div>
         <a href="${root}contact/" class="btn btn-primary" style="padding:10px 18px; font-size:14px;">Démarrer ma publicité en ligne</a>
         <button type="button" class="we-burger" aria-label="Ouvrir le menu" aria-expanded="false">
@@ -154,6 +177,7 @@ function footer(root) {
 function shell({ path, title, desc, active, jsonld = [], body, label }) {
   const root = '/';
   const pagePath = '/' + path.replace(/index\.html$/, '');
+  const enPagePath = enPagePathOf(pagePath);
   const canonical = `${SITE.baseUrl}${pagePath}`;
   const org = {
     '@context': 'https://schema.org', '@type': 'Organization',
@@ -176,7 +200,7 @@ function shell({ path, title, desc, active, jsonld = [], body, label }) {
   <meta name="description" content="${jsonEsc(desc)}">
   <link rel="canonical" href="${canonical}">
   <link rel="alternate" hreflang="fr-CA" href="${canonical}">
-  <link rel="alternate" hreflang="en-CA" href="${SITE.baseUrl}/en${pagePath}">
+  <link rel="alternate" hreflang="en-CA" href="${SITE.baseUrl}${enPagePath}">
   <link rel="alternate" hreflang="x-default" href="${canonical}">
   <link rel="icon" type="image/svg+xml" href="${root}assets/img/favicon.svg">
   <link rel="icon" type="image/png" href="${root}assets/img/favicon.png">
@@ -201,7 +225,7 @@ ${blocks}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <div class="we-page">
-${header(active, root, pagePath)}
+${header(active, root, pagePath, enPagePath)}
   <main id="contenu" data-screen-label="${label}" style="animation: epFadeUp 300ms cubic-bezier(0.2,0.7,0.2,1);">
 ${body}
   </main>
@@ -895,9 +919,13 @@ ${field('Téléphone', 'phone', 'tel', 'tel')}
                 <label for="f-msg" style="font-size:13px; font-weight:700; color:var(--charbon);">Votre message</label>
                 <textarea id="f-msg" name="message" rows="5" placeholder="Parlez-nous de votre entreprise et de vos besoins…" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; resize:vertical; width:100%; box-sizing:border-box;"></textarea>
               </div>
+              <label style="display:flex; gap:10px; align-items:flex-start; font-size:12.5px; color:var(--charbon-300); line-height:1.55; cursor:pointer;">
+                <input type="checkbox" name="marketing" style="accent-color:var(--violet); width:16px; height:16px; margin-top:1px; flex:none;">
+                <span>J'accepte de recevoir des communications électroniques d'Essentiel PME&nbsp;: conseils, nouveautés et offres, environ une fois par mois. Consentement facultatif&nbsp;— je peux le retirer en tout temps via le lien de désabonnement ou à info@essentielpme.com.</span>
+              </label>
               <button type="submit" class="btn btn-primary btn-lg" style="align-self:flex-start;">Envoyer ma demande →</button>
               <p data-contact-error hidden style="margin:0; font-size:13.5px; color:var(--danger); font-weight:600;">Une erreur est survenue et votre message n'a pas été envoyé. Réessayez dans un moment ou écrivez-nous à info@essentielpme.com.</p>
-              <p style="margin:0; font-size:12.5px; color:var(--charbon-300);">En soumettant ce formulaire, vous acceptez notre politique de confidentialité. Vos données ne sont jamais partagées.</p>
+              <p style="margin:0; font-size:12.5px; color:var(--charbon-300);">En soumettant ce formulaire, vous acceptez notre <a href="/mentions-legales/#politique-de-confidentialite" style="color:inherit;">politique de confidentialité</a>. Essentiel PME est un service de Solutions SuperQuanti inc., 6000, boul. de Rome, bureau 300, Brossard (Québec) J4Y 0B6.</p>
             </form>
           </div>
 
@@ -908,6 +936,12 @@ ${field('Téléphone', 'phone', 'tel', 'tel')}
                 <div style="display:flex; gap:12px; align-items:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><a href="mailto:${SITE.email}" style="color:inherit; border-bottom:none;">${SITE.email}</a></div>
                 <div style="display:flex; gap:12px; align-items:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg><a href="tel:${SITE.phoneIntl}" style="color:inherit; border-bottom:none;">${SITE.phone}</a></div>
                 <div style="display:flex; gap:12px; align-items:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span>${SITE.location}</span></div>
+                <div style="display:flex; gap:12px; align-items:center; margin-top:6px; padding-top:14px; border-top:1px solid var(--border);">
+                  <span style="font-size:13px; font-weight:700; color:var(--charbon-500);">Suivez-nous&nbsp;:</span>
+                  <a href="${SITE.social.facebook}" target="_blank" rel="noopener" title="Facebook" style="width:36px; height:36px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;">${socialIcon('facebook')}</a>
+                  <a href="${SITE.social.instagram}" target="_blank" rel="noopener" title="Instagram" style="width:36px; height:36px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;">${socialIcon('instagram')}</a>
+                  <a href="${SITE.social.linkedin}" target="_blank" rel="noopener" title="LinkedIn" style="width:36px; height:36px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;">${socialIcon('linkedin')}</a>
+                </div>
               </div>
             </div>
             <div style="background:var(--violet); color:#fff; border-radius:20px; padding:30px;">
@@ -1013,30 +1047,54 @@ function plateformesPage() {
         </div>
       </section>
 
-${platforms.map((p, i) => `      <section id="${p.anchor}" style="background:${i % 2 === 0 ? '#fff' : 'var(--blanc-casse)'}; padding:56px 24px;">
-        <div style="max-width:960px; margin:0 auto; display:grid; grid-template-columns:96px 1fr; gap:30px; align-items:start;">
-          <div style="width:96px; height:96px; border-radius:22px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center;">
-            <svg width="38" height="38" viewBox="${p.viewBox}" fill="var(--violet)"><path d="${p.path}"></path></svg>
-          </div>
-          <div style="display:flex; flex-direction:column; gap:12px;">
-            <h2 style="margin:0; font-size:26px;">${p.label}</h2>
-            <p style="margin:0; font-size:15px; color:var(--charbon-500); line-height:1.7;">${p.desc}</p>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:22px; margin-top:10px; align-items:start;">
-              <div>
-                <h3 style="margin:0 0 10px; font-size:13px; font-weight:800; letter-spacing:var(--tracking-wide); text-transform:uppercase; color:var(--violet);">Pourquoi ça fonctionne</h3>
-                <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px;">
-                  ${p.atouts.map((a) => `<li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; color:var(--charbon-500); line-height:1.6;">${check(15, 'var(--violet)', 'flex:none; margin-top:3px;')}<span>${a}</span></li>`).join('\n                  ')}
-                </ul>
+      <section class="section" style="background:#fff;">
+        <div class="section-inner" style="max-width:1100px;">
+          <div class="plat-grid">
+${platforms.map((p) => `            <div class="plat-card" id="${p.anchor}">
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:54px; height:54px; border-radius:15px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; flex:none;">
+                  <svg width="24" height="24" viewBox="${p.viewBox}" fill="var(--violet)"><path d="${p.path}"></path></svg>
+                </div>
+                <h2 style="margin:0; font-size:19px;">${p.label}</h2>
               </div>
-              <div style="background:${i % 2 === 0 ? 'var(--lavande-50)' : '#fff'}; border:1px solid var(--lavande-100); border-radius:16px; padding:20px 22px; display:flex; flex-direction:column; gap:12px; font-size:13.5px; line-height:1.6; color:var(--charbon-500);">
-                <div><strong style="display:block; color:var(--violet); font-size:12px; letter-spacing:var(--tracking-wide); text-transform:uppercase; margin-bottom:2px;">Formats d'annonces</strong>${p.formats}</div>
-                <div><strong style="display:block; color:var(--violet); font-size:12px; letter-spacing:var(--tracking-wide); text-transform:uppercase; margin-bottom:2px;">Objectifs typiques</strong>${p.objectifs}</div>
-                <div><strong style="display:block; color:var(--violet); font-size:12px; letter-spacing:var(--tracking-wide); text-transform:uppercase; margin-bottom:2px;">Idéal pour</strong>${p.ideal}</div>
+              <p style="margin:0; font-size:14.5px; color:var(--charbon-500); line-height:1.6; flex:1;">${p.hook}</p>
+              <button type="button" class="plat-more" data-plat-open="${p.key}">Plus de détails →</button>
+              <div data-plat-details="${p.key}" hidden>
+                <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
+                  <div style="width:60px; height:60px; border-radius:16px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; flex:none;">
+                    <svg width="26" height="26" viewBox="${p.viewBox}" fill="var(--violet)"><path d="${p.path}"></path></svg>
+                  </div>
+                  <h2 style="margin:0; font-size:24px;">${p.label}</h2>
+                </div>
+                <p style="margin:0 0 18px; font-size:15px; color:var(--charbon-500); line-height:1.7;">${p.desc}</p>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; align-items:start;">
+                  <div>
+                    <h3 style="margin:0 0 10px; font-size:13px; font-weight:800; letter-spacing:var(--tracking-wide); text-transform:uppercase; color:var(--violet);">Pourquoi ça fonctionne</h3>
+                    <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px;">
+                      ${p.atouts.map((a) => `<li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; color:var(--charbon-500); line-height:1.6;">${check(15, 'var(--violet)', 'flex:none; margin-top:3px;')}<span>${a}</span></li>`).join('\n                      ')}
+                    </ul>
+                  </div>
+                  <div style="background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:16px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; font-size:13.5px; line-height:1.6; color:var(--charbon-500);">
+                    <div><strong style="display:block; color:var(--violet); font-size:12px; letter-spacing:var(--tracking-wide); text-transform:uppercase; margin-bottom:2px;">Formats d'annonces</strong>${p.formats}</div>
+                    <div><strong style="display:block; color:var(--violet); font-size:12px; letter-spacing:var(--tracking-wide); text-transform:uppercase; margin-bottom:2px;">Objectifs typiques</strong>${p.objectifs}</div>
+                    <div><strong style="display:block; color:var(--violet); font-size:12px; letter-spacing:var(--tracking-wide); text-transform:uppercase; margin-bottom:2px;">Idéal pour</strong>${p.ideal}</div>
+                  </div>
+                </div>
+                <div style="margin-top:22px; display:flex; justify-content:flex-end;">
+                  <a href="/contact/" class="btn btn-primary">Démarrer mes pubs →</a>
+                </div>
               </div>
-            </div>
+            </div>`).join('\n')}
           </div>
         </div>
-      </section>`).join('\n\n')}
+      </section>
+
+      <div class="plat-overlay" data-plat-modal hidden>
+        <div class="plat-modal" role="dialog" aria-modal="true" aria-label="Détails de la plateforme">
+          <button type="button" class="plat-close" data-plat-close aria-label="Fermer">×</button>
+          <div data-plat-content></div>
+        </div>
+      </div>
 
 ${ctaBand({ h: 'Pas certain de la bonne plateforme&nbsp;?', p: 'Parlez-nous de votre entreprise&nbsp;: on vous recommande le bon mix, sans jargon.', cta: 'Démarrer mes pubs →', href: '/contact/' })}`;
 
@@ -1224,7 +1282,7 @@ function trText(txt) {
 /* Produit la version anglaise d'une page française générée. */
 function toEnglish(html, pagePath) {
   const frCanon = `${SITE.baseUrl}${pagePath}`;
-  const enCanon = `${SITE.baseUrl}/en${pagePath}`;
+  const enCanon = `${SITE.baseUrl}${enPagePathOf(pagePath)}`;
 
   // 1. Protéger les <script> (JSON-LD, GTM) de la traduction
   const guards = [];
@@ -1263,6 +1321,11 @@ function toEnglish(html, pagePath) {
   html = html.replace(/ data-lang-link="fr-x" (href="[^"]*") class="active"/, ' data-lang-link="fr" $1');
   html = html.replace(/ data-lang-link="en" (href="[^"]*")/, ' data-lang-link="en" $1 class="active"');
 
+  // 6b. Slugs anglais dans les liens /en/… (après la bascule, pour ne pas toucher le lien FR)
+  for (const [fr, en] of Object.entries(EN_SLUGS)) {
+    if (fr !== en) html = html.split(`href="/en/${fr}/`).join(`href="/en/${en}/`);
+  }
+
   // 8. Restaurer les scripts
   html = html.replace(/@@SCRIPT(\d+)@@/g, (m, i) => guards[+i]);
   return html;
@@ -1283,17 +1346,21 @@ const pages = [
 
 for (const [p, html] of pages) {
   const pagePath = '/' + p.replace(/index\.html$/, '');
+  const enFile = enPagePathOf(pagePath).slice(1) + 'index.html';
   mkdirSync(dirname(join(OUT, p)), { recursive: true });
   writeFileSync(join(OUT, p), html);
   const en = toEnglish(html, pagePath);
-  mkdirSync(dirname(join(OUT, 'en', p)), { recursive: true });
-  writeFileSync(join(OUT, 'en', p), en);
-  console.log('wrote', p, `(${html.length} o)`, '+ en/' + p, `(${en.length} o)`);
+  mkdirSync(dirname(join(OUT, enFile)), { recursive: true });
+  writeFileSync(join(OUT, enFile), en);
+  console.log('wrote', p, `(${html.length} o)`, '+', enFile, `(${en.length} o)`);
 }
 
 const sitemapPaths = pages
   .map(([p]) => p.replace(/index\.html$/, ''))
-  .flatMap((p) => (p === '' ? ['en/'] : [p, 'en/' + p]));
+  .flatMap((p) => {
+    const en = enPagePathOf('/' + p).slice(1);
+    return p === '' ? [en] : [p, en];
+  });
 writeFileSync(join(OUT, 'sitemap.xml'), sitemap(sitemapPaths));
 writeFileSync(join(OUT, 'robots.txt'), robots);
 writeFileSync(join(OUT, 'llms.txt'), llms);

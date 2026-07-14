@@ -450,6 +450,22 @@ img { max-width: 100%; }
 .we-lang-toggle a.active, .we-lang-toggle button.active { color: var(--violet); }
 .we-lang-toggle .sep { color: var(--charbon-300); }
 
+/* Page Plateformes — grille de cartes + fenêtre de détails */
+.plat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.plat-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 14px; transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease; }
+.plat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--lavande-200); }
+.plat-more { align-self: flex-start; cursor: pointer; font: inherit; font-weight: 700; font-size: 13.5px; color: var(--violet); background: var(--lavande-50); border: 1px solid var(--lavande-100); border-radius: 999px; padding: 8px 16px; transition: opacity 180ms ease, transform 180ms ease, background 180ms ease; }
+.plat-more:hover { background: var(--lavande-100); }
+@media (hover: hover) {
+  .plat-card .plat-more { opacity: 0; transform: translateY(4px); }
+  .plat-card:hover .plat-more, .plat-card:focus-within .plat-more { opacity: 1; transform: none; }
+}
+.plat-overlay { position: fixed; inset: 0; z-index: 92; background: rgba(35,25,60,0.55); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.plat-overlay[hidden] { display: none; }
+.plat-modal { position: relative; max-width: 780px; width: 100%; max-height: 86vh; overflow-y: auto; background: #fff; border-radius: 22px; box-shadow: 0 30px 90px rgba(20,10,40,0.4); padding: 30px 32px; }
+.plat-close { position: absolute; top: 14px; right: 16px; width: 36px; height: 36px; border-radius: 999px; border: none; background: var(--lavande-50); color: var(--charbon); font-size: 20px; line-height: 1; cursor: pointer; }
+.plat-close:hover { background: var(--lavande-100); }
+
 /* Fenêtre de consentement aux témoins (Loi 25) — modale bloquante jusqu'au choix */
 .consent-overlay { position: fixed; inset: 0; z-index: 95; background: rgba(35,25,60,0.62); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; animation: epFadeUp 200ms ease; }
 .consent-overlay[hidden] { display: none; }

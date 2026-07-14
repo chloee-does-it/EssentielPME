@@ -33,7 +33,43 @@
     initBlogSubscribe();
     initAnchorScroll();
     initConsent();
+    initPlatformModals();
   });
+
+  /* ---------------- Page Plateformes : fenêtre de détails ---------------- */
+  function initPlatformModals() {
+    var overlay = document.querySelector('[data-plat-modal]');
+    if (!overlay) return;
+    var content = overlay.querySelector('[data-plat-content]');
+
+    function open(key) {
+      var src = document.querySelector('[data-plat-details="' + key + '"]');
+      if (!src) return;
+      content.innerHTML = src.innerHTML;
+      overlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      overlay.hidden = true;
+      content.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('[data-plat-open]').forEach(function (btn) {
+      btn.addEventListener('click', function () { open(btn.getAttribute('data-plat-open')); });
+    });
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay || e.target.closest('[data-plat-close]')) close();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+    // Arrivée avec une ancre (#plat-facebook, depuis l'accueil) : ouvrir la fenêtre
+    if (location.hash) {
+      var card = document.getElementById(location.hash.slice(1));
+      var btn = card && card.querySelector('[data-plat-open]');
+      if (btn) open(btn.getAttribute('data-plat-open'));
+    }
+  }
 
   /* ---------------- Bandeau de consentement aux témoins (Loi 25) ----------------
      Trois catégories : fonctionnels (toujours actifs), analytiques, publicitaires.
@@ -182,6 +218,8 @@
       payload.interest = interest ? interest.value : '';
       var msg = form.querySelector('[name="message"]');
       payload.message = msg ? msg.value.trim() : '';
+      var marketing = form.querySelector('[name="marketing"]');
+      payload.marketing = !!(marketing && marketing.checked);
 
       fetch(CONTACT_ENDPOINT, {
         method: 'POST',

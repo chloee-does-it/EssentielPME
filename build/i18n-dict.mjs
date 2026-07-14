@@ -825,3 +825,25 @@ Object.assign(DICT, {
   'Optimisation de la présence (contenus structurés, fiches, données)': 'Presence optimization (structured content, listings, data)',
   'Visibilité émergente, recommandations, avantage de pionnier': 'Emerging visibility, recommendations, first-mover advantage',
 });
+
+/* Cartes plateformes, réseaux sociaux Contact, consentement LCAP */
+Object.assign(DICT, {
+  'Là où tout le Québec passe, chaque jour.': 'Where all of Québec spends time, every day.',
+  'Si votre travail se montre, Instagram le vend.': 'If your work can be shown, Instagram sells it.',
+  "Le réseau où se prennent les décisions d'affaires.": 'The network where business decisions are made.',
+  'La portée publicitaire la plus abordable du moment.': "Today's most affordable advertising reach.",
+  'La vidéo qui explique, rassure et convainc.': 'Video that explains, reassures and convinces.',
+  'Présent au moment où vos clients planifient.': 'Present at the moment your customers are planning.',
+  'Des communautés passionnées, introuvables ailleurs.': 'Passionate communities found nowhere else.',
+  'Votre message dans les moments sans écran.': 'Your message during screen-free moments.',
+  "Visible au moment exact où l'on vous cherche.": 'Visible at the exact moment people search for you.',
+  'La nouvelle porte d\'entrée de vos futurs clients.': 'The new front door for your future customers.',
+  'Plus de détails →': 'More details →',
+  'Fermer': 'Close',
+  'Détails de la plateforme': 'Platform details',
+  'Suivez-nous :': 'Follow us:',
+  'politique de confidentialité': 'privacy policy',
+  "J'accepte de recevoir des communications électroniques d'Essentiel PME : conseils, nouveautés et offres, environ une fois par mois. Consentement facultatif — je peux le retirer en tout temps via le lien de désabonnement ou à info@essentielpme.com.": 'I agree to receive electronic communications from SMB Essentials: advice, news and offers, about once a month. Optional consent — I can withdraw it at any time via the unsubscribe link or at info@essentielpme.com.',
+  'En soumettant ce formulaire, vous acceptez notre': 'By submitting this form, you accept our',
+  '. Essentiel PME est un service de Solutions SuperQuanti inc., 6000, boul. de Rome, bureau 300, Brossard (Québec) J4Y 0B6.': '. SMB Essentials is a service of Solutions SuperQuanti Inc., 6000 Rome Blvd., Suite 300, Brossard, Québec J4Y 0B6.',
+});
