@@ -261,7 +261,9 @@ code, kbd, samp, pre {
     linear-gradient(90deg, #FFFFFF 0%, #FBF9FF 50%, #FFFFFF 100%);  /* @kind color */
 }
 
-.we-page { background: var(--blanc-casse); min-height: 100vh; font-family: var(--font-sans); color: var(--charbon); overflow-x: hidden; }
+/* overflow-x: clip (et non hidden) — hidden créerait un conteneur de défilement
+   qui neutralise le position:sticky de l'en-tête */
+.we-page { background: var(--blanc-casse); min-height: 100vh; font-family: var(--font-sans); color: var(--charbon); overflow-x: clip; }
 
 /* Decorative blobs */
 .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55; pointer-events: none; z-index: 0; }
@@ -443,9 +445,18 @@ img { max-width: 100%; }
 
 /* Language toggle in header */
 .we-lang-toggle { display: inline-flex; align-items: center; gap: 2px; font-size: 13px; font-weight: 800; margin-right: 4px; }
-.we-lang-toggle button { background: none; border: none; cursor: pointer; font: inherit; font-weight: 800; padding: 2px 4px; color: var(--charbon-300); }
-.we-lang-toggle button.active { color: var(--violet); }
+.we-lang-toggle a, .we-lang-toggle button { background: none; border: none; border-bottom: none; cursor: pointer; font: inherit; font-weight: 800; padding: 2px 4px; color: var(--charbon-300); }
+.we-lang-toggle a.active, .we-lang-toggle button.active { color: var(--violet); }
 .we-lang-toggle .sep { color: var(--charbon-300); }
+
+/* Bandeau de consentement aux témoins (Loi 25) */
+.consent-banner { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 90; max-width: 720px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); padding: 18px 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.consent-banner[hidden] { display: none; }
+.consent-banner p { margin: 0; flex: 1 1 320px; font-size: 13.5px; line-height: 1.55; color: var(--charbon-500); }
+.consent-banner .consent-actions { display: flex; gap: 10px; flex: none; }
+.consent-banner button { cursor: pointer; font: inherit; font-weight: 700; font-size: 13.5px; border-radius: 999px; padding: 9px 18px; }
+.consent-banner [data-consent-accept] { background: var(--violet); color: #fff; border: none; }
+.consent-banner [data-consent-refuse] { background: none; color: var(--charbon); border: 1px solid var(--border); }
 
 /* Skip link (a11y) */
 .skip-link { position: absolute; left: -9999px; top: 0; background: var(--violet); color: #fff; padding: 10px 16px; border-radius: 0 0 10px 0; z-index: 200; }

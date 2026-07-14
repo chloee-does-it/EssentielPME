@@ -13,20 +13,20 @@
 ## Pages
 
 - [Accueil](https://essentielpme.com/) : présentation des services, forfaits, témoignages, FAQ.
-- [Publicité en ligne](https://essentielpme.com/publicite.html) : les 3 forfaits en détail, inclusions et plateformes.
-- [Plateformes](https://essentielpme.com/plateformes.html) : description de chaque plateforme publicitaire et pour qui elle convient.
-- [À propos](https://essentielpme.com/a-propos.html) : mission, valeurs et processus en 6 étapes.
-- [Blogue](https://essentielpme.com/blogue.html) : conseils publicité en ligne pour PME (articles à venir).
-- [Contact](https://essentielpme.com/contact.html) : formulaire, info@essentielpme.com, 1-844-763-3832, Québec, QC.
+- [Publicité en ligne](https://essentielpme.com/publicite/) : les 3 forfaits en détail, inclusions et plateformes.
+- [Plateformes](https://essentielpme.com/plateformes/) : description de chaque plateforme publicitaire et pour qui elle convient.
+- [À propos](https://essentielpme.com/a-propos/) : mission, valeurs et processus en 6 étapes.
+- [Blogue](https://essentielpme.com/blogue/) : conseils publicité en ligne pour PME (articles à venir).
+- [Contact](https://essentielpme.com/contact/) : formulaire, info@essentielpme.com, 1-844-763-3832, Québec, QC.
 
 ## Industries desservies
 
-- [Construction et métiers](https://essentielpme.com/industries/construction.html) : Vos journées se passent sur les chantiers, pas devant un écran. On gère vos campagnes; vous encaissez les demandes de soumission.
-- [Santé et cliniques](https://essentielpme.com/industries/sante.html) : Votre équipe soigne; on s’occupe des demandes. Des campagnes qui remplissent votre horaire, sans y penser.
-- [Beauté et bien-être](https://essentielpme.com/industries/beaute.html) : Entre deux clients, il ne reste pas une minute pour gérer des publicités. On s’en charge; votre agenda se remplit.
-- [Restauration](https://essentielpme.com/industries/restauration.html) : Faites connaître votre menu et vos promotions au bon moment. On ramène les gens du quartier à votre porte.
-- [Services professionnels](https://essentielpme.com/industries/services-pro.html) : Travaillez sur vos heures facturables; on s’occupe de votre publicité et de votre pipeline de clients d’affaires.
-- [Commerce en ligne](https://essentielpme.com/industries/ecommerce.html) : Vous vendez; le reste roule seul. Acquisition et reciblage des paniers abandonnés, on s’en charge.
+- [Construction et métiers](https://essentielpme.com/industries/construction/) : Vos journées se passent sur les chantiers, pas devant un écran. On gère vos campagnes; vous encaissez les demandes de soumission.
+- [Santé et cliniques](https://essentielpme.com/industries/sante/) : Votre équipe soigne; on s’occupe des demandes. Des campagnes qui remplissent votre horaire, sans y penser.
+- [Beauté et bien-être](https://essentielpme.com/industries/beaute/) : Entre deux clients, il ne reste pas une minute pour gérer des publicités. On s’en charge; votre agenda se remplit.
+- [Restauration](https://essentielpme.com/industries/restauration/) : Faites connaître votre menu et vos promotions au bon moment. On ramène les gens du quartier à votre porte.
+- [Services professionnels](https://essentielpme.com/industries/services-pro/) : Travaillez sur vos heures facturables; on s’occupe de votre publicité et de votre pipeline de clients d’affaires.
+- [Commerce en ligne](https://essentielpme.com/industries/ecommerce/) : Vous vendez; le reste roule seul. Acquisition et reciblage des paniers abandonnés, on s’en charge.
 
 ## Coordonnées
 

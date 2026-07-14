@@ -10,6 +10,9 @@ import {
   homeSteps, homeFeatures, aboutProcess, aboutValues, platforms,
   industries, blogFeatured, blogArticles,
 } from './data.mjs';
+import { DICT, META_EN, norm } from './i18n-dict.mjs';
+
+const GTM_ID = 'GTM-NWFC4HHZ';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'site');
@@ -33,7 +36,7 @@ const socialIcon = (key) => {
 
 /* ================= chrome ================= */
 
-function header(active, root) {
+function header(active, root, pagePath) {
   const a = (k) => (active === k ? ' class="active"' : '');
   const drop = (label, href, activeCls, items) => `
         <div class="we-navdrop" style="position:relative; display:flex; align-items:center;">
@@ -50,26 +53,26 @@ function header(active, root) {
   return `  <a class="skip-link" href="#contenu">Aller au contenu</a>
   <header class="we-header">
     <div class="we-header-inner">
-      <a href="${root}index.html" class="we-logo" style="border-bottom:none;" aria-label="Essentiel PME — Accueil">
-        <img src="${root}assets/img/logo-h-fr-rgb.svg" data-i18n-src-en="${root}assets/img/logo-h-en-rgb.svg" alt="Essentiel PME" style="height:60px; width:auto;">
+      <a href="${root}" class="we-logo" style="border-bottom:none;" aria-label="Essentiel PME — Accueil">
+        <img src="${root}assets/img/logo-h-fr-rgb.svg" alt="Essentiel PME" style="height:60px; width:auto;">
       </a>
       <nav class="we-nav" aria-label="Navigation principale">
-        <a href="${root}publicite.html"${a('ads')}>Publicité en ligne</a>
-${drop('Industries', `${root}industries/construction.html`, active === 'industries', industries.map((i) => ({ label: i.label, href: `${root}industries/${i.key}.html` })))}
-${drop('À propos', `${root}a-propos.html`, active === 'aboutGroup', [
-    { label: 'À propos', href: `${root}a-propos.html` },
-    { label: 'Plateformes', href: `${root}plateformes.html` },
-    { label: 'Blogue', href: `${root}blogue.html` },
+        <a href="${root}publicite/"${a('ads')}>Publicité en ligne</a>
+${drop('Industries', `${root}industries/construction/`, active === 'industries', industries.map((i) => ({ label: i.label, href: `${root}industries/${i.key}/` })))}
+${drop('À propos', `${root}a-propos/`, active === 'aboutGroup', [
+    { label: 'À propos', href: `${root}a-propos/` },
+    { label: 'Plateformes', href: `${root}plateformes/` },
+    { label: 'Blogue', href: `${root}blogue/` },
   ])}
-        <a href="${root}contact.html"${a('contact')}>Contact</a>
+        <a href="${root}contact/"${a('contact')}>Contact</a>
       </nav>
       <div class="we-header-right">
-        <div class="we-lang-toggle" data-no-i18n="1">
-          <button type="button" data-lang-btn="fr" class="active">FR</button>
+        <div class="we-lang-toggle">
+          <a data-lang-link="fr" href="${pagePath}" class="active" hreflang="fr-CA">FR</a>
           <span class="sep">·</span>
-          <button type="button" data-lang-btn="en">EN</button>
+          <a data-lang-link="en" href="/en${pagePath}" hreflang="en-CA">EN</a>
         </div>
-        <a href="${root}contact.html" class="btn btn-primary" style="padding:10px 18px; font-size:14px;">Démarrer ma publicité en ligne</a>
+        <a href="${root}contact/" class="btn btn-primary" style="padding:10px 18px; font-size:14px;">Démarrer ma publicité en ligne</a>
         <button type="button" class="we-burger" aria-label="Ouvrir le menu" aria-expanded="false">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
@@ -79,22 +82,22 @@ ${drop('À propos', `${root}a-propos.html`, active === 'aboutGroup', [
   <div class="we-mobile-nav" role="dialog" aria-label="Menu">
     <div class="we-mobile-panel">
       <div class="we-mobile-top">
-        <img src="${root}assets/img/logo-h-fr-rgb.svg" data-i18n-src-en="${root}assets/img/logo-h-en-rgb.svg" alt="Essentiel PME">
+        <img src="${root}assets/img/logo-h-fr-rgb.svg" alt="Essentiel PME">
         <button type="button" class="we-mobile-close" aria-label="Fermer le menu">×</button>
       </div>
       <nav aria-label="Navigation mobile">
-        <a href="${root}index.html">Accueil</a>
-        <a href="${root}publicite.html">Publicité en ligne</a>
+        <a href="${root}">Accueil</a>
+        <a href="${root}publicite/">Publicité en ligne</a>
         <span class="grouplabel">Industries</span>
-        ${industries.map((i) => `<a class="sub" href="${root}industries/${i.key}.html">${i.label}</a>`).join('\n        ')}
+        ${industries.map((i) => `<a class="sub" href="${root}industries/${i.key}/">${i.label}</a>`).join('\n        ')}
         <span class="grouplabel">À propos</span>
-        <a class="sub" href="${root}a-propos.html">À propos</a>
-        <a class="sub" href="${root}plateformes.html">Plateformes</a>
-        <a class="sub" href="${root}blogue.html">Blogue</a>
-        <a href="${root}contact.html">Contact</a>
+        <a class="sub" href="${root}a-propos/">À propos</a>
+        <a class="sub" href="${root}plateformes/">Plateformes</a>
+        <a class="sub" href="${root}blogue/">Blogue</a>
+        <a href="${root}contact/">Contact</a>
       </nav>
       <div class="we-mobile-cta">
-        <a href="${root}contact.html" class="btn btn-primary">Démarrer ma publicité en ligne</a>
+        <a href="${root}contact/" class="btn btn-primary">Démarrer ma publicité en ligne</a>
       </div>
     </div>
   </div>`;
@@ -115,26 +118,26 @@ function footer(root) {
       <div>
         <h4>Services</h4>
         <ul>
-          <li><a href="${root}publicite.html">Publicité en ligne</a></li>
-          <li><a href="${root}plateformes.html">Plateformes</a></li>
-          <li><a href="${root}industries/construction.html">Industries</a></li>
+          <li><a href="${root}publicite/">Publicité en ligne</a></li>
+          <li><a href="${root}plateformes/">Plateformes</a></li>
+          <li><a href="${root}industries/construction/">Industries</a></li>
         </ul>
       </div>
       <div>
         <h4>Entreprise</h4>
         <ul>
-          <li><a href="${root}a-propos.html">À propos</a></li>
-          <li><a href="${root}industries/construction.html">Industries</a></li>
-          <li><a href="${root}blogue.html">Blogue</a></li>
-          <li><a href="${root}contact.html">Contact</a></li>
+          <li><a href="${root}a-propos/">À propos</a></li>
+          <li><a href="${root}industries/construction/">Industries</a></li>
+          <li><a href="${root}blogue/">Blogue</a></li>
+          <li><a href="${root}contact/">Contact</a></li>
         </ul>
       </div>
       <div>
         <h4>Légal</h4>
         <ul>
-          <li><a href="${root}mentions-legales.html">Mentions légales</a></li>
-          <li><a href="${root}mentions-legales.html#politique-de-confidentialite">Politique de confidentialité</a></li>
-          <li><a href="${root}mentions-legales.html#temoins">Politique de cookies</a></li>
+          <li><a href="${root}mentions-legales/">Mentions légales</a></li>
+          <li><a href="${root}mentions-legales/#politique-de-confidentialite">Politique de confidentialité</a></li>
+          <li><a href="${root}mentions-legales/#temoins">Politique de cookies</a></li>
         </ul>
       </div>
     </div>
@@ -148,8 +151,10 @@ function footer(root) {
   </footer>`;
 }
 
-function shell({ path, root, title, desc, active, jsonld = [], body, label }) {
-  const canonical = `${SITE.baseUrl}/${path}`.replace(/\/index\.html$/, '/');
+function shell({ path, title, desc, active, jsonld = [], body, label }) {
+  const root = '/';
+  const pagePath = '/' + path.replace(/index\.html$/, '');
+  const canonical = `${SITE.baseUrl}${pagePath}`;
   const org = {
     '@context': 'https://schema.org', '@type': 'Organization',
     name: SITE.name, alternateName: SITE.nameEn, url: SITE.baseUrl + '/',
@@ -170,6 +175,9 @@ function shell({ path, root, title, desc, active, jsonld = [], body, label }) {
   <title>${title}</title>
   <meta name="description" content="${jsonEsc(desc)}">
   <link rel="canonical" href="${canonical}">
+  <link rel="alternate" hreflang="fr-CA" href="${canonical}">
+  <link rel="alternate" hreflang="en-CA" href="${SITE.baseUrl}/en${pagePath}">
+  <link rel="alternate" hreflang="x-default" href="${canonical}">
   <link rel="icon" type="image/svg+xml" href="${root}assets/img/favicon.svg">
   <link rel="icon" type="image/png" href="${root}assets/img/favicon.png">
   <meta property="og:type" content="website">
@@ -181,17 +189,31 @@ function shell({ path, root, title, desc, active, jsonld = [], body, label }) {
   <meta property="og:image" content="${SITE.baseUrl}/assets/img/og-cover.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="${root}assets/css/styles.css">
+  <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'denied'});</script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');</script>
+  <!-- End Google Tag Manager -->
 ${blocks}
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <div class="we-page">
-${header(active, root)}
+${header(active, root, pagePath)}
   <main id="contenu" data-screen-label="${label}" style="animation: epFadeUp 300ms cubic-bezier(0.2,0.7,0.2,1);">
 ${body}
   </main>
 ${footer(root)}
 </div>
-<script src="${root}assets/js/i18n.js"></script>
+<div class="consent-banner" data-consent-banner hidden>
+  <p>On utilise des témoins pour mesurer l'audience du site et nos campagnes. Vous pouvez accepter ou refuser — détails dans notre <a href="${root}mentions-legales/#temoins">politique de témoins</a>.</p>
+  <div class="consent-actions">
+    <button type="button" data-consent-refuse>Refuser</button>
+    <button type="button" data-consent-accept>Accepter</button>
+  </div>
+</div>
 <script src="${root}assets/js/main.js"></script>
 </body>
 </html>
@@ -239,7 +261,7 @@ function faqJsonLd(items) {
 
 function platformTiles(root) {
   return `            <div class="plat-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:14px;">
-${platforms.map((p) => `              <a href="${root}plateformes.html#${p.anchor}" class="plat-tile" title="Voir la section ${p.label}" style="background:#fff; border:1px solid var(--border); border-radius:16px; aspect-ratio:3/2; display:flex; align-items:center; justify-content:center; transition:all 200ms; position:relative; cursor:pointer; border-bottom:none;${p.tileGridColumn ? ` grid-column:${p.tileGridColumn};` : ''}">
+${platforms.map((p) => `              <a href="${root}plateformes/#${p.anchor}" class="plat-tile" title="Voir la section ${p.label}" style="background:#fff; border:1px solid var(--border); border-radius:16px; aspect-ratio:3/2; display:flex; align-items:center; justify-content:center; transition:all 200ms; position:relative; cursor:pointer; border-bottom:none;${p.tileGridColumn ? ` grid-column:${p.tileGridColumn};` : ''}">
                 <svg width="${p.tileW}" height="32" viewBox="${p.viewBox}" fill="var(--violet)"><path d="${p.path}"></path></svg>
                 <span class="plat-name" style="position:absolute; left:0; right:0; bottom:7px; text-align:center; font-size:11.5px; font-weight:800; color:var(--violet); pointer-events:none; opacity:0; transition:opacity 120ms;">${p.label}</span>
               </a>`).join('\n')}
@@ -259,7 +281,7 @@ function ctaBand({ h, p, cta, href }) {
 /* ================= pages ================= */
 
 function homePage() {
-  const root = '';
+  const root = '/';
   const body = `
       <!-- Hero (variante illustration) -->
       <section class="hero">
@@ -270,7 +292,7 @@ function homePage() {
             <h1>Votre marketing numérique professionnel,<br><span class="grad">simplement.</span></h1>
             <p class="lead">Publicité en ligne gérée pour vous, pour les PME d'ici.</p>
             <div class="hero-ctas">
-              <a href="publicite.html" class="btn btn-primary btn-lg">Voir nos forfaits</a>
+              <a href="/publicite/" class="btn btn-primary btn-lg">Voir nos forfaits</a>
             </div>
             <div class="hero-meta">
               <span>${check(14)} Prix fixes</span>
@@ -323,9 +345,9 @@ function homePage() {
             <p class="lead">On s'occupe des annonces, du ciblage et des rapports. Vous récoltez les demandes.</p>
           </div>
           <div class="packages-grid">
-${adPackages.map((p) => pkgCard(p, { useHomeName: true, ctaHref: 'contact.html' })).join('\n')}
+${adPackages.map((p) => pkgCard(p, { useHomeName: true, ctaHref: '/contact/' })).join('\n')}
           </div>
-          <p style="text-align:center; font-size:13.5px; color:var(--charbon-500); margin:28px 0 0;">Frais d'installation unique&nbsp;: 600&nbsp;$. Minimum 3 mois, puis mensuel avec préavis de 30 jours. <a href="publicite.html" style="font-weight:700;">Tous les détails →</a></p>
+          <p style="text-align:center; font-size:13.5px; color:var(--charbon-500); margin:28px 0 0;">Frais d'installation unique&nbsp;: 600&nbsp;$. Minimum 3 mois, puis mensuel avec préavis de 30 jours. <a href="/publicite/" style="font-weight:700;">Tous les détails →</a></p>
         </div>
       </section>
 
@@ -361,7 +383,7 @@ ${homeSteps.map((s, i) => `            <div class="step-card">
             </div>`).join('\n')}
           </div>
           <div style="text-align:center; margin-top:48px;">
-            <a href="a-propos.html" class="btn btn-ghost">Voir le processus complet →</a>
+            <a href="/a-propos/" class="btn btn-ghost">Voir le processus complet →</a>
           </div>
         </div>
       </section>
@@ -411,7 +433,7 @@ ${faqList(faqHome, 'faq-home')}
 }
 
 function publicitePage() {
-  const root = '';
+  const root = '/';
   const body = `
       <section style="background:var(--grad-hero); padding:80px 24px 64px; text-align:center;">
         <div style="max-width:780px; margin:0 auto;">
@@ -424,7 +446,7 @@ function publicitePage() {
       <section class="section packages" style="padding-top:72px;">
         <div class="section-inner">
           <div class="packages-grid">
-${adPackages.map((p) => pkgCard(p, { useHomeName: false, ctaHref: 'contact.html' })).join('\n')}
+${adPackages.map((p) => pkgCard(p, { useHomeName: false, ctaHref: '/contact/' })).join('\n')}
           </div>
           <div style="margin-top:36px; background:#fff; border:1px solid var(--lavande-100); border-radius:16px; padding:28px 32px; max-width:960px; margin-left:auto; margin-right:auto;">
             <div style="font-size:12px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--violet); margin-bottom:16px;">Inclus dans les trois forfaits</div>
@@ -456,7 +478,7 @@ ${includedInAll.map((s) => `              <div style="display:flex; gap:10px; fo
                   <li style="display:flex; gap:10px; font-size:14.5px; color:var(--charbon); line-height:1.6; align-items:flex-start;">${check(16, 'var(--violet)', 'flex:none; margin-top:4px;')}<span><strong>Des résultats mesurés</strong>&nbsp;<br>Chaque canal est suivi dans GA4; on garde ce qui rapporte.</span></li>
                 </ul>
               </div>
-              <a href="contact.html" class="btn btn-primary">Démarrer mes pubs</a>
+              <a href="/contact/" class="btn btn-primary">Démarrer mes pubs</a>
             </div>
 ${platformTiles(root)}
           </div>
@@ -474,10 +496,10 @@ ${faqList(faqAds, 'faq-ads', true)}
         </div>
       </section>
 
-${ctaBand({ h: 'Prêt à démarrer vos pubs&nbsp;?', p: 'On configure tout&nbsp;: comptes, pixels et audiences.', cta: 'Démarrer mes pubs →', href: 'contact.html' })}`;
+${ctaBand({ h: 'Prêt à démarrer vos pubs&nbsp;?', p: 'On configure tout&nbsp;: comptes, pixels et audiences.', cta: 'Démarrer mes pubs →', href: '/contact/' })}`;
 
   return shell({
-    path: 'publicite.html', root, active: 'ads', label: 'Publicité',
+    path: 'publicite/index.html', root, active: 'ads', label: 'Publicité',
     title: 'Forfaits Essentiel, Essentiel Plus et Essentiel Performance | Essentiel PME',
     desc: 'Trois forfaits de publicité en ligne gérée pour PME : Essentiel 695 $/mois, Essentiel Plus 995 $/mois, Essentiel Performance 1 495 $/mois. Toutes les plateformes, rédaction FR/EN, rapports clairs.',
     jsonld: [
@@ -504,9 +526,9 @@ ${ctaBand({ h: 'Prêt à démarrer vos pubs&nbsp;?', p: 'On configure tout&nbsp;
 }
 
 function industryPage(ind) {
-  const root = '../';
+  const root = '/';
   const pills = industries.map((x) =>
-    `            <a href="${x.key}.html" class="btn ${x.key === ind.key ? 'btn-primary' : 'btn-secondary'}" style="padding:9px 16px; font-size:13.5px;">${x.label}</a>`
+    `            <a href="/industries/${x.key}/" class="btn ${x.key === ind.key ? 'btn-primary' : 'btn-secondary'}" style="padding:9px 16px; font-size:13.5px;">${x.label}</a>`
   ).join('\n');
 
   const body = `
@@ -548,7 +570,7 @@ ${ind.tags.map((tg) => tg.solid
     ? `                <span style="font-size:11.5px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; color:#fff; background:var(--violet); padding:4px 10px; border-radius:999px;">${tg.text}</span>`
     : `                <span style="font-size:11.5px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; color:var(--violet); background:var(--lavande-100); padding:4px 10px; border-radius:999px;">${tg.text}</span>`).join('\n')}
               </div>
-              <a href="${root}contact.html" class="btn btn-primary" style="align-self:flex-start; margin-top:4px;">Choisir mon forfait →</a>
+              <a href="${root}contact/" class="btn btn-primary" style="align-self:flex-start; margin-top:4px;">Choisir mon forfait →</a>
             </div>
           </div>
         </div>
@@ -620,8 +642,8 @@ ${ind.stats.map((st) => `                <div>
             <div style="text-align:right;">
               <div style="font-size:38px; font-weight:800; color:var(--violet); letter-spacing:-0.02em;">${ind.recoPrice}</div>
               <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:14px; flex-wrap:wrap;">
-                <a href="${root}publicite.html" class="btn btn-secondary">Voir les forfaits</a>
-                <a href="${root}contact.html" class="btn btn-primary">Parler de mon projet →</a>
+                <a href="${root}publicite/" class="btn btn-secondary">Voir les forfaits</a>
+                <a href="${root}contact/" class="btn btn-primary">Parler de mon projet →</a>
               </div>
             </div>
           </div>
@@ -662,10 +684,10 @@ ${ind.futureBlog.map((fb) => `            <article style="background:var(--blanc
         </div>
       </section>
 
-${ctaBand({ h: 'Votre secteur n\'est pas dans la liste&nbsp;?', p: 'On s\'adapte. Racontez-nous votre entreprise et on vous propose le bon plan.', cta: 'Parlez-nous&nbsp; →', href: `${root}contact.html` })}`;
+${ctaBand({ h: 'Votre secteur n\'est pas dans la liste&nbsp;?', p: 'On s\'adapte. Racontez-nous votre entreprise et on vous propose le bon plan.', cta: 'Parlez-nous&nbsp; →', href: `${root}contact/` })}`;
 
   return shell({
-    path: `industries/${ind.key}.html`, root, active: 'industries', label: 'Industries',
+    path: `industries/${ind.key}/index.html`, root, active: 'industries', label: 'Industries',
     title: `${stripTags(ind.title)} au Québec | Essentiel PME`,
     desc: ind.seoDesc,
     jsonld: [
@@ -679,8 +701,8 @@ ${ctaBand({ h: 'Votre secteur n\'est pas dans la liste&nbsp;?', p: 'On s\'adapte
         '@context': 'https://schema.org', '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE.baseUrl + '/' },
-          { '@type': 'ListItem', position: 2, name: 'Industries', item: `${SITE.baseUrl}/industries/construction.html` },
-          { '@type': 'ListItem', position: 3, name: jsonEsc(ind.label), item: `${SITE.baseUrl}/industries/${ind.key}.html` },
+          { '@type': 'ListItem', position: 2, name: 'Industries', item: `${SITE.baseUrl}/industries/construction/` },
+          { '@type': 'ListItem', position: 3, name: jsonEsc(ind.label), item: `${SITE.baseUrl}/industries/${ind.key}/` },
         ],
       },
     ],
@@ -750,23 +772,24 @@ ${aboutProcess.map((s, i) => `              <div style="display:grid; grid-templ
         </div>
       </section>
 
-${ctaBand({ h: 'Travaillons ensemble.', p: 'Un premier appel pour faire connaissance. Sans engagement.', cta: 'Prendre contact →', href: 'contact.html' })}`;
+${ctaBand({ h: 'Travaillons ensemble.', p: 'Un premier appel pour faire connaissance. Sans engagement.', cta: 'Prendre contact →', href: '/contact/' })}`;
 
   return shell({
-    path: 'a-propos.html', root: '', active: 'aboutGroup', label: 'À propos',
+    path: 'a-propos/index.html', root: '/', active: 'aboutGroup', label: 'À propos',
     title: 'À propos — mission, valeurs et processus | Essentiel PME',
     desc: 'Essentiel PME rend la publicité en ligne accessible aux PME québécoises : mission, valeurs (simplicité, efficacité, rapidité) et un processus structuré en 6 étapes, sans surprise.',
-    jsonld: [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'À propos d’Essentiel PME', url: `${SITE.baseUrl}/a-propos.html` }],
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'À propos d’Essentiel PME', url: `${SITE.baseUrl}/a-propos/` }],
     body,
   });
 }
 
 function contactPage() {
-  const field = (label, name, type, half = true) => `                <div style="display:flex; flex-direction:column; gap:6px;">
+  const field = (label, name, type, autocomplete = '') => `                <div style="display:flex; flex-direction:column; gap:6px;">
                   <label for="f-${name}" style="font-size:13px; font-weight:700; color:var(--charbon);">${label} *</label>
-                  <input id="f-${name}" name="${name}" type="${type}" data-field="${name}" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
+                  <input id="f-${name}" name="${name}" type="${type}"${autocomplete ? ` autocomplete="${autocomplete}"` : ''} data-field="${name}" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
                   <span data-error="${name}" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">${{
-                    name: 'Veuillez indiquer votre nom.',
+                    firstname: 'Veuillez indiquer votre prénom.',
+                    lastname: 'Veuillez indiquer votre nom.',
                     biz: 'Veuillez indiquer votre entreprise.',
                     email: 'Veuillez entrer un courriel valide.',
                     phone: 'Veuillez indiquer votre téléphone.',
@@ -793,12 +816,13 @@ function contactPage() {
             </div>
             <form style="display:flex; flex-direction:column; gap:18px;" data-contact-form novalidate>
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-${field('Votre nom', 'name', 'text')}
-${field('Entreprise', 'biz', 'text')}
+${field('Prénom', 'firstname', 'text', 'given-name')}
+${field('Nom', 'lastname', 'text', 'family-name')}
               </div>
+${field('Entreprise', 'biz', 'text', 'organization')}
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-${field('Courriel', 'email', 'email')}
-${field('Téléphone', 'phone', 'tel')}
+${field('Courriel', 'email', 'email', 'email')}
+${field('Téléphone', 'phone', 'tel', 'tel')}
               </div>
               <div style="display:flex; flex-direction:column; gap:6px;">
                 <label for="f-interest" style="font-size:13px; font-weight:700; color:var(--charbon);">Ce qui vous intéresse</label>
@@ -837,12 +861,12 @@ ${field('Téléphone', 'phone', 'tel')}
       </section>`;
 
   return shell({
-    path: 'contact.html', root: '', active: 'contact', label: 'Contact',
+    path: 'contact/index.html', root: '/', active: 'contact', label: 'Contact',
     title: 'Contact — réponse en 24 h ouvrables | Essentiel PME',
     desc: 'Contactez Essentiel PME pour démarrer votre publicité en ligne : formulaire, info@essentielpme.com ou 1-844-763-3832. Réponse d’un humain en 24 heures ouvrables. Québec, QC.',
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'ContactPage',
-      name: 'Contact — Essentiel PME', url: `${SITE.baseUrl}/contact.html`,
+      name: 'Contact — Essentiel PME', url: `${SITE.baseUrl}/contact/`,
     }],
     body,
   });
@@ -907,15 +931,15 @@ ${blogArticles.map((a) => `            <article style="background:#fff; border:1
         </div>
       </section>
 
-${ctaBand({ h: 'Un conseil utile par mois, pas plus.', p: 'Recevez nos articles par courriel. Pas de pourriel, désabonnement en un clic.', cta: 'S\'abonner à l\'infolettre →', href: 'contact.html' })}`;
+${ctaBand({ h: 'Un conseil utile par mois, pas plus.', p: 'Recevez nos articles par courriel. Pas de pourriel, désabonnement en un clic.', cta: 'S\'abonner à l\'infolettre →', href: '/contact/' })}`;
 
   return shell({
-    path: 'blogue.html', root: '', active: 'aboutGroup', label: 'Blogue',
+    path: 'blogue/index.html', root: '/', active: 'aboutGroup', label: 'Blogue',
     title: 'Blogue — conseils publicité en ligne pour PME | Essentiel PME',
     desc: 'Conseils clairs et sans jargon sur la publicité en ligne pour PME québécoises : coûts, Meta vs Google Ads, reciblage, fiche Google et référencement local.',
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'Blog',
-      name: 'Blogue Essentiel PME', url: `${SITE.baseUrl}/blogue.html`, inLanguage: 'fr-CA',
+      name: 'Blogue Essentiel PME', url: `${SITE.baseUrl}/blogue/`, inLanguage: 'fr-CA',
       blogPost: [blogFeatured, ...blogArticles].map((a) => ({ '@type': 'BlogPosting', headline: jsonEsc(a.title) })),
     }],
     body,
@@ -944,10 +968,10 @@ ${platforms.map((p, i) => `      <section id="${p.anchor}" style="background:${i
         </div>
       </section>`).join('\n\n')}
 
-${ctaBand({ h: 'Pas certain de la bonne plateforme&nbsp;?', p: 'Parlez-nous de votre entreprise&nbsp;: on vous recommande le bon mix, sans jargon.', cta: 'Démarrer mes pubs →', href: 'contact.html' })}`;
+${ctaBand({ h: 'Pas certain de la bonne plateforme&nbsp;?', p: 'Parlez-nous de votre entreprise&nbsp;: on vous recommande le bon mix, sans jargon.', cta: 'Démarrer mes pubs →', href: '/contact/' })}`;
 
   return shell({
-    path: 'plateformes.html', root: '', active: 'aboutGroup', label: 'Plateformes',
+    path: 'plateformes/index.html', root: '/', active: 'aboutGroup', label: 'Plateformes',
     title: 'Plateformes publicitaires — Meta, Google, LinkedIn, TikTok et plus | Essentiel PME',
     desc: 'Facebook, Instagram, LinkedIn, TikTok, YouTube, Pinterest, Reddit, Spotify, Google Ads et ChatGPT : chaque plateforme a sa force. Toutes incluses dans nos forfaits de publicité en ligne.',
     jsonld: [{
@@ -1003,7 +1027,7 @@ function mentionsLegalesPage() {
           ${p('Cette section explique comment on recueille, utilise et protège vos renseignements personnels, conformément à la Loi sur la protection des renseignements personnels dans le secteur privé (Québec), telle que modifiée par la Loi 25.')}
           ${h3('3.1 Responsable de la protection des renseignements personnels')}
           <div style="background:var(--lavande-50); border:1px solid var(--lavande-200); border-radius:16px; padding:20px 24px; margin:20px 0;">
-            <p style="margin:0; color:var(--charbon); line-height:1.7;"><strong>Benoit Laurent Arlabosse</strong><br>
+            <p style="margin:0; color:var(--charbon); line-height:1.7;"><strong>Benoit Arlabosse</strong><br>
             Responsable de la protection des renseignements personnels<br>
             ${SITE.email} · 1&nbsp;844&nbsp;763-3832</p>
           </div>
@@ -1045,7 +1069,7 @@ function mentionsLegalesPage() {
       </section>`;
 
   return shell({
-    path: 'mentions-legales.html', root: '', active: '',
+    path: 'mentions-legales/index.html', root: '/', active: '',
     label: 'Mentions légales et confidentialité',
     title: 'Mentions légales et confidentialité | Essentiel PME',
     desc: "Mentions légales, conditions d'utilisation, politique de confidentialité (Loi 25) et politique de témoins d'Essentiel PME.",
@@ -1092,15 +1116,15 @@ const llms = `# Essentiel PME
 ## Pages
 
 - [Accueil](${SITE.baseUrl}/) : présentation des services, forfaits, témoignages, FAQ.
-- [Publicité en ligne](${SITE.baseUrl}/publicite.html) : les 3 forfaits en détail, inclusions et plateformes.
-- [Plateformes](${SITE.baseUrl}/plateformes.html) : description de chaque plateforme publicitaire et pour qui elle convient.
-- [À propos](${SITE.baseUrl}/a-propos.html) : mission, valeurs et processus en 6 étapes.
-- [Blogue](${SITE.baseUrl}/blogue.html) : conseils publicité en ligne pour PME (articles à venir).
-- [Contact](${SITE.baseUrl}/contact.html) : formulaire, ${SITE.email}, ${SITE.phone}, ${SITE.location}.
+- [Publicité en ligne](${SITE.baseUrl}/publicite/) : les 3 forfaits en détail, inclusions et plateformes.
+- [Plateformes](${SITE.baseUrl}/plateformes/) : description de chaque plateforme publicitaire et pour qui elle convient.
+- [À propos](${SITE.baseUrl}/a-propos/) : mission, valeurs et processus en 6 étapes.
+- [Blogue](${SITE.baseUrl}/blogue/) : conseils publicité en ligne pour PME (articles à venir).
+- [Contact](${SITE.baseUrl}/contact/) : formulaire, ${SITE.email}, ${SITE.phone}, ${SITE.location}.
 
 ## Industries desservies
 
-${industries.map((i) => `- [${i.label}](${SITE.baseUrl}/industries/${i.key}.html) : ${jsonEsc(i.intro)}`).join('\n')}
+${industries.map((i) => `- [${i.label}](${SITE.baseUrl}/industries/${i.key}/) : ${jsonEsc(i.intro)}`).join('\n')}
 
 ## Coordonnées
 
@@ -1113,26 +1137,91 @@ ${industries.map((i) => `- [${i.label}](${SITE.baseUrl}/industries/${i.key}.html
 - En association avec SuperQuanti : ${SITE.superquanti}
 `;
 
+/* ================= traduction EN (pages statiques /en/…) ================= */
+
+const decodeEnt = (s) => s
+  .replace(/&nbsp;/g, ' ').replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+const encodeEnt = (s) => s.replace(/&/g, '&amp;');
+
+function trText(txt) {
+  const en = DICT[norm(decodeEnt(txt))];
+  if (en == null) return txt;
+  return txt.match(/^\s*/)[0] + encodeEnt(en) + txt.match(/\s*$/)[0];
+}
+
+/* Produit la version anglaise d'une page française générée. */
+function toEnglish(html, pagePath) {
+  const frCanon = `${SITE.baseUrl}${pagePath}`;
+  const enCanon = `${SITE.baseUrl}/en${pagePath}`;
+
+  // 1. Protéger les <script> (JSON-LD, GTM) de la traduction
+  const guards = [];
+  html = html.replace(/<script[\s\S]*?<\/script>/g, (m) => `@@SCRIPT${guards.push(m) - 1}@@`);
+
+  // 2. Nœuds texte (entre balises)
+  html = html.replace(/>([^<]+)</g, (m, txt) => (txt.trim() ? `>${trText(txt)}<` : m));
+
+  // 3. Attributs traduisibles
+  html = html.replace(/(placeholder|alt|aria-label|title)="([^"]*)"/g, (m, attr, val) => {
+    const en = DICT[norm(decodeEnt(val))];
+    return en == null ? m : `${attr}="${encodeEnt(en).replace(/"/g, '&quot;')}"`;
+  });
+
+  // 4. Métadonnées (title, descriptions, OG)
+  html = html.replace(/<title>([^<]*)<\/title>/, (m, t) => `<title>${META_EN[norm(decodeEnt(t))] || t}</title>`);
+  html = html.replace(/((?:name="description"|property="og:title"|property="og:description") content=")([^"]*)"/g,
+    (m, pre, val) => {
+      const en = META_EN[norm(decodeEnt(val))] || DICT[norm(decodeEnt(val))];
+      return en == null ? m : `${pre}${encodeEnt(en).replace(/"/g, '&quot;')}"`;
+    });
+
+  // 5. Langue, locale, logos, canonique
+  html = html.replace('<html lang="fr">', '<html lang="en">');
+  html = html.replace('property="og:locale" content="fr_CA"', 'property="og:locale" content="en_CA"');
+  html = html.replace(/logo-h-fr-(rgb|white)\.svg/g, 'logo-h-en-$1.svg');
+  html = html.replace(`<link rel="canonical" href="${frCanon}">`, `<link rel="canonical" href="${enCanon}">`);
+  html = html.replace(`property="og:url" content="${frCanon}"`, `property="og:url" content="${enCanon}"`);
+
+  // 6. Liens internes → /en/… (sauf assets, api et liens déjà /en/)
+  html = html.replace(/href="\/(?!assets\/|api\/|en\/|en")/g, 'href="/en/');
+
+  // 7. Bascule de langue : FR redevient un lien vers la version française, EN devient actif
+  html = html.replace(/<a data-lang-link="fr" href="\/en/, '<a data-lang-link="fr" href="');
+  html = html.replace(' data-lang-link="fr" ', ' data-lang-link="fr-x" ');
+  html = html.replace(/ data-lang-link="fr-x" (href="[^"]*") class="active"/, ' data-lang-link="fr" $1');
+  html = html.replace(/ data-lang-link="en" (href="[^"]*")/, ' data-lang-link="en" $1 class="active"');
+
+  // 8. Restaurer les scripts
+  html = html.replace(/@@SCRIPT(\d+)@@/g, (m, i) => guards[+i]);
+  return html;
+}
+
 /* ================= emit ================= */
 
 const pages = [
   ['index.html', homePage()],
-  ['publicite.html', publicitePage()],
-  ['plateformes.html', plateformesPage()],
-  ['a-propos.html', aboutPage()],
-  ['contact.html', contactPage()],
-  ['blogue.html', bloguePage()],
-  ['mentions-legales.html', mentionsLegalesPage()],
-  ...industries.map((ind) => [`industries/${ind.key}.html`, industryPage(ind)]),
+  ['publicite/index.html', publicitePage()],
+  ['plateformes/index.html', plateformesPage()],
+  ['a-propos/index.html', aboutPage()],
+  ['contact/index.html', contactPage()],
+  ['blogue/index.html', bloguePage()],
+  ['mentions-legales/index.html', mentionsLegalesPage()],
+  ...industries.map((ind) => [`industries/${ind.key}/index.html`, industryPage(ind)]),
 ];
 
-mkdirSync(join(OUT, 'industries'), { recursive: true });
 for (const [p, html] of pages) {
+  const pagePath = '/' + p.replace(/index\.html$/, '');
+  mkdirSync(dirname(join(OUT, p)), { recursive: true });
   writeFileSync(join(OUT, p), html);
-  console.log('wrote', p, `(${html.length} bytes)`);
+  const en = toEnglish(html, pagePath);
+  mkdirSync(dirname(join(OUT, 'en', p)), { recursive: true });
+  writeFileSync(join(OUT, 'en', p), en);
+  console.log('wrote', p, `(${html.length} o)`, '+ en/' + p, `(${en.length} o)`);
 }
 
-const sitemapPaths = pages.map(([p]) => p).filter((p) => p !== 'index.html');
+const sitemapPaths = pages
+  .map(([p]) => p.replace(/index\.html$/, ''))
+  .flatMap((p) => (p === '' ? ['en/'] : [p, 'en/' + p]));
 writeFileSync(join(OUT, 'sitemap.xml'), sitemap(sitemapPaths));
 writeFileSync(join(OUT, 'robots.txt'), robots);
 writeFileSync(join(OUT, 'llms.txt'), llms);

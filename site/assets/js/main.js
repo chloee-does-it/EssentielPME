@@ -1,44 +1,50 @@
 /* Essentiel PME — static site interactions
    Mobile menu · FAQ accordions · form validation · blog subscribe
-   smooth-scroll anchors · FR/EN language toggle (via EPME_I18N) */
+   smooth-scroll anchors · consent banner (les pages EN sont statiques sous /en/) */
 (function () {
   'use strict';
 
   var HEADER_OFFSET = 84;
+  var EN = document.documentElement.getAttribute('lang') === 'en';
 
   document.addEventListener('DOMContentLoaded', function () {
-    initLang();
     initMobileMenu();
     initFaq();
     initContactForm();
     initBlogSubscribe();
     initAnchorScroll();
+    initConsent();
   });
 
-  /* ---------------- Language toggle (FR/EN) ---------------- */
-  function initLang() {
-    var stored = 'fr';
-    try { stored = localStorage.getItem('epme_lang') || 'fr'; } catch (e) {}
-    setLang(stored, false);
+  /* ---------------- Bandeau de consentement aux témoins (Loi 25) ---------------- */
+  function initConsent() {
+    var banner = document.querySelector('[data-consent-banner]');
+    if (!banner) return;
+    var stored = null;
+    try { stored = localStorage.getItem('epme_consent'); } catch (e) {}
 
-    document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        setLang(btn.getAttribute('data-lang-btn'), true);
-      });
-    });
-  }
-
-  function setLang(lang, persist) {
-    if (lang !== 'fr' && lang !== 'en') lang = 'fr';
-    if (window.EPME_I18N) {
-      try { window.EPME_I18N.apply(document.body, lang); } catch (e) {}
+    function grant() {
+      if (window.gtag) {
+        window.gtag('consent', 'update', {
+          ad_storage: 'granted', ad_user_data: 'granted',
+          ad_personalization: 'granted', analytics_storage: 'granted',
+        });
+      }
     }
-    document.documentElement.setAttribute('lang', lang);
-    document.querySelectorAll('[data-lang-btn]').forEach(function (b) {
-      b.classList.toggle('active', b.getAttribute('data-lang-btn') === lang);
+
+    if (stored === 'granted') { grant(); return; }
+    if (stored === 'denied') return;
+
+    banner.hidden = false;
+    banner.querySelector('[data-consent-accept]').addEventListener('click', function () {
+      try { localStorage.setItem('epme_consent', 'granted'); } catch (e) {}
+      grant();
+      banner.hidden = true;
     });
-    if (persist) { try { localStorage.setItem('epme_lang', lang); } catch (e) {} }
+    banner.querySelector('[data-consent-refuse]').addEventListener('click', function () {
+      try { localStorage.setItem('epme_consent', 'denied'); } catch (e) {}
+      banner.hidden = true;
+    });
   }
 
   /* ---------------- Mobile hamburger menu ---------------- */
@@ -90,7 +96,8 @@
       e.preventDefault();
       if (sending) return;
       var ok = true;
-      ok = validateField(form, 'name', function (v) { return v.trim().length > 0; }) && ok;
+      ok = validateField(form, 'firstname', function (v) { return v.trim().length > 0; }) && ok;
+      ok = validateField(form, 'lastname', function (v) { return v.trim().length > 0; }) && ok;
       ok = validateField(form, 'biz', function (v) { return v.trim().length > 0; }) && ok;
       ok = validateField(form, 'email', function (v) { return emailRe.test(v.trim()); }) && ok;
       ok = validateField(form, 'phone', function (v) { return v.replace(/[^0-9]/g, '').length >= 10; }) && ok;
@@ -102,12 +109,12 @@
       if (errBox) errBox.hidden = true;
       if (btn) {
         btn.disabled = true;
-        btn.textContent = document.documentElement.getAttribute('lang') === 'en' ? 'Sending…' : 'Envoi en cours…';
+        btn.textContent = EN ? 'Sending…' : 'Envoi en cours…';
       }
       sending = true;
 
       var payload = {};
-      ['name', 'biz', 'email', 'phone'].forEach(function (k) {
+      ['firstname', 'lastname', 'biz', 'email', 'phone'].forEach(function (k) {
         var el = form.querySelector('[data-field="' + k + '"]');
         payload[k] = el ? el.value.trim() : '';
       });
