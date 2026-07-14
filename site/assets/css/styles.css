@@ -457,6 +457,8 @@ img { max-width: 100%; }
 .consent-banner button { cursor: pointer; font: inherit; font-weight: 700; font-size: 13.5px; border-radius: 999px; padding: 9px 18px; }
 .consent-banner [data-consent-accept], .consent-banner [data-consent-save] { background: var(--violet); color: #fff; border: none; }
 .consent-banner [data-consent-customize], .consent-banner [data-consent-optional-refuse] { background: none; color: var(--charbon); border: 1px solid var(--border); }
+.consent-reopen { position: fixed; left: 16px; bottom: 16px; z-index: 80; width: 44px; height: 44px; border-radius: 999px; background: #fff; color: var(--violet); border: 1px solid var(--border); box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
+.consent-reopen:hover { background: var(--lavande-50); }
 .consent-choices { display: flex; flex-direction: column; gap: 10px; margin: 0 0 14px; }
 .consent-choices label { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; line-height: 1.5; color: var(--charbon-500); cursor: pointer; }
 .consent-choices input[type="checkbox"] { accent-color: var(--violet); width: 17px; height: 17px; margin-top: 1px; flex: none; }

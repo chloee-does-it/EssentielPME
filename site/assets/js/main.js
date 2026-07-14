@@ -54,21 +54,20 @@
       banner.hidden = true;
     }
 
-    var stored = readStored();
-    if (stored) { apply(stored); return; }
-
     var main = banner.querySelector('[data-consent-main]');
     var panel = banner.querySelector('[data-consent-panel]');
-    banner.hidden = false;
+
+    function openPanel() {
+      main.style.display = 'none';
+      panel.hidden = false;
+      panel.style.display = 'block';
+      banner.hidden = false;
+    }
 
     banner.querySelector('[data-consent-accept]').addEventListener('click', function () {
       save({ analytics: true, ads: true });
     });
-    banner.querySelector('[data-consent-customize]').addEventListener('click', function () {
-      main.style.display = 'none';
-      panel.hidden = false;
-      panel.style.display = 'block';
-    });
+    banner.querySelector('[data-consent-customize]').addEventListener('click', openPanel);
     banner.querySelector('[data-consent-optional-refuse]').addEventListener('click', function () {
       save({ analytics: false, ads: false });
     });
@@ -78,6 +77,21 @@
         ads: banner.querySelector('[data-consent-ads]').checked,
       });
     });
+
+    // Icône permanente : rouvre les préférences avec les choix actuels pré-remplis
+    var reopen = document.querySelector('[data-consent-reopen]');
+    if (reopen) {
+      reopen.addEventListener('click', function () {
+        var current = readStored() || { analytics: true, ads: true };
+        banner.querySelector('[data-consent-analytics]').checked = !!current.analytics;
+        banner.querySelector('[data-consent-ads]').checked = !!current.ads;
+        openPanel();
+      });
+    }
+
+    var stored = readStored();
+    if (stored) { apply(stored); return; }
+    banner.hidden = false;
   }
 
   /* ---------------- Mobile hamburger menu ---------------- */

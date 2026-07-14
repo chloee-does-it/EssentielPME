@@ -754,4 +754,5 @@ Object.assign(DICT, {
   '— mesure et performance des campagnes (Meta, Google Ads)': '— campaign measurement and performance (Meta, Google Ads)',
   'Refuser les témoins optionnels': 'Refuse optional cookies',
   'Confirmer mes choix': 'Confirm my choices',
+  'Gérer les témoins': 'Manage cookies',
 });
