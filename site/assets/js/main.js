@@ -77,14 +77,18 @@
     });
   }
 
-  /* ---------------- Contact form validation ---------------- */
+  /* ---------------- Contact form (validation + envoi via /api) ---------------- */
+  var CONTACT_ENDPOINT = '/api/contact/submit';
+
   function initContactForm() {
     var form = document.querySelector('[data-contact-form]');
     if (!form) return;
     var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    var sending = false;
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (sending) return;
       var ok = true;
       ok = validateField(form, 'name', function (v) { return v.trim().length > 0; }) && ok;
       ok = validateField(form, 'biz', function (v) { return v.trim().length > 0; }) && ok;
@@ -92,9 +96,44 @@
       ok = validateField(form, 'phone', function (v) { return v.replace(/[^0-9]/g, '').length >= 10; }) && ok;
       if (!ok) return;
 
-      var success = document.querySelector('[data-contact-success]');
-      form.style.display = 'none';
-      if (success) { success.hidden = false; success.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      var btn = form.querySelector('button[type="submit"]');
+      var errBox = document.querySelector('[data-contact-error]');
+      var btnHTML = btn ? btn.innerHTML : '';
+      if (errBox) errBox.hidden = true;
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = document.documentElement.getAttribute('lang') === 'en' ? 'Sending…' : 'Envoi en cours…';
+      }
+      sending = true;
+
+      var payload = {};
+      ['name', 'biz', 'email', 'phone'].forEach(function (k) {
+        var el = form.querySelector('[data-field="' + k + '"]');
+        payload[k] = el ? el.value.trim() : '';
+      });
+      var interest = form.querySelector('[name="interest"]');
+      payload.interest = interest ? interest.value : '';
+      var msg = form.querySelector('[name="message"]');
+      payload.message = msg ? msg.value.trim() : '';
+
+      fetch(CONTACT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          var success = document.querySelector('[data-contact-success]');
+          form.style.display = 'none';
+          if (success) { success.hidden = false; success.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+        })
+        .catch(function () {
+          if (errBox) errBox.hidden = false;
+        })
+        .then(function () {
+          sending = false;
+          if (btn) { btn.disabled = false; btn.innerHTML = btnHTML; }
+        });
     });
 
     form.querySelectorAll('[data-field]').forEach(function (input) {

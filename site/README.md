@@ -45,14 +45,25 @@ Modifier le contenu → éditer `build/data.mjs`, puis regénérer. Ne pas édit
 
 ## Déploiement
 
-Aucune dépendance serveur : déposer le contenu de `site/` sur n'importe quel hébergement statique
-(Netlify, GitHub Pages, cPanel…). Le domaine canonique configuré est `https://essentielpme.com`
+Le site lui-même est statique : déposer le contenu de `site/` sur n'importe quel hébergement statique.
+Le domaine canonique configuré est `https://essentielpme.com`
 (voir `SITE.baseUrl` dans `build/data.mjs` pour le changer, puis regénérer).
+
+Le formulaire de contact envoie un courriel via **Resend**, servi par une fonction serverless
+(`../functions/`, format DigitalOcean Functions). Sur DigitalOcean App Platform :
+
+1. Composant **Static Site** — source directory `site/`.
+2. Composant **Functions** — source directory `functions/`, route HTTP `/api`
+   (le site appelle `POST /api/contact/submit`, voir `CONTACT_ENDPOINT` dans `assets/js/main.js`).
+3. Variables d'environnement du composant Functions :
+   - `RESEND_API_KEY` (obligatoire, type *encrypted*)
+   - `CONTACT_TO_EMAIL` (défaut : `info@essentielpme.com`)
+   - `CONTACT_FROM_EMAIL` (défaut : `Essentiel PME <formulaire@essentielpme.com>` —
+     l'adresse doit appartenir à un domaine vérifié dans Resend)
 
 ## Avant le lancement
 
-- [ ] Brancher le formulaire de contact sur un vrai backend (Formspree, Netlify Forms, etc.) —
-      la validation est en place, l'envoi est simulé.
+- [x] Brancher le formulaire de contact sur un vrai backend (Resend, voir « Déploiement »).
 - [ ] Brancher l'inscription à l'infolettre (pages industries).
 - [ ] Rédiger les pages légales (placeholders `noindex` pour l'instant).
 - [ ] Ajouter les images du blogue (placeholders dégradés pour l'instant) et rédiger les articles.

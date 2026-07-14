@@ -1,0 +1,6 @@
+packages:
+  - name: contact
+    functions:
+      - name: submit
+        runtime: nodejs:18
+        web: true

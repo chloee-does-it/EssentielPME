@@ -476,6 +476,8 @@
     "Publicité : Performance (1 495 $/mois)": "Advertising: Performance ($1,495/mo)",
     "Votre message": "Your message",
     "Envoyer ma demande →": "Send my request →",
+    "Envoi en cours…": "Sending…",
+    "Une erreur est survenue et votre message n'a pas été envoyé. Réessayez dans un moment ou écrivez-nous à info@essentielpme.com.": "Something went wrong and your message was not sent. Please try again in a moment or email us at info@essentielpme.com.",
     "En soumettant ce formulaire, vous acceptez notre politique de confidentialité. Vos données ne sont jamais partagées.": "By submitting this form, you accept our privacy policy. Your data is never shared.",
     "Nous joindre": "Reach us",
     "Chaque demande reçoit une réponse d'un humain dans un jour ouvrable. Pas de robot, pas de file d'attente.": "Every request gets a reply from a human within one business day. No bots, no queue.",
