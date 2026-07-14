@@ -7,6 +7,25 @@
   var HEADER_OFFSET = 84;
   var EN = document.documentElement.getAttribute('lang') === 'en';
 
+  /* Consentement mémorisé ({analytics, ads}) ou null. Formats hérités : granted/denied. */
+  function getConsent() {
+    var raw = null;
+    try { raw = localStorage.getItem('epme_consent'); } catch (e) {}
+    if (!raw) return null;
+    if (raw === 'granted') return { analytics: true, ads: true };
+    if (raw === 'denied') return { analytics: false, ads: false };
+    try { var c = JSON.parse(raw); if (c && typeof c === 'object') return c; } catch (e) {}
+    return null;
+  }
+
+  /* Téléphone nord-américain → format E.164 (+1XXXXXXXXXX), requis par Google/Meta. */
+  function toE164(phone) {
+    var d = String(phone).replace(/[^0-9]/g, '');
+    if (d.length === 10) return '+1' + d;
+    if (d.length === 11 && d.charAt(0) === '1') return '+' + d;
+    return d ? '+' + d : '';
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initMobileMenu();
     initFaq();
@@ -23,16 +42,6 @@
   function initConsent() {
     var banner = document.querySelector('[data-consent-banner]');
     if (!banner) return;
-
-    function readStored() {
-      var raw = null;
-      try { raw = localStorage.getItem('epme_consent'); } catch (e) {}
-      if (!raw) return null;
-      if (raw === 'granted') return { analytics: true, ads: true };   // ancien format
-      if (raw === 'denied') return { analytics: false, ads: false };
-      try { var c = JSON.parse(raw); if (c && typeof c === 'object') return c; } catch (e) {}
-      return null;
-    }
 
     function apply(c) {
       if (window.gtag) {
@@ -82,14 +91,14 @@
     var reopen = document.querySelector('[data-consent-reopen]');
     if (reopen) {
       reopen.addEventListener('click', function () {
-        var current = readStored() || { analytics: true, ads: true };
+        var current = getConsent() || { analytics: true, ads: true };
         banner.querySelector('[data-consent-analytics]').checked = !!current.analytics;
         banner.querySelector('[data-consent-ads]').checked = !!current.ads;
         openPanel();
       });
     }
 
-    var stored = readStored();
+    var stored = getConsent();
     if (stored) { apply(stored); return; }
     banner.hidden = false;
   }
@@ -178,12 +187,26 @@
         .then(function (res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
           if (window.dataLayer) {
-            window.dataLayer.push({
+            var dlEvent = {
               event: 'lead-form_submission',
               form_id: 'contact',
               form_interest: payload.interest,
               page_language: EN ? 'en' : 'fr',
-            });
+            };
+            // Données personnelles pour Enhanced Conversions (Google) et Advanced
+            // Matching (Meta) — seulement si les témoins publicitaires sont acceptés.
+            var consent = getConsent();
+            if (consent && consent.ads) {
+              dlEvent.user_data = {
+                email: payload.email.toLowerCase(),
+                phone_number: toE164(payload.phone),
+                address: {
+                  first_name: payload.firstname,
+                  last_name: payload.lastname,
+                },
+              };
+            }
+            window.dataLayer.push(dlEvent);
           }
           var success = document.querySelector('[data-contact-success]');
           form.style.display = 'none';
