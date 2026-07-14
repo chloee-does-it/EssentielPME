@@ -7,7 +7,7 @@
                          (défaut : Essentiel PME <formulaire@essentielpme.com>)      */
 'use strict';
 
-const MAX = { name: 200, biz: 200, email: 320, phone: 40, interest: 150, message: 5000 };
+const MAX = { firstname: 100, lastname: 100, name: 200, biz: 200, email: 320, phone: 40, interest: 150, message: 5000 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const esc = (s) =>
@@ -55,7 +55,10 @@ async function main(args) {
   const from = process.env.CONTACT_FROM_EMAIL || 'Essentiel PME <formulaire@essentielpme.com>';
 
   const field = (k) => String(data[k] || '').trim().slice(0, MAX[k]);
-  const name = field('name');
+  const firstname = field('firstname');
+  const lastname = field('lastname');
+  // « name » : compatibilité avec l'ancien formulaire à champ unique
+  const name = [firstname, lastname].filter(Boolean).join(' ') || field('name');
   const biz = field('biz');
   const email = field('email');
   const phone = field('phone');
@@ -64,8 +67,8 @@ async function main(args) {
 
   if (!name || !biz || !EMAIL_RE.test(email) || phone.replace(/[^0-9]/g, '').length < 10) {
     console.error('Validation échouée —',
-      'name:', !!name, '| biz:', !!biz,
-      '| email valide:', EMAIL_RE.test(email),
+      'nom:', !!name, '| entreprise:', !!biz,
+      '| courriel valide:', EMAIL_RE.test(email),
       '| téléphone valide:', phone.replace(/[^0-9]/g, '').length >= 10);
     return json(400, { error: 'Champs invalides' });
   }
@@ -77,7 +80,7 @@ async function main(args) {
   const html = `
     <h2 style="margin:0 0 12px;">Nouvelle demande de contact — essentielpme.com</h2>
     <table style="border-collapse:collapse; font-size:15px;">
-      ${row('Nom', name)}
+      ${firstname ? row('Prénom', firstname) + row('Nom', lastname) : row('Nom', name)}
       ${row('Entreprise', biz)}
       ${row('Courriel', email)}
       ${row('Téléphone', phone)}

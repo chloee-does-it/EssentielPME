@@ -8,30 +8,37 @@ Implémenté en HTML/CSS/JS statique à partir des maquettes Claude Design (`pro
 ```
 site/
 ├── index.html                  Accueil (hero, forfaits, piliers, étapes, témoignages, FAQ)
-├── publicite.html              Forfaits Départ / Croissance / Performance + plateformes + FAQ
-├── plateformes.html            Une section par plateforme (10), ancres #plat-*
-├── a-propos.html               Mission, valeurs, processus en 6 étapes
-├── contact.html                Formulaire validé côté client + coordonnées
-├── blogue.html                 Article vedette + 6 aperçus (contenu à venir)
-├── politique-de-*.html         Pages légales (placeholders, noindex)
-├── industries/                 6 pages SEO, une par vertical
-│   ├── construction.html · sante.html · beaute.html
-│   └── restauration.html · services-pro.html · ecommerce.html
+├── publicite/                  Forfaits + plateformes + FAQ        (URL propre : /publicite/)
+├── plateformes/ · a-propos/ · contact/ · blogue/ · mentions-legales/
+├── industries/<vertical>/      6 pages SEO (construction, sante, beaute,
+│                               restauration, services-pro, ecommerce)
+├── en/…                        Version anglaise statique complète (même arborescence)
 ├── sitemap.xml · robots.txt · llms.txt
 └── assets/
     ├── css/styles.css          Design system (violet/lavande, Nunito) + responsive + menu mobile
-    ├── js/main.js              Menu mobile, FAQ, formulaires, défilement, bascule FR/EN
-    ├── js/i18n.js              Dictionnaire FR→EN complet (moteur DOM-walk)
+    ├── js/main.js              Menu mobile, FAQ, formulaire, défilement, bandeau de consentement
     ├── fonts/                  Nunito variable auto-hébergée (latin + latin-ext)
     └── img/                    Logos FR/EN, favicon, images industries, SuperQuanti
 ```
 
+Toutes les URLs sont « propres » (sans `.html`) : chaque page est un dossier contenant un `index.html`.
+
 ## Bilinguisme
 
-Le bouton **FR · EN** de l'en-tête traduit toute la page via le dictionnaire de `assets/js/i18n.js`
-(textes, placeholders, attributs `alt`, logos FR↔EN). Le choix est mémorisé (`localStorage`).
-**Tout nouveau texte français ajouté au site doit recevoir son entrée dans le dictionnaire**,
-sinon il restera en français en mode EN.
+Le site anglais est **généré statiquement** sous `/en/…` au build (bon pour le SEO : balises
+`hreflang`, canoniques et métadonnées propres à chaque langue). Le bouton **FR · EN** de
+l'en-tête est un simple lien entre les deux versions d'une même page.
+
+La traduction vient du dictionnaire `build/i18n-dict.mjs` (textes, placeholders, `alt`,
+logos FR↔EN, plus `META_EN` pour les `<title>` et meta descriptions).
+**Tout nouveau texte français doit recevoir son entrée dans le dictionnaire**, sinon il
+restera en français sur les pages `/en/`.
+
+## Mesure (GTM) et consentement
+
+Google Tag Manager (`GTM-NWFC4HHZ`) est chargé sur toutes les pages avec le **Consent Mode**
+de Google : tout est refusé par défaut, et un bandeau (Loi 25) permet d'accepter ou refuser
+les témoins non essentiels. Le choix est mémorisé dans `localStorage` (`epme_consent`).
 
 ## Regénérer les pages
 

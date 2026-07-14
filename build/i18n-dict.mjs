@@ -1,6 +1,7 @@
-/* Essentiel PME — FR→EN translation layer (DOM-walk, survives React re-renders) */
-(function () {
-  function norm(s) {
+/* Essentiel PME — dictionnaire FR→EN partagé (généré depuis l''ancien i18n.js client).
+   Utilisé par build.mjs pour produire les pages statiques anglaises (/en/…). */
+
+export function norm(s) {
     return s == null ? '' : String(s)
       .replace(/\u00A0/g, ' ')
       .replace(/[\u2018\u2019]/g, "'")
@@ -9,7 +10,7 @@
       .trim();
   }
 
-  var DICT = {
+export const DICT = {
     // ---- Brand & package names ----
     "Essentiel PME": "SMB Essentials",
     "© 2026 Essentiel PME": "© 2026 SMB Essentials",
@@ -666,80 +667,71 @@
     "Téléphone": "Phone"
   };
 
-  var STAMP = '__i18n_stamp';
+/* Métadonnées (balises <title> et meta descriptions) — utilisées uniquement
+   par le générateur pour les pages EN ; jamais affichées dans la page. */
+export const META_EN = {
+  'Essentiel PME — Publicité en ligne gérée pour les PME du Québec':
+    'SMB Essentials — Managed online advertising for Quebec SMBs',
+  'Publicité en ligne gérée de A à Z pour les PME québécoises : Meta, Google, LinkedIn, TikTok et plus. Prix fixes à partir de 695 $/mois, bilingue FR/EN, réponse en 24 h.':
+    'Online advertising managed end to end for Quebec SMBs: Meta, Google, LinkedIn, TikTok and more. Fixed prices from $695/mo, bilingual FR/EN, 24-hour response.',
+  'Forfaits Essentiel, Essentiel Plus et Essentiel Performance | Essentiel PME':
+    'Essential, Essential Plus and Essential Performance packages | SMB Essentials',
+  'Trois forfaits de publicité en ligne gérée pour PME : Essentiel 695 $/mois, Essentiel Plus 995 $/mois, Essentiel Performance 1 495 $/mois. Toutes les plateformes, rédaction FR/EN, rapports clairs.':
+    'Three managed online advertising packages for SMBs: Essential $695/mo, Essential Plus $995/mo, Essential Performance $1,495/mo. Every platform, FR/EN copywriting, clear reports.',
+  'À propos — mission, valeurs et processus | Essentiel PME':
+    'About us — mission, values and process | SMB Essentials',
+  "Essentiel PME rend la publicité en ligne accessible aux PME québécoises : mission, valeurs (simplicité, efficacité, rapidité) et un processus structuré en 6 étapes, sans surprise.":
+    'SMB Essentials makes online advertising accessible to Quebec SMBs: our mission, values (simplicity, efficiency, speed) and a structured 6-step process, no surprises.',
+  'Contact — réponse en 24 h ouvrables | Essentiel PME':
+    'Contact — reply within 24 business hours | SMB Essentials',
+  "Contactez Essentiel PME pour démarrer votre publicité en ligne : formulaire, info@essentielpme.com ou 1-844-763-3832. Réponse d'un humain en 24 heures ouvrables. Québec, QC.":
+    'Contact SMB Essentials to start your online advertising: form, info@essentielpme.com or 1-844-763-3832. A reply from a human within 24 business hours. Québec, QC.',
+  'Blogue — conseils publicité en ligne pour PME | Essentiel PME':
+    'Blog — online advertising advice for SMBs | SMB Essentials',
+  'Conseils clairs et sans jargon sur la publicité en ligne pour PME québécoises : coûts, Meta vs Google Ads, reciblage, fiche Google et référencement local.':
+    'Clear, jargon-free advice on online advertising for Quebec SMBs: costs, Meta vs Google Ads, retargeting, Google Business Profile and local SEO.',
+  'Plateformes publicitaires — Meta, Google, LinkedIn, TikTok et plus | Essentiel PME':
+    'Advertising platforms — Meta, Google, LinkedIn, TikTok and more | SMB Essentials',
+  'Facebook, Instagram, LinkedIn, TikTok, YouTube, Pinterest, Reddit, Spotify, Google Ads et ChatGPT : chaque plateforme a sa force. Toutes incluses dans nos forfaits de publicité en ligne.':
+    'Facebook, Instagram, LinkedIn, TikTok, YouTube, Pinterest, Reddit, Spotify, Google Ads and ChatGPT: each platform has its strength. All included in our online advertising packages.',
+  'Mentions légales et confidentialité | Essentiel PME':
+    'Legal notice & privacy | SMB Essentials',
+  "Mentions légales, conditions d'utilisation, politique de confidentialité (Loi 25) et politique de témoins d'Essentiel PME.":
+    "SMB Essentials' legal notice, terms of use, privacy policy (Law 25) and cookie policy.",
+  'Publicité en ligne pour la construction et les métiers au Québec | Essentiel PME':
+    'Online advertising for construction and trades in Québec | SMB Essentials',
+  'Publicité en ligne gérée pour entrepreneurs en construction, plombiers et électriciens au Québec. Campagnes Google et Meta, ciblage par zones desservies, demandes de soumission.':
+    'Managed online advertising for construction contractors, plumbers and electricians in Québec. Google and Meta campaigns, service-area targeting, quote requests.',
+  'Publicité en ligne pour la santé et les cliniques au Québec | Essentiel PME':
+    'Online advertising for healthcare and clinics in Québec | SMB Essentials',
+  'Publicité en ligne gérée pour cliniques et professionnels de la santé au Québec. Annonces Google ciblées par soin et par quartier, consentement et suivi configurés correctement.':
+    'Managed online advertising for clinics and healthcare professionals in Québec. Google ads targeted by treatment and neighbourhood, with consent and tracking set up properly.',
+  'Publicité en ligne pour la beauté et le bien-être au Québec | Essentiel PME':
+    'Online advertising for beauty and wellness in Québec | SMB Essentials',
+  'Publicité en ligne gérée pour salons de coiffure, studios d’esthétique et centres de bien-être au Québec. Campagnes Instagram et Facebook géolocalisées qui remplissent votre agenda.':
+    'Managed online advertising for hair salons, esthetics studios and wellness centres in Québec. Geo-targeted Instagram and Facebook campaigns that fill your calendar.',
+  'Publicité en ligne pour la restauration au Québec | Essentiel PME':
+    'Online advertising for restaurants in Québec | SMB Essentials',
+  'Publicité en ligne gérée pour restaurants, cafés et traiteurs au Québec. Campagnes géolocalisées, promotions hebdomadaires et annonces « resto près de moi ».':
+    'Managed online advertising for restaurants, cafés and caterers in Québec. Geo-targeted campaigns, weekly promotions and "restaurant near me" ads.',
+  'Publicité en ligne pour les services professionnels au Québec | Essentiel PME':
+    'Online advertising for professional services in Québec | SMB Essentials',
+  'Publicité en ligne gérée pour comptables, avocats et conseillers au Québec. Campagnes LinkedIn et Google B2B qui remplissent votre pipeline de mandats qualifiés.':
+    'Managed online advertising for accountants, lawyers and consultants in Québec. LinkedIn and Google B2B campaigns that fill your pipeline with qualified mandates.',
+  'Publicité en ligne pour le commerce en ligne au Québec | Essentiel PME':
+    'Online advertising for e-commerce in Québec | SMB Essentials',
+  'Publicité en ligne gérée pour boutiques en ligne au Québec. Campagnes d’acquisition Meta et Google, catalogue synchronisé et reciblage des paniers abandonnés.':
+    'Managed online advertising for online shops in Québec. Meta and Google acquisition campaigns, synced catalogue and abandoned-cart retargeting.',
+};
 
-  function translateNode(n, lang) {
-    // detect React-updated content: if current value differs from what we last set, refresh FR source
-    if (n[STAMP] === undefined || n.nodeValue !== n[STAMP]) {
-      n.__i18n_fr = n.nodeValue;
-    }
-    var fr = n.__i18n_fr;
-    var out = fr;
-    if (lang === 'en') {
-      var key = norm(fr);
-      if (key && DICT[key] != null) {
-        var lead = (fr.match(/^\s*/) || [''])[0];
-        var trail = (fr.match(/\s*$/) || [''])[0];
-        out = lead + DICT[key] + trail;
-      }
-    }
-    if (n.nodeValue !== out) n.nodeValue = out;
-    n[STAMP] = out;
-  }
-
-  function translateAttr(el, attr, lang) {
-    var sk = '__i18n_a_' + attr;
-    var stk = '__i18n_as_' + attr;
-    var cur = el.getAttribute(attr);
-    if (el[stk] === undefined || cur !== el[stk]) el[sk] = cur;
-    var fr = el[sk];
-    var out = fr;
-    if (lang === 'en') {
-      var en = DICT[norm(fr)];
-      if (en != null) out = en;
-    }
-    if (cur !== out) el.setAttribute(attr, out);
-    el[stk] = out;
-  }
-
-  function apply(root, lang) {
-    if (!root) return;
-    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode: function (node) {
-        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-        var p = node.parentNode;
-        while (p && p !== root) {
-          if (p.nodeType === 1) {
-            var tag = p.tagName;
-            if (tag === 'SCRIPT' || tag === 'STYLE' || p.hasAttribute('data-no-i18n')) return NodeFilter.FILTER_REJECT;
-          }
-          p = p.parentNode;
-        }
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    });
-    var nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    for (var i = 0; i < nodes.length; i++) translateNode(nodes[i], lang);
-
-    var els = root.querySelectorAll('[placeholder],[alt],[aria-label]');
-    for (var j = 0; j < els.length; j++) {
-      var el = els[j];
-      if (el.closest('[data-no-i18n]')) continue;
-      if (el.hasAttribute('placeholder')) translateAttr(el, 'placeholder', lang);
-      if (el.hasAttribute('alt')) translateAttr(el, 'alt', lang);
-      if (el.hasAttribute('aria-label')) translateAttr(el, 'aria-label', lang);
-    }
-
-    // swap image sources tagged with data-i18n-src-en
-    var imgs = root.querySelectorAll('[data-i18n-src-en]');
-    for (var k = 0; k < imgs.length; k++) {
-      var im = imgs[k];
-      if (im.__i18n_src_fr == null) im.__i18n_src_fr = im.getAttribute('src');
-      var want = lang === 'en' ? im.getAttribute('data-i18n-src-en') : im.__i18n_src_fr;
-      if (want && im.getAttribute('src') !== want) im.setAttribute('src', want);
-    }
-  }
-
-  window.EPME_I18N = { norm: norm, apply: apply, DICT: DICT };
-})();
+/* Nouvelles chaînes (formulaire prénom/nom, bandeau de consentement) */
+Object.assign(DICT, {
+  'Prénom *': 'First name *',
+  'Comptes publicitaires, pixels et audiences : tout est installé correctement.': 'Ad accounts, pixels and audiences: everything set up correctly.',
+  'Nom *': 'Last name *',
+  'Veuillez indiquer votre prénom.': 'Please enter your first name.',
+  "On utilise des témoins pour mesurer l'audience du site et nos campagnes. Vous pouvez accepter ou refuser — détails dans notre": 'We use cookies to measure site traffic and our campaigns. You can accept or refuse — details in our',
+  'politique de témoins': 'cookie policy',
+  'Accepter': 'Accept',
+  'Refuser': 'Refuse',
+});
