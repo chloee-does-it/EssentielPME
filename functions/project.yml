@@ -4,3 +4,7 @@ packages:
       - name: submit
         runtime: nodejs:18
         web: true
+        # Sur App Platform, les variables d'environnement du composant ne sont
+        # visibles par la fonction que si elles sont réclamées ici (templating).
+        environment:
+          RESEND_API_KEY: "${RESEND_API_KEY}"
