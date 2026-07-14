@@ -16,34 +16,67 @@
     initConsent();
   });
 
-  /* ---------------- Bandeau de consentement aux témoins (Loi 25) ---------------- */
+  /* ---------------- Bandeau de consentement aux témoins (Loi 25) ----------------
+     Trois catégories : fonctionnels (toujours actifs), analytiques, publicitaires.
+     Niveau 1 : « Tout accepter » ou « Personnaliser » ; le refus des témoins
+     optionnels ne se fait qu'au niveau 2 (les cases sont pré-cochées). */
   function initConsent() {
     var banner = document.querySelector('[data-consent-banner]');
     if (!banner) return;
-    var stored = null;
-    try { stored = localStorage.getItem('epme_consent'); } catch (e) {}
 
-    function grant() {
+    function readStored() {
+      var raw = null;
+      try { raw = localStorage.getItem('epme_consent'); } catch (e) {}
+      if (!raw) return null;
+      if (raw === 'granted') return { analytics: true, ads: true };   // ancien format
+      if (raw === 'denied') return { analytics: false, ads: false };
+      try { var c = JSON.parse(raw); if (c && typeof c === 'object') return c; } catch (e) {}
+      return null;
+    }
+
+    function apply(c) {
       if (window.gtag) {
         window.gtag('consent', 'update', {
-          ad_storage: 'granted', ad_user_data: 'granted',
-          ad_personalization: 'granted', analytics_storage: 'granted',
+          analytics_storage: c.analytics ? 'granted' : 'denied',
+          ad_storage: c.ads ? 'granted' : 'denied',
+          ad_user_data: c.ads ? 'granted' : 'denied',
+          ad_personalization: c.ads ? 'granted' : 'denied',
         });
+      }
+      if (window.dataLayer) {
+        window.dataLayer.push({ event: 'epme_consent', consent_analytics: !!c.analytics, consent_ads: !!c.ads });
       }
     }
 
-    if (stored === 'granted') { grant(); return; }
-    if (stored === 'denied') return;
+    function save(c) {
+      try { localStorage.setItem('epme_consent', JSON.stringify(c)); } catch (e) {}
+      apply(c);
+      banner.hidden = true;
+    }
 
+    var stored = readStored();
+    if (stored) { apply(stored); return; }
+
+    var main = banner.querySelector('[data-consent-main]');
+    var panel = banner.querySelector('[data-consent-panel]');
     banner.hidden = false;
+
     banner.querySelector('[data-consent-accept]').addEventListener('click', function () {
-      try { localStorage.setItem('epme_consent', 'granted'); } catch (e) {}
-      grant();
-      banner.hidden = true;
+      save({ analytics: true, ads: true });
     });
-    banner.querySelector('[data-consent-refuse]').addEventListener('click', function () {
-      try { localStorage.setItem('epme_consent', 'denied'); } catch (e) {}
-      banner.hidden = true;
+    banner.querySelector('[data-consent-customize]').addEventListener('click', function () {
+      main.style.display = 'none';
+      panel.hidden = false;
+      panel.style.display = 'block';
+    });
+    banner.querySelector('[data-consent-optional-refuse]').addEventListener('click', function () {
+      save({ analytics: false, ads: false });
+    });
+    banner.querySelector('[data-consent-save]').addEventListener('click', function () {
+      save({
+        analytics: banner.querySelector('[data-consent-analytics]').checked,
+        ads: banner.querySelector('[data-consent-ads]').checked,
+      });
     });
   }
 

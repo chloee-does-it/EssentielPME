@@ -37,8 +37,16 @@ restera en français sur les pages `/en/`.
 ## Mesure (GTM) et consentement
 
 Google Tag Manager (`GTM-NWFC4HHZ`) est chargé sur toutes les pages avec le **Consent Mode**
-de Google : tout est refusé par défaut, et un bandeau (Loi 25) permet d'accepter ou refuser
-les témoins non essentiels. Le choix est mémorisé dans `localStorage` (`epme_consent`).
+de Google : tout est refusé par défaut jusqu'au choix du visiteur. Le bandeau (Loi 25)
+présente trois catégories — **fonctionnels** (toujours actifs), **analytiques**
+(`analytics_storage`) et **publicitaires** (`ad_storage`, `ad_user_data`,
+`ad_personalization`) — pré-cochées. Niveau 1 : « Tout accepter » ou « Personnaliser » ;
+le refus des optionnels se fait au niveau 2 (minimum 2 clics). Le choix est mémorisé dans
+`localStorage` (`epme_consent`, JSON `{analytics, ads}`) et poussé au `dataLayer`
+(événement `epme_consent`) pour déclencher les balises dans GTM.
+
+Note SEO : `robots.txt` exclut `/cdn-cgi/` (lien technique injecté par Cloudflare pour la
+protection des adresses courriel — signalé à tort comme 404 par les robots d'audit).
 
 ## Regénérer les pages
 

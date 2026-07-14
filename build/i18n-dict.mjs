@@ -735,3 +735,23 @@ Object.assign(DICT, {
   'Accepter': 'Accept',
   'Refuser': 'Refuse',
 });
+
+/* Bandeau de consentement — version à 3 catégories */
+Object.assign(DICT, {
+  'On utilise trois types de témoins :': 'We use three types of cookies:',
+  'fonctionnels': 'functional',
+  'analytiques': 'analytics',
+  'publicitaires': 'advertising',
+  'et': 'and',
+  '— pour faire fonctionner le site et mesurer nos campagnes. Détails dans notre': '— to run the site and measure our campaigns. Details in our',
+  'Tout accepter': 'Accept all',
+  'Personnaliser': 'Customize',
+  'Fonctionnels': 'Functional',
+  '— nécessaires au fonctionnement du site (toujours actifs)': '— required for the site to work (always on)',
+  'Analytiques': 'Analytics',
+  "— mesure d'audience du site (GA4)": '— site audience measurement (GA4)',
+  'Publicitaires': 'Advertising',
+  '— mesure et performance des campagnes (Meta, Google Ads)': '— campaign measurement and performance (Meta, Google Ads)',
+  'Refuser les témoins optionnels': 'Refuse optional cookies',
+  'Confirmer mes choix': 'Confirm my choices',
+});
