@@ -57,10 +57,14 @@
       }
     }
 
+    // La modale bloque la page : défilement verrouillé tant qu'aucun choix n'est fait
+    function show() { banner.hidden = false; document.body.style.overflow = 'hidden'; }
+
     function save(c) {
       try { localStorage.setItem('epme_consent', JSON.stringify(c)); } catch (e) {}
       apply(c);
       banner.hidden = true;
+      document.body.style.overflow = '';
     }
 
     var main = banner.querySelector('[data-consent-main]');
@@ -70,7 +74,7 @@
       main.style.display = 'none';
       panel.hidden = false;
       panel.style.display = 'block';
-      banner.hidden = false;
+      show();
     }
 
     banner.querySelector('[data-consent-accept]').addEventListener('click', function () {
@@ -100,7 +104,7 @@
 
     var stored = getConsent();
     if (stored) { apply(stored); return; }
-    banner.hidden = false;
+    show();
   }
 
   /* ---------------- Mobile hamburger menu ---------------- */

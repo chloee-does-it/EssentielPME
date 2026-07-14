@@ -323,6 +323,7 @@ code, kbd, samp, pre {
 .hero-illu .illu-main { inset: 8% 4% 12% 8%; padding: 0; overflow: hidden; }
 .hero-illu .illu-floating-1 { width: 38%; right: -3%; top: 18%; }
 .hero-illu .illu-floating-2 { width: 50%; left: -5%; bottom: 5%; }
+.hero-illu .illu-floating-3 { left: -3%; top: 10%; }
 
 /* Floating chart card */
 .illu-stat { font-size: 11px; color: var(--fg-2); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
@@ -449,14 +450,18 @@ img { max-width: 100%; }
 .we-lang-toggle a.active, .we-lang-toggle button.active { color: var(--violet); }
 .we-lang-toggle .sep { color: var(--charbon-300); }
 
-/* Bandeau de consentement aux témoins (Loi 25) */
-.consent-banner { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 90; max-width: 720px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); padding: 18px 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
-.consent-banner[hidden] { display: none; }
-.consent-banner p { margin: 0; flex: 1 1 320px; font-size: 13.5px; line-height: 1.55; color: var(--charbon-500); }
-.consent-banner .consent-actions { display: flex; gap: 10px; flex: none; }
-.consent-banner button { cursor: pointer; font: inherit; font-weight: 700; font-size: 13.5px; border-radius: 999px; padding: 9px 18px; }
-.consent-banner [data-consent-accept], .consent-banner [data-consent-save] { background: var(--violet); color: #fff; border: none; }
-.consent-banner [data-consent-customize], .consent-banner [data-consent-optional-refuse] { background: none; color: var(--charbon); border: 1px solid var(--border); }
+/* Fenêtre de consentement aux témoins (Loi 25) — modale bloquante jusqu'au choix */
+.consent-overlay { position: fixed; inset: 0; z-index: 95; background: rgba(35,25,60,0.62); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; animation: epFadeUp 200ms ease; }
+.consent-overlay[hidden] { display: none; }
+.consent-banner { max-width: 560px; width: 100%; background: #fff; border-radius: 20px; box-shadow: 0 30px 90px rgba(20,10,40,0.45); padding: 28px 30px 26px; }
+.consent-banner h3 { margin: 0 0 12px; font-size: 20px; font-weight: 800; color: var(--violet); }
+.consent-banner p { margin: 0 0 20px; font-size: 14.5px; line-height: 1.6; color: var(--charbon-500); }
+.consent-banner .consent-actions { display: flex; gap: 12px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+.consent-banner button { cursor: pointer; font: inherit; font-weight: 700; border-radius: 999px; }
+.consent-banner [data-consent-accept], .consent-banner [data-consent-save] { background: var(--violet); color: #fff; border: none; font-size: 15px; padding: 13px 30px; box-shadow: var(--shadow-md); }
+.consent-banner [data-consent-accept]:hover, .consent-banner [data-consent-save]:hover { background: var(--lavande-700, #5C3D9E); }
+.consent-banner [data-consent-customize], .consent-banner [data-consent-optional-refuse] { background: none; color: var(--charbon-300); border: none; font-size: 13px; padding: 8px 10px; text-decoration: underline; text-underline-offset: 3px; }
+.consent-banner [data-consent-customize]:hover, .consent-banner [data-consent-optional-refuse]:hover { color: var(--charbon); }
 .consent-reopen { position: fixed; left: 16px; bottom: 16px; z-index: 80; width: 44px; height: 44px; border-radius: 999px; background: #fff; color: var(--violet); border: 1px solid var(--border); box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
 .consent-reopen:hover { background: var(--lavande-50); }
 .consent-choices { display: flex; flex-direction: column; gap: 10px; margin: 0 0 14px; }

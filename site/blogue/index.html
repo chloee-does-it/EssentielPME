@@ -293,23 +293,26 @@
     </div>
   </footer>
 </div>
-<div class="consent-banner" data-consent-banner hidden>
-  <div data-consent-main style="display:contents;">
-    <p>On utilise trois types de témoins&nbsp;: <strong>fonctionnels</strong>, <strong>analytiques</strong> et <strong>publicitaires</strong> — pour faire fonctionner le site et mesurer nos campagnes. Détails dans notre <a href="/mentions-legales/#temoins">politique de témoins</a>.</p>
-    <div class="consent-actions">
-      <button type="button" data-consent-customize>Personnaliser</button>
-      <button type="button" data-consent-accept>Tout accepter</button>
+<div class="consent-overlay" data-consent-banner hidden>
+  <div class="consent-banner" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <h3 id="consent-title">Votre expérience, vos choix</h3>
+    <div data-consent-main>
+      <p>On utilise trois types de témoins&nbsp;: <strong>fonctionnels</strong>, <strong>analytiques</strong> et <strong>publicitaires</strong> — pour offrir la meilleure expérience possible et améliorer nos services. Détails dans notre <a href="/mentions-legales/#temoins">politique de témoins</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-customize>Personnaliser</button>
+        <button type="button" data-consent-accept>Tout accepter</button>
+      </div>
     </div>
-  </div>
-  <div data-consent-panel hidden style="display:none; width:100%;">
-    <div class="consent-choices">
-      <label><input type="checkbox" checked disabled> <span><strong>Fonctionnels</strong> — nécessaires au fonctionnement du site (toujours actifs)</span></label>
-      <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytiques</strong> — mesure d'audience du site (GA4)</span></label>
-      <label><input type="checkbox" data-consent-ads checked> <span><strong>Publicitaires</strong> — mesure et performance des campagnes (Meta, Google Ads)</span></label>
-    </div>
-    <div class="consent-actions" style="justify-content:flex-end;">
-      <button type="button" data-consent-optional-refuse>Refuser les témoins optionnels</button>
-      <button type="button" data-consent-save>Confirmer mes choix</button>
+    <div data-consent-panel hidden style="display:none;">
+      <div class="consent-choices">
+        <label><input type="checkbox" checked disabled> <span><strong>Fonctionnels</strong> — nécessaires au fonctionnement du site (toujours actifs)</span></label>
+        <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytiques</strong> — nous aident à comprendre comment le site est utilisé, pour l'améliorer</span></label>
+        <label><input type="checkbox" data-consent-ads checked> <span><strong>Publicitaires</strong> — servent à mesurer l'efficacité de nos publicités et à les rendre plus pertinentes</span></label>
+      </div>
+      <div class="consent-actions">
+        <button type="button" data-consent-optional-refuse>Refuser les témoins optionnels</button>
+        <button type="button" data-consent-save>Confirmer mes choix</button>
+      </div>
     </div>
   </div>
 </div>

@@ -294,23 +294,26 @@
     </div>
   </footer>
 </div>
-<div class="consent-banner" data-consent-banner hidden>
-  <div data-consent-main style="display:contents;">
-    <p>We use three types of cookies: <strong>functional</strong>, <strong>analytics</strong> and <strong>advertising</strong> — to run the site and measure our campaigns. Details in our <a href="/en/mentions-legales/#temoins">cookie policy</a>.</p>
-    <div class="consent-actions">
-      <button type="button" data-consent-customize>Customize</button>
-      <button type="button" data-consent-accept>Accept all</button>
+<div class="consent-overlay" data-consent-banner hidden>
+  <div class="consent-banner" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <h3 id="consent-title">Your experience, your choices</h3>
+    <div data-consent-main>
+      <p>We use three types of cookies: <strong>functional</strong>, <strong>analytics</strong> and <strong>advertising</strong> — to give you the best possible experience and improve our services. Details in our <a href="/en/mentions-legales/#temoins">cookie policy</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-customize>Customize</button>
+        <button type="button" data-consent-accept>Accept all</button>
+      </div>
     </div>
-  </div>
-  <div data-consent-panel hidden style="display:none; width:100%;">
-    <div class="consent-choices">
-      <label><input type="checkbox" checked disabled> <span><strong>Functional</strong> — required for the site to work (always on)</span></label>
-      <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytics</strong> — site audience measurement (GA4)</span></label>
-      <label><input type="checkbox" data-consent-ads checked> <span><strong>Advertising</strong> — campaign measurement and performance (Meta, Google Ads)</span></label>
-    </div>
-    <div class="consent-actions" style="justify-content:flex-end;">
-      <button type="button" data-consent-optional-refuse>Refuse optional cookies</button>
-      <button type="button" data-consent-save>Confirm my choices</button>
+    <div data-consent-panel hidden style="display:none;">
+      <div class="consent-choices">
+        <label><input type="checkbox" checked disabled> <span><strong>Functional</strong> — required for the site to work (always on)</span></label>
+        <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytics</strong> — help us understand how the site is used, so we can improve it</span></label>
+        <label><input type="checkbox" data-consent-ads checked> <span><strong>Advertising</strong> — used to measure how effective our advertising is and make it more relevant</span></label>
+      </div>
+      <div class="consent-actions">
+        <button type="button" data-consent-optional-refuse>Refuse optional cookies</button>
+        <button type="button" data-consent-save>Confirm my choices</button>
+      </div>
     </div>
   </div>
 </div>
