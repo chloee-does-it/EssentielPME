@@ -132,8 +132,9 @@ function footer(root) {
       <div>
         <h4>Légal</h4>
         <ul>
-          <li><a href="${root}politique-de-confidentialite.html">Politique de confidentialité</a></li>
-          <li><a href="${root}politique-de-cookies.html">Politique de cookies</a></li>
+          <li><a href="${root}mentions-legales.html">Mentions légales</a></li>
+          <li><a href="${root}mentions-legales.html#politique-de-confidentialite">Politique de confidentialité</a></li>
+          <li><a href="${root}mentions-legales.html#temoins">Politique de cookies</a></li>
         </ul>
       </div>
     </div>
@@ -958,24 +959,96 @@ ${ctaBand({ h: 'Pas certain de la bonne plateforme&nbsp;?', p: 'Parlez-nous de v
   });
 }
 
-/* Minimal legal placeholder pages (linked from the footer in the design) */
-function legalPage(path, title, h1, note) {
+/* Mentions légales et confidentialité (conditions, Loi 25, témoins) */
+function mentionsLegalesPage() {
+  const h2 = (id, t) => `<h2 id="${id}" style="font-size:24px; font-weight:800; color:var(--violet); margin:44px 0 12px;">${t}</h2>`;
+  const h3 = (t) => `<h3 style="font-size:17px; font-weight:700; color:var(--charbon); margin:26px 0 8px;">${t}</h3>`;
+  const p = (t) => `<p style="margin:0 0 14px; color:var(--charbon-500); line-height:1.7;">${t}</p>`;
+  const ul = (items) => `<ul style="margin:0 0 14px 22px; padding:0; color:var(--charbon-500); line-height:1.7;">
+            ${items.map((i) => `<li style="margin-bottom:6px;">${i}</li>`).join('\n            ')}
+          </ul>`;
+
   const body = `
-      <section style="background:var(--grad-hero); padding:80px 24px 64px; text-align:center;">
-        <div style="max-width:720px; margin:0 auto;">
-          <h1 style="font-size:clamp(2.2rem, 3vw + 0.8rem, 3.2rem); margin:0 0 18px;">${h1}</h1>
+      <section style="background:var(--grad-hero); padding:80px 24px 56px; text-align:center;">
+        <div style="max-width:760px; margin:0 auto;">
+          <p style="margin:0 0 12px; font-weight:800; font-size:13px; letter-spacing:var(--tracking-wide); text-transform:uppercase; color:var(--violet);">Informations légales</p>
+          <h1 style="font-size:clamp(2.2rem, 3vw + 0.8rem, 3.2rem); margin:0 0 14px;">Mentions légales et confidentialité</h1>
+          <p style="margin:0; color:var(--charbon-500);">Dernière mise à jour&nbsp;: 14 juillet 2026</p>
         </div>
       </section>
       <section class="section" style="background:#fff;">
-        <div class="section-inner" style="max-width:720px;">
-          <p style="color:var(--charbon-500); line-height:1.7;">${note}</p>
-          <p style="color:var(--charbon-500); line-height:1.7;">Pour toute question, écrivez-nous à <a href="mailto:${SITE.email}">${SITE.email}</a>.</p>
+        <div class="section-inner" style="max-width:760px;">
+          ${h2('qui-nous-sommes', '1. Qui nous sommes')}
+          ${p('Le site essentielpme.com (le «&nbsp;Site&nbsp;») est exploité par Solutions SuperQuanti inc., faisant affaire sous le nom Essentiel PME, entreprise immatriculée au Registraire des entreprises du Québec sous le numéro 1178979937.')}
+          ${ul([
+            'Adresse&nbsp;: 6000, boul. de Rome, bureau 300, Brossard (Québec) J4Y 0B6',
+            `Courriel&nbsp;: ${SITE.email}`,
+            'Téléphone&nbsp;: 1&nbsp;844&nbsp;763-3832',
+          ])}
+          ${p('Le Site est hébergé par DigitalOcean, LLC, dont le siège est situé à New York (États-Unis).')}
+
+          ${h2('conditions', "2. Conditions d'utilisation")}
+          ${h3('2.1 Acceptation')}
+          ${p("En consultant le Site, vous acceptez les présentes conditions. Si vous n'êtes pas d'accord, on vous invite simplement à ne pas utiliser le Site.")}
+          ${h3('2.2 Prix et offres')}
+          ${p("Les prix affichés sur le Site font foi. Ils sont en dollars canadiens et peuvent être modifiés en tout temps&nbsp;; le prix applicable à votre entente est celui confirmé dans votre soumission ou votre contrat. Les informations du Site sont fournies à titre informatif et ne constituent pas une offre contractuelle.")}
+          ${h3('2.3 Propriété intellectuelle')}
+          ${p('Le contenu du Site — textes, logo, éléments graphiques, maquettes et structure — appartient à Essentiel PME ou à ses concédants. Toute reproduction ou utilisation sans autorisation écrite préalable est interdite. Les marques et logos de tiers (notamment les plateformes publicitaires) appartiennent à leurs propriétaires respectifs.')}
+          ${h3('2.4 Limitation de responsabilité')}
+          ${p("On s'efforce de maintenir le Site exact et à jour, mais Essentiel PME ne garantit pas que le contenu soit exempt d'erreurs ou que le Site soit accessible sans interruption. Dans la mesure permise par la loi, Essentiel PME décline toute responsabilité pour les dommages découlant de l'utilisation du Site ou de sites tiers vers lesquels il renvoie.")}
+          ${h3('2.5 Liens externes')}
+          ${p("Le Site peut contenir des liens vers des sites tiers. Ces liens sont fournis pour votre commodité&nbsp;; Essentiel PME n'exerce aucun contrôle sur leur contenu.")}
+
+          ${h2('politique-de-confidentialite', '3. Politique de confidentialité')}
+          ${p('Cette section explique comment on recueille, utilise et protège vos renseignements personnels, conformément à la Loi sur la protection des renseignements personnels dans le secteur privé (Québec), telle que modifiée par la Loi 25.')}
+          ${h3('3.1 Responsable de la protection des renseignements personnels')}
+          <div style="background:var(--lavande-50); border:1px solid var(--lavande-200); border-radius:16px; padding:20px 24px; margin:20px 0;">
+            <p style="margin:0; color:var(--charbon); line-height:1.7;"><strong>Benoit Laurent Arlabosse</strong><br>
+            Responsable de la protection des renseignements personnels<br>
+            ${SITE.email} · 1&nbsp;844&nbsp;763-3832</p>
+          </div>
+          ${h3('3.2 Renseignements recueillis')}
+          ${ul([
+            "<strong>Ce que vous nous fournissez&nbsp;:</strong> nom, courriel, téléphone, nom d'entreprise et détails de votre demande, lorsque vous remplissez un formulaire ou nous écrivez.",
+            "<strong>Ce qui est recueilli automatiquement&nbsp;:</strong> données de navigation (pages visitées, durée, type d'appareil, adresse IP abrégée) via des témoins et outils de mesure décrits à la section 4.",
+          ])}
+          ${h3('3.3 Finalités')}
+          ${p("On utilise vos renseignements uniquement pour&nbsp;: répondre à vos demandes et préparer des soumissions&nbsp;; fournir et facturer nos services&nbsp;; mesurer et améliorer le Site et nos campagnes&nbsp;; respecter nos obligations légales. On ne vend jamais vos renseignements personnels.")}
+          ${h3('3.4 Consentement')}
+          ${p(`En nous transmettant vos renseignements, vous consentez à leur utilisation pour ces finalités. Vous pouvez retirer votre consentement en tout temps en écrivant à ${SITE.email}&nbsp;; on donnera suite dans les meilleurs délais.`)}
+          ${h3('3.5 Communication à des tiers')}
+          ${p("Vos renseignements peuvent être traités par des fournisseurs qui nous rendent des services (hébergement, infolettre, mesure d'audience, plateformes publicitaires comme Google et Meta). Certains de ces fournisseurs sont situés à l'extérieur du Québec&nbsp;; le cas échéant, on s'assure que les renseignements bénéficient d'une protection adéquate, conformément à la loi.")}
+          ${h3('3.6 Conservation et sécurité')}
+          ${p("On conserve vos renseignements le temps nécessaire aux finalités décrites, puis on les détruit ou les anonymise de façon sécuritaire. Des mesures raisonnables — techniques et organisationnelles — protègent vos renseignements contre l'accès, l'utilisation ou la communication non autorisés.")}
+          ${h3('3.7 Vos droits')}
+          ${p(`Vous pouvez en tout temps&nbsp;: demander l'accès à vos renseignements&nbsp;; en demander la rectification&nbsp;; retirer votre consentement&nbsp;; demander la cessation de leur diffusion&nbsp;; obtenir les renseignements informatisés que vous nous avez fournis dans un format technologique structuré et couramment utilisé, ou en demander le transfert à un autre organisme (droit à la portabilité). On répond à ces demandes dans un délai de 30 jours. Adressez votre demande au responsable identifié ci-dessus. Si vous êtes insatisfait du traitement de votre demande, vous pouvez déposer une plainte auprès de la <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener">Commission d'accès à l'information du Québec</a>.`)}
+          ${h3('3.8 Incident de confidentialité')}
+          ${p("En cas d'incident présentant un risque de préjudice sérieux, on avisera les personnes concernées et la Commission d'accès à l'information, comme la loi l'exige.")}
+
+          ${h2('temoins', '4. Témoins (cookies)')}
+          ${p('Le Site utilise des témoins et technologies similaires&nbsp;:')}
+          ${ul([
+            '<strong>Essentiels&nbsp;:</strong> nécessaires au fonctionnement du Site.',
+            "<strong>Mesure d'audience&nbsp;:</strong> Google Analytics 4 et Google Tag Manager, pour comprendre l'utilisation du Site.",
+            '<strong>Publicité&nbsp;:</strong> pixel Meta et balises Google Ads, pour mesurer nos campagnes et présenter des publicités pertinentes.',
+          ])}
+          ${p("À votre première visite, un bandeau vous permet d'accepter ou de refuser les témoins non essentiels. Vous pouvez aussi les gérer dans les paramètres de votre navigateur.")}
+
+          ${h2('droit-applicable', '5. Droit applicable')}
+          ${p('Le Site et les présentes conditions sont régis par les lois applicables au Québec. Tout litige relève des tribunaux compétents du district judiciaire de Longueuil.')}
+
+          ${h2('nous-joindre', '6. Nous joindre')}
+          ${p(`Des questions sur cette page ou sur vos renseignements personnels&nbsp;? Écrivez-nous à ${SITE.email} ou appelez au 1&nbsp;844&nbsp;763-3832. Réponse en 24&nbsp;h. Pas de robot, pas de file d'attente.`)}
+
+          <p style="margin:36px 0 0; padding-top:20px; border-top:1px solid var(--border); font-size:13px; color:var(--charbon-300); line-height:1.7;">En cas de divergence entre la version française et la version anglaise de cette page, la version française prévaut.</p>
         </div>
       </section>`;
+
   return shell({
-    path, root: '', active: '', label: h1, noindex: true,
-    title: `${title} | Essentiel PME`,
-    desc: `${title} d’Essentiel PME.`,
+    path: 'mentions-legales.html', root: '', active: '',
+    label: 'Mentions légales et confidentialité',
+    title: 'Mentions légales et confidentialité | Essentiel PME',
+    desc: "Mentions légales, conditions d'utilisation, politique de confidentialité (Loi 25) et politique de témoins d'Essentiel PME.",
     body,
   });
 }
@@ -1049,8 +1122,7 @@ const pages = [
   ['a-propos.html', aboutPage()],
   ['contact.html', contactPage()],
   ['blogue.html', bloguePage()],
-  ['politique-de-confidentialite.html', legalPage('politique-de-confidentialite.html', 'Politique de confidentialité', 'Politique de confidentialité', 'Cette page présentera la politique de confidentialité d’Essentiel PME : renseignements recueillis via le formulaire de contact, usage, conservation et droits d’accès. Contenu final à valider avant le lancement.')],
-  ['politique-de-cookies.html', legalPage('politique-de-cookies.html', 'Politique de cookies', 'Politique de cookies', 'Cette page présentera la politique de cookies d’Essentiel PME : témoins utilisés, finalités (mesure d’audience, pixels publicitaires) et gestion du consentement. Contenu final à valider avant le lancement.')],
+  ['mentions-legales.html', mentionsLegalesPage()],
   ...industries.map((ind) => [`industries/${ind.key}.html`, industryPage(ind)]),
 ];
 
@@ -1060,7 +1132,7 @@ for (const [p, html] of pages) {
   console.log('wrote', p, `(${html.length} bytes)`);
 }
 
-const sitemapPaths = pages.map(([p]) => p).filter((p) => p !== 'index.html' && !p.startsWith('politique-'));
+const sitemapPaths = pages.map(([p]) => p).filter((p) => p !== 'index.html');
 writeFileSync(join(OUT, 'sitemap.xml'), sitemap(sitemapPaths));
 writeFileSync(join(OUT, 'robots.txt'), robots);
 writeFileSync(join(OUT, 'llms.txt'), llms);

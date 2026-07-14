@@ -65,6 +65,6 @@ Le formulaire de contact envoie un courriel via **Resend**, servi par une foncti
 
 - [x] Brancher le formulaire de contact sur un vrai backend (Resend, voir « Déploiement »).
 - [ ] Brancher l'inscription à l'infolettre (pages industries).
-- [ ] Rédiger les pages légales (placeholders `noindex` pour l'instant).
+- [x] Rédiger les pages légales (`mentions-legales.html` : conditions, confidentialité Loi 25, témoins).
 - [ ] Ajouter les images du blogue (placeholders dégradés pour l'instant) et rédiger les articles.
 - [ ] Remplacer `assets/img/og-cover.png` par un vrai visuel de partage 1200×630.
