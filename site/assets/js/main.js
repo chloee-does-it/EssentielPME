@@ -26,7 +26,52 @@
     return d ? '+' + d : '';
   }
 
+  /* ---------------- Attribution (UTM / source de trafic) ----------------
+     Capturée à l'arrivée, mémorisée localement, jointe à la soumission du
+     formulaire. Les paramètres de campagne sont rafraîchis à chaque nouvelle
+     arrivée avec UTM (dernière source non directe). */
+  function initAttribution() {
+    try {
+      var params = new URLSearchParams(location.search);
+      var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', 'msclkid'];
+      var found = {};
+      var has = false;
+      keys.forEach(function (k) {
+        var v = params.get(k);
+        if (v) { found[k] = String(v).slice(0, 200); has = true; }
+      });
+
+      var stored = null;
+      try { stored = JSON.parse(localStorage.getItem('epme_attrib') || 'null'); } catch (e) {}
+
+      var externalRef = '';
+      if (document.referrer) {
+        var a = document.createElement('a');
+        a.href = document.referrer;
+        if (a.host && a.host !== location.host) externalRef = document.referrer.slice(0, 300);
+      }
+
+      if (!stored) {
+        stored = {
+          params: found,
+          referrer: externalRef,
+          landing: (location.pathname + location.search).slice(0, 300),
+          first_visit: new Date().toISOString(),
+        };
+      } else if (has) {
+        stored.params = found;   // nouvelle campagne : on retient la plus récente
+        if (externalRef) stored.referrer = externalRef;
+      }
+      localStorage.setItem('epme_attrib', JSON.stringify(stored));
+    } catch (e) {}
+  }
+
+  function getAttribution() {
+    try { return JSON.parse(localStorage.getItem('epme_attrib') || 'null'); } catch (e) { return null; }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    initAttribution();
     initMobileMenu();
     initFaq();
     initContactForm();
@@ -220,6 +265,7 @@
       payload.message = msg ? msg.value.trim() : '';
       var marketing = form.querySelector('[name="marketing"]');
       payload.marketing = !!(marketing && marketing.checked);
+      payload.attribution = getAttribution();
 
       fetch(CONTACT_ENDPOINT, {
         method: 'POST',

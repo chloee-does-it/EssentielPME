@@ -79,6 +79,40 @@ async function main(args) {
   const row = (label, value) =>
     `<tr><td style="padding:6px 14px 6px 0; font-weight:bold; vertical-align:top; white-space:nowrap;">${label}</td><td style="padding:6px 0;">${esc(value)}</td></tr>`;
 
+  /* Bloc « source de trafic » à partir de l'attribution captée côté client */
+  const attributionRows = (attr) => {
+    if (!attr || typeof attr !== 'object') return row('Source de trafic', 'Inconnue');
+    const p = attr.params && typeof attr.params === 'object' ? attr.params : {};
+    const v = (x) => String(x || '').slice(0, 200);
+    const rows = [];
+
+    let source = v(p.utm_source);
+    if (!source) {
+      if (p.gclid) source = 'Google Ads (gclid)';
+      else if (p.fbclid) source = 'Meta (fbclid)';
+      else if (p.msclkid) source = 'Microsoft Ads (msclkid)';
+      else if (attr.referrer) {
+        const host = String(attr.referrer).replace(/^https?:\/\//, '').split('/')[0];
+        if (/google\./.test(host)) source = 'Google — référencement naturel';
+        else if (/facebook\.|instagram\./.test(host)) source = 'Facebook / Instagram (organique)';
+        else if (/linkedin\./.test(host)) source = 'LinkedIn (organique)';
+        else if (/bing\./.test(host)) source = 'Bing — référencement naturel';
+        else source = `Site référent : ${host}`;
+      } else source = 'Trafic direct';
+    }
+    rows.push(row('Source de trafic', source));
+    if (p.utm_medium) rows.push(row('Médium', v(p.utm_medium)));
+    if (p.utm_campaign) rows.push(row('Campagne', v(p.utm_campaign)));
+    if (p.utm_term) rows.push(row('Terme', v(p.utm_term)));
+    if (p.utm_content) rows.push(row('Contenu', v(p.utm_content)));
+    if (p.gclid) rows.push(row('Clic publicitaire', 'Google Ads (gclid présent)'));
+    if (p.fbclid) rows.push(row('Clic publicitaire', 'Meta (fbclid présent)'));
+    if (attr.referrer) rows.push(row('Référent', v(attr.referrer).slice(0, 150)));
+    if (attr.landing) rows.push(row("Page d'entrée", v(attr.landing).slice(0, 150)));
+    if (attr.first_visit) rows.push(row('Première visite', v(attr.first_visit).slice(0, 24)));
+    return rows.join('\n      ');
+  };
+
   const html = `
     <h2 style="margin:0 0 12px;">Nouvelle demande de contact — essentielpme.com</h2>
     <table style="border-collapse:collapse; font-size:15px;">
@@ -89,6 +123,8 @@ async function main(args) {
       ${row('Intérêt', interest || '—')}
       ${row('Message', message || '—')}
       ${row('Communications (LCAP)', marketing ? 'OUI — consentement exprès donné via le formulaire' : 'Non')}
+      <tr><td colspan="2" style="padding:14px 0 4px; font-weight:bold; border-top:1px solid #ddd;">Provenance</td></tr>
+      ${attributionRows(data.attribution)}
     </table>`;
 
   const res = await fetch('https://api.resend.com/emails', {
