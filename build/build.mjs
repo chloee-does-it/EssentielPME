@@ -156,6 +156,13 @@ function footer(root) {
         </ul>
       </div>
       <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="${root}publicite-en-ligne/">Publicité en ligne : le guide</a></li>
+          <li><a href="${root}mesurer-ses-resultats/">Mesurer ses résultats</a></li>
+        </ul>
+      </div>
+      <div>
         <h4>Légal</h4>
         <ul>
           <li><a href="${root}mentions-legales/">Mentions légales</a></li>
@@ -174,10 +181,10 @@ function footer(root) {
   </footer>`;
 }
 
-function shell({ path, title, desc, active, jsonld = [], body, label }) {
+function shell({ path, title, desc, active, jsonld = [], body, label, frOnly = false }) {
   const root = '/';
   const pagePath = '/' + path.replace(/index\.html$/, '');
-  const enPagePath = enPagePathOf(pagePath);
+  const enPagePath = frOnly ? '/en/' : enPagePathOf(pagePath);
   const canonical = `${SITE.baseUrl}${pagePath}`;
   const org = {
     '@context': 'https://schema.org', '@type': 'Organization',
@@ -199,8 +206,8 @@ function shell({ path, title, desc, active, jsonld = [], body, label }) {
   <title>${title}</title>
   <meta name="description" content="${jsonEsc(desc)}">
   <link rel="canonical" href="${canonical}">
-  <link rel="alternate" hreflang="fr-CA" href="${canonical}">
-  <link rel="alternate" hreflang="en-CA" href="${SITE.baseUrl}${enPagePath}">
+  <link rel="alternate" hreflang="fr-CA" href="${canonical}">${frOnly ? '' : `
+  <link rel="alternate" hreflang="en-CA" href="${SITE.baseUrl}${enPagePath}">`}
   <link rel="alternate" hreflang="x-default" href="${canonical}">
   <link rel="icon" type="image/svg+xml" href="${root}assets/img/favicon.svg">
   <link rel="icon" type="image/png" href="${root}assets/img/favicon.png">
@@ -1111,6 +1118,246 @@ ${ctaBand({ h: 'Pas certain de la bonne plateforme&nbsp;?', p: 'Parlez-nous de v
   });
 }
 
+/* ================= pages piliers (contenu SEO long format, FR seulement) ================= */
+
+const pilH2 = (id, t) => `<h2 id="${id}" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">${t}</h2>`;
+const pilH3 = (t) => `<h3 style="font-size:17px; font-weight:800; color:var(--charbon); margin:26px 0 8px;">${t}</h3>`;
+const pilP = (t) => `<p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">${t}</p>`;
+
+const pilTable = (headers, rows) => `<div style="overflow-x:auto; margin:6px 0 18px;"><table style="border-collapse:collapse; width:100%; min-width:640px; font-size:14px; line-height:1.55; color:var(--charbon-500);">
+            <thead><tr>${headers.map((h) => `<th style="text-align:left; padding:11px 14px; background:var(--lavande-50); color:var(--violet); font-size:12px; text-transform:uppercase; letter-spacing:var(--tracking-wide); border-bottom:2px solid var(--lavande-200); white-space:nowrap;">${h}</th>`).join('')}</tr></thead>
+            <tbody>${rows.map((r) => `<tr>${r.map((c) => `<td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">${c}</td>`).join('')}</tr>`).join('\n            ')}</tbody>
+          </table></div>`;
+
+const pilCallout = (t) => `<div style="background:var(--lavande-50); border:1px solid var(--lavande-200); border-radius:16px; padding:20px 24px; margin:0 0 18px; font-size:15px; line-height:1.7; color:var(--charbon);">${t}</div>`;
+
+const pilSecteurs = (intro) => `${pilP(intro)}
+          <div style="display:flex; flex-wrap:wrap; gap:10px; margin:0 0 8px;">
+            ${industries.map((i) => `<a href="/industries/${i.key}/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">${i.label}</a>`).join('\n            ')}
+          </div>`;
+
+const pilAuthor = `<div style="margin-top:44px; padding:20px 24px; background:var(--blanc-casse); border:1px solid var(--border); border-radius:16px; font-size:13.5px; color:var(--charbon-500); line-height:1.7;">
+            <strong style="color:var(--charbon);">Rédigé par Benoit, fondateur d'Essentiel PME</strong> — plus de 15 ans en marketing numérique et gestion de publicité en ligne pour des entreprises québécoises, des PME aux grands comptes. <a href="https://www.linkedin.com/company/essentiel-pme" target="_blank" rel="noopener">LinkedIn</a> · Dernière révision&nbsp;: 15 juillet 2026 · Fourchettes de coûts&nbsp;: données internes Essentiel PME (comptes gérés 2025-2026) et documentations officielles des plateformes.
+          </div>`;
+
+function pilierShell({ path, title, desc, h1, answerBox, toc, content, faq, faqPrefix, label }) {
+  const body = `
+      <section style="background:var(--grad-hero); padding:76px 24px 56px; text-align:center;">
+        <div style="max-width:860px; margin:0 auto;">
+          <span class="eyebrow" style="display:block; margin-bottom:14px;">LE GUIDE</span>
+          <h1 style="font-size:clamp(2rem, 2.6vw + 0.8rem, 3rem); margin:0 0 10px;">${h1}</h1>
+          <div style="background:#fff; border:1px solid var(--lavande-200); border-left:4px solid var(--violet); border-radius:14px; padding:20px 24px; font-size:15px; line-height:1.7; color:var(--charbon); margin:24px auto 0; text-align:left;">${answerBox}</div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin:24px 0 0;">
+            ${toc.map(([id, l]) => `<a href="#${id}" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">${l}</a>`).join('\n            ')}
+          </div>
+        </div>
+      </section>
+      <section class="section" style="background:#fff; padding-top:24px;">
+        <div class="section-inner" style="max-width:800px;">
+${content}
+          ${pilH2('faq', 'FAQ')}
+${faqList(faq, faqPrefix)}
+          ${pilAuthor}
+        </div>
+      </section>
+${ctaBand({ h: 'Les prix sont affichés. Le reste aussi.', p: "On s'occupe de votre publicité et de votre suivi. Réponse d'un humain en 24 heures ouvrables.", cta: 'Parler de mon projet →', href: '/contact/' })}`;
+
+  return shell({
+    path, label, title, desc, active: '', frOnly: true, body,
+    jsonld: [
+      {
+        '@context': 'https://schema.org', '@type': 'Article',
+        headline: h1, inLanguage: 'fr-CA', dateModified: '2026-07-15',
+        author: { '@type': 'Person', name: 'Benoit', jobTitle: "Fondateur, Essentiel PME" },
+        publisher: { '@type': 'Organization', name: SITE.name, url: SITE.baseUrl + '/' },
+        mainEntityOfPage: `${SITE.baseUrl}/${path.replace(/index\.html$/, '')}`,
+      },
+      {
+        '@context': 'https://schema.org', '@type': 'FAQPage',
+        mainEntity: faq.map((f) => ({
+          '@type': 'Question', name: jsonEsc(f.q),
+          acceptedAnswer: { '@type': 'Answer', text: jsonEsc(f.a) },
+        })),
+      },
+    ],
+  });
+}
+
+function pilierPublicitePage() {
+  const content = `
+          ${pilH2('pourquoi', 'Pourquoi la publicité en ligne en 2026')}
+          ${pilP("Parce que vos clients décident en ligne. Même quand ils achètent en personne. Une recherche «&nbsp;près de moi&nbsp;» le dimanche soir, une publication aperçue dans un fil Instagram, une fiche Google consultée deux minutes avant d'appeler&nbsp;: la décision se prend sur un écran, presque toujours un cellulaire.")}
+          ${pilP("Le bouche-à-oreille reste précieux. Mais il ne se contrôle pas. La publicité, elle, vous laisse choisir trois choses&nbsp;: le territoire, le budget, le message. Vous annoncez dans un rayon de 5&nbsp;km autour de votre porte ou dans toute la Montérégie, vous dépensez 500&nbsp;$ ou 5&nbsp;000&nbsp;$ par mois, et vous montrez ce que vous voulez montrer — votre savoir-faire, pas des rabais.")}
+          ${pilP("Et contrairement à une pancarte ou à une annonce dans l'hebdo régional, tout se mesure&nbsp;: qui a vu, qui a cliqué, qui a appelé, qui a réservé. Chaque dollar laisse une trace.")}
+
+          ${pilH2('plateformes', 'Google, Meta ou TikTok : qui fait quoi')}
+          ${pilP("Google capte l'intention. Meta crée l'envie. TikTok bâtit la notoriété auprès des moins de 35 ans. Ce ne sont pas trois versions du même outil&nbsp;: ce sont trois moments différents dans la tête de votre client, et chacun se paie à son prix.")}
+          ${pilTable(
+            ['Plateforme', 'Moment capté', 'Idéal pour', 'Résultats attendus'],
+            [
+              ['<strong>Google (recherche)</strong>', "Le client cherche activement&nbsp;: «&nbsp;plombier urgence Laval&nbsp;», «&nbsp;manucure près de moi&nbsp;»", 'Services à forte intention&nbsp;: urgences, rendez-vous, soumissions', 'Rapides&nbsp;: souvent dès les premières semaines'],
+              ['<strong>Meta (Facebook · Instagram)</strong>', 'Le client ne cherche pas encore&nbsp;; votre pub crée le déclic dans son fil', 'Métiers visuels (beauté, resto, rénovation), offres locales', 'Progressifs&nbsp;: la plateforme apprend en 4 à 6 semaines'],
+              ['<strong>TikTok</strong>', 'Découverte et divertissement&nbsp;; formats vidéo courts', 'Clientèles jeunes, commerces, restauration, notoriété de marque', "Notoriété d'abord, conversions ensuite"],
+            ]
+          )}
+          ${pilP("La combinaison gagnante pour la plupart des PME&nbsp;: Google pour capter la demande qui existe déjà, Meta pour en créer de la nouvelle, et TikTok seulement quand la clientèle et le contenu vidéo s'y prêtent vraiment. Une plateforme bien gérée bat trois plateformes négligées. Toujours. <a href='/plateformes/'>Le détail de chaque plateforme est ici.</a>")}
+
+          ${pilH2('couts', 'Combien ça coûte, vraiment (repères 2026 par industrie)')}
+          ${pilP("Personne n'affiche ses prix dans cette industrie. Nous, oui. Voici les repères observés dans les comptes que nous gérons chez Essentiel PME, pour des PME québécoises, en 2025-2026 — en gardant en tête que vos coûts réels bougeront selon le quartier, la concurrence et la saison.")}
+          ${pilTable(
+            ['Industrie', 'CPC Google (approx.)', 'CPC Meta (approx.)', 'Coût par demande / réservation', 'Budget média minimum réaliste'],
+            [
+              ['Beauté et bien-être (salon, spa)', '1 à 4&nbsp;$', '0,50 à 2&nbsp;$', '5 à 20&nbsp;$', '450 à 600&nbsp;$/mois'],
+              ['Restauration', '1 à 3&nbsp;$', '0,50 à 2&nbsp;$', '5 à 15&nbsp;$', '450 à 600&nbsp;$/mois'],
+              ['Construction et rénovation', '3 à 8&nbsp;$', '1 à 3&nbsp;$', '30 à 60&nbsp;$ (Meta) · 50 à 100&nbsp;$ (Google, soumission)', '600 à 900&nbsp;$/mois'],
+              ['Services professionnels (avocats, comptables)', '5 à 15&nbsp;$', '2 à 5&nbsp;$', '40 à 120&nbsp;$ (consultation)', '600 à 900&nbsp;$/mois'],
+              ['Santé (cliniques, dentaire)', '3 à 8&nbsp;$', '1 à 3&nbsp;$', '20 à 60&nbsp;$ (rendez-vous)', '600 à 900&nbsp;$/mois'],
+              ['Commerce de détail', '0,75 à 2,50&nbsp;$', '0,50 à 1,50&nbsp;$', '3 à 12&nbsp;$ (visite/vente)', '450 à 600&nbsp;$/mois'],
+            ]
+          )}
+          <p style="margin:-8px 0 18px; font-size:12.5px; color:var(--charbon-300);">Source&nbsp;: données internes Essentiel PME, comptes gérés 2025-2026. Fourchettes indicatives&nbsp;; le guide de chaque secteur (section «&nbsp;Par secteur&nbsp;» ci-dessous) donne les repères complets.</p>
+          ${pilH3('La règle du ~2:1')}
+          ${pilCallout("Un dollar de gestion, deux dollars de budget média. C'est la règle. Une gestion à 695&nbsp;$/mois s'accompagne donc d'environ 1&nbsp;400&nbsp;$/mois payés directement aux plateformes, parce que c'est à ce ratio que la gestion se rentabilise. En bas de ça, les frais fixes mangent la performance. <a href='/publicite/'>Nos forfaits et leurs budgets recommandés sont affichés ici.</a>")}
+          ${pilH3('Le calcul qui compte : la valeur à vie')}
+          ${pilP("Une cliente de salon en coloration revient aux 6 semaines, à 120&nbsp;$ la visite. Mille dollars par année. Pendant des années. Son coût d'acquisition en publicité&nbsp;: 5 à 20&nbsp;$. Le même raisonnement s'applique partout — un contrat de rénovation à 40&nbsp;000&nbsp;$ justifie largement une soumission payée 100&nbsp;$, et il la justifierait encore à trois fois ce prix. Calculez ce que vaut un client sur 3&nbsp;ans. Pas ce que coûte un clic.")}
+
+          ${pilH2('erreurs', "Les 5 erreurs qui gaspillent le budget d'une PME")}
+          ${pilP('Nous auditons des comptes publicitaires de PME québécoises chaque mois. Les mêmes cinq erreurs reviennent. Dans toutes les industries.')}
+          ${pilH3('1. Le bouton « Boost »')}
+          ${pilP("Booster une publication n'est pas une campagne&nbsp;: pas de ciblage précis, pas d'objectif de conversion, pas de suivi. C'est la façon la plus rapide de dépenser 200&nbsp;$ pour des «&nbsp;j'aime&nbsp;» qui n'achètent jamais.")}
+          ${pilH3('2. Aucun endroit où convertir')}
+          ${pilP("L'envie passe vite. Sans réservation en ligne, formulaire court ou numéro cliquable, chaque clic payé meurt sur une page qui ne demande rien.")}
+          ${pilH3('3. Cibler trop large')}
+          ${pilP("Personne ne traverse trois ponts pour une coupe de cheveux. Un rayon de 3 à 8&nbsp;km suffit pour la plupart des commerces de proximité&nbsp;; chaque dollar dépensé hors zone est un dollar jeté.")}
+          ${pilH3("4. N'annoncer que des rabais")}
+          ${pilP('Les promos à répétition attirent les chasseurs d\'aubaines et dévalorisent votre travail. Annoncez votre savoir-faire&nbsp;: vos réalisations, vos avant-après, vos avis.')}
+          ${pilH3('5. Arrêter après 3 semaines, sans rien mesurer')}
+          ${pilP("Les plateformes ont besoin de 4 à 6 semaines pour apprendre qui convertit. Et sans suivi (GA4, pixel Meta), impossible de savoir quelle annonce rapporte et laquelle brûle le budget.")}
+          ${pilCallout('Le suivi des conversions mérite son propre guide&nbsp;: <a href="/mesurer-ses-resultats/"><strong>Mesurer sa publicité&nbsp;: GA4, pixel Meta et conversions pour PME →</strong></a>')}
+
+          ${pilH2('delai', 'Combien de temps avant des résultats')}
+          ${pilP("Quatre à six semaines d'apprentissage. Puis un régime de croisière vers le troisième mois. C'est mécanique&nbsp;: les algorithmes de Google et de Meta testent vos annonces sur différents profils, éliminent ce qui ne convertit pas, puis concentrent le budget sur ce qui fonctionne — et les plateformes le documentent elles-mêmes, <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta décrivant une phase d'apprentissage</a> qui exige un volume suffisant de conversions avant de stabiliser la diffusion, <a href='https://support.google.com/google-ads' target='_blank' rel='noopener'>Google Ads recommandant de laisser tourner les campagnes</a> avant d'en juger. Couper avant la fin de l'apprentissage, c'est payer pour la leçon sans jamais lire la réponse.")}
+          ${pilP("Google donne des signaux plus vite, parce qu'il capte une demande qui existe déjà. Meta prend plus de temps, mais construit un bassin de nouvelles clientèles. D'où notre engagement minimum de 3&nbsp;mois&nbsp;: pas pour vendre plus longtemps, mais parce qu'en deçà, les chiffres ne veulent rien dire. Rien du tout.")}
+
+          ${pilH2('qui-gere', 'Interne, pigiste ou agence : qui devrait gérer vos campagnes')}
+          ${pilP('Ça dépend. De votre temps, de votre budget, de la complexité de vos campagnes. Voici la comparaison honnête.')}
+          ${pilTable(
+            ['Option', 'Coût typique', 'Forces', 'Limites'],
+            [
+              ['<strong>Vous-même (interne)</strong>', 'Votre temps (5 à 10&nbsp;h/semaine au début)', 'Contrôle total, aucun frais de gestion', "Courbe d'apprentissage abrupte&nbsp;; les plateformes changent constamment&nbsp;; erreurs coûteuses au début"],
+              ['<strong>Pigiste</strong>', '300 à 800&nbsp;$/mois', 'Flexible, abordable', 'Qualité inégale&nbsp;; disponibilité variable&nbsp;; dépendance à une seule personne'],
+              ['<strong>Grande agence</strong>', '2&nbsp;000 à 5&nbsp;000&nbsp;$/mois et plus', 'Équipe complète, outils avancés', 'Pensée pour les gros budgets&nbsp;; une PME devient le petit compte de la liste'],
+              ['<strong>Essentiel PME</strong>', '695 à 1&nbsp;495&nbsp;$/mois, <a href="/publicite/">prix affichés</a>', 'Gestion complète, rapport mensuel en français, fait pour les PME d\'ici', 'Budget média minimum requis (~2:1) pour que la gestion se rentabilise'],
+            ]
+          )}
+          ${pilP("Le test est simple. Si gérer vos campagnes vous éloigne de ce qui fait rentrer l'argent — vos clients, vos chantiers, vos chaises —, déléguez. Si vous avez le temps et l'envie d'apprendre, commencez petit, sur une seule plateforme. Mais commencez.")}
+
+          ${pilH2('par-secteur', 'La publicité de votre secteur, en détail')}
+          ${pilSecteurs('Chaque industrie a ses coûts, son calendrier, ses pièges. Le guide de chaque secteur&nbsp;:')}`;
+
+  return pilierShell({
+    path: 'publicite-en-ligne/index.html',
+    label: 'Guide publicité en ligne',
+    title: 'La publicité en ligne pour les PME au Québec : le guide complet (2026) | Essentiel PME',
+    desc: 'Plateformes, coûts réels 2026 par industrie et erreurs à éviter : le guide de la publicité en ligne pour PME au Québec, par Essentiel PME.',
+    h1: 'La publicité en ligne pour les PME au Québec&nbsp;: le guide complet (2026)',
+    answerBox: "La publicité en ligne place une PME québécoise devant ses clients au moment où ils cherchent, ou juste avant. Chez Essentiel PME, nos comptes gérés en 2025-2026 montrent des coûts par clic de 0,50&nbsp;$ à 15&nbsp;$ et des budgets minimums réalistes de 450&nbsp;$ à 900&nbsp;$ par mois, selon la plateforme et l'industrie. Ce guide couvre les plateformes, les coûts réels par secteur, les cinq erreurs les plus coûteuses et le délai avant des résultats.",
+    toc: [
+      ['pourquoi', 'Pourquoi en 2026'], ['plateformes', 'Google, Meta ou TikTok'], ['couts', 'Les coûts réels'],
+      ['erreurs', 'Les 5 erreurs'], ['delai', 'Le délai avant résultats'], ['qui-gere', 'Interne, pigiste ou agence'],
+      ['par-secteur', 'Par secteur'], ['faq', 'FAQ'],
+    ],
+    content,
+    faqPrefix: 'faq-pilier-pub',
+    faq: [
+      { q: 'Combien coûte la publicité en ligne pour une PME au Québec ?', a: "Selon nos comptes gérés en 2025-2026 : 0,50 $ à 15 $ par clic selon la plateforme et l'industrie, 5 $ à 120 $ par demande selon le secteur, et un budget média minimum réaliste de 450 $ à 900 $ par mois sur une plateforme, plus la gestion si vous déléguez.", open: true },
+      { q: 'Quel budget minimum pour commencer la publicité en ligne au Québec ?', a: 'Prévoyez 450 à 600 $ par mois de budget média sur une seule plateforme, plus la gestion si vous déléguez. En bas de ce seuil, les plateformes manquent de données pour optimiser. Les résultats deviennent aléatoires.' },
+      { q: 'Google Ads ou Facebook : lequel choisir en premier ?', a: "Google si vos clients vous cherchent déjà (urgences, services, rendez-vous). Meta si votre métier est visuel ou si vous devez créer la demande. En cas de doute, commencez là où l'intention est la plus forte : la recherche Google." },
+      { q: 'Est-ce que booster une publication Facebook fonctionne ?', a: "Rarement. Le boost optimise pour l'engagement (« j'aime », commentaires), pas pour les ventes ou les demandes. Une vraie campagne dans le Gestionnaire de publicités cible mieux, coûte moins cher par résultat et se mesure." },
+      { q: 'Combien de temps avant de voir des résultats ?', a: "Comptez 4 à 6 semaines d'apprentissage algorithmique, et jugez la performance au troisième mois. Google réagit généralement plus vite que Meta." },
+      { q: 'La publicité en ligne fonctionne-t-elle pour une très petite entreprise ?', a: "Oui, à condition de rester local : un rayon serré, une seule plateforme, un seul objectif (appels, réservations ou soumissions). C'est le contraire d'une campagne nationale. Et c'est ce qui la rend abordable." },
+    ],
+  });
+}
+
+function pilierMesurePage() {
+  const content = `
+          ${pilH2('pourquoi-mesurer', "Pourquoi l'absence de mesure brûle le budget")}
+          ${pilP("Sans mesure, deux annonces se ressemblent. Avec la mesure, l'une amène des réservations à 8&nbsp;$ et l'autre à 45&nbsp;$ — et sur un budget de 1&nbsp;500&nbsp;$ par mois, cette différence-là, c'est le simple au quintuple en résultats, pour la même dépense. Exactement la même.")}
+          ${pilP("C'est aussi la raison du fameux «&nbsp;j'ai essayé la pub, ça ne marche pas&nbsp;». Dans nos audits chez Essentiel PME, la plupart des comptes abandonnés n'avaient aucun suivi de conversions&nbsp;: impossible de savoir ce qui fonctionnait, donc impossible d'optimiser. La campagne n'a pas échoué. Elle n'a jamais été pilotée.")}
+          ${pilP("Et il y a plus. Les algorithmes de Google et de Meta optimisent vers ce que vous mesurez&nbsp;: pas de conversions déclarées, pas d'apprentissage. Votre concurrent qui mesure entraîne sa machine&nbsp;; vous, non. Le fossé se creuse chaque semaine.")}
+
+          ${pilH2('ga4', 'GA4 en français simple')}
+          ${pilP("Google Analytics 4 (GA4) est l'outil gratuit qui enregistre ce qui se passe sur votre site&nbsp;: d'où viennent les visiteurs, ce qu'ils consultent, ce qu'ils font. Quatre notions suffisent.")}
+          ${pilTable(
+            ['Terme GA4', 'En français simple'],
+            [
+              ['<strong>Événement</strong>', 'Une action sur votre site&nbsp;: page vue, clic sur le numéro, formulaire envoyé.'],
+              ['<strong>Conversion (événement clé)</strong>', "L'événement qui compte pour vos affaires&nbsp;: demande de soumission, réservation, appel. C'est VOUS qui le déclarez."],
+              ['<strong>Source / médium</strong>', "D'où vient le visiteur&nbsp;: Google organique, publicité Meta, courriel, direct."],
+              ['<strong>Attribution</strong>', 'À quelle source GA4 accorde le mérite d\'une conversion quand le client a vu plusieurs canaux avant d\'agir.'],
+            ]
+          )}
+          ${pilP("L'installation de base se fait avec Google Tag Manager (GTM)&nbsp;: un seul code sur le site, puis chaque suivi se configure sans toucher au code. Le trio minimal pour une PME&nbsp;: clics sur le numéro de téléphone, envois de formulaire, clics sur le bouton de réservation. Tout le reste est du confort.")}
+
+          ${pilH2('pixel-meta', "Le pixel Meta et l'API Conversions : pourquoi vos pubs « ne marchent pas »")}
+          ${pilP("Le pixel Meta est un code qui dit à Facebook et Instagram ce que font les visiteurs venus de vos pubs. Sans lui, Meta optimise à l'aveugle. Il montre vos annonces à des gens qui cliquent, pas à des gens qui réservent.")}
+          ${pilP("Le problème depuis quelques années&nbsp;: les bloqueurs de témoins et les restrictions d'iOS font perdre au pixel une partie des conversions. La réponse de Meta s'appelle l'API Conversions (CAPI)&nbsp;: les données partent de votre serveur ou de vos outils — formulaire, système de réservation, CRM — plutôt que du seul navigateur, ce qui donne une mesure plus complète, donc un algorithme mieux entraîné, donc un coût par résultat qui baisse. Une chaîne. Trois maillons.")}
+          ${pilCallout(`<strong>Minimum vital&nbsp;:</strong> pixel installé via GTM + événement de conversion sur l'action qui compte (formulaire, réservation, appel).<br><br>
+            <strong>Niveau recommandé&nbsp;:</strong> pixel + API Conversions avec déduplication (les deux envoient, Meta élimine les doublons).<br><br>
+            <strong>À vérifier chaque mois&nbsp;:</strong> le Gestionnaire d'événements Meta affiche-t-il vos conversions&nbsp;? Un pixel silencieux depuis trois semaines est une campagne qui vole à l'aveugle.`)}
+
+          ${pilH2('loi-25', "La Loi 25 : consentement et publicité, ce qu'une PME doit faire")}
+          ${pilP('La Loi 25 encadre la protection des renseignements personnels au Québec. Pour votre marketing, elle se résume à trois obligations concrètes. Ce résumé ne remplace pas un avis juridique&nbsp;; pour les cas particuliers, consultez la <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener">Commission d\'accès à l\'information (CAI)</a> ou un conseiller juridique.')}
+          ${pilH3('1. Le consentement avant les témoins non essentiels')}
+          ${pilP("Votre site doit afficher un bandeau de consentement, et GA4 comme le pixel Meta ne doivent s'activer qu'après un «&nbsp;oui&nbsp;». Les paramètres par défaut doivent être les plus protecteurs.")}
+          ${pilH3('2. La transparence')}
+          ${pilP("Une politique de confidentialité claire (quelles données, pourquoi, avec qui elles sont partagées) et un responsable de la protection des renseignements personnels désigné — dans une PME, c'est souvent le dirigeant.")}
+          ${pilH3('3. Les formulaires')}
+          ${pilP("Ne collectez que le nécessaire, dites ce que vous ferez du courriel (ex.&nbsp;: recevoir le guide + l'infolettre), et offrez un désabonnement simple.")}
+          ${pilCallout("La bonne nouvelle&nbsp;: un site conforme n'est pas un site qui mesure moins bien. Le <a href='https://support.google.com/analytics' target='_blank' rel='noopener'>mode consentement de Google</a> et l'<a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>API Conversions de Meta</a> sont justement conçus pour travailler dans ce cadre — la conformité et la performance ne s'opposent pas, elles s'installent ensemble, une seule fois.")}
+
+          ${pilH2('indicateurs', 'Le rapport mensuel qui compte : nos 6 indicateurs')}
+          ${pilP("Un bon rapport tient sur une page. Il répond à une seule question&nbsp;: est-ce que la publicité rapporte&nbsp;? Voici les six indicateurs que nous suivons chez Essentiel PME, dans cet ordre.")}
+          ${pilTable(
+            ['Indicateur', 'La question à laquelle il répond'],
+            [
+              ['<strong>1. Conversions</strong> (demandes, réservations, appels)', "Combien d'occasions d'affaires ce mois-ci&nbsp;?"],
+              ['<strong>2. Coût par conversion</strong>', "Combien coûte chaque occasion&nbsp;? Est-ce viable face à la valeur d'un client&nbsp;?"],
+              ['<strong>3. Dépense vs budget</strong>', "A-t-on dépensé ce qui était prévu, là où c'était prévu&nbsp;?"],
+              ['<strong>4. Répartition par plateforme</strong>', 'Qui livre&nbsp;: Google, Meta, TikTok&nbsp;? Où réallouer&nbsp;?'],
+              ['<strong>5. Meilleures et pires annonces</strong>', 'Quoi couper, quoi amplifier le mois prochain&nbsp;?'],
+              ['<strong>6. Tendance sur 3 mois</strong>', "Est-ce que ça s'améliore&nbsp;? (Un mois isolé ne prouve rien.)"],
+            ]
+          )}
+          ${pilP("Ce qui ne devrait jamais ouvrir un rapport&nbsp;: les impressions et la portée. Ce sont des chiffres de vanité — gros, flatteurs, et incapables de payer une facture. Ils servent au diagnostic. Pas au verdict.")}
+
+          ${pilH2('par-secteur', 'La mesure de votre secteur')}
+          ${pilSecteurs("Les trois conversions à suivre changent selon le métier&nbsp;: soumissions en construction, réservations en restauration, rendez-vous en clinique. Chaque page d'industrie détaille son approche&nbsp;:")}`;
+
+  return pilierShell({
+    path: 'mesurer-ses-resultats/index.html',
+    label: 'Guide mesure',
+    title: 'Mesurer sa publicité : GA4, pixel Meta et conversions pour PME (sans jargon) | Essentiel PME',
+    desc: 'GA4, pixel Meta, conversions et Loi 25 expliqués sans jargon : le guide de la mesure publicitaire pour PME québécoises, par Essentiel PME.',
+    h1: 'Mesurer sa publicité&nbsp;: GA4, pixel Meta et conversions pour PME (sans jargon)',
+    answerBox: "Mesurer sa publicité, c'est savoir quelle annonce amène des appels, des réservations ou des soumissions, et laquelle brûle le budget. Pour une PME, trois outils suffisent&nbsp;: GA4 (gratuit, de Google), le pixel Meta avec l'API Conversions, et un suivi des actions qui comptent (appel, formulaire, réservation). Au Québec, la Loi 25 encadre le tout&nbsp;: consentement requis avant d'activer ces outils. Ce guide explique chaque pièce, sans jargon, dans l'ordre où les installer en 2026.",
+    toc: [
+      ['pourquoi-mesurer', 'Pourquoi mesurer'], ['ga4', 'GA4 en français simple'], ['pixel-meta', 'Pixel Meta et API Conversions'],
+      ['loi-25', 'La Loi 25'], ['indicateurs', 'Les 6 indicateurs'], ['par-secteur', 'Par secteur'], ['faq', 'FAQ'],
+    ],
+    content,
+    faqPrefix: 'faq-pilier-mesure',
+    faq: [
+      { q: 'GA4 est-il gratuit ?', a: "Oui, entièrement, pour les besoins d'une PME. L'installation via Google Tag Manager demande une à deux heures pour un suivi de base bien fait.", open: true },
+      { q: "Quelle est la différence entre le pixel Meta et l'API Conversions ?", a: "Le pixel mesure depuis le navigateur du visiteur ; l'API Conversions envoie les données depuis vos systèmes. Ensemble (avec déduplication), ils donnent la mesure la plus complète — et de meilleurs coûts par résultat." },
+      { q: "La Loi 25 s'applique-t-elle à ma petite entreprise ?", a: 'Oui : la loi vise toute entreprise qui recueille des renseignements personnels au Québec, sans seuil de taille. Bandeau de consentement, politique de confidentialité et responsable désigné sont le minimum.' },
+      { q: 'Que suivre en priorité si je ne mesure rien aujourd\'hui ?', a: 'Trois actions : les clics sur votre numéro de téléphone, les envois de formulaire et les réservations en ligne. Avec ça, vous savez déjà quelle campagne travaille.' },
+      { q: 'Le consentement fait-il perdre des données ?', a: "Une partie, oui, c'est le principe. Mais le mode consentement de Google et l'API Conversions compensent en partie, et une mesure conforme à 80 % bat une mesure illégale à 100 %." },
+    ],
+  });
+}
+
 /* Mentions légales et confidentialité (conditions, Loi 25, témoins) */
 function mentionsLegalesPage() {
   const h2 = (id, t) => `<h2 id="${id}" style="font-size:24px; font-weight:800; color:var(--violet); margin:44px 0 12px;">${t}</h2>`;
@@ -1251,6 +1498,8 @@ const llms = `# Essentiel PME
 - [À propos](${SITE.baseUrl}/a-propos/) : mission, valeurs et processus en 6 étapes.
 - [Blogue](${SITE.baseUrl}/blogue/) : conseils publicité en ligne pour PME (articles à venir).
 - [Contact](${SITE.baseUrl}/contact/) : formulaire, ${SITE.email}, ${SITE.phone}, ${SITE.location}.
+- [Guide : la publicité en ligne pour les PME au Québec](${SITE.baseUrl}/publicite-en-ligne/) : plateformes, coûts réels 2026 par industrie, les 5 erreurs, délais avant résultats.
+- [Guide : mesurer sa publicité](${SITE.baseUrl}/mesurer-ses-resultats/) : GA4, pixel Meta et API Conversions, Loi 25, les 6 indicateurs d'un bon rapport.
 
 ## Industries desservies
 
@@ -1312,8 +1561,8 @@ function toEnglish(html, pagePath) {
   html = html.replace(`<link rel="canonical" href="${frCanon}">`, `<link rel="canonical" href="${enCanon}">`);
   html = html.replace(`property="og:url" content="${frCanon}"`, `property="og:url" content="${enCanon}"`);
 
-  // 6. Liens internes → /en/… (sauf assets, api et liens déjà /en/)
-  html = html.replace(/href="\/(?!assets\/|api\/|en\/|en")/g, 'href="/en/');
+  // 6. Liens internes → /en/… (sauf assets, api, liens déjà /en/ et pages franco-seulement)
+  html = html.replace(/href="\/(?!assets\/|api\/|en\/|en"|publicite-en-ligne\/|mesurer-ses-resultats\/)/g, 'href="/en/');
 
   // 7. Bascule de langue : FR redevient un lien vers la version française, EN devient actif
   html = html.replace(/<a data-lang-link="fr" href="\/en/, '<a data-lang-link="fr" href="');
@@ -1341,14 +1590,23 @@ const pages = [
   ['contact/index.html', contactPage()],
   ['blogue/index.html', bloguePage()],
   ['mentions-legales/index.html', mentionsLegalesPage()],
+  ['publicite-en-ligne/index.html', pilierPublicitePage()],
+  ['mesurer-ses-resultats/index.html', pilierMesurePage()],
   ...industries.map((ind) => [`industries/${ind.key}/index.html`, industryPage(ind)]),
 ];
 
+/* Pages publiées en français seulement (pas de version /en/ pour l'instant) */
+const FR_ONLY = new Set(['publicite-en-ligne/index.html', 'mesurer-ses-resultats/index.html']);
+
 for (const [p, html] of pages) {
   const pagePath = '/' + p.replace(/index\.html$/, '');
-  const enFile = enPagePathOf(pagePath).slice(1) + 'index.html';
   mkdirSync(dirname(join(OUT, p)), { recursive: true });
   writeFileSync(join(OUT, p), html);
+  if (FR_ONLY.has(p)) {
+    console.log('wrote', p, `(${html.length} o) — FR seulement`);
+    continue;
+  }
+  const enFile = enPagePathOf(pagePath).slice(1) + 'index.html';
   const en = toEnglish(html, pagePath);
   mkdirSync(dirname(join(OUT, enFile)), { recursive: true });
   writeFileSync(join(OUT, enFile), en);
@@ -1358,6 +1616,7 @@ for (const [p, html] of pages) {
 const sitemapPaths = pages
   .map(([p]) => p.replace(/index\.html$/, ''))
   .flatMap((p) => {
+    if (FR_ONLY.has(p + 'index.html')) return [p];
     const en = enPagePathOf('/' + p).slice(1);
     return p === '' ? [en] : [p, en];
   });

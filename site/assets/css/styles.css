@@ -410,7 +410,7 @@ code, kbd, samp, pre {
 /* Footer */
 .footer { background: var(--charbon-900); color: rgba(255,255,255,0.75); padding: 64px 24px 32px; position: relative; overflow: hidden; }
 .footer::before { content: ''; position: absolute; width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(75,46,131,0.5) 0%, transparent 70%); top: -200px; right: -200px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; position: relative; z-index: 1; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 36px; position: relative; z-index: 1; }
 .footer-brand img { height: 28px; filter: brightness(0) invert(1); margin-bottom: 12px; }
 .footer-brand p { font-size: 14px; line-height: 1.6; max-width: 280px; margin: 0; color: rgba(255,255,255,0.85); }
 .footer h4 { color: #fff; font-size: 13px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 14px; }

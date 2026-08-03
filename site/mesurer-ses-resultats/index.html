@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mesurer sa publicité : GA4, pixel Meta et conversions pour PME (sans jargon) | Essentiel PME</title>
+  <meta name="description" content="GA4, pixel Meta, conversions et Loi 25 expliqués sans jargon : le guide de la mesure publicitaire pour PME québécoises, par Essentiel PME.">
+  <link rel="canonical" href="https://essentielpme.com/mesurer-ses-resultats/">
+  <link rel="alternate" hreflang="fr-CA" href="https://essentielpme.com/mesurer-ses-resultats/">
+  <link rel="alternate" hreflang="x-default" href="https://essentielpme.com/mesurer-ses-resultats/">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Essentiel PME">
+  <meta property="og:locale" content="fr_CA">
+  <meta property="og:title" content="Mesurer sa publicité : GA4, pixel Meta et conversions pour PME (sans jargon) | Essentiel PME">
+  <meta property="og:description" content="GA4, pixel Meta, conversions et Loi 25 expliqués sans jargon : le guide de la mesure publicitaire pour PME québécoises, par Essentiel PME.">
+  <meta property="og:url" content="https://essentielpme.com/mesurer-ses-resultats/">
+  <meta property="og:image" content="https://essentielpme.com/assets/img/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'denied'});</script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NWFC4HHZ');</script>
+  <!-- End Google Tag Manager -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Essentiel PME","alternateName":"SMB Essentials","url":"https://essentielpme.com/","logo":"https://essentielpme.com/assets/img/logo-h-fr-rgb.svg","email":"info@essentielpme.com","telephone":"+18447633832","address":{"@type":"PostalAddress","addressLocality":"Québec","addressRegion":"QC","addressCountry":"CA"},"sameAs":["https://www.facebook.com/profile.php?id=61591838577895","https://www.instagram.com/essentielpme","https://www.linkedin.com/company/essentiel-pme"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Mesurer sa publicité&nbsp;: GA4, pixel Meta et conversions pour PME (sans jargon)","inLanguage":"fr-CA","dateModified":"2026-07-15","author":{"@type":"Person","name":"Benoit","jobTitle":"Fondateur, Essentiel PME"},"publisher":{"@type":"Organization","name":"Essentiel PME","url":"https://essentielpme.com/"},"mainEntityOfPage":"https://essentielpme.com/mesurer-ses-resultats/"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"GA4 est-il gratuit ?","acceptedAnswer":{"@type":"Answer","text":"Oui, entièrement, pour les besoins d'une PME. L'installation via Google Tag Manager demande une à deux heures pour un suivi de base bien fait."}},{"@type":"Question","name":"Quelle est la différence entre le pixel Meta et l'API Conversions ?","acceptedAnswer":{"@type":"Answer","text":"Le pixel mesure depuis le navigateur du visiteur ; l'API Conversions envoie les données depuis vos systèmes. Ensemble (avec déduplication), ils donnent la mesure la plus complète — et de meilleurs coûts par résultat."}},{"@type":"Question","name":"La Loi 25 s'applique-t-elle à ma petite entreprise ?","acceptedAnswer":{"@type":"Answer","text":"Oui : la loi vise toute entreprise qui recueille des renseignements personnels au Québec, sans seuil de taille. Bandeau de consentement, politique de confidentialité et responsable désigné sont le minimum."}},{"@type":"Question","name":"Que suivre en priorité si je ne mesure rien aujourd'hui ?","acceptedAnswer":{"@type":"Answer","text":"Trois actions : les clics sur votre numéro de téléphone, les envois de formulaire et les réservations en ligne. Avec ça, vous savez déjà quelle campagne travaille."}},{"@type":"Question","name":"Le consentement fait-il perdre des données ?","acceptedAnswer":{"@type":"Answer","text":"Une partie, oui, c'est le principe. Mais le mode consentement de Google et l'API Conversions compensent en partie, et une mesure conforme à 80 % bat une mesure illégale à 100 %."}}]}</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NWFC4HHZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="we-page">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="we-header">
+    <div class="we-header-inner">
+      <a href="/" class="we-logo" style="border-bottom:none;" aria-label="Essentiel PME — Accueil">
+        <img src="/assets/img/logo-h-fr-rgb.svg" alt="Essentiel PME" style="height:60px; width:auto;">
+      </a>
+      <nav class="we-nav" aria-label="Navigation principale">
+        <a href="/publicite/">Publicité en ligne</a>
+
+        <div class="we-navdrop" style="position:relative; display:flex; align-items:center;">
+          <a href="/industries/construction/" style="display:inline-flex; align-items:center; gap:5px;">Industries
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="we-dropmenu" style="position:absolute; top:100%; left:-8px; padding-top:10px; display:none; z-index:50;">
+            <div style="background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-md); padding:8px; display:flex; flex-direction:column; min-width:230px;">
+              <a href="/industries/construction/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Construction et métiers</a>
+              <a href="/industries/sante/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Santé et cliniques</a>
+              <a href="/industries/beaute/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Beauté et bien-être</a>
+              <a href="/industries/restauration/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Restauration</a>
+              <a href="/industries/services-pro/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Services professionnels</a>
+              <a href="/industries/ecommerce/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Commerce en ligne</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="we-navdrop" style="position:relative; display:flex; align-items:center;">
+          <a href="/a-propos/" style="display:inline-flex; align-items:center; gap:5px;">À propos
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="we-dropmenu" style="position:absolute; top:100%; left:-8px; padding-top:10px; display:none; z-index:50;">
+            <div style="background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-md); padding:8px; display:flex; flex-direction:column; min-width:230px;">
+              <a href="/a-propos/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">À propos</a>
+              <a href="/plateformes/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Plateformes</a>
+              <a href="/blogue/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Blogue</a>
+            </div>
+          </div>
+        </div>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="we-header-right">
+        <div class="we-lang-toggle">
+          <a data-lang-link="fr" href="/mesurer-ses-resultats/" class="active" hreflang="fr-CA">FR</a>
+          <span class="sep">·</span>
+          <a data-lang-link="en" href="/en/" hreflang="en-CA">EN</a>
+        </div>
+        <a href="/contact/" class="btn btn-primary" style="padding:10px 18px; font-size:14px;">Démarrer ma publicité en ligne</a>
+        <button type="button" class="we-burger" aria-label="Ouvrir le menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="we-mobile-nav" role="dialog" aria-label="Menu">
+    <div class="we-mobile-panel">
+      <div class="we-mobile-top">
+        <img src="/assets/img/logo-h-fr-rgb.svg" alt="Essentiel PME">
+        <button type="button" class="we-mobile-close" aria-label="Fermer le menu">×</button>
+      </div>
+      <nav aria-label="Navigation mobile">
+        <a href="/">Accueil</a>
+        <a href="/publicite/">Publicité en ligne</a>
+        <span class="grouplabel">Industries</span>
+        <a class="sub" href="/industries/construction/">Construction et métiers</a>
+        <a class="sub" href="/industries/sante/">Santé et cliniques</a>
+        <a class="sub" href="/industries/beaute/">Beauté et bien-être</a>
+        <a class="sub" href="/industries/restauration/">Restauration</a>
+        <a class="sub" href="/industries/services-pro/">Services professionnels</a>
+        <a class="sub" href="/industries/ecommerce/">Commerce en ligne</a>
+        <span class="grouplabel">À propos</span>
+        <a class="sub" href="/a-propos/">À propos</a>
+        <a class="sub" href="/plateformes/">Plateformes</a>
+        <a class="sub" href="/blogue/">Blogue</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="we-mobile-cta">
+        <a href="/contact/" class="btn btn-primary">Démarrer ma publicité en ligne</a>
+      </div>
+    </div>
+  </div>
+  <main id="contenu" data-screen-label="Guide mesure" style="animation: epFadeUp 300ms cubic-bezier(0.2,0.7,0.2,1);">
+
+      <section style="background:var(--grad-hero); padding:76px 24px 56px; text-align:center;">
+        <div style="max-width:860px; margin:0 auto;">
+          <span class="eyebrow" style="display:block; margin-bottom:14px;">LE GUIDE</span>
+          <h1 style="font-size:clamp(2rem, 2.6vw + 0.8rem, 3rem); margin:0 0 10px;">Mesurer sa publicité&nbsp;: GA4, pixel Meta et conversions pour PME (sans jargon)</h1>
+          <div style="background:#fff; border:1px solid var(--lavande-200); border-left:4px solid var(--violet); border-radius:14px; padding:20px 24px; font-size:15px; line-height:1.7; color:var(--charbon); margin:24px auto 0; text-align:left;">Mesurer sa publicité, c'est savoir quelle annonce amène des appels, des réservations ou des soumissions, et laquelle brûle le budget. Pour une PME, trois outils suffisent&nbsp;: GA4 (gratuit, de Google), le pixel Meta avec l'API Conversions, et un suivi des actions qui comptent (appel, formulaire, réservation). Au Québec, la Loi 25 encadre le tout&nbsp;: consentement requis avant d'activer ces outils. Ce guide explique chaque pièce, sans jargon, dans l'ordre où les installer en 2026.</div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin:24px 0 0;">
+            <a href="#pourquoi-mesurer" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Pourquoi mesurer</a>
+            <a href="#ga4" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">GA4 en français simple</a>
+            <a href="#pixel-meta" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Pixel Meta et API Conversions</a>
+            <a href="#loi-25" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">La Loi 25</a>
+            <a href="#indicateurs" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Les 6 indicateurs</a>
+            <a href="#par-secteur" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Par secteur</a>
+            <a href="#faq" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">FAQ</a>
+          </div>
+        </div>
+      </section>
+      <section class="section" style="background:#fff; padding-top:24px;">
+        <div class="section-inner" style="max-width:800px;">
+
+          <h2 id="pourquoi-mesurer" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">Pourquoi l'absence de mesure brûle le budget</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Sans mesure, deux annonces se ressemblent. Avec la mesure, l'une amène des réservations à 8&nbsp;$ et l'autre à 45&nbsp;$ — et sur un budget de 1&nbsp;500&nbsp;$ par mois, cette différence-là, c'est le simple au quintuple en résultats, pour la même dépense. Exactement la même.</p>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">C'est aussi la raison du fameux «&nbsp;j'ai essayé la pub, ça ne marche pas&nbsp;». Dans nos audits chez Essentiel PME, la plupart des comptes abandonnés n'avaient aucun suivi de conversions&nbsp;: impossible de savoir ce qui fonctionnait, donc impossible d'optimiser. La campagne n'a pas échoué. Elle n'a jamais été pilotée.</p>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Et il y a plus. Les algorithmes de Google et de Meta optimisent vers ce que vous mesurez&nbsp;: pas de conversions déclarées, pas d'apprentissage. Votre concurrent qui mesure entraîne sa machine&nbsp;; vous, non. Le fossé se creuse chaque semaine.</p>
+
+          <h2 id="ga4" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">GA4 en français simple</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Google Analytics 4 (GA4) est l'outil gratuit qui enregistre ce qui se passe sur votre site&nbsp;: d'où viennent les visiteurs, ce qu'ils consultent, ce qu'ils font. Quatre notions suffisent.</p>
+          <div style="overflow-x:auto; margin:6px 0 18px;"><table style="border-collapse:collapse; width:100%; min-width:640px; font-size:14px; line-height:1.55; color:var(--charbon-500);">
+            <thead><tr><th style="text-align:left; padding:11px 14px; background:var(--lavande-50); color:var(--violet); font-size:12px; text-transform:uppercase; letter-spacing:var(--tracking-wide); border-bottom:2px solid var(--lavande-200); white-space:nowrap;">Terme GA4</th><th style="text-align:left; padding:11px 14px; background:var(--lavande-50); color:var(--violet); font-size:12px; text-transform:uppercase; letter-spacing:var(--tracking-wide); border-bottom:2px solid var(--lavande-200); white-space:nowrap;">En français simple</th></tr></thead>
+            <tbody><tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>Événement</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Une action sur votre site&nbsp;: page vue, clic sur le numéro, formulaire envoyé.</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>Conversion (événement clé)</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">L'événement qui compte pour vos affaires&nbsp;: demande de soumission, réservation, appel. C'est VOUS qui le déclarez.</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>Source / médium</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">D'où vient le visiteur&nbsp;: Google organique, publicité Meta, courriel, direct.</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>Attribution</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">À quelle source GA4 accorde le mérite d'une conversion quand le client a vu plusieurs canaux avant d'agir.</td></tr></tbody>
+          </table></div>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">L'installation de base se fait avec Google Tag Manager (GTM)&nbsp;: un seul code sur le site, puis chaque suivi se configure sans toucher au code. Le trio minimal pour une PME&nbsp;: clics sur le numéro de téléphone, envois de formulaire, clics sur le bouton de réservation. Tout le reste est du confort.</p>
+
+          <h2 id="pixel-meta" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">Le pixel Meta et l'API Conversions : pourquoi vos pubs « ne marchent pas »</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Le pixel Meta est un code qui dit à Facebook et Instagram ce que font les visiteurs venus de vos pubs. Sans lui, Meta optimise à l'aveugle. Il montre vos annonces à des gens qui cliquent, pas à des gens qui réservent.</p>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Le problème depuis quelques années&nbsp;: les bloqueurs de témoins et les restrictions d'iOS font perdre au pixel une partie des conversions. La réponse de Meta s'appelle l'API Conversions (CAPI)&nbsp;: les données partent de votre serveur ou de vos outils — formulaire, système de réservation, CRM — plutôt que du seul navigateur, ce qui donne une mesure plus complète, donc un algorithme mieux entraîné, donc un coût par résultat qui baisse. Une chaîne. Trois maillons.</p>
+          <div style="background:var(--lavande-50); border:1px solid var(--lavande-200); border-radius:16px; padding:20px 24px; margin:0 0 18px; font-size:15px; line-height:1.7; color:var(--charbon);"><strong>Minimum vital&nbsp;:</strong> pixel installé via GTM + événement de conversion sur l'action qui compte (formulaire, réservation, appel).<br><br>
+            <strong>Niveau recommandé&nbsp;:</strong> pixel + API Conversions avec déduplication (les deux envoient, Meta élimine les doublons).<br><br>
+            <strong>À vérifier chaque mois&nbsp;:</strong> le Gestionnaire d'événements Meta affiche-t-il vos conversions&nbsp;? Un pixel silencieux depuis trois semaines est une campagne qui vole à l'aveugle.</div>
+
+          <h2 id="loi-25" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">La Loi 25 : consentement et publicité, ce qu'une PME doit faire</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">La Loi 25 encadre la protection des renseignements personnels au Québec. Pour votre marketing, elle se résume à trois obligations concrètes. Ce résumé ne remplace pas un avis juridique&nbsp;; pour les cas particuliers, consultez la <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener">Commission d'accès à l'information (CAI)</a> ou un conseiller juridique.</p>
+          <h3 style="font-size:17px; font-weight:800; color:var(--charbon); margin:26px 0 8px;">1. Le consentement avant les témoins non essentiels</h3>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Votre site doit afficher un bandeau de consentement, et GA4 comme le pixel Meta ne doivent s'activer qu'après un «&nbsp;oui&nbsp;». Les paramètres par défaut doivent être les plus protecteurs.</p>
+          <h3 style="font-size:17px; font-weight:800; color:var(--charbon); margin:26px 0 8px;">2. La transparence</h3>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Une politique de confidentialité claire (quelles données, pourquoi, avec qui elles sont partagées) et un responsable de la protection des renseignements personnels désigné — dans une PME, c'est souvent le dirigeant.</p>
+          <h3 style="font-size:17px; font-weight:800; color:var(--charbon); margin:26px 0 8px;">3. Les formulaires</h3>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Ne collectez que le nécessaire, dites ce que vous ferez du courriel (ex.&nbsp;: recevoir le guide + l'infolettre), et offrez un désabonnement simple.</p>
+          <div style="background:var(--lavande-50); border:1px solid var(--lavande-200); border-radius:16px; padding:20px 24px; margin:0 0 18px; font-size:15px; line-height:1.7; color:var(--charbon);">La bonne nouvelle&nbsp;: un site conforme n'est pas un site qui mesure moins bien. Le <a href='https://support.google.com/analytics' target='_blank' rel='noopener'>mode consentement de Google</a> et l'<a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>API Conversions de Meta</a> sont justement conçus pour travailler dans ce cadre — la conformité et la performance ne s'opposent pas, elles s'installent ensemble, une seule fois.</div>
+
+          <h2 id="indicateurs" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">Le rapport mensuel qui compte : nos 6 indicateurs</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Un bon rapport tient sur une page. Il répond à une seule question&nbsp;: est-ce que la publicité rapporte&nbsp;? Voici les six indicateurs que nous suivons chez Essentiel PME, dans cet ordre.</p>
+          <div style="overflow-x:auto; margin:6px 0 18px;"><table style="border-collapse:collapse; width:100%; min-width:640px; font-size:14px; line-height:1.55; color:var(--charbon-500);">
+            <thead><tr><th style="text-align:left; padding:11px 14px; background:var(--lavande-50); color:var(--violet); font-size:12px; text-transform:uppercase; letter-spacing:var(--tracking-wide); border-bottom:2px solid var(--lavande-200); white-space:nowrap;">Indicateur</th><th style="text-align:left; padding:11px 14px; background:var(--lavande-50); color:var(--violet); font-size:12px; text-transform:uppercase; letter-spacing:var(--tracking-wide); border-bottom:2px solid var(--lavande-200); white-space:nowrap;">La question à laquelle il répond</th></tr></thead>
+            <tbody><tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>1. Conversions</strong> (demandes, réservations, appels)</td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Combien d'occasions d'affaires ce mois-ci&nbsp;?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>2. Coût par conversion</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Combien coûte chaque occasion&nbsp;? Est-ce viable face à la valeur d'un client&nbsp;?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>3. Dépense vs budget</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">A-t-on dépensé ce qui était prévu, là où c'était prévu&nbsp;?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>4. Répartition par plateforme</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Qui livre&nbsp;: Google, Meta, TikTok&nbsp;? Où réallouer&nbsp;?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>5. Meilleures et pires annonces</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Quoi couper, quoi amplifier le mois prochain&nbsp;?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>6. Tendance sur 3 mois</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Est-ce que ça s'améliore&nbsp;? (Un mois isolé ne prouve rien.)</td></tr></tbody>
+          </table></div>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Ce qui ne devrait jamais ouvrir un rapport&nbsp;: les impressions et la portée. Ce sont des chiffres de vanité — gros, flatteurs, et incapables de payer une facture. Ils servent au diagnostic. Pas au verdict.</p>
+
+          <h2 id="par-secteur" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">La mesure de votre secteur</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Les trois conversions à suivre changent selon le métier&nbsp;: soumissions en construction, réservations en restauration, rendez-vous en clinique. Chaque page d'industrie détaille son approche&nbsp;:</p>
+          <div style="display:flex; flex-wrap:wrap; gap:10px; margin:0 0 8px;">
+            <a href="/industries/construction/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Construction et métiers</a>
+            <a href="/industries/sante/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Santé et cliniques</a>
+            <a href="/industries/beaute/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Beauté et bien-être</a>
+            <a href="/industries/restauration/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Restauration</a>
+            <a href="/industries/services-pro/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Services professionnels</a>
+            <a href="/industries/ecommerce/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Commerce en ligne</a>
+          </div>
+          <h2 id="faq" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">FAQ</h2>
+          <div class="faq-list">
+            <div class="faq-item open">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-0" aria-expanded="true">
+                <span>GA4 est-il gratuit ?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-0">Oui, entièrement, pour les besoins d'une PME. L'installation via Google Tag Manager demande une à deux heures pour un suivi de base bien fait.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-1" aria-expanded="false">
+                <span>Quelle est la différence entre le pixel Meta et l'API Conversions ?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-1">Le pixel mesure depuis le navigateur du visiteur ; l'API Conversions envoie les données depuis vos systèmes. Ensemble (avec déduplication), ils donnent la mesure la plus complète — et de meilleurs coûts par résultat.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-2" aria-expanded="false">
+                <span>La Loi 25 s'applique-t-elle à ma petite entreprise ?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-2">Oui : la loi vise toute entreprise qui recueille des renseignements personnels au Québec, sans seuil de taille. Bandeau de consentement, politique de confidentialité et responsable désigné sont le minimum.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-3" aria-expanded="false">
+                <span>Que suivre en priorité si je ne mesure rien aujourd'hui ?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-3">Trois actions : les clics sur votre numéro de téléphone, les envois de formulaire et les réservations en ligne. Avec ça, vous savez déjà quelle campagne travaille.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-4" aria-expanded="false">
+                <span>Le consentement fait-il perdre des données ?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-4">Une partie, oui, c'est le principe. Mais le mode consentement de Google et l'API Conversions compensent en partie, et une mesure conforme à 80 % bat une mesure illégale à 100 %.</div>
+            </div>
+          </div>
+          <div style="margin-top:44px; padding:20px 24px; background:var(--blanc-casse); border:1px solid var(--border); border-radius:16px; font-size:13.5px; color:var(--charbon-500); line-height:1.7;">
+            <strong style="color:var(--charbon);">Rédigé par Benoit, fondateur d'Essentiel PME</strong> — plus de 15 ans en marketing numérique et gestion de publicité en ligne pour des entreprises québécoises, des PME aux grands comptes. <a href="https://www.linkedin.com/company/essentiel-pme" target="_blank" rel="noopener">LinkedIn</a> · Dernière révision&nbsp;: 15 juillet 2026 · Fourchettes de coûts&nbsp;: données internes Essentiel PME (comptes gérés 2025-2026) et documentations officielles des plateformes.
+          </div>
+        </div>
+      </section>
+      <section class="cta-band">
+        <div class="cta-band-inner">
+          <h2>Les prix sont affichés. Le reste aussi.</h2>
+          <p>On s'occupe de votre publicité et de votre suivi. Réponse d'un humain en 24 heures ouvrables.</p>
+          <a href="/contact/" class="btn btn-on-violet btn-lg">Parler de mon projet →</a>
+        </div>
+      </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="/assets/img/logo-h-fr-white.svg" data-i18n-src-en="/assets/img/logo-h-en-white.svg" alt="Essentiel PME" style="filter:none; height:32px;">
+        <p>Publicité en ligne gérée pour les PME du Québec. Simple, efficace, rapide.</p>
+        <div style="display:flex; gap:12px; margin-top:4px;">
+          <a href="https://www.facebook.com/profile.php?id=61591838577895" target="_blank" rel="noopener" title="Facebook" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;"><svg width="17" height="17" viewBox="0 0 320 512" fill="var(--violet)"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path></svg></a>
+          <a href="https://www.instagram.com/essentielpme" target="_blank" rel="noopener" title="Instagram" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;"><svg width="17" height="17" viewBox="0 0 448 512" fill="var(--violet)"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg></a>
+          <a href="https://www.linkedin.com/company/essentiel-pme" target="_blank" rel="noopener" title="LinkedIn" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;"><svg width="17" height="17" viewBox="0 0 448 512" fill="var(--violet)"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 155.6z"></path></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/publicite/">Publicité en ligne</a></li>
+          <li><a href="/plateformes/">Plateformes</a></li>
+          <li><a href="/industries/construction/">Industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Entreprise</h4>
+        <ul>
+          <li><a href="/a-propos/">À propos</a></li>
+          <li><a href="/industries/construction/">Industries</a></li>
+          <li><a href="/blogue/">Blogue</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="/publicite-en-ligne/">Publicité en ligne : le guide</a></li>
+          <li><a href="/mesurer-ses-resultats/">Mesurer ses résultats</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="/mentions-legales/">Mentions légales</a></li>
+          <li><a href="/mentions-legales/#politique-de-confidentialite">Politique de confidentialité</a></li>
+          <li><a href="/mentions-legales/#temoins">Politique de cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Essentiel PME</span>
+      <a href="https://superquanti.com" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:10px; color:inherit; border-bottom:none; white-space:nowrap;">
+        <span>En association avec</span>
+        <img src="/assets/img/superquanti-logo.svg" alt="SuperQuanti" style="height:10px; width:auto; display:block;">
+      </a>
+    </div>
+  </footer>
+</div>
+<div class="consent-overlay" data-consent-banner hidden>
+  <div class="consent-banner" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <h3 id="consent-title">Votre expérience, vos choix</h3>
+    <div data-consent-main>
+      <p>On utilise trois types de témoins&nbsp;: <strong>fonctionnels</strong>, <strong>analytiques</strong> et <strong>publicitaires</strong> — pour offrir la meilleure expérience possible et améliorer nos services. Détails dans notre <a href="/mentions-legales/#temoins">politique de témoins</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-customize>Personnaliser</button>
+        <button type="button" data-consent-accept>Tout accepter</button>
+      </div>
+    </div>
+    <div data-consent-panel hidden style="display:none;">
+      <div class="consent-choices">
+        <label><input type="checkbox" checked disabled> <span><strong>Fonctionnels</strong> — nécessaires au fonctionnement du site (toujours actifs)</span></label>
+        <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytiques</strong> — nous aident à comprendre comment le site est utilisé, pour l'améliorer</span></label>
+        <label><input type="checkbox" data-consent-ads checked> <span><strong>Publicitaires</strong> — servent à mesurer l'efficacité de nos publicités et à les rendre plus pertinentes</span></label>
+      </div>
+      <div class="consent-actions">
+        <button type="button" data-consent-optional-refuse>Refuser les témoins optionnels</button>
+        <button type="button" data-consent-save>Confirmer mes choix</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button type="button" class="consent-reopen" data-consent-reopen aria-label="Gérer les témoins" title="Gérer les témoins">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><circle cx="8.5" cy="8.5" r="0.8" fill="currentColor"></circle><circle cx="16" cy="15.5" r="0.8" fill="currentColor"></circle><circle cx="9" cy="15" r="0.8" fill="currentColor"></circle><circle cx="12.5" cy="11" r="0.8" fill="currentColor"></circle></svg>
+</button>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

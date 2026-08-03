@@ -843,6 +843,8 @@ Object.assign(DICT, {
   'Détails de la plateforme': 'Platform details',
   'Suivez-nous :': 'Follow us:',
   'politique de confidentialité': 'privacy policy',
+  'Publicité en ligne : le guide': 'Online advertising guide (FR)',
+  'Mesurer ses résultats': 'Measuring your results (FR)',
   'Oui, envoyez-moi le conseil du mois !': 'Yes, send me the tip of the month!',
   'Des idées concrètes de publicité et de marketing pour votre PME — un seul courriel par mois, zéro pourriel, désabonnement en un clic. Retrait possible en tout temps.': 'Concrete advertising and marketing ideas for your SMB — just one email a month, zero spam, one-click unsubscribe. Withdraw anytime.',
   'Essentiel — 695 $/mois': 'Essential — $695/mo',

@@ -18,6 +18,8 @@
 - [À propos](https://essentielpme.com/a-propos/) : mission, valeurs et processus en 6 étapes.
 - [Blogue](https://essentielpme.com/blogue/) : conseils publicité en ligne pour PME (articles à venir).
 - [Contact](https://essentielpme.com/contact/) : formulaire, info@essentielpme.com, 1-844-763-3832, Québec, QC.
+- [Guide : la publicité en ligne pour les PME au Québec](https://essentielpme.com/publicite-en-ligne/) : plateformes, coûts réels 2026 par industrie, les 5 erreurs, délais avant résultats.
+- [Guide : mesurer sa publicité](https://essentielpme.com/mesurer-ses-resultats/) : GA4, pixel Meta et API Conversions, Loi 25, les 6 indicateurs d'un bon rapport.
 
 ## Industries desservies
 
