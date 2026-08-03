@@ -671,7 +671,7 @@ ${ind.tags.map((tg) => tg.solid
     ? `                <span style="font-size:11.5px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; color:#fff; background:var(--violet); padding:4px 10px; border-radius:999px;">${tg.text}</span>`
     : `                <span style="font-size:11.5px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; color:var(--violet); background:var(--lavande-100); padding:4px 10px; border-radius:999px;">${tg.text}</span>`).join('\n')}
               </div>
-              <a href="${root}contact/" class="btn btn-primary" style="align-self:flex-start; margin-top:4px;">Choisir mon forfait →</a>
+              <a href="${root}contact/" class="btn btn-primary" style="align-self:flex-start; margin-top:4px;">Démarrer ma pub en ligne →</a>
             </div>
           </div>
         </div>

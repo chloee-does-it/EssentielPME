@@ -172,6 +172,7 @@ export const DICT = {
     "On configure tout : comptes, pixels et audiences.": "We set up everything: accounts, pixels and audiences.",
     "Démarrer mes pubs →": "Start my ads →",
     "Choisir mon forfait →": "Choose my package →",
+    "Démarrer ma pub en ligne →": "Start my online ads →",
 
     // ---- Industries (generic sections) ----
     "CE QU'ON ENTEND SOUVENT": "WHAT WE OFTEN HEAR",
