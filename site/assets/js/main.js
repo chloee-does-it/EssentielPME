@@ -259,7 +259,7 @@
         var el = form.querySelector('[data-field="' + k + '"]');
         payload[k] = el ? el.value.trim() : '';
       });
-      var interest = form.querySelector('[name="interest"]');
+      var interest = form.querySelector('[name="interest"]:checked') || form.querySelector('[name="interest"]');
       payload.interest = interest ? interest.value : '';
       var msg = form.querySelector('[name="message"]');
       payload.message = msg ? msg.value.trim() : '';

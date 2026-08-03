@@ -906,14 +906,14 @@ ${field('Entreprise', 'biz', 'text', 'organization')}
 ${field('Courriel', 'email', 'email', 'email')}
 ${field('Téléphone', 'phone', 'tel', 'tel')}
               </div>
-              <div style="display:flex; flex-direction:column; gap:6px;">
-                <label for="f-interest" style="font-size:13px; font-weight:700; color:var(--charbon);">Ce qui vous intéresse</label>
-                <select id="f-interest" name="interest" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; appearance:auto;">
-                  <option value="Je ne sais pas encore">Je ne sais pas encore</option>
-                  <option value="Publicité : Essentiel (695 $/mois)">Publicité : Essentiel (695&nbsp;$/mois)</option>
-                  <option value="Publicité : Essentiel Plus (995 $/mois)">Publicité : Essentiel Plus (995&nbsp;$/mois)</option>
-                  <option value="Publicité : Essentiel Performance (1 495 $/mois)">Publicité : Essentiel Performance (1&nbsp;495&nbsp;$/mois)</option>
-                </select>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <span style="font-size:13px; font-weight:700; color:var(--charbon);">Ce qui vous intéresse</span>
+                <div class="interest-group" role="radiogroup" aria-label="Ce qui vous intéresse">
+                  <input type="radio" name="interest" id="int-essentiel" value="Publicité : Essentiel (695 $/mois)"><label for="int-essentiel">Essentiel — 695&nbsp;$/mois</label>
+                  <input type="radio" name="interest" id="int-plus" value="Publicité : Essentiel Plus (995 $/mois)"><label for="int-plus">Essentiel Plus — 995&nbsp;$/mois</label>
+                  <input type="radio" name="interest" id="int-performance" value="Publicité : Essentiel Performance (1 495 $/mois)"><label for="int-performance">Essentiel Performance — 1&nbsp;495&nbsp;$/mois</label>
+                  <input type="radio" name="interest" id="int-aide" value="Aidez-moi à choisir" checked><label for="int-aide">Aidez-moi à choisir</label>
+                </div>
               </div>
               <div style="display:flex; flex-direction:column; gap:6px;">
                 <label for="f-msg" style="font-size:13px; font-weight:700; color:var(--charbon);">Votre message</label>
