@@ -89,7 +89,7 @@ ${drop('À propos', `${root}a-propos/`, active === 'aboutGroup', [
     { label: 'Plateformes', href: `${root}plateformes/` },
     { label: 'Blogue', href: `${root}blogue/` },
   ])}
-${drop('Guides', `${root}publicite-en-ligne/`, active === 'guides', [
+${drop('Ressources', `${root}publicite-en-ligne/`, active === 'guides', [
     { label: 'Publicité en ligne : le guide', href: `${root}publicite-en-ligne/` },
     { label: 'Mesurer ses résultats', href: `${root}mesurer-ses-resultats/` },
   ])}
@@ -123,7 +123,7 @@ ${drop('Guides', `${root}publicite-en-ligne/`, active === 'guides', [
         <a class="sub" href="${root}a-propos/">À propos</a>
         <a class="sub" href="${root}plateformes/">Plateformes</a>
         <a class="sub" href="${root}blogue/">Blogue</a>
-        <span class="grouplabel">Guides</span>
+        <span class="grouplabel">Ressources</span>
         <a class="sub" href="${root}publicite-en-ligne/">Publicité en ligne : le guide</a>
         <a class="sub" href="${root}mesurer-ses-resultats/">Mesurer ses résultats</a>
         <a href="${root}contact/">Contact</a>
@@ -139,8 +139,9 @@ function footer(root) {
   return `  <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="${root}assets/img/logo-h-fr-white.svg" data-i18n-src-en="${root}assets/img/logo-h-en-white.svg" alt="Essentiel PME" style="filter:none; height:32px;">
+        <img src="${root}assets/img/logo-h-fr-white.svg" alt="Essentiel PME" style="filter:none; height:32px;">
         <p>Publicité en ligne gérée pour les PME du Québec. Simple, efficace, rapide.</p>
+        <p style="margin-top:2px;">Fondé par <a href="https://www.linkedin.com/in/benoitarlabosse/" target="_blank" rel="noopener" style="color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px; border-bottom:none;">Benoit Arlabosse</a></p>
         <div style="display:flex; gap:12px; margin-top:4px;">
           <a href="${SITE.social.facebook}" target="_blank" rel="noopener" title="Facebook" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;">${socialIcon('facebook')}</a>
           <a href="${SITE.social.instagram}" target="_blank" rel="noopener" title="Instagram" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;">${socialIcon('instagram')}</a>
@@ -165,7 +166,7 @@ function footer(root) {
         </ul>
       </div>
       <div>
-        <h4>Guides</h4>
+        <h4>Ressources</h4>
         <ul>
           <li><a href="${root}publicite-en-ligne/">Publicité en ligne : le guide</a></li>
           <li><a href="${root}mesurer-ses-resultats/">Mesurer ses résultats</a></li>
@@ -200,6 +201,7 @@ function shell({ path, title, desc, active, jsonld = [], body, label, frOnly = f
     name: SITE.name, alternateName: SITE.nameEn, url: SITE.baseUrl + '/',
     logo: `${SITE.baseUrl}/assets/img/logo-h-fr-rgb.svg`,
     email: SITE.email, telephone: SITE.phoneIntl,
+    founder: { '@type': 'Person', name: 'Benoit Arlabosse', sameAs: ['https://www.linkedin.com/in/benoitarlabosse/'] },
     address: { '@type': 'PostalAddress', addressLocality: 'Québec', addressRegion: 'QC', addressCountry: 'CA' },
     sameAs: [SITE.social.facebook, SITE.social.instagram, SITE.social.linkedin],
   };
@@ -1147,11 +1149,11 @@ const pilSecteurs = (intro) => `${pilP(intro)}
           </div>`;
 
 const pilAuthor = `<div style="margin-top:44px; padding:20px 24px; background:var(--blanc-casse); border:1px solid var(--border); border-radius:16px; font-size:13.5px; color:var(--charbon-500); line-height:1.7;">
-            <strong style="color:var(--charbon);">Rédigé par Benoit, fondateur d'Essentiel PME</strong> — plus de 15 ans en marketing numérique et gestion de publicité en ligne pour des entreprises québécoises, des PME aux grands comptes. <a href="https://www.linkedin.com/company/essentiel-pme" target="_blank" rel="noopener">LinkedIn</a> · Dernière révision&nbsp;: 15 juillet 2026 · Fourchettes de coûts&nbsp;: données internes Essentiel PME (comptes gérés 2025-2026) et documentations officielles des plateformes.
+            <strong style="color:var(--charbon);">Rédigé par Benoit Arlabosse, fondateur d'Essentiel PME</strong> — plus de 15 ans en marketing numérique et gestion de publicité en ligne pour des entreprises québécoises, des PME aux grands comptes. <a href="https://www.linkedin.com/in/benoitarlabosse/" target="_blank" rel="noopener">LinkedIn</a> · Dernière révision&nbsp;: 15 juillet 2026 · Fourchettes de coûts&nbsp;: données internes Essentiel PME (comptes gérés 2025-2026) et documentations officielles des plateformes.
           </div>`;
 
 const pilAuthorEN = `<div style="margin-top:44px; padding:20px 24px; background:var(--blanc-casse); border:1px solid var(--border); border-radius:16px; font-size:13.5px; color:var(--charbon-500); line-height:1.7;">
-            <strong style="color:var(--charbon);">Written by Benoit, founder of SMB Essentials</strong> — 15+ years in digital marketing and online advertising management for Quebec businesses, from SMBs to major accounts. <a href="https://www.linkedin.com/company/essentiel-pme" target="_blank" rel="noopener">LinkedIn</a> · Last revised: July 15, 2026 · Cost ranges: SMB Essentials internal data (managed accounts, 2025-2026) and official platform documentation.
+            <strong style="color:var(--charbon);">Written by Benoit Arlabosse, founder of SMB Essentials</strong> — 15+ years in digital marketing and online advertising management for Quebec businesses, from SMBs to major accounts. <a href="https://www.linkedin.com/in/benoitarlabosse/" target="_blank" rel="noopener">LinkedIn</a> · Last revised: July 15, 2026 · Cost ranges: SMB Essentials internal data (managed accounts, 2025-2026) and official platform documentation.
           </div>`;
 
 const PIL_CTA_FR = { h: 'Les prix sont affichés. Le reste aussi.', p: "On s'occupe de votre publicité et de votre suivi. Réponse d'un humain en 24 heures ouvrables.", cta: 'Parler de mon projet →', href: '/contact/' };
@@ -1185,7 +1187,7 @@ ${ctaBand(cta)}`;
       {
         '@context': 'https://schema.org', '@type': 'Article',
         headline: h1, inLanguage: 'fr-CA', dateModified: '2026-07-15',
-        author: { '@type': 'Person', name: 'Benoit', jobTitle: "Fondateur, Essentiel PME" },
+        author: { '@type': 'Person', name: 'Benoit Arlabosse', jobTitle: 'Fondateur, Essentiel PME', sameAs: ['https://www.linkedin.com/in/benoitarlabosse/'] },
         publisher: { '@type': 'Organization', name: SITE.name, url: SITE.baseUrl + '/' },
         mainEntityOfPage: `${SITE.baseUrl}/${path.replace(/index\.html$/, '')}`,
       },

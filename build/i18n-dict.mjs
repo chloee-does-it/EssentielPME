@@ -843,6 +843,8 @@ Object.assign(DICT, {
   'Détails de la plateforme': 'Platform details',
   'Suivez-nous :': 'Follow us:',
   'politique de confidentialité': 'privacy policy',
+  'Ressources': 'Resources',
+  'Fondé par': 'Founded by',
   'Publicité en ligne : le guide': 'Online advertising: the guide',
   'Mesurer ses résultats': 'Measuring your results',
   'Envie de comprendre les coûts, les plateformes et les délais avant de choisir ?': 'Want to understand the costs, platforms and timelines before choosing?',
