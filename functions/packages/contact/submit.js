@@ -122,7 +122,7 @@ async function main(args) {
       ${row('Téléphone', phone)}
       ${row('Intérêt', interest || '—')}
       ${row('Message', message || '—')}
-      ${row('Communications (LCAP)', marketing ? 'OUI — consentement exprès donné via le formulaire' : 'Non')}
+      ${row('Communications (LCAP)', marketing ? 'Oui — case cochée à la soumission (pré-cochée par défaut)' : 'Non — case décochée par le visiteur')}
       <tr><td colspan="2" style="padding:14px 0 4px; font-weight:bold; border-top:1px solid #ddd;">Provenance</td></tr>
       ${attributionRows(data.attribution)}
     </table>`;
