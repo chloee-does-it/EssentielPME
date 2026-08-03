@@ -843,6 +843,8 @@ Object.assign(DICT, {
   'Détails de la plateforme': 'Platform details',
   'Suivez-nous :': 'Follow us:',
   'politique de confidentialité': 'privacy policy',
+  'Oui, envoyez-moi le conseil du mois !': 'Yes, send me the tip of the month!',
+  'Des idées concrètes de publicité et de marketing pour votre PME — un seul courriel par mois, zéro pourriel, désabonnement en un clic. Retrait possible en tout temps à info@essentielpme.com. Essentiel PME · Solutions SuperQuanti inc., 6000, boul. de Rome, bureau 300, Brossard (Québec) J4Y 0B6.': 'Concrete advertising and marketing ideas for your SMB — just one email a month, zero spam, one-click unsubscribe. Withdraw anytime at info@essentielpme.com. SMB Essentials · Solutions SuperQuanti Inc., 6000 Rome Blvd., Suite 300, Brossard, Québec J4Y 0B6.',
   'Essentiel — 695 $/mois': 'Essential — $695/mo',
   'Essentiel Plus — 995 $/mois': 'Essential Plus — $995/mo',
   'Essentiel Performance — 1 495 $/mois': 'Essential Performance — $1,495/mo',
