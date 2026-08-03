@@ -22,6 +22,8 @@ const EN_SLUGS = {
   'contact': 'contact',
   'blogue': 'blog',
   'mentions-legales': 'legal',
+  'publicite-en-ligne': 'online-advertising',
+  'mesurer-ses-resultats': 'measuring-your-results',
   'industries/construction': 'industries/construction',
   'industries/sante': 'industries/healthcare',
   'industries/beaute': 'industries/beauty',
@@ -87,6 +89,10 @@ ${drop('À propos', `${root}a-propos/`, active === 'aboutGroup', [
     { label: 'Plateformes', href: `${root}plateformes/` },
     { label: 'Blogue', href: `${root}blogue/` },
   ])}
+${drop('Guides', `${root}publicite-en-ligne/`, active === 'guides', [
+    { label: 'Publicité en ligne : le guide', href: `${root}publicite-en-ligne/` },
+    { label: 'Mesurer ses résultats', href: `${root}mesurer-ses-resultats/` },
+  ])}
         <a href="${root}contact/"${a('contact')}>Contact</a>
       </nav>
       <div class="we-header-right">
@@ -117,6 +123,9 @@ ${drop('À propos', `${root}a-propos/`, active === 'aboutGroup', [
         <a class="sub" href="${root}a-propos/">À propos</a>
         <a class="sub" href="${root}plateformes/">Plateformes</a>
         <a class="sub" href="${root}blogue/">Blogue</a>
+        <span class="grouplabel">Guides</span>
+        <a class="sub" href="${root}publicite-en-ligne/">Publicité en ligne : le guide</a>
+        <a class="sub" href="${root}mesurer-ses-resultats/">Mesurer ses résultats</a>
         <a href="${root}contact/">Contact</a>
       </nav>
       <div class="we-mobile-cta">
@@ -582,6 +591,7 @@ ${platformTiles(root)}
             <h2>Questions fréquentes sur la publicité.</h2>
           </div>
 ${faqList(faqAds, 'faq-ads', true)}
+          <p style="text-align:center; margin:28px 0 0; font-size:15px; color:var(--charbon-500);">Envie de comprendre les coûts, les plateformes et les délais avant de choisir&nbsp;? <a href="/publicite-en-ligne/" style="font-weight:700;">Le guide complet de la publicité en ligne →</a></p>
         </div>
       </section>
 
@@ -1140,11 +1150,18 @@ const pilAuthor = `<div style="margin-top:44px; padding:20px 24px; background:va
             <strong style="color:var(--charbon);">Rédigé par Benoit, fondateur d'Essentiel PME</strong> — plus de 15 ans en marketing numérique et gestion de publicité en ligne pour des entreprises québécoises, des PME aux grands comptes. <a href="https://www.linkedin.com/company/essentiel-pme" target="_blank" rel="noopener">LinkedIn</a> · Dernière révision&nbsp;: 15 juillet 2026 · Fourchettes de coûts&nbsp;: données internes Essentiel PME (comptes gérés 2025-2026) et documentations officielles des plateformes.
           </div>`;
 
-function pilierShell({ path, title, desc, h1, answerBox, toc, content, faq, faqPrefix, label }) {
+const pilAuthorEN = `<div style="margin-top:44px; padding:20px 24px; background:var(--blanc-casse); border:1px solid var(--border); border-radius:16px; font-size:13.5px; color:var(--charbon-500); line-height:1.7;">
+            <strong style="color:var(--charbon);">Written by Benoit, founder of SMB Essentials</strong> — 15+ years in digital marketing and online advertising management for Quebec businesses, from SMBs to major accounts. <a href="https://www.linkedin.com/company/essentiel-pme" target="_blank" rel="noopener">LinkedIn</a> · Last revised: July 15, 2026 · Cost ranges: SMB Essentials internal data (managed accounts, 2025-2026) and official platform documentation.
+          </div>`;
+
+const PIL_CTA_FR = { h: 'Les prix sont affichés. Le reste aussi.', p: "On s'occupe de votre publicité et de votre suivi. Réponse d'un humain en 24 heures ouvrables.", cta: 'Parler de mon projet →', href: '/contact/' };
+const PIL_CTA_EN = { h: 'Our prices are published. So is everything else.', p: 'We manage your advertising and your tracking. A reply from a human within 24 business hours.', cta: 'Talk about my project →', href: '/contact/' };
+
+function pilierShell({ path, title, desc, h1, answerBox, toc, content, faq, faqPrefix, label, eyebrow = 'LE GUIDE', faqTitle = 'FAQ', author = pilAuthor, cta = PIL_CTA_FR }) {
   const body = `
       <section style="background:var(--grad-hero); padding:76px 24px 56px; text-align:center;">
         <div style="max-width:860px; margin:0 auto;">
-          <span class="eyebrow" style="display:block; margin-bottom:14px;">LE GUIDE</span>
+          <span class="eyebrow" style="display:block; margin-bottom:14px;">${eyebrow}</span>
           <h1 style="font-size:clamp(2rem, 2.6vw + 0.8rem, 3rem); margin:0 0 10px;">${h1}</h1>
           <div style="background:#fff; border:1px solid var(--lavande-200); border-left:4px solid var(--violet); border-radius:14px; padding:20px 24px; font-size:15px; line-height:1.7; color:var(--charbon); margin:24px auto 0; text-align:left;">${answerBox}</div>
           <div style="display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin:24px 0 0;">
@@ -1155,15 +1172,15 @@ function pilierShell({ path, title, desc, h1, answerBox, toc, content, faq, faqP
       <section class="section" style="background:#fff; padding-top:24px;">
         <div class="section-inner" style="max-width:800px;">
 ${content}
-          ${pilH2('faq', 'FAQ')}
+          ${pilH2('faq', faqTitle)}
 ${faqList(faq, faqPrefix)}
-          ${pilAuthor}
+          ${author}
         </div>
       </section>
-${ctaBand({ h: 'Les prix sont affichés. Le reste aussi.', p: "On s'occupe de votre publicité et de votre suivi. Réponse d'un humain en 24 heures ouvrables.", cta: 'Parler de mon projet →', href: '/contact/' })}`;
+${ctaBand(cta)}`;
 
   return shell({
-    path, label, title, desc, active: '', frOnly: true, body,
+    path, label, title, desc, active: 'guides', body,
     jsonld: [
       {
         '@context': 'https://schema.org', '@type': 'Article',
@@ -1354,6 +1371,185 @@ function pilierMesurePage() {
       { q: "La Loi 25 s'applique-t-elle à ma petite entreprise ?", a: 'Oui : la loi vise toute entreprise qui recueille des renseignements personnels au Québec, sans seuil de taille. Bandeau de consentement, politique de confidentialité et responsable désigné sont le minimum.' },
       { q: 'Que suivre en priorité si je ne mesure rien aujourd\'hui ?', a: 'Trois actions : les clics sur votre numéro de téléphone, les envois de formulaire et les réservations en ligne. Avec ça, vous savez déjà quelle campagne travaille.' },
       { q: 'Le consentement fait-il perdre des données ?', a: "Une partie, oui, c'est le principe. Mais le mode consentement de Google et l'API Conversions compensent en partie, et une mesure conforme à 80 % bat une mesure illégale à 100 %." },
+    ],
+  });
+}
+
+/* Versions anglaises des piliers — contenu autoral EN ; le chrome (menu, pied
+   de page, bandeau) reste français ici et se traduit au passage toEnglish(). */
+function pilierPubliciteEN() {
+  const content = `
+          ${pilH2('pourquoi', 'Why online advertising in 2026')}
+          ${pilP("Because your customers decide online. Even when they buy in person. A “near me” search on a Sunday night, a post spotted in an Instagram feed, a Google listing checked two minutes before calling: the decision happens on a screen, almost always a phone.")}
+          ${pilP("Word of mouth is still precious. But you can't control it. Advertising lets you choose three things: the territory, the budget, the message. You advertise within a 5&nbsp;km radius of your front door or across the whole Montérégie, you spend $500 or $5,000 a month, and you show what you want to show — your craft, not discounts.")}
+          ${pilP("And unlike a billboard or an ad in the regional weekly, everything is measurable: who saw, who clicked, who called, who booked. Every dollar leaves a trace.")}
+
+          ${pilH2('plateformes', 'Google, Meta or TikTok: who does what')}
+          ${pilP("Google captures intent. Meta creates desire. TikTok builds awareness with the under-35 crowd. These aren't three versions of the same tool: they're three different moments in your customer's mind, and each one has its own price.")}
+          ${pilTable(
+            ['Platform', 'Moment captured', 'Ideal for', 'Expected results'],
+            [
+              ['<strong>Google (search)</strong>', 'The customer is actively searching: “emergency plumber Laval”, “manicure near me”', 'High-intent services: emergencies, appointments, quotes', 'Fast: often within the first weeks'],
+              ['<strong>Meta (Facebook · Instagram)</strong>', "The customer isn't searching yet; your ad sparks the idea in their feed", 'Visual trades (beauty, restaurants, renovation), local offers', 'Progressive: the platform learns over 4 to 6 weeks'],
+              ['<strong>TikTok</strong>', 'Discovery and entertainment; short video formats', 'Younger audiences, retail, restaurants, brand awareness', 'Awareness first, conversions later'],
+            ]
+          )}
+          ${pilP("The winning combination for most SMBs: Google to capture the demand that already exists, Meta to create new demand, and TikTok only when the audience and video content truly fit. One well-managed platform beats three neglected ones. Always. <a href='/plateformes/'>The details of every platform are here.</a>")}
+
+          ${pilH2('couts', 'What it really costs (2026 benchmarks by industry)')}
+          ${pilP("Nobody publishes their prices in this industry. We do. Here are the benchmarks observed in the accounts we manage at SMB Essentials, for Quebec SMBs, in 2025-2026 — keeping in mind that your actual costs will move with the neighbourhood, the competition and the season.")}
+          ${pilTable(
+            ['Industry', 'Google CPC (approx.)', 'Meta CPC (approx.)', 'Cost per lead / booking', 'Realistic minimum media budget'],
+            [
+              ['Beauty and wellness (salon, spa)', '$1 to $4', '$0.50 to $2', '$5 to $20', '$450 to $600/mo'],
+              ['Restaurants', '$1 to $3', '$0.50 to $2', '$5 to $15', '$450 to $600/mo'],
+              ['Construction and renovation', '$3 to $8', '$1 to $3', '$30 to $60 (Meta) · $50 to $100 (Google, quote)', '$600 to $900/mo'],
+              ['Professional services (lawyers, accountants)', '$5 to $15', '$2 to $5', '$40 to $120 (consultation)', '$600 to $900/mo'],
+              ['Healthcare (clinics, dental)', '$3 to $8', '$1 to $3', '$20 to $60 (appointment)', '$600 to $900/mo'],
+              ['Retail', '$0.75 to $2.50', '$0.50 to $1.50', '$3 to $12 (visit/sale)', '$450 to $600/mo'],
+            ]
+          )}
+          <p style="margin:-8px 0 18px; font-size:12.5px; color:var(--charbon-300);">Source: SMB Essentials internal data, managed accounts 2025-2026. Indicative ranges; each sector's page (see “By sector” below) gives the full picture.</p>
+          ${pilH3('The ~2:1 rule')}
+          ${pilCallout("One dollar of management, two dollars of media budget. That's the rule. A $695/mo management fee therefore comes with roughly $1,400/mo paid directly to the platforms, because that's the ratio at which management pays for itself. Below that, fixed fees eat the performance. <a href='/publicite/'>Our packages and their recommended budgets are published here.</a>")}
+          ${pilH3('The math that matters: lifetime value')}
+          ${pilP("A salon colour client comes back every 6 weeks, at $120 a visit. A thousand dollars a year. For years. Her acquisition cost through advertising: $5 to $20. The same reasoning applies everywhere — a $40,000 renovation contract easily justifies a quote that cost $100 in advertising, and it would still justify it at three times that price. Calculate what a customer is worth over 3 years. Not what a click costs.")}
+
+          ${pilH2('erreurs', "The 5 mistakes that waste an SMB's budget")}
+          ${pilP('We audit Quebec SMB ad accounts every month. The same five mistakes come back. In every industry.')}
+          ${pilH3('1. The “Boost” button')}
+          ${pilP("Boosting a post is not a campaign: no precise targeting, no conversion objective, no tracking. It's the fastest way to spend $200 on likes that never buy.")}
+          ${pilH3('2. Nowhere to convert')}
+          ${pilP("Desire fades fast. Without online booking, a short form or a tappable phone number, every paid click dies on a page that asks for nothing.")}
+          ${pilH3('3. Targeting too wide')}
+          ${pilP("Nobody crosses three bridges for a haircut. A 3 to 8&nbsp;km radius is enough for most local businesses; every dollar spent outside your zone is a dollar thrown away.")}
+          ${pilH3('4. Advertising nothing but discounts')}
+          ${pilP('Repeated promos attract bargain hunters and devalue your work. Advertise your craft: your projects, your before-and-afters, your reviews.')}
+          ${pilH3('5. Stopping after 3 weeks, without measuring anything')}
+          ${pilP("The platforms need 4 to 6 weeks to learn who converts. And without tracking (GA4, Meta pixel), there's no way to know which ad pays off and which one burns the budget.")}
+          ${pilCallout('Conversion tracking deserves its own guide: <a href="/mesurer-ses-resultats/"><strong>Measuring your advertising: GA4, Meta pixel and conversions for SMBs →</strong></a>')}
+
+          ${pilH2('delai', 'How long before you see results')}
+          ${pilP("Four to six weeks of learning. Then cruising speed around the third month. It's mechanical: Google's and Meta's algorithms test your ads on different profiles, eliminate what doesn't convert, then concentrate the budget on what works — and the platforms document it themselves, <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta describing a learning phase</a> that requires a sufficient volume of conversions before delivery stabilizes, <a href='https://support.google.com/google-ads' target='_blank' rel='noopener'>Google Ads recommending that campaigns run</a> before judging them. Cutting before the learning ends means paying for the lesson without ever reading the answer.")}
+          ${pilP("Google gives signals faster, because it captures demand that already exists. Meta takes longer, but builds a pool of new customers. Hence our 3-month minimum commitment: not to sell longer, but because below that, the numbers mean nothing. Nothing at all.")}
+
+          ${pilH2('qui-gere', 'In-house, freelancer or agency: who should manage your campaigns')}
+          ${pilP('It depends. On your time, your budget, the complexity of your campaigns. Here is the honest comparison.')}
+          ${pilTable(
+            ['Option', 'Typical cost', 'Strengths', 'Limits'],
+            [
+              ['<strong>Yourself (in-house)</strong>', 'Your time (5 to 10&nbsp;hrs/week at first)', 'Total control, no management fees', 'Steep learning curve; platforms change constantly; costly mistakes early on'],
+              ['<strong>Freelancer</strong>', '$300 to $800/mo', 'Flexible, affordable', 'Uneven quality; variable availability; dependent on one person'],
+              ['<strong>Large agency</strong>', '$2,000 to $5,000/mo and up', 'Full team, advanced tools', 'Built for big budgets; an SMB becomes the small account on the list'],
+              ['<strong>SMB Essentials</strong>', '$695 to $1,495/mo, <a href="/publicite/">published prices</a>', 'Full management, monthly report, built for local SMBs', 'Minimum media budget required (~2:1) so management pays for itself'],
+            ]
+          )}
+          ${pilP("The test is simple. If managing your campaigns pulls you away from what brings in the money — your customers, your job sites, your chairs — delegate. If you have the time and the desire to learn, start small, on a single platform. But start.")}
+
+          ${pilH2('par-secteur', "Your sector's advertising, in detail")}
+          ${pilSecteurs('Every industry has its costs, its calendar, its traps. The guide for each sector:')}`;
+
+  return pilierShell({
+    path: 'publicite-en-ligne/index.html',
+    label: 'Online advertising guide',
+    title: 'Online advertising for Quebec SMBs: the complete guide (2026) | SMB Essentials',
+    desc: 'Platforms, real 2026 costs by industry and mistakes to avoid: the online advertising guide for Quebec SMBs, by SMB Essentials.',
+    h1: 'Online advertising for Quebec SMBs: the complete guide (2026)',
+    eyebrow: 'THE GUIDE', faqTitle: 'FAQ', author: pilAuthorEN, cta: PIL_CTA_EN,
+    answerBox: "Online advertising puts a Quebec SMB in front of its customers at the moment they're searching, or just before. In the accounts SMB Essentials managed in 2025-2026, costs per click ranged from $0.50 to $15, with realistic minimum budgets of $450 to $900 per month, depending on platform and industry. This guide covers the platforms, real costs by sector, the five most expensive mistakes and how long it takes to see results.",
+    toc: [
+      ['pourquoi', 'Why in 2026'], ['plateformes', 'Google, Meta or TikTok'], ['couts', 'Real costs'],
+      ['erreurs', 'The 5 mistakes'], ['delai', 'Time to results'], ['qui-gere', 'In-house, freelancer or agency'],
+      ['par-secteur', 'By sector'], ['faq', 'FAQ'],
+    ],
+    content,
+    faqPrefix: 'faq-pilier-pub',
+    faq: [
+      { q: 'How much does online advertising cost for a Quebec SMB?', a: 'Based on our managed accounts in 2025-2026: $0.50 to $15 per click depending on platform and industry, $5 to $120 per lead depending on the sector, and a realistic minimum media budget of $450 to $900 per month on one platform, plus management if you delegate.', open: true },
+      { q: 'What minimum budget do you need to start advertising online in Quebec?', a: 'Plan for $450 to $600 per month of media budget on a single platform, plus management if you delegate. Below that threshold, the platforms lack the data to optimize. Results become random.' },
+      { q: 'Google Ads or Facebook: which should you choose first?', a: 'Google if your customers are already searching for you (emergencies, services, appointments). Meta if your trade is visual or you need to create demand. When in doubt, start where intent is strongest: Google search.' },
+      { q: 'Does boosting a Facebook post work?', a: 'Rarely. Boosting optimizes for engagement (likes, comments), not for sales or leads. A real campaign in Ads Manager targets better, costs less per result and can be measured.' },
+      { q: 'How long before you see results?', a: 'Count on 4 to 6 weeks of algorithmic learning, and judge performance in the third month. Google generally reacts faster than Meta.' },
+      { q: 'Does online advertising work for a very small business?', a: "Yes, as long as you stay local: a tight radius, a single platform, a single objective (calls, bookings or quotes). It's the opposite of a national campaign. And that's what makes it affordable." },
+    ],
+  });
+}
+
+function pilierMesureEN() {
+  const content = `
+          ${pilH2('pourquoi-mesurer', 'Why the absence of measurement burns your budget')}
+          ${pilP("Without measurement, two ads look the same. With measurement, one brings bookings at $8 and the other at $45 — and on a $1,500 monthly budget, that difference is one-to-five in results, for the same spend. Exactly the same.")}
+          ${pilP("It's also the reason behind the famous “I tried ads, they don't work”. In our audits at SMB Essentials, most abandoned accounts had no conversion tracking at all: impossible to know what was working, therefore impossible to optimize. The campaign didn't fail. It was never steered.")}
+          ${pilP("And there's more. Google's and Meta's algorithms optimize toward what you measure: no declared conversions, no learning. Your competitor who measures is training their machine; you aren't. The gap widens every week.")}
+
+          ${pilH2('ga4', 'GA4 in plain language')}
+          ${pilP("Google Analytics 4 (GA4) is the free tool that records what happens on your site: where visitors come from, what they view, what they do. Four notions are enough.")}
+          ${pilTable(
+            ['GA4 term', 'In plain language'],
+            [
+              ['<strong>Event</strong>', 'An action on your site: page view, click on your phone number, form submitted.'],
+              ['<strong>Conversion (key event)</strong>', "The event that matters for your business: quote request, booking, call. YOU declare it."],
+              ['<strong>Source / medium</strong>', 'Where the visitor comes from: organic Google, Meta ads, email, direct.'],
+              ['<strong>Attribution</strong>', 'Which source GA4 credits for a conversion when the customer saw several channels before acting.'],
+            ]
+          )}
+          ${pilP("The basic setup is done with Google Tag Manager (GTM): a single code on the site, then every tracking piece is configured without touching the code. The minimum trio for an SMB: clicks on your phone number, form submissions, clicks on the booking button. Everything else is comfort.")}
+
+          ${pilH2('pixel-meta', "The Meta pixel and the Conversions API: why your ads “don't work”")}
+          ${pilP("The Meta pixel is a piece of code that tells Facebook and Instagram what visitors from your ads actually do. Without it, Meta optimizes blindly. It shows your ads to people who click, not to people who book.")}
+          ${pilP("The problem in recent years: cookie blockers and iOS restrictions make the pixel lose part of the conversions. Meta's answer is the Conversions API (CAPI): the data leaves from your server or your tools — form, booking system, CRM — rather than only from the browser, which gives a more complete measurement, therefore a better-trained algorithm, therefore a lower cost per result. A chain. Three links.")}
+          ${pilCallout(`<strong>Bare minimum:</strong> pixel installed via GTM + a conversion event on the action that matters (form, booking, call).<br><br>
+            <strong>Recommended level:</strong> pixel + Conversions API with deduplication (both send, Meta removes duplicates).<br><br>
+            <strong>Check every month:</strong> does Meta Events Manager show your conversions? A pixel that's been silent for three weeks is a campaign flying blind.`)}
+
+          ${pilH2('loi-25', 'Law 25: consent and advertising — what an SMB must do')}
+          ${pilP("Law 25 governs the protection of personal information in Quebec. For your marketing, it comes down to three concrete obligations. This summary is not legal advice; for specific cases, consult the <a href='https://www.cai.gouv.qc.ca' target='_blank' rel='noopener'>Commission d'accès à l'information (CAI)</a> or a legal advisor.")}
+          ${pilH3('1. Consent before non-essential cookies')}
+          ${pilP("Your site must display a consent banner, and GA4 and the Meta pixel must only activate after a “yes”. Default settings must be the most protective ones.")}
+          ${pilH3('2. Transparency')}
+          ${pilP("A clear privacy policy (what data, why, who it's shared with) and a designated person responsible for the protection of personal information — in an SMB, that's often the owner.")}
+          ${pilH3('3. Forms')}
+          ${pilP("Collect only what's necessary, say what you'll do with the email address (e.g., receive the guide + the newsletter), and offer a simple unsubscribe.")}
+          ${pilCallout("The good news: a compliant site is not a site that measures worse. <a href='https://support.google.com/analytics' target='_blank' rel='noopener'>Google's consent mode</a> and <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta's Conversions API</a> are designed precisely to work within this framework — compliance and performance don't oppose each other, they get installed together, once.")}
+
+          ${pilH2('indicateurs', 'The monthly report that matters: our 6 indicators')}
+          ${pilP("A good report fits on one page. It answers a single question: is the advertising paying off? Here are the six indicators we track at SMB Essentials, in this order.")}
+          ${pilTable(
+            ['Indicator', 'The question it answers'],
+            [
+              ['<strong>1. Conversions</strong> (leads, bookings, calls)', 'How many business opportunities this month?'],
+              ['<strong>2. Cost per conversion</strong>', "How much does each opportunity cost? Is it viable against a customer's value?"],
+              ['<strong>3. Spend vs budget</strong>', 'Did we spend what was planned, where it was planned?'],
+              ['<strong>4. Split by platform</strong>', 'Who delivers: Google, Meta, TikTok? Where to reallocate?'],
+              ['<strong>5. Best and worst ads</strong>', 'What to cut, what to amplify next month?'],
+              ['<strong>6. 3-month trend</strong>', 'Is it improving? (A single month proves nothing.)'],
+            ]
+          )}
+          ${pilP("What should never open a report: impressions and reach. They're vanity metrics — big, flattering, and incapable of paying an invoice. They're for diagnosis. Not for the verdict.")}
+
+          ${pilH2('par-secteur', "Your sector's measurement")}
+          ${pilSecteurs('The three conversions to track change with the trade: quotes in construction, bookings in restaurants, appointments in clinics. Each industry page details its approach:')}`;
+
+  return pilierShell({
+    path: 'mesurer-ses-resultats/index.html',
+    label: 'Measurement guide',
+    title: 'Measuring your advertising: GA4, Meta pixel and conversions for SMBs (no jargon) | SMB Essentials',
+    desc: 'GA4, Meta pixel, conversions and Law 25 explained without jargon: the advertising measurement guide for Quebec SMBs, by SMB Essentials.',
+    h1: 'Measuring your advertising: GA4, Meta pixel and conversions for SMBs (no jargon)',
+    eyebrow: 'THE GUIDE', faqTitle: 'FAQ', author: pilAuthorEN, cta: PIL_CTA_EN,
+    answerBox: "Measuring your advertising means knowing which ad brings calls, bookings or quote requests, and which one burns the budget. For an SMB, three tools are enough: GA4 (free, from Google), the Meta pixel with the Conversions API, and tracking on the actions that matter (call, form, booking). In Quebec, Law 25 frames all of it: consent is required before activating these tools. This guide explains every piece, without jargon, in the order to install them in 2026.",
+    toc: [
+      ['pourquoi-mesurer', 'Why measure'], ['ga4', 'GA4 in plain language'], ['pixel-meta', 'Meta pixel and Conversions API'],
+      ['loi-25', 'Law 25'], ['indicateurs', 'The 6 indicators'], ['par-secteur', 'By sector'], ['faq', 'FAQ'],
+    ],
+    content,
+    faqPrefix: 'faq-pilier-mesure',
+    faq: [
+      { q: 'Is GA4 free?', a: "Yes, entirely, for an SMB's needs. Installation via Google Tag Manager takes one to two hours for a solid basic setup.", open: true },
+      { q: 'What is the difference between the Meta pixel and the Conversions API?', a: "The pixel measures from the visitor's browser; the Conversions API sends data from your systems. Together (with deduplication), they give the most complete measurement — and better costs per result." },
+      { q: 'Does Law 25 apply to my small business?', a: 'Yes: the law covers any business that collects personal information in Quebec, with no size threshold. A consent banner, a privacy policy and a designated privacy officer are the minimum.' },
+      { q: "What should I track first if I'm not measuring anything today?", a: 'Three actions: clicks on your phone number, form submissions and online bookings. With that, you already know which campaign is working.' },
+      { q: 'Does consent make you lose data?', a: "Some, yes — that's the principle. But Google's consent mode and the Conversions API partly compensate, and a measurement that's 80% compliant beats one that's 100% illegal." },
     ],
   });
 }
@@ -1562,7 +1758,7 @@ function toEnglish(html, pagePath) {
   html = html.replace(`property="og:url" content="${frCanon}"`, `property="og:url" content="${enCanon}"`);
 
   // 6. Liens internes → /en/… (sauf assets, api, liens déjà /en/ et pages franco-seulement)
-  html = html.replace(/href="\/(?!assets\/|api\/|en\/|en"|publicite-en-ligne\/|mesurer-ses-resultats\/)/g, 'href="/en/');
+  html = html.replace(/href="\/(?!assets\/|api\/|en\/|en")/g, 'href="/en/');
 
   // 7. Bascule de langue : FR redevient un lien vers la version française, EN devient actif
   html = html.replace(/<a data-lang-link="fr" href="\/en/, '<a data-lang-link="fr" href="');
@@ -1595,19 +1791,19 @@ const pages = [
   ...industries.map((ind) => [`industries/${ind.key}/index.html`, industryPage(ind)]),
 ];
 
-/* Pages publiées en français seulement (pas de version /en/ pour l'instant) */
-const FR_ONLY = new Set(['publicite-en-ligne/index.html', 'mesurer-ses-resultats/index.html']);
+/* Pages dont la version anglaise est rédigée à part (contenu autoral EN),
+   plutôt que traduite automatiquement par dictionnaire */
+const EN_OVERRIDES = {
+  'publicite-en-ligne/index.html': pilierPubliciteEN(),
+  'mesurer-ses-resultats/index.html': pilierMesureEN(),
+};
 
 for (const [p, html] of pages) {
   const pagePath = '/' + p.replace(/index\.html$/, '');
   mkdirSync(dirname(join(OUT, p)), { recursive: true });
   writeFileSync(join(OUT, p), html);
-  if (FR_ONLY.has(p)) {
-    console.log('wrote', p, `(${html.length} o) — FR seulement`);
-    continue;
-  }
   const enFile = enPagePathOf(pagePath).slice(1) + 'index.html';
-  const en = toEnglish(html, pagePath);
+  const en = toEnglish(EN_OVERRIDES[p] || html, pagePath);
   mkdirSync(dirname(join(OUT, enFile)), { recursive: true });
   writeFileSync(join(OUT, enFile), en);
   console.log('wrote', p, `(${html.length} o)`, '+', enFile, `(${en.length} o)`);
@@ -1616,7 +1812,6 @@ for (const [p, html] of pages) {
 const sitemapPaths = pages
   .map(([p]) => p.replace(/index\.html$/, ''))
   .flatMap((p) => {
-    if (FR_ONLY.has(p + 'index.html')) return [p];
     const en = enPagePathOf('/' + p).slice(1);
     return p === '' ? [en] : [p, en];
   });

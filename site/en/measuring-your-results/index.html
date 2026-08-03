@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Measuring your advertising: GA4, Meta pixel and conversions for SMBs (no jargon) | SMB Essentials</title>
+  <meta name="description" content="GA4, Meta pixel, conversions and Law 25 explained without jargon: the advertising measurement guide for Quebec SMBs, by SMB Essentials.">
+  <link rel="canonical" href="https://essentielpme.com/en/measuring-your-results/">
+  <link rel="alternate" hreflang="fr-CA" href="https://essentielpme.com/mesurer-ses-resultats/">
+  <link rel="alternate" hreflang="en-CA" href="https://essentielpme.com/en/measuring-your-results/">
+  <link rel="alternate" hreflang="x-default" href="https://essentielpme.com/mesurer-ses-resultats/">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Essentiel PME">
+  <meta property="og:locale" content="en_CA">
+  <meta property="og:title" content="Measuring your advertising: GA4, Meta pixel and conversions for SMBs (no jargon) | SMB Essentials">
+  <meta property="og:description" content="GA4, Meta pixel, conversions and Law 25 explained without jargon: the advertising measurement guide for Quebec SMBs, by SMB Essentials.">
+  <meta property="og:url" content="https://essentielpme.com/en/measuring-your-results/">
+  <meta property="og:image" content="https://essentielpme.com/assets/img/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'denied'});</script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NWFC4HHZ');</script>
+  <!-- End Google Tag Manager -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Essentiel PME","alternateName":"SMB Essentials","url":"https://essentielpme.com/","logo":"https://essentielpme.com/assets/img/logo-h-fr-rgb.svg","email":"info@essentielpme.com","telephone":"+18447633832","address":{"@type":"PostalAddress","addressLocality":"Québec","addressRegion":"QC","addressCountry":"CA"},"sameAs":["https://www.facebook.com/profile.php?id=61591838577895","https://www.instagram.com/essentielpme","https://www.linkedin.com/company/essentiel-pme"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Measuring your advertising: GA4, Meta pixel and conversions for SMBs (no jargon)","inLanguage":"fr-CA","dateModified":"2026-07-15","author":{"@type":"Person","name":"Benoit","jobTitle":"Fondateur, Essentiel PME"},"publisher":{"@type":"Organization","name":"Essentiel PME","url":"https://essentielpme.com/"},"mainEntityOfPage":"https://essentielpme.com/mesurer-ses-resultats/"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is GA4 free?","acceptedAnswer":{"@type":"Answer","text":"Yes, entirely, for an SMB's needs. Installation via Google Tag Manager takes one to two hours for a solid basic setup."}},{"@type":"Question","name":"What is the difference between the Meta pixel and the Conversions API?","acceptedAnswer":{"@type":"Answer","text":"The pixel measures from the visitor's browser; the Conversions API sends data from your systems. Together (with deduplication), they give the most complete measurement — and better costs per result."}},{"@type":"Question","name":"Does Law 25 apply to my small business?","acceptedAnswer":{"@type":"Answer","text":"Yes: the law covers any business that collects personal information in Quebec, with no size threshold. A consent banner, a privacy policy and a designated privacy officer are the minimum."}},{"@type":"Question","name":"What should I track first if I'm not measuring anything today?","acceptedAnswer":{"@type":"Answer","text":"Three actions: clicks on your phone number, form submissions and online bookings. With that, you already know which campaign is working."}},{"@type":"Question","name":"Does consent make you lose data?","acceptedAnswer":{"@type":"Answer","text":"Some, yes — that's the principle. But Google's consent mode and the Conversions API partly compensate, and a measurement that's 80% compliant beats one that's 100% illegal."}}]}</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NWFC4HHZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="we-page">
+  <a class="skip-link" href="#contenu">Skip to content</a>
+  <header class="we-header">
+    <div class="we-header-inner">
+      <a href="/en/" class="we-logo" style="border-bottom:none;" aria-label="Essentiel PME — Accueil">
+        <img src="/assets/img/logo-h-en-rgb.svg" alt="SMB Essentials" style="height:60px; width:auto;">
+      </a>
+      <nav class="we-nav" aria-label="Navigation principale">
+        <a href="/en/advertising/">Online Advertising</a>
+
+        <div class="we-navdrop" style="position:relative; display:flex; align-items:center;">
+          <a href="/en/industries/construction/" style="display:inline-flex; align-items:center; gap:5px;">Industries
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="we-dropmenu" style="position:absolute; top:100%; left:-8px; padding-top:10px; display:none; z-index:50;">
+            <div style="background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-md); padding:8px; display:flex; flex-direction:column; min-width:230px;">
+              <a href="/en/industries/construction/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Construction &amp; trades</a>
+              <a href="/en/industries/healthcare/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Health &amp; clinics</a>
+              <a href="/en/industries/beauty/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Beauty &amp; wellness</a>
+              <a href="/en/industries/restaurants/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Restaurants</a>
+              <a href="/en/industries/professional-services/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Professional services</a>
+              <a href="/en/industries/ecommerce/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Online retail</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="we-navdrop" style="position:relative; display:flex; align-items:center;">
+          <a href="/en/about/" style="display:inline-flex; align-items:center; gap:5px;">About
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="we-dropmenu" style="position:absolute; top:100%; left:-8px; padding-top:10px; display:none; z-index:50;">
+            <div style="background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-md); padding:8px; display:flex; flex-direction:column; min-width:230px;">
+              <a href="/en/about/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">About</a>
+              <a href="/en/platforms/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Platforms</a>
+              <a href="/en/blog/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Blog</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="we-navdrop" style="position:relative; display:flex; align-items:center;">
+          <a href="/en/online-advertising/" class="active" style="display:inline-flex; align-items:center; gap:5px;">Guides
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="we-dropmenu" style="position:absolute; top:100%; left:-8px; padding-top:10px; display:none; z-index:50;">
+            <div style="background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-md); padding:8px; display:flex; flex-direction:column; min-width:230px;">
+              <a href="/en/online-advertising/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Online advertising: the guide</a>
+              <a href="/en/measuring-your-results/" style="padding:10px 14px; border-radius:8px; border-bottom:none; font-size:14px; font-weight:700; color:var(--charbon); white-space:nowrap;">Measuring your results</a>
+            </div>
+          </div>
+        </div>
+        <a href="/en/contact/">Contact</a>
+      </nav>
+      <div class="we-header-right">
+        <div class="we-lang-toggle">
+          <a data-lang-link="fr" href="/mesurer-ses-resultats/" hreflang="fr-CA">FR</a>
+          <span class="sep">·</span>
+          <a data-lang-link="en" href="/en/measuring-your-results/" class="active" hreflang="en-CA">EN</a>
+        </div>
+        <a href="/en/contact/" class="btn btn-primary" style="padding:10px 18px; font-size:14px;">Start my online advertising</a>
+        <button type="button" class="we-burger" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="we-mobile-nav" role="dialog" aria-label="Menu">
+    <div class="we-mobile-panel">
+      <div class="we-mobile-top">
+        <img src="/assets/img/logo-h-en-rgb.svg" alt="SMB Essentials">
+        <button type="button" class="we-mobile-close" aria-label="Close menu">×</button>
+      </div>
+      <nav aria-label="Navigation mobile">
+        <a href="/en/">Home</a>
+        <a href="/en/advertising/">Online Advertising</a>
+        <span class="grouplabel">Industries</span>
+        <a class="sub" href="/en/industries/construction/">Construction &amp; trades</a>
+        <a class="sub" href="/en/industries/healthcare/">Health &amp; clinics</a>
+        <a class="sub" href="/en/industries/beauty/">Beauty &amp; wellness</a>
+        <a class="sub" href="/en/industries/restaurants/">Restaurants</a>
+        <a class="sub" href="/en/industries/professional-services/">Professional services</a>
+        <a class="sub" href="/en/industries/ecommerce/">Online retail</a>
+        <span class="grouplabel">About</span>
+        <a class="sub" href="/en/about/">About</a>
+        <a class="sub" href="/en/platforms/">Platforms</a>
+        <a class="sub" href="/en/blog/">Blog</a>
+        <span class="grouplabel">Guides</span>
+        <a class="sub" href="/en/online-advertising/">Online advertising: the guide</a>
+        <a class="sub" href="/en/measuring-your-results/">Measuring your results</a>
+        <a href="/en/contact/">Contact</a>
+      </nav>
+      <div class="we-mobile-cta">
+        <a href="/en/contact/" class="btn btn-primary">Start my online advertising</a>
+      </div>
+    </div>
+  </div>
+  <main id="contenu" data-screen-label="Measurement guide" style="animation: epFadeUp 300ms cubic-bezier(0.2,0.7,0.2,1);">
+
+      <section style="background:var(--grad-hero); padding:76px 24px 56px; text-align:center;">
+        <div style="max-width:860px; margin:0 auto;">
+          <span class="eyebrow" style="display:block; margin-bottom:14px;">THE GUIDE</span>
+          <h1 style="font-size:clamp(2rem, 2.6vw + 0.8rem, 3rem); margin:0 0 10px;">Measuring your advertising: GA4, Meta pixel and conversions for SMBs (no jargon)</h1>
+          <div style="background:#fff; border:1px solid var(--lavande-200); border-left:4px solid var(--violet); border-radius:14px; padding:20px 24px; font-size:15px; line-height:1.7; color:var(--charbon); margin:24px auto 0; text-align:left;">Measuring your advertising means knowing which ad brings calls, bookings or quote requests, and which one burns the budget. For an SMB, three tools are enough: GA4 (free, from Google), the Meta pixel with the Conversions API, and tracking on the actions that matter (call, form, booking). In Quebec, Law 25 frames all of it: consent is required before activating these tools. This guide explains every piece, without jargon, in the order to install them in 2026.</div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin:24px 0 0;">
+            <a href="#pourquoi-mesurer" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Why measure</a>
+            <a href="#ga4" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">GA4 in plain language</a>
+            <a href="#pixel-meta" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Meta pixel and Conversions API</a>
+            <a href="#loi-25" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Law 25</a>
+            <a href="#indicateurs" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">The 6 indicators</a>
+            <a href="#par-secteur" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">By sector</a>
+            <a href="#faq" style="font-size:12.5px; font-weight:700; background:rgba(255,255,255,0.75); border:1px solid var(--lavande-100); border-radius:999px; padding:7px 13px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">FAQ</a>
+          </div>
+        </div>
+      </section>
+      <section class="section" style="background:#fff; padding-top:24px;">
+        <div class="section-inner" style="max-width:800px;">
+
+          <h2 id="pourquoi-mesurer" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">Why the absence of measurement burns your budget</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Without measurement, two ads look the same. With measurement, one brings bookings at $8 and the other at $45 — and on a $1,500 monthly budget, that difference is one-to-five in results, for the same spend. Exactly the same.</p>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">It's also the reason behind the famous “I tried ads, they don't work”. In our audits at SMB Essentials, most abandoned accounts had no conversion tracking at all: impossible to know what was working, therefore impossible to optimize. The campaign didn't fail. It was never steered.</p>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">And there's more. Google's and Meta's algorithms optimize toward what you measure: no declared conversions, no learning. Your competitor who measures is training their machine; you aren't. The gap widens every week.</p>
+
+          <h2 id="ga4" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">GA4 in plain language</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Google Analytics 4 (GA4) is the free tool that records what happens on your site: where visitors come from, what they view, what they do. Four notions are enough.</p>
+          <div style="overflow-x:auto; margin:6px 0 18px;"><table style="border-collapse:collapse; width:100%; min-width:640px; font-size:14px; line-height:1.55; color:var(--charbon-500);">
+            <thead><tr><th style="text-align:left; padding:11px 14px; background:var(--lavande-50); color:var(--violet); font-size:12px; text-transform:uppercase; letter-spacing:var(--tracking-wide); border-bottom:2px solid var(--lavande-200); white-space:nowrap;">GA4 term</th><th style="text-align:left; padding:11px 14px; background:var(--lavande-50); color:var(--violet); font-size:12px; text-transform:uppercase; letter-spacing:var(--tracking-wide); border-bottom:2px solid var(--lavande-200); white-space:nowrap;">In plain language</th></tr></thead>
+            <tbody><tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>Event</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">An action on your site: page view, click on your phone number, form submitted.</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>Conversion (key event)</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">The event that matters for your business: quote request, booking, call. YOU declare it.</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>Source / medium</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Where the visitor comes from: organic Google, Meta ads, email, direct.</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>Attribution</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Which source GA4 credits for a conversion when the customer saw several channels before acting.</td></tr></tbody>
+          </table></div>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">The basic setup is done with Google Tag Manager (GTM): a single code on the site, then every tracking piece is configured without touching the code. The minimum trio for an SMB: clicks on your phone number, form submissions, clicks on the booking button. Everything else is comfort.</p>
+
+          <h2 id="pixel-meta" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">The Meta pixel and the Conversions API: why your ads “don't work”</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">The Meta pixel is a piece of code that tells Facebook and Instagram what visitors from your ads actually do. Without it, Meta optimizes blindly. It shows your ads to people who click, not to people who book.</p>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">The problem in recent years: cookie blockers and iOS restrictions make the pixel lose part of the conversions. Meta's answer is the Conversions API (CAPI): the data leaves from your server or your tools — form, booking system, CRM — rather than only from the browser, which gives a more complete measurement, therefore a better-trained algorithm, therefore a lower cost per result. A chain. Three links.</p>
+          <div style="background:var(--lavande-50); border:1px solid var(--lavande-200); border-radius:16px; padding:20px 24px; margin:0 0 18px; font-size:15px; line-height:1.7; color:var(--charbon);"><strong>Bare minimum:</strong> pixel installed via GTM + a conversion event on the action that matters (form, booking, call).<br><br>
+            <strong>Recommended level:</strong> pixel + Conversions API with deduplication (both send, Meta removes duplicates).<br><br>
+            <strong>Check every month:</strong> does Meta Events Manager show your conversions? A pixel that's been silent for three weeks is a campaign flying blind.</div>
+
+          <h2 id="loi-25" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">Law 25: consent and advertising — what an SMB must do</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Law 25 governs the protection of personal information in Quebec. For your marketing, it comes down to three concrete obligations. This summary is not legal advice; for specific cases, consult the <a href='https://www.cai.gouv.qc.ca' target='_blank' rel='noopener'>Commission d'accès à l'information (CAI)</a> or a legal advisor.</p>
+          <h3 style="font-size:17px; font-weight:800; color:var(--charbon); margin:26px 0 8px;">1. Consent before non-essential cookies</h3>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Your site must display a consent banner, and GA4 and the Meta pixel must only activate after a “yes”. Default settings must be the most protective ones.</p>
+          <h3 style="font-size:17px; font-weight:800; color:var(--charbon); margin:26px 0 8px;">2. Transparency</h3>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">A clear privacy policy (what data, why, who it's shared with) and a designated person responsible for the protection of personal information — in an SMB, that's often the owner.</p>
+          <h3 style="font-size:17px; font-weight:800; color:var(--charbon); margin:26px 0 8px;">3. Forms</h3>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">Collect only what's necessary, say what you'll do with the email address (e.g., receive the guide + the newsletter), and offer a simple unsubscribe.</p>
+          <div style="background:var(--lavande-50); border:1px solid var(--lavande-200); border-radius:16px; padding:20px 24px; margin:0 0 18px; font-size:15px; line-height:1.7; color:var(--charbon);">The good news: a compliant site is not a site that measures worse. <a href='https://support.google.com/analytics' target='_blank' rel='noopener'>Google's consent mode</a> and <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta's Conversions API</a> are designed precisely to work within this framework — compliance and performance don't oppose each other, they get installed together, once.</div>
+
+          <h2 id="indicateurs" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">The monthly report that matters: our 6 indicators</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">A good report fits on one page. It answers a single question: is the advertising paying off? Here are the six indicators we track at SMB Essentials, in this order.</p>
+          <div style="overflow-x:auto; margin:6px 0 18px;"><table style="border-collapse:collapse; width:100%; min-width:640px; font-size:14px; line-height:1.55; color:var(--charbon-500);">
+            <thead><tr><th style="text-align:left; padding:11px 14px; background:var(--lavande-50); color:var(--violet); font-size:12px; text-transform:uppercase; letter-spacing:var(--tracking-wide); border-bottom:2px solid var(--lavande-200); white-space:nowrap;">Indicator</th><th style="text-align:left; padding:11px 14px; background:var(--lavande-50); color:var(--violet); font-size:12px; text-transform:uppercase; letter-spacing:var(--tracking-wide); border-bottom:2px solid var(--lavande-200); white-space:nowrap;">The question it answers</th></tr></thead>
+            <tbody><tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>1. Conversions</strong> (leads, bookings, calls)</td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">How many business opportunities this month?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>2. Cost per conversion</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">How much does each opportunity cost? Is it viable against a customer's value?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>3. Spend vs budget</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Did we spend what was planned, where it was planned?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>4. Split by platform</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Who delivers: Google, Meta, TikTok? Where to reallocate?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>5. Best and worst ads</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">What to cut, what to amplify next month?</td></tr>
+            <tr><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;"><strong>6. 3-month trend</strong></td><td style="padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top;">Is it improving? (A single month proves nothing.)</td></tr></tbody>
+          </table></div>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">What should never open a report: impressions and reach. They're vanity metrics — big, flattering, and incapable of paying an invoice. They're for diagnosis. Not for the verdict.</p>
+
+          <h2 id="par-secteur" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">Your sector's measurement</h2>
+          <p style="margin:0 0 15px; color:var(--charbon-500); font-size:15.5px; line-height:1.75;">The three conversions to track change with the trade: quotes in construction, bookings in restaurants, appointments in clinics. Each industry page details its approach:</p>
+          <div style="display:flex; flex-wrap:wrap; gap:10px; margin:0 0 8px;">
+            <a href="/en/industries/construction/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Construction &amp; trades</a>
+            <a href="/en/industries/healthcare/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Health &amp; clinics</a>
+            <a href="/en/industries/beauty/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Beauty &amp; wellness</a>
+            <a href="/en/industries/restaurants/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Restaurants</a>
+            <a href="/en/industries/professional-services/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Professional services</a>
+            <a href="/en/industries/ecommerce/" style="font-size:13.5px; font-weight:700; background:var(--lavande-50); border:1px solid var(--lavande-100); border-radius:999px; padding:9px 16px; color:var(--violet); border-bottom:1px solid var(--lavande-100);">Online retail</a>
+          </div>
+          <h2 id="faq" style="font-size:26px; font-weight:800; color:var(--violet); margin:52px 0 14px;">FAQ</h2>
+          <div class="faq-list">
+            <div class="faq-item open">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-0" aria-expanded="true">
+                <span>Is GA4 free?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-0">Yes, entirely, for an SMB's needs. Installation via Google Tag Manager takes one to two hours for a solid basic setup.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-1" aria-expanded="false">
+                <span>What is the difference between the Meta pixel and the Conversions API?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-1">The pixel measures from the visitor's browser; the Conversions API sends data from your systems. Together (with deduplication), they give the most complete measurement — and better costs per result.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-2" aria-expanded="false">
+                <span>Does Law 25 apply to my small business?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-2">Yes: the law covers any business that collects personal information in Quebec, with no size threshold. A consent banner, a privacy policy and a designated privacy officer are the minimum.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-3" aria-expanded="false">
+                <span>What should I track first if I'm not measuring anything today?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-3">Three actions: clicks on your phone number, form submissions and online bookings. With that, you already know which campaign is working.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q" aria-controls="faq-pilier-mesure-4" aria-expanded="false">
+                <span>Does consent make you lose data?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex:none;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="faq-a" id="faq-pilier-mesure-4">Some, yes — that's the principle. But Google's consent mode and the Conversions API partly compensate, and a measurement that's 80% compliant beats one that's 100% illegal.</div>
+            </div>
+          </div>
+          <div style="margin-top:44px; padding:20px 24px; background:var(--blanc-casse); border:1px solid var(--border); border-radius:16px; font-size:13.5px; color:var(--charbon-500); line-height:1.7;">
+            <strong style="color:var(--charbon);">Written by Benoit, founder of SMB Essentials</strong> — 15+ years in digital marketing and online advertising management for Quebec businesses, from SMBs to major accounts. <a href="https://www.linkedin.com/company/essentiel-pme" target="_blank" rel="noopener">LinkedIn</a> · Last revised: July 15, 2026 · Cost ranges: SMB Essentials internal data (managed accounts, 2025-2026) and official platform documentation.
+          </div>
+        </div>
+      </section>
+      <section class="cta-band">
+        <div class="cta-band-inner">
+          <h2>Our prices are published. So is everything else.</h2>
+          <p>We manage your advertising and your tracking. A reply from a human within 24 business hours.</p>
+          <a href="/en/contact/" class="btn btn-on-violet btn-lg">Talk about my project →</a>
+        </div>
+      </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="/assets/img/logo-h-en-white.svg" data-i18n-src-en="/assets/img/logo-h-en-white.svg" alt="SMB Essentials" style="filter:none; height:32px;">
+        <p>Online advertising managed for Quebec SMBs. Simple, efficient, fast.</p>
+        <div style="display:flex; gap:12px; margin-top:4px;">
+          <a href="https://www.facebook.com/profile.php?id=61591838577895" target="_blank" rel="noopener" title="Facebook" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;"><svg width="17" height="17" viewBox="0 0 320 512" fill="var(--violet)"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path></svg></a>
+          <a href="https://www.instagram.com/essentielpme" target="_blank" rel="noopener" title="Instagram" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;"><svg width="17" height="17" viewBox="0 0 448 512" fill="var(--violet)"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg></a>
+          <a href="https://www.linkedin.com/company/essentiel-pme" target="_blank" rel="noopener" title="LinkedIn" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;"><svg width="17" height="17" viewBox="0 0 448 512" fill="var(--violet)"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 155.6z"></path></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/en/advertising/">Online Advertising</a></li>
+          <li><a href="/en/platforms/">Platforms</a></li>
+          <li><a href="/en/industries/construction/">Industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/en/about/">About</a></li>
+          <li><a href="/en/industries/construction/">Industries</a></li>
+          <li><a href="/en/blog/">Blog</a></li>
+          <li><a href="/en/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="/en/online-advertising/">Online advertising: the guide</a></li>
+          <li><a href="/en/measuring-your-results/">Measuring your results</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/en/legal/">Legal notice</a></li>
+          <li><a href="/en/legal/#politique-de-confidentialite">Privacy policy</a></li>
+          <li><a href="/en/legal/#temoins">Cookie policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SMB Essentials</span>
+      <a href="https://superquanti.com" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:10px; color:inherit; border-bottom:none; white-space:nowrap;">
+        <span>In partnership with</span>
+        <img src="/assets/img/superquanti-logo.svg" alt="SuperQuanti" style="height:10px; width:auto; display:block;">
+      </a>
+    </div>
+  </footer>
+</div>
+<div class="consent-overlay" data-consent-banner hidden>
+  <div class="consent-banner" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <h3 id="consent-title">Your experience, your choices</h3>
+    <div data-consent-main>
+      <p>We use three types of cookies: <strong>functional</strong>, <strong>analytics</strong> and <strong>advertising</strong> — to give you the best possible experience and improve our services. Details in our <a href="/en/legal/#temoins">cookie policy</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-customize>Customize</button>
+        <button type="button" data-consent-accept>Accept all</button>
+      </div>
+    </div>
+    <div data-consent-panel hidden style="display:none;">
+      <div class="consent-choices">
+        <label><input type="checkbox" checked disabled> <span><strong>Functional</strong> — required for the site to work (always on)</span></label>
+        <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytics</strong> — help us understand how the site is used, so we can improve it</span></label>
+        <label><input type="checkbox" data-consent-ads checked> <span><strong>Advertising</strong> — used to measure how effective our advertising is and make it more relevant</span></label>
+      </div>
+      <div class="consent-actions">
+        <button type="button" data-consent-optional-refuse>Refuse optional cookies</button>
+        <button type="button" data-consent-save>Confirm my choices</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button type="button" class="consent-reopen" data-consent-reopen aria-label="Manage cookies" title="Manage cookies">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><circle cx="8.5" cy="8.5" r="0.8" fill="currentColor"></circle><circle cx="16" cy="15.5" r="0.8" fill="currentColor"></circle><circle cx="9" cy="15" r="0.8" fill="currentColor"></circle><circle cx="12.5" cy="11" r="0.8" fill="currentColor"></circle></svg>
+</button>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
