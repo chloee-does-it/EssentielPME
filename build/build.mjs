@@ -287,7 +287,7 @@ function pkgCard(p, { useHomeName = false, ctaHref }) {
   return `            <div class="pkg${p.featured ? ' featured' : ''}">
               ${p.featured ? '<span class="pkg-ribbon">Le plus populaire</span>' : ''}
               <div class="pkg-name">${name}</div>
-              <div class="pkg-price">${p.price}<small> $/mois</small></div>
+              <div class="pkg-price">${p.price}<small> $&nbsp;/&nbsp;mois</small></div>
               <div class="pkg-tag">${p.tag}</div>
               <div style="font-size:13px; color:var(--charbon-500); line-height:1.55; background:var(--lavande-50); border-radius:10px; padding:10px 14px;">${p.budget}</div>
               <ul class="pkg-list">
@@ -522,7 +522,7 @@ ${faqList(faqHome, 'faq-home')}
   return shell({
     path: 'index.html', root, active: 'home', label: 'Accueil',
     title: 'Essentiel PME | Publicité en ligne gérée pour les PME du Québec',
-    desc: 'Publicité en ligne gérée de A à Z pour les PME québécoises : Meta, Google, LinkedIn, TikTok et plus. Prix fixes à partir de 695 $/mois, bilingue FR/EN, réponse en 24 h.',
+    desc: 'Publicité en ligne gérée de A à Z pour les PME québécoises : Meta, Google, LinkedIn, TikTok et plus. Prix fixes à partir de 695 $&nbsp;/&nbsp;mois, bilingue FR/EN, réponse en 24 h.',
     jsonld: [
       { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: SITE.baseUrl + '/', inLanguage: 'fr-CA' },
       faqJsonLd(faqHome),
@@ -601,7 +601,7 @@ ${ctaBand({ h: 'Prêt à démarrer vos pubs&nbsp;?', p: 'On configure tout&nbsp;
   return shell({
     path: 'publicite/index.html', root, active: 'ads', label: 'Publicité',
     title: 'Forfaits Essentiel, Essentiel Plus et Essentiel Performance | Essentiel PME',
-    desc: 'Trois forfaits de publicité en ligne gérée pour PME : Essentiel 695 $/mois, Essentiel Plus 995 $/mois, Essentiel Performance 1 495 $/mois. Toutes les plateformes, rédaction FR/EN, rapports clairs.',
+    desc: 'Trois forfaits de publicité en ligne gérée pour PME : Essentiel 695 $&nbsp;/&nbsp;mois, Essentiel Plus 995 $&nbsp;/&nbsp;mois, Essentiel Performance 1 495 $&nbsp;/&nbsp;mois. Toutes les plateformes, rédaction FR/EN, rapports clairs.',
     jsonld: [
       {
         '@context': 'https://schema.org', '@type': 'Service',
@@ -1225,17 +1225,17 @@ function pilierPublicitePage() {
           ${pilTable(
             ['Industrie', 'CPC Google (approx.)', 'CPC Meta (approx.)', 'Coût par demande / réservation', 'Budget média minimum réaliste'],
             [
-              ['Beauté et bien-être (salon, spa)', '1 à 4&nbsp;$', '0,50 à 2&nbsp;$', '5 à 20&nbsp;$', '450 à 600&nbsp;$/mois'],
-              ['Restauration', '1 à 3&nbsp;$', '0,50 à 2&nbsp;$', '5 à 15&nbsp;$', '450 à 600&nbsp;$/mois'],
-              ['Construction et rénovation', '3 à 8&nbsp;$', '1 à 3&nbsp;$', '30 à 60&nbsp;$ (Meta) · 50 à 100&nbsp;$ (Google, soumission)', '600 à 900&nbsp;$/mois'],
-              ['Services professionnels (avocats, comptables)', '5 à 15&nbsp;$', '2 à 5&nbsp;$', '40 à 120&nbsp;$ (consultation)', '600 à 900&nbsp;$/mois'],
-              ['Santé (cliniques, dentaire)', '3 à 8&nbsp;$', '1 à 3&nbsp;$', '20 à 60&nbsp;$ (rendez-vous)', '600 à 900&nbsp;$/mois'],
-              ['Commerce de détail', '0,75 à 2,50&nbsp;$', '0,50 à 1,50&nbsp;$', '3 à 12&nbsp;$ (visite/vente)', '450 à 600&nbsp;$/mois'],
+              ['Beauté et bien-être (salon, spa)', '1 à 4&nbsp;$', '0,50 à 2&nbsp;$', '5 à 20&nbsp;$', '450 à 600&nbsp;$&nbsp;/&nbsp;mois'],
+              ['Restauration', '1 à 3&nbsp;$', '0,50 à 2&nbsp;$', '5 à 15&nbsp;$', '450 à 600&nbsp;$&nbsp;/&nbsp;mois'],
+              ['Construction et rénovation', '3 à 8&nbsp;$', '1 à 3&nbsp;$', '30 à 60&nbsp;$ (Meta) · 50 à 100&nbsp;$ (Google, soumission)', '600 à 900&nbsp;$&nbsp;/&nbsp;mois'],
+              ['Services professionnels (avocats, comptables)', '5 à 15&nbsp;$', '2 à 5&nbsp;$', '40 à 120&nbsp;$ (consultation)', '600 à 900&nbsp;$&nbsp;/&nbsp;mois'],
+              ['Santé (cliniques, dentaire)', '3 à 8&nbsp;$', '1 à 3&nbsp;$', '20 à 60&nbsp;$ (rendez-vous)', '600 à 900&nbsp;$&nbsp;/&nbsp;mois'],
+              ['Commerce de détail', '0,75 à 2,50&nbsp;$', '0,50 à 1,50&nbsp;$', '3 à 12&nbsp;$ (visite/vente)', '450 à 600&nbsp;$&nbsp;/&nbsp;mois'],
             ]
           )}
           <p style="margin:-8px 0 18px; font-size:12.5px; color:var(--charbon-300);">Source&nbsp;: données internes Essentiel PME, comptes gérés 2025-2026. Fourchettes indicatives&nbsp;; le guide de chaque secteur (section «&nbsp;Par secteur&nbsp;» ci-dessous) donne les repères complets.</p>
           ${pilH3('La règle du ~2:1')}
-          ${pilCallout("Un dollar de gestion, deux dollars de budget média. C'est la règle. Une gestion à 695&nbsp;$/mois s'accompagne donc d'environ 1&nbsp;400&nbsp;$/mois payés directement aux plateformes, parce que c'est à ce ratio que la gestion se rentabilise. En bas de ça, les frais fixes mangent la performance. <a href='/publicite/'>Nos forfaits et leurs budgets recommandés sont affichés ici.</a>")}
+          ${pilCallout("Un dollar de gestion, deux dollars de budget média. C'est la règle. Une gestion à 695&nbsp;$&nbsp;/&nbsp;mois s'accompagne donc d'environ 1&nbsp;400&nbsp;$&nbsp;/&nbsp;mois payés directement aux plateformes, parce que c'est à ce ratio que la gestion se rentabilise. En bas de ça, les frais fixes mangent la performance. <a href='/publicite/'>Nos forfaits et leurs budgets recommandés sont affichés ici.</a>")}
           ${pilH3('Le calcul qui compte : la valeur à vie')}
           ${pilP("Une cliente de salon en coloration revient aux 6 semaines, à 120&nbsp;$ la visite. Mille dollars par année. Pendant des années. Son coût d'acquisition en publicité&nbsp;: 5 à 20&nbsp;$. Le même raisonnement s'applique partout : un contrat de rénovation à 40&nbsp;000&nbsp;$ justifie largement une soumission payée 100&nbsp;$, et il la justifierait encore à trois fois ce prix. Calculez ce que vaut un client sur 3&nbsp;ans. Pas ce que coûte un clic.")}
 
@@ -1263,9 +1263,9 @@ function pilierPublicitePage() {
             ['Option', 'Coût typique', 'Forces', 'Limites'],
             [
               ['<strong>Vous-même (interne)</strong>', 'Votre temps (5 à 10&nbsp;h/semaine au début)', 'Contrôle total, aucun frais de gestion', "Courbe d'apprentissage abrupte&nbsp;; les plateformes changent constamment&nbsp;; erreurs coûteuses au début"],
-              ['<strong>Pigiste</strong>', '300 à 800&nbsp;$/mois', 'Flexible, abordable', 'Qualité inégale&nbsp;; disponibilité variable&nbsp;; dépendance à une seule personne'],
-              ['<strong>Grande agence</strong>', '2&nbsp;000 à 5&nbsp;000&nbsp;$/mois et plus', 'Équipe complète, outils avancés', 'Pensée pour les gros budgets&nbsp;; une PME devient le petit compte de la liste'],
-              ['<strong>Essentiel PME</strong>', '695 à 1&nbsp;495&nbsp;$/mois, <a href="/publicite/">prix affichés</a>', 'Gestion complète, rapport mensuel en français, fait pour les PME d\'ici', 'Budget média minimum requis (~2:1) pour que la gestion se rentabilise'],
+              ['<strong>Pigiste</strong>', '300 à 800&nbsp;$&nbsp;/&nbsp;mois', 'Flexible, abordable', 'Qualité inégale&nbsp;; disponibilité variable&nbsp;; dépendance à une seule personne'],
+              ['<strong>Grande agence</strong>', '2&nbsp;000 à 5&nbsp;000&nbsp;$&nbsp;/&nbsp;mois et plus', 'Équipe complète, outils avancés', 'Pensée pour les gros budgets&nbsp;; une PME devient le petit compte de la liste'],
+              ['<strong>Essentiel PME</strong>', '695 à 1&nbsp;495&nbsp;$&nbsp;/&nbsp;mois, <a href="/publicite/">prix affichés</a>', 'Gestion complète, rapport mensuel en français, fait pour les PME d\'ici', 'Budget média minimum requis (~2:1) pour que la gestion se rentabilise'],
             ]
           )}
           ${pilP("Le test est simple. Si gérer vos campagnes vous éloigne de ce qui fait rentrer l'argent (vos clients, vos chantiers, vos chaises), déléguez. Si vous avez le temps et l'envie d'apprendre, commencez petit, sur une seule plateforme. Mais commencez.")}
@@ -1683,7 +1683,7 @@ const llms = `# Essentiel PME
 ## Services
 
 - Publicité en ligne gérée de A à Z : configuration des comptes, pixels et audiences, rédaction des annonces (FR/EN), optimisation et rapport mensuel.
-- Forfaits : Essentiel 695 $/mois (1 plateforme) · Essentiel Plus 995 $/mois (2 plateformes, reciblage, tests A/B) · Essentiel Performance 1 495 $/mois (3 plateformes, tableau de bord temps réel).
+- Forfaits : Essentiel 695 $ / mois (1 plateforme) · Essentiel Plus 995 $ / mois (2 plateformes, reciblage, tests A/B) · Essentiel Performance 1 495 $ / mois (3 plateformes, tableau de bord temps réel).
 - Frais d'installation unique : 600 $. Minimum 3 mois, puis mensuel avec préavis de 30 jours. Le budget média est payé directement aux plateformes.
 - Plateformes prises en charge : Facebook, Instagram, LinkedIn, TikTok, YouTube, Pinterest, Reddit, Spotify, Google Ads, ChatGPT.
 

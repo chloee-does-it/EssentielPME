@@ -47,9 +47,9 @@ export const DICT = {
 
     // ---- Packages (generic) ----
     "Le plus populaire": "Most popular",
-    "$/mois": "$/mo",
+    "$ / mois": "$ / mo",
     "Tester la publicité sociale": "Test social advertising",
-    "Budget média recommandé : jusqu'à 1 500 $/mois (payé aux plateformes)": "Recommended media budget: up to $1,500/mo (paid to platforms)",
+    "Budget média recommandé : jusqu'à 1 500 $ / mois (payé aux plateformes)": "Recommended media budget: up to $1,500/mo (paid to platforms)",
     "1 plateforme": "1 platform",
     "Configuration : comptes, pixels, objectifs": "Setup: accounts, pixels, objectives",
     "Rédaction de 2 annonces par mois (FR/EN)": "Copywriting for 2 ads per month (FR/EN)",
@@ -59,7 +59,7 @@ export const DICT = {
     "1 h d'accompagnement par mois": "1 hr of guidance per month",
     "Choisir Départ": "Choose Starter",
     "Générer des demandes régulières": "Generate steady leads",
-    "Budget média recommandé : 1 500 à 4 000 $/mois (payé aux plateformes)": "Recommended media budget: $1,500–4,000/mo (paid to platforms)",
+    "Budget média recommandé : 1 500 à 4 000 $ / mois (payé aux plateformes)": "Recommended media budget: $1,500–4,000/mo (paid to platforms)",
     "2 plateformes au choix": "2 platforms of your choice",
     "Reciblage + tests A/B (annonces)": "Retargeting + A/B testing (ads)",
     "Rédaction de 4 annonces par mois (FR/EN)": "Copywriting for 4 ads per month (FR/EN)",
@@ -69,7 +69,7 @@ export const DICT = {
     "2 h d'accompagnement par mois": "2 hrs of guidance per month",
     "Choisir Croissance": "Choose Growth",
     "Accélérer la croissance": "Accelerate growth",
-    "Budget média recommandé : 4 000 à 8 000 $/mois (payé aux plateformes)": "Recommended media budget: $4,000–8,000/mo (paid to platforms)",
+    "Budget média recommandé : 4 000 à 8 000 $ / mois (payé aux plateformes)": "Recommended media budget: $4,000–8,000/mo (paid to platforms)",
     "3 plateformes au choix": "3 platforms of your choice",
     "Audiences similaires + tests A/B complets": "Lookalike audiences + full A/B testing",
     "Rédaction de 8 annonces par mois (FR/EN)": "Copywriting for 8 ads per month (FR/EN)",
@@ -129,7 +129,7 @@ export const DICT = {
     "Frais d'installation unique : 600 $ (une fois).": "One-time setup fee: $600.",
     "Offerts avec un site Essentiel Performance ou un engagement de 6 mois. Minimum 3 mois, puis mensuel avec préavis de 30 jours.": "Waived with an Essential Performance website or a 6-month commitment. 3-month minimum, then monthly with 30 days' notice.",
     "Offerts avec un engagement de 6 mois. Minimum 3 mois, puis mensuel avec préavis de 30 jours.": "Waived with a 6-month commitment. 3-month minimum, then monthly with 30 days' notice.",
-    "695 $/mois": "$695/mo",
+    "695 $ / mois": "$695 / mo",
     "Choisir Essentiel": "Choose Essential",
     "Choisir Essentiel Plus": "Choose Essential Plus",
     "Choisir Essentiel Performance": "Choose Essential Performance",
@@ -137,7 +137,7 @@ export const DICT = {
     "Publicité : Essentiel Plus (995 $/mois)": "Advertising: Essential Plus ($995/mo)",
     "Publicité : Essentiel Performance (1 495 $/mois)": "Advertising: Essential Performance ($1,495/mo)",
     "Offerts avec un engagement de 12 mois. Minimum 3 mois, puis mensuel avec préavis de 30 jours.": "Waived with a 12-month commitment. 3-month minimum, then monthly with 30 days' notice.",
-    "995 $/mois": "$995/mo",
+    "995 $ / mois": "$995 / mo",
     "Aller au contenu": "Skip to content",
     "Ouvrir le menu": "Open menu",
     "Fermer le menu": "Close menu",
@@ -223,8 +223,8 @@ export const DICT = {
     "Qualifié": "Qualified",
     "Crédibilité": "Credibility",
     "Panier": "Cart",
-    "795 $/mois": "$795/mo",
-    "495 $/mois": "$495/mo",
+    "795 $ / mois": "$795 / mo",
+    "495 $ / mois": "$495 / mo",
 
     // ---- Industry: Construction ----
     "CONSTRUCTION ET MÉTIERS SPÉCIALISÉS": "CONSTRUCTION & SPECIALIZED TRADES",
@@ -673,11 +673,11 @@ export const DICT = {
 export const META_EN = {
   'Essentiel PME | Publicité en ligne gérée pour les PME du Québec':
     'SMB Essentials | Managed online advertising for Quebec SMBs',
-  'Publicité en ligne gérée de A à Z pour les PME québécoises : Meta, Google, LinkedIn, TikTok et plus. Prix fixes à partir de 695 $/mois, bilingue FR/EN, réponse en 24 h.':
+  'Publicité en ligne gérée de A à Z pour les PME québécoises : Meta, Google, LinkedIn, TikTok et plus. Prix fixes à partir de 695 $ / mois, bilingue FR/EN, réponse en 24 h.':
     'Online advertising managed end to end for Quebec SMBs: Meta, Google, LinkedIn, TikTok and more. Fixed prices from $695/mo, bilingual FR/EN, 24-hour response.',
   'Forfaits Essentiel, Essentiel Plus et Essentiel Performance | Essentiel PME':
     'Essential, Essential Plus and Essential Performance packages | SMB Essentials',
-  'Trois forfaits de publicité en ligne gérée pour PME : Essentiel 695 $/mois, Essentiel Plus 995 $/mois, Essentiel Performance 1 495 $/mois. Toutes les plateformes, rédaction FR/EN, rapports clairs.':
+  'Trois forfaits de publicité en ligne gérée pour PME : Essentiel 695 $ / mois, Essentiel Plus 995 $ / mois, Essentiel Performance 1 495 $ / mois. Toutes les plateformes, rédaction FR/EN, rapports clairs.':
     'Three managed online advertising packages for SMBs: Essential $695/mo, Essential Plus $995/mo, Essential Performance $1,495/mo. Every platform, FR/EN copywriting, clear reports.',
   'À propos : mission, valeurs et processus | Essentiel PME':
     'About us: mission, values and process | SMB Essentials',
@@ -852,9 +852,9 @@ Object.assign(DICT, {
   'Le guide complet de la publicité en ligne →': 'The complete online advertising guide →',
   'Oui, envoyez-moi le conseil du mois !': 'Yes, send me the tip of the month!',
   'Des idées concrètes de publicité et de marketing pour votre PME : un seul courriel par mois, zéro pourriel, désabonnement en un clic. Retrait possible en tout temps.': 'Concrete advertising and marketing ideas for your SMB: just one email a month, zero spam, one-click unsubscribe. Withdraw anytime.',
-  'Essentiel — 695 $/mois': 'Essential — $695/mo',
-  'Essentiel Plus — 995 $/mois': 'Essential Plus — $995/mo',
-  'Essentiel Performance — 1 495 $/mois': 'Essential Performance — $1,495/mo',
+  'Essentiel — 695 $ / mois': 'Essential — $695/mo',
+  'Essentiel Plus — 995 $ / mois': 'Essential Plus — $995/mo',
+  'Essentiel Performance — 1 495 $ / mois': 'Essential Performance — $1,495/mo',
   'Aidez-moi à choisir': 'Help me choose',
   "J'accepte de recevoir des communications électroniques d'Essentiel PME : conseils, nouveautés et offres, environ une fois par mois. Consentement facultatif — je peux le retirer en tout temps via le lien de désabonnement ou à info@essentielpme.com.": 'I agree to receive electronic communications from SMB Essentials: advice, news and offers, about once a month. Optional consent — I can withdraw it at any time via the unsubscribe link or at info@essentielpme.com.',
   'En soumettant ce formulaire, vous acceptez notre': 'By submitting this form, you accept our',

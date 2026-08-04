@@ -27,7 +27,7 @@ export const adPackages = [
     adsName: 'Essentiel',
     price: '695',
     tag: 'Tester la publicité sociale',
-    budget: 'Budget média recommandé&nbsp;: jusqu’à 1&nbsp;500&nbsp;$/mois (payé aux plateformes)',
+    budget: 'Budget média recommandé&nbsp;: jusqu’à 1&nbsp;500&nbsp;$&nbsp;/&nbsp;mois (payé aux plateformes)',
     bullets: [
       '1 plateforme',
       'Configuration&nbsp;: comptes, pixels, objectifs',
@@ -46,7 +46,7 @@ export const adPackages = [
     adsName: 'Essentiel Plus',
     price: '995',
     tag: 'Générer des demandes régulières',
-    budget: 'Budget média recommandé&nbsp;: 1&nbsp;500 à 4&nbsp;000&nbsp;$/mois (payé aux plateformes)',
+    budget: 'Budget média recommandé&nbsp;: 1&nbsp;500 à 4&nbsp;000&nbsp;$&nbsp;/&nbsp;mois (payé aux plateformes)',
     bullets: [
       '2 plateformes au choix',
       'Reciblage + tests A/B (annonces)',
@@ -65,7 +65,7 @@ export const adPackages = [
     adsName: 'Essentiel Performance',
     price: '1&nbsp;495',
     tag: 'Accélérer la croissance',
-    budget: 'Budget média recommandé&nbsp;: 4&nbsp;000 à 8&nbsp;000&nbsp;$/mois (payé aux plateformes)',
+    budget: 'Budget média recommandé&nbsp;: 4&nbsp;000 à 8&nbsp;000&nbsp;$&nbsp;/&nbsp;mois (payé aux plateformes)',
     bullets: [
       '3 plateformes au choix',
       'Audiences similaires + tests A/B complets',
@@ -372,7 +372,7 @@ export const industries = [
       { num: '48 h', label: 'pour mettre vos campagnes en ligne' },
       { num: 'Local', label: 'ciblage limité à vos zones desservies' },
     ],
-    recoName: 'Essentiel Plus', recoPrice: '995 $/mois', recoWhy: 'Deux plateformes et du reciblage : idéal pour un flux régulier de soumissions.',
+    recoName: 'Essentiel Plus', recoPrice: '995 $&nbsp;/&nbsp;mois', recoWhy: 'Deux plateformes et du reciblage : idéal pour un flux régulier de soumissions.',
     futureBlog: [
       { tag: 'Guide', title: 'Combien investir en publicité quand on est entrepreneur en construction', bg: 'var(--lavande-100)' },
       { tag: 'Conseil', title: 'Les photos avant/après qui font vendre vos services', bg: 'var(--violet-50)' },
@@ -405,7 +405,7 @@ export const industries = [
       { num: 'Local', label: 'ciblage par quartier et par soin' },
       { num: 'Suivi', label: 'chaque appel et formulaire mesuré' },
     ],
-    recoName: 'Essentiel Plus', recoPrice: '995 $/mois', recoWhy: 'Recherche Google + reciblage pour un horaire toujours rempli.',
+    recoName: 'Essentiel Plus', recoPrice: '995 $&nbsp;/&nbsp;mois', recoWhy: 'Recherche Google + reciblage pour un horaire toujours rempli.',
     futureBlog: [
       { tag: 'Guide', title: 'Attirer de nouveaux patients sans dépendre du bouche-à-oreille', bg: 'var(--violet-50)' },
       { tag: 'Conseil', title: 'Rédiger des annonces de santé claires et rassurantes', bg: 'var(--lavande-100)' },
@@ -438,7 +438,7 @@ export const industries = [
       { num: 'Visuel', label: 'annonces bâties sur vos réalisations' },
       { num: 'Quartier', label: 'ciblage géolocalisé autour de vous' },
     ],
-    recoName: 'Essentiel', recoPrice: '695 $/mois', recoWhy: 'Une plateforme visuelle (Instagram/Facebook) suffit pour remplir l’agenda.',
+    recoName: 'Essentiel', recoPrice: '695 $&nbsp;/&nbsp;mois', recoWhy: 'Une plateforme visuelle (Instagram/Facebook) suffit pour remplir l’agenda.',
     futureBlog: [
       { tag: 'Guide', title: 'Remplir votre agenda pendant les périodes creuses', bg: 'var(--lavande-100)' },
       { tag: 'Conseil', title: 'Les photos avant/après qui font réserver', bg: 'var(--lavande-50)' },
@@ -471,7 +471,7 @@ export const industries = [
       { num: 'Hebdo', label: 'promotions poussées chaque semaine' },
       { num: 'Heures', label: 'annonces diffusées aux moments creux' },
     ],
-    recoName: 'Essentiel', recoPrice: '695 $/mois', recoWhy: 'Une plateforme géolocalisée suffit pour remplir la salle localement.',
+    recoName: 'Essentiel', recoPrice: '695 $&nbsp;/&nbsp;mois', recoWhy: 'Une plateforme géolocalisée suffit pour remplir la salle localement.',
     futureBlog: [
       { tag: 'Guide', title: 'Remplir votre salle les soirs de semaine', bg: 'var(--lavande-50)' },
       { tag: 'Conseil', title: 'Photographier vos plats pour des annonces qui donnent faim', bg: 'var(--lavande-100)' },
@@ -504,7 +504,7 @@ export const industries = [
       { num: 'Qualifié', label: 'demandes filtrées selon vos critères' },
       { num: 'Crédibilité', label: 'contenu qui vous positionne en référence' },
     ],
-    recoName: 'Essentiel Plus', recoPrice: '995 $/mois', recoWhy: 'LinkedIn + Google et A/B testing pour un pipeline B2B régulier.',
+    recoName: 'Essentiel Plus', recoPrice: '995 $&nbsp;/&nbsp;mois', recoWhy: 'LinkedIn + Google et A/B testing pour un pipeline B2B régulier.',
     futureBlog: [
       { tag: 'Guide', title: 'Générer des mandats B2B avec LinkedIn Ads', bg: 'var(--violet-50)' },
       { tag: 'Conseil', title: 'Le contenu commandité qui bâtit votre crédibilité', bg: 'var(--lavande-100)' },
@@ -537,7 +537,7 @@ export const industries = [
       { num: 'Panier', label: 'reciblage dynamique des abandons' },
       { num: 'Auto', label: 'catalogue synchronisé avec vos annonces' },
     ],
-    recoName: 'Essentiel Plus', recoPrice: '995 $/mois', recoWhy: 'Acquisition + reciblage dynamique pour faire croître les ventes.',
+    recoName: 'Essentiel Plus', recoPrice: '995 $&nbsp;/&nbsp;mois', recoWhy: 'Acquisition + reciblage dynamique pour faire croître les ventes.',
     futureBlog: [
       { tag: 'Guide', title: 'Réduire vos paniers abandonnés avec le reciblage', bg: 'var(--violet-50)' },
       { tag: 'Conseil', title: 'Calculer et améliorer votre ROAS', bg: 'var(--lavande-100)' },

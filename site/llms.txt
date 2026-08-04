@@ -6,7 +6,7 @@
 ## Services
 
 - Publicité en ligne gérée de A à Z : configuration des comptes, pixels et audiences, rédaction des annonces (FR/EN), optimisation et rapport mensuel.
-- Forfaits : Essentiel 695 $/mois (1 plateforme) · Essentiel Plus 995 $/mois (2 plateformes, reciblage, tests A/B) · Essentiel Performance 1 495 $/mois (3 plateformes, tableau de bord temps réel).
+- Forfaits : Essentiel 695 $ / mois (1 plateforme) · Essentiel Plus 995 $ / mois (2 plateformes, reciblage, tests A/B) · Essentiel Performance 1 495 $ / mois (3 plateformes, tableau de bord temps réel).
 - Frais d'installation unique : 600 $. Minimum 3 mois, puis mensuel avec préavis de 30 jours. Le budget média est payé directement aux plateformes.
 - Plateformes prises en charge : Facebook, Instagram, LinkedIn, TikTok, YouTube, Pinterest, Reddit, Spotify, Google Ads, ChatGPT.
 
