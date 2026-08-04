@@ -235,7 +235,7 @@ export const DICT = {
     "Campagnes Google Ads sur les recherches « urgence » et devis": "Google Ads campaigns on \"emergency\" and quote searches",
     "Annonces avant/après qui montrent vos réalisations": "Before/after ads that showcase your work",
     "Ciblage géographique précis par zones desservies": "Precise geographic targeting by service area",
-    "Exemple d'annonce — construction": "Ad example — construction",
+    "Exemple d'annonce : construction": "Ad example: construction",
     "Le bouche-à-oreille plafonne": "Word of mouth has plateaued",
     "Quand les référencements ralentissent, vos annonces prennent le relais et alimentent un flux constant de demandes.": "When referrals slow down, your ads take over and feed a steady flow of requests.",
     "Trop de clics, peu de bons clients": "Lots of clicks, few good customers",
@@ -267,7 +267,7 @@ export const DICT = {
     "Annonces Google sur les recherches de soins près de vous": "Google ads on searches for care near you",
     "Ciblage par soin et par service, selon la demande": "Targeting by treatment and service, based on demand",
     "Consentement et suivi configurés correctement": "Consent and tracking set up properly",
-    "Exemple d'annonce — clinique": "Ad example — clinic",
+    "Exemple d'annonce : clinique": "Ad example: clinic",
     "Des plages horaires vides": "Empty appointment slots",
     "On cible les patients qui cherchent activement vos soins pour remplir les rendez-vous disponibles.": "We target patients actively searching for your care to fill the available appointments.",
     "Une concurrence locale forte": "Strong local competition",
@@ -301,7 +301,7 @@ export const DICT = {
     "Annonces visuelles qui mettent votre travail en valeur": "Visual ads that showcase your work",
     "Reciblage des visiteurs qui n'ont pas encore réservé": "Retargeting visitors who haven't booked yet",
     "Meta Ads": "Meta Ads",
-    "Exemple d'annonce — salon de beauté": "Ad example — beauty salon",
+    "Exemple d'annonce : salon de beauté": "Ad example: beauty salon",
     "Des trous dans l'agenda": "Gaps in the calendar",
     "On pousse vos disponibilités et vos promotions au bon moment pour combler les plages libres.": "We push your availability and promotions at the right time to fill open slots.",
     "Instagram prend trop de temps": "Instagram takes too much time",
@@ -333,7 +333,7 @@ export const DICT = {
     "Promotions et nouveautés mises en avant chaque semaine": "Promotions and new items featured every week",
     "Campagnes géolocalisées autour de votre restaurant": "Geo-targeted campaigns around your restaurant",
     "Annonces Google sur les recherches « resto près de moi »": "Google ads on \"restaurant near me\" searches",
-    "Exemple d'annonce — restaurant": "Ad example — restaurant",
+    "Exemple d'annonce : restaurant": "Ad example: restaurant",
     "Des soirées trop tranquilles": "Slow evenings",
     "On pousse vos offres aux heures et aux jours où vous avez besoin de remplir la salle.": "We push your offers on the days and hours you need to fill the room.",
     "Une visibilité noyée": "Visibility that gets drowned out",
@@ -366,7 +366,7 @@ export const DICT = {
     "Annonces Google sur les recherches de vos services": "Google ads on searches for your services",
     "Contenu commandité qui bâtit votre crédibilité": "Sponsored content that builds your credibility",
     "Campagnes LinkedIn ciblées B2B": "Targeted B2B LinkedIn campaigns",
-    "Exemple d'annonce — services professionnels": "Ad example — professional services",
+    "Exemple d'annonce : services professionnels": "Ad example: professional services",
     "Un pipeline irrégulier": "An irregular pipeline",
     "On capte les recherches de vos services pour un flux constant de mandats qualifiés.": "We capture searches for your services for a steady flow of qualified mandates.",
     "Se démarquer de la concurrence": "Standing out from the competition",
@@ -398,7 +398,7 @@ export const DICT = {
     "Campagnes d'acquisition Meta et Google": "Meta and Google acquisition campaigns",
     "Catalogue produits synchronisé avec vos annonces": "Product catalog synced with your ads",
     "Reciblage Meta des paniers abandonnés": "Meta retargeting of abandoned carts",
-    "Exemple d'annonce — boutique en ligne": "Ad example — online shop",
+    "Exemple d'annonce : boutique en ligne": "Ad example: online shop",
     "Des paniers abandonnés": "Abandoned carts",
     "Le reciblage Meta ramène les acheteurs à un pas de la caisse pour finaliser l'achat.": "Meta retargeting brings shoppers one step from checkout back to finish the purchase.",
     "Un coût d'acquisition trop élevé": "Too high an acquisition cost",
@@ -503,7 +503,7 @@ export const DICT = {
     "2.2 Prix et offres": "2.2 Pricing and offers",
     "Les prix affichés sur le Site font foi. Ils sont en dollars canadiens et peuvent être modifiés en tout temps ; le prix applicable à votre entente est celui confirmé dans votre soumission ou votre contrat. Les informations du Site sont fournies à titre informatif et ne constituent pas une offre contractuelle.": "The prices displayed on the Site are authoritative. They are in Canadian dollars and may change at any time; the price that applies to your agreement is the one confirmed in your quote or contract. The Site's content is provided for information purposes and does not constitute a contractual offer.",
     "2.3 Propriété intellectuelle": "2.3 Intellectual property",
-    "Le contenu du Site — textes, logo, éléments graphiques, maquettes et structure — appartient à Essentiel PME ou à ses concédants. Toute reproduction ou utilisation sans autorisation écrite préalable est interdite. Les marques et logos de tiers (notamment les plateformes publicitaires) appartiennent à leurs propriétaires respectifs.": "The Site's content — text, logo, graphic elements, mockups and structure — belongs to Essentiel PME or its licensors. Any reproduction or use without prior written authorization is prohibited. Third-party trademarks and logos (including advertising platforms) belong to their respective owners.",
+    "Le contenu du Site (textes, logo, éléments graphiques, maquettes et structure) appartient à Essentiel PME ou à ses concédants. Toute reproduction ou utilisation sans autorisation écrite préalable est interdite. Les marques et logos de tiers (notamment les plateformes publicitaires) appartiennent à leurs propriétaires respectifs.": "The Site's content (text, logo, graphic elements, mockups and structure) belongs to Essentiel PME or its licensors. Any reproduction or use without prior written authorization is prohibited. Third-party trademarks and logos (including advertising platforms) belong to their respective owners.",
     "2.4 Limitation de responsabilité": "2.4 Limitation of liability",
     "On s'efforce de maintenir le Site exact et à jour, mais Essentiel PME ne garantit pas que le contenu soit exempt d'erreurs ou que le Site soit accessible sans interruption. Dans la mesure permise par la loi, Essentiel PME décline toute responsabilité pour les dommages découlant de l'utilisation du Site ou de sites tiers vers lesquels il renvoie.": "We strive to keep the Site accurate and up to date, but Essentiel PME does not warrant that the content is error-free or that the Site will be available without interruption. To the extent permitted by law, Essentiel PME disclaims all liability for damages arising from the use of the Site or of third-party sites it links to.",
     "2.5 Liens externes": "2.5 External links",
@@ -524,7 +524,7 @@ export const DICT = {
     "3.5 Communication à des tiers": "3.5 Disclosure to third parties",
     "Vos renseignements peuvent être traités par des fournisseurs qui nous rendent des services (hébergement, infolettre, mesure d'audience, plateformes publicitaires comme Google et Meta). Certains de ces fournisseurs sont situés à l'extérieur du Québec ; le cas échéant, on s'assure que les renseignements bénéficient d'une protection adéquate, conformément à la loi.": "Your information may be processed by service providers acting on our behalf (hosting, newsletters, audience measurement, advertising platforms such as Google and Meta). Some of these providers are located outside Québec; where that is the case, we ensure the information receives adequate protection, as required by law.",
     "3.6 Conservation et sécurité": "3.6 Retention and security",
-    "On conserve vos renseignements le temps nécessaire aux finalités décrites, puis on les détruit ou les anonymise de façon sécuritaire. Des mesures raisonnables — techniques et organisationnelles — protègent vos renseignements contre l'accès, l'utilisation ou la communication non autorisés.": "We keep your information only as long as necessary for the purposes described above, then securely destroy or anonymize it. Reasonable technical and organizational measures protect your information against unauthorized access, use or disclosure.",
+    "On conserve vos renseignements le temps nécessaire aux finalités décrites, puis on les détruit ou les anonymise de façon sécuritaire. Des mesures raisonnables, techniques et organisationnelles, protègent vos renseignements contre l'accès, l'utilisation ou la communication non autorisés.": "We keep your information only as long as necessary for the purposes described above, then securely destroy or anonymize it. Reasonable technical and organizational measures protect your information against unauthorized access, use or disclosure.",
     "3.7 Vos droits": "3.7 Your rights",
     "Vous pouvez en tout temps : demander l'accès à vos renseignements ; en demander la rectification ; retirer votre consentement ; demander la cessation de leur diffusion ; obtenir les renseignements informatisés que vous nous avez fournis dans un format technologique structuré et couramment utilisé, ou en demander le transfert à un autre organisme (droit à la portabilité). On répond à ces demandes dans un délai de 30 jours. Adressez votre demande au responsable identifié ci-dessus. Si vous êtes insatisfait du traitement de votre demande, vous pouvez déposer une plainte auprès de la": "At any time, you may: request access to your information; request its correction; withdraw your consent; request that its dissemination cease; or obtain the computerized information you provided to us in a structured, commonly used technological format, or ask that it be transferred to another organization (right to data portability). We respond to these requests within 30 days. Send your request to the person in charge identified above. If you are dissatisfied with how your request is handled, you may file a complaint with the",
     "3.8 Incident de confidentialité": "3.8 Confidentiality incidents",
@@ -547,11 +547,11 @@ export const DICT = {
     // ---- Blog ----
     "BLOGUE": "BLOG",
     "Des conseils clairs pour votre PME.": "Clear advice for your SMB.",
-    "Publicité en ligne et présence numérique — expliqués sans jargon, pour des gens occupés.": "Online advertising and digital presence, explained without jargon, for busy people.",
+    "Publicité en ligne et présence numérique, expliqués sans jargon, pour des gens occupés.": "Online advertising and digital presence, explained without jargon, for busy people.",
     "Article vedette": "Featured article",
     "8 juillet 2026 · 6 min": "July 8, 2026 · 6 min",
     "Combien coûte la publicité en ligne pour une PME au Québec ?": "How much does online advertising cost for an SMB in Quebec?",
-    "Entre gérer soi-même, les agences à gros forfaits et les budgets média qui s'envolent, difficile de s'y retrouver. Voici les vraies fourchettes de prix en 2026 — et ce que chaque option vous donne réellement.": "Between doing it yourself, agencies with big packages and media budgets that spiral, it's hard to find your way. Here are the real price ranges in 2026, and what each option actually gives you.",
+    "Entre gérer soi-même, les agences à gros forfaits et les budgets média qui s'envolent, difficile de s'y retrouver. Voici les vraies fourchettes de prix en 2026, et ce que chaque option vous donne réellement.": "Between doing it yourself, agencies with big packages and media budgets that spiral, it's hard to find your way. Here are the real price ranges in 2026, and what each option actually gives you.",
     "Lire l'article →": "Read the article →",
     "DERNIERS ARTICLES": "LATEST ARTICLES",
     "Lire, comprendre, décider.": "Read, understand, decide.",
@@ -559,26 +559,26 @@ export const DICT = {
     "Le reciblage : pourquoi vos visiteurs reviennent (et achètent)": "Retargeting: why your visitors come back (and buy)",
     "La plupart des gens n'achètent pas à la première visite. Comment ramener les bonnes personnes sans gaspiller de budget.": "Most people don't buy on the first visit. How to bring the right people back without wasting budget.",
     "Meta ou Google Ads : où mettre votre premier budget pub ?": "Meta or Google Ads: where to put your first ad budget?",
-    "Les deux fonctionnent — mais pas pour les mêmes entreprises. Un guide simple selon votre secteur et votre clientèle.": "Both work, but not for the same businesses. A simple guide based on your sector and your customers.",
+    "Les deux fonctionnent, mais pas pour les mêmes entreprises. Un guide simple selon votre secteur et votre clientèle.": "Both work, but not for the same businesses. A simple guide based on your sector and your customers.",
     "Référencement local": "Local SEO",
     "Fiche Google : le guide du commerce local québécois": "Google Business Profile: the guide for Quebec local businesses",
     "La fiche Google amène souvent plus d'appels que la publicité payante. Comment la remplir, la garder à jour et récolter des avis.": "A Google Business Profile often brings more calls than paid ads. How to fill it out, keep it current and gather reviews.",
     "5 signes que vos publicités gaspillent votre budget": "5 signs your ads are wasting your budget",
     "Mauvais ciblage, annonces sans appel à l'action, budget mal réparti… Des erreurs faciles à repérer qui coûtent cher chaque semaine.": "Poor targeting, ads with no call to action, budget spread too thin… Easy-to-spot mistakes that cost you every week.",
     "Gérer ses pubs soi-même : le vrai coût du « boost » Facebook": "Managing your own ads: the real cost of the Facebook \"boost\"",
-    "Le bouton « booster » semble simple — jusqu'à ce qu'on compte l'argent gaspillé. Le calcul honnête entre gérer soi-même et déléguer.": "The \"boost\" button seems simple, until you count the wasted money. The honest math between DIY and delegating.",
+    "Le bouton « booster » semble simple, jusqu'à ce qu'on compte l'argent gaspillé. Le calcul honnête entre gérer soi-même et déléguer.": "The \"boost\" button seems simple, until you count the wasted money. The honest math between DIY and delegating.",
     "Être trouvé sur Google dans sa ville : le référencement local expliqué": "Getting found on Google in your city: local SEO explained",
     "« Plombier Laval », « coiffeur Limoilou » : comment vos annonces se placent sur les recherches qui comptent vraiment.": "\"Plumber Laval\", \"hair salon Limoilou\": how your ads rank on the searches that really matter.",
-    "Articles à venir — présentés à titre d'aperçu en attendant le lancement officiel.": "Upcoming articles, shown as a preview ahead of the official launch.",
+    "Articles à venir, présentés à titre d'aperçu en attendant le lancement officiel.": "Upcoming articles, shown as a preview ahead of the official launch.",
     "Un conseil utile par mois, pas plus.": "One useful tip a month, no more.",
     "Recevez nos articles par courriel. Pas de pourriel, désabonnement en un clic.": "Get our articles by email. No spam, unsubscribe in one click.",
     "S'abonner à l'infolettre →": "Subscribe to the newsletter →",
     "Image de l'article vedette": "Featured article image",
-    "Image — reciblage": "Image — retargeting",
-    "Image — fiche Google": "Image — Google Business Profile",
-    "Image — site désuet": "Image — outdated site",
-    "Image — plateformes DIY": "Image — DIY platforms",
-    "Image — SEO local": "Image — local SEO",
+    "Image : reciblage": "Image : retargeting",
+    "Image : fiche Google": "Image : Google Business Profile",
+    "Image : site désuet": "Image : outdated site",
+    "Image : plateformes DIY": "Image : DIY platforms",
+    "Image : SEO local": "Image : local SEO",
 
     // ---- Platforms page ----
     "Chaque plateforme a sa force.": "Every platform has its strength.",
@@ -671,28 +671,28 @@ export const DICT = {
 /* Métadonnées (balises <title> et meta descriptions) — utilisées uniquement
    par le générateur pour les pages EN ; jamais affichées dans la page. */
 export const META_EN = {
-  'Essentiel PME — Publicité en ligne gérée pour les PME du Québec':
-    'SMB Essentials — Managed online advertising for Quebec SMBs',
+  'Essentiel PME | Publicité en ligne gérée pour les PME du Québec':
+    'SMB Essentials | Managed online advertising for Quebec SMBs',
   'Publicité en ligne gérée de A à Z pour les PME québécoises : Meta, Google, LinkedIn, TikTok et plus. Prix fixes à partir de 695 $/mois, bilingue FR/EN, réponse en 24 h.':
     'Online advertising managed end to end for Quebec SMBs: Meta, Google, LinkedIn, TikTok and more. Fixed prices from $695/mo, bilingual FR/EN, 24-hour response.',
   'Forfaits Essentiel, Essentiel Plus et Essentiel Performance | Essentiel PME':
     'Essential, Essential Plus and Essential Performance packages | SMB Essentials',
   'Trois forfaits de publicité en ligne gérée pour PME : Essentiel 695 $/mois, Essentiel Plus 995 $/mois, Essentiel Performance 1 495 $/mois. Toutes les plateformes, rédaction FR/EN, rapports clairs.':
     'Three managed online advertising packages for SMBs: Essential $695/mo, Essential Plus $995/mo, Essential Performance $1,495/mo. Every platform, FR/EN copywriting, clear reports.',
-  'À propos — mission, valeurs et processus | Essentiel PME':
-    'About us — mission, values and process | SMB Essentials',
+  'À propos : mission, valeurs et processus | Essentiel PME':
+    'About us: mission, values and process | SMB Essentials',
   "Essentiel PME rend la publicité en ligne accessible aux PME québécoises : mission, valeurs (simplicité, efficacité, rapidité) et un processus structuré en 6 étapes, sans surprise.":
     'SMB Essentials makes online advertising accessible to Quebec SMBs: our mission, values (simplicity, efficiency, speed) and a structured 6-step process, no surprises.',
-  'Contact — réponse en 24 h ouvrables | Essentiel PME':
-    'Contact — reply within 24 business hours | SMB Essentials',
+  'Contact : réponse en 24 h ouvrables | Essentiel PME':
+    'Contact: reply within 24 business hours | SMB Essentials',
   "Contactez Essentiel PME pour démarrer votre publicité en ligne : formulaire, info@essentielpme.com ou 1-844-763-3832. Réponse d'un humain en 24 heures ouvrables. Québec, QC.":
     'Contact SMB Essentials to start your online advertising: form, info@essentielpme.com or 1-844-763-3832. A reply from a human within 24 business hours. Québec, QC.',
-  'Blogue — conseils publicité en ligne pour PME | Essentiel PME':
-    'Blog — online advertising advice for SMBs | SMB Essentials',
+  'Blogue : conseils publicité en ligne pour PME | Essentiel PME':
+    'Blog: online advertising advice for SMBs | SMB Essentials',
   'Conseils clairs et sans jargon sur la publicité en ligne pour PME québécoises : coûts, Meta vs Google Ads, reciblage, fiche Google et référencement local.':
     'Clear, jargon-free advice on online advertising for Quebec SMBs: costs, Meta vs Google Ads, retargeting, Google Business Profile and local SEO.',
-  'Plateformes publicitaires — Meta, Google, LinkedIn, TikTok et plus | Essentiel PME':
-    'Advertising platforms — Meta, Google, LinkedIn, TikTok and more | SMB Essentials',
+  'Plateformes publicitaires : Meta, Google, LinkedIn, TikTok et plus | Essentiel PME':
+    'Advertising platforms: Meta, Google, LinkedIn, TikTok and more | SMB Essentials',
   'Facebook, Instagram, LinkedIn, TikTok, YouTube, Pinterest, Reddit, Spotify, Google Ads et ChatGPT : chaque plateforme a sa force. Toutes incluses dans nos forfaits de publicité en ligne.':
     'Facebook, Instagram, LinkedIn, TikTok, YouTube, Pinterest, Reddit, Spotify, Google Ads and ChatGPT: each platform has its strength. All included in our online advertising packages.',
   'Mentions légales et confidentialité | Essentiel PME':
@@ -711,7 +711,7 @@ export const META_EN = {
     'Online advertising for beauty and wellness in Québec | SMB Essentials',
   'Publicité en ligne gérée pour salons de coiffure, studios d’esthétique et centres de bien-être au Québec. Campagnes Instagram et Facebook géolocalisées qui remplissent votre agenda.':
     'Managed online advertising for hair salons, esthetics studios and wellness centres in Québec. Geo-targeted Instagram and Facebook campaigns that fill your calendar.',
-  'Publicité en ligne pour la restauration au Québec | Essentiel PME':
+  'Publicité en ligne pour les restaurants au Québec | Essentiel PME':
     'Online advertising for restaurants in Québec | SMB Essentials',
   'Publicité en ligne gérée pour restaurants, cafés et traiteurs au Québec. Campagnes géolocalisées, promotions hebdomadaires et annonces « resto près de moi ».':
     'Managed online advertising for restaurants, cafés and caterers in Québec. Geo-targeted campaigns, weekly promotions and "restaurant near me" ads.',
@@ -744,16 +744,16 @@ Object.assign(DICT, {
   'analytiques': 'analytics',
   'publicitaires': 'advertising',
   'et': 'and',
-  '— pour offrir la meilleure expérience possible et améliorer nos services. Détails dans notre': '— to give you the best possible experience and improve our services. Details in our',
+  ', pour offrir la meilleure expérience possible et améliorer nos services. Détails dans notre': ', to give you the best possible experience and improve our services. Details in our',
   'Votre expérience, vos choix': 'Your experience, your choices',
   'Tout accepter': 'Accept all',
   'Personnaliser': 'Customize',
   'Fonctionnels': 'Functional',
-  '— nécessaires au fonctionnement du site (toujours actifs)': '— required for the site to work (always on)',
+  ': nécessaires au fonctionnement du site (toujours actifs)': ': required for the site to work (always on)',
   'Analytiques': 'Analytics',
-  '— nous aident à comprendre comment le site est utilisé, pour l\'améliorer': '— help us understand how the site is used, so we can improve it',
+  ': nous aident à comprendre comment le site est utilisé, pour l\'améliorer': ': help us understand how the site is used, so we can improve it',
   'Publicitaires': 'Advertising',
-  '— servent à mesurer l\'efficacité de nos publicités et à les rendre plus pertinentes': '— used to measure how effective our advertising is and make it more relevant',
+  ': servent à mesurer l\'efficacité de nos publicités et à les rendre plus pertinentes': ': used to measure how effective our advertising is and make it more relevant',
   'Refuser les témoins optionnels': 'Refuse optional cookies',
   'Confirmer mes choix': 'Confirm my choices',
   'Gérer les témoins': 'Manage cookies',
@@ -774,7 +774,7 @@ Object.assign(DICT, {
   // Instagram
   'La vitrine des métiers visuels : avant/après, réalisations, coulisses.': 'The showcase for visual trades: before/after, work, behind the scenes.',
   'Stories et Reels : des formats immersifs qui créent une proximité avec votre marque.': 'Stories and Reels: immersive formats that build closeness with your brand.',
-  'Le même gestionnaire de publicités que Facebook — deux réseaux, une seule campagne.': 'The same ads manager as Facebook — two networks, one campaign.',
+  'Le même gestionnaire de publicités que Facebook : deux réseaux, une seule campagne.': 'The same ads manager as Facebook: two networks, one campaign.',
   'Image, carrousel, Stories, Reels, collection': 'Image, carousel, Stories, Reels, collection',
   'Image de marque, prises de rendez-vous, ventes en boutique et en ligne': 'Brand image, appointment bookings, in-store and online sales',
   // LinkedIn
@@ -784,7 +784,7 @@ Object.assign(DICT, {
   'Image, vidéo, carrousel documentaire, messages commandités': 'Image, video, document carousel, sponsored messaging',
   'Notoriété B2B, mandats qualifiés, recrutement': 'B2B awareness, qualified mandates, recruiting',
   // TikTok
-  "Des coûts publicitaires encore doux au Québec — le moment d'en profiter.": 'Ad costs still gentle in Québec — the time to take advantage.',
+  "Des coûts publicitaires encore doux au Québec. Le moment d'en profiter.": 'Ad costs still gentle in Québec. The time to take advantage.',
   'La vidéo courte authentique y performe mieux que la publicité léchée.': 'Authentic short video outperforms polished advertising there.',
   'Un algorithme qui trouve votre public au-delà de vos abonnés.': 'An algorithm that finds your audience beyond your followers.',
   'Vidéo courte plein écran, amplification de contenus existants (Spark Ads)': 'Full-screen short video, amplification of existing content (Spark Ads)',
@@ -796,7 +796,7 @@ Object.assign(DICT, {
   'Annonces vidéo (avant et pendant la lecture, Shorts), bannières': 'Video ads (pre-roll and in-stream, Shorts), banners',
   'Notoriété, considération, éducation du client': 'Awareness, consideration, customer education',
   // Pinterest
-  "Les gens y planifient leurs projets : rénovation, mariage, déco — l'achat suit.": 'People plan their projects there: renovation, weddings, decor — purchases follow.',
+  "Les gens y planifient leurs projets : rénovation, mariage, déco. L'achat suit.": 'People plan their projects there: renovation, weddings, decor. Purchases follow.',
   'Vos épingles continuent de travailler des mois après leur publication.': 'Your pins keep working for months after they are published.',
   'Un public en mode découverte, ouvert aux nouvelles marques.': 'An audience in discovery mode, open to new brands.',
   'Épingles image et vidéo, carrousels, épingles produits': 'Image and video pins, carousels, product pins',
@@ -851,7 +851,7 @@ Object.assign(DICT, {
   'Envie de comprendre les coûts, les plateformes et les délais avant de choisir ?': 'Want to understand the costs, platforms and timelines before choosing?',
   'Le guide complet de la publicité en ligne →': 'The complete online advertising guide →',
   'Oui, envoyez-moi le conseil du mois !': 'Yes, send me the tip of the month!',
-  'Des idées concrètes de publicité et de marketing pour votre PME — un seul courriel par mois, zéro pourriel, désabonnement en un clic. Retrait possible en tout temps.': 'Concrete advertising and marketing ideas for your SMB — just one email a month, zero spam, one-click unsubscribe. Withdraw anytime.',
+  'Des idées concrètes de publicité et de marketing pour votre PME : un seul courriel par mois, zéro pourriel, désabonnement en un clic. Retrait possible en tout temps.': 'Concrete advertising and marketing ideas for your SMB: just one email a month, zero spam, one-click unsubscribe. Withdraw anytime.',
   'Essentiel — 695 $/mois': 'Essential — $695/mo',
   'Essentiel Plus — 995 $/mois': 'Essential Plus — $995/mo',
   'Essentiel Performance — 1 495 $/mois': 'Essential Performance — $1,495/mo',

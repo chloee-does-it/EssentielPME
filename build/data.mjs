@@ -216,7 +216,7 @@ export const platforms = [
     atouts: [
       'La vitrine des métiers visuels&nbsp;: avant/après, réalisations, coulisses.',
       'Stories et Reels&nbsp;: des formats immersifs qui créent une proximité avec votre marque.',
-      'Le même gestionnaire de publicités que Facebook — deux réseaux, une seule campagne.',
+      'Le même gestionnaire de publicités que Facebook : deux réseaux, une seule campagne.',
     ],
     formats: 'Image, carrousel, Stories, Reels, collection',
     objectifs: 'Image de marque, prises de rendez-vous, ventes en boutique et en ligne',
@@ -244,7 +244,7 @@ export const platforms = [
     desc: 'La vidéo courte qui rejoint un public plus jeune&nbsp; et de plus en plus tous les âges. Idéale pour bâtir une notoriété rapidement, à faible coût par vue.',
     ideal: 'Restauration, beauté, commerce en ligne.',
     atouts: [
-      "Des coûts publicitaires encore doux au Québec — le moment d'en profiter.",
+      "Des coûts publicitaires encore doux au Québec. Le moment d'en profiter.",
       'La vidéo courte authentique y performe mieux que la publicité léchée.',
       'Un algorithme qui trouve votre public au-delà de vos abonnés.',
     ],
@@ -274,7 +274,7 @@ export const platforms = [
     desc: 'Le moteur d’inspiration. Vos produits et réalisations apparaissent au moment où les gens planifient un projet ou un achat.',
     ideal: 'Décoration, rénovation, mariage, boutiques en ligne.',
     atouts: [
-      "Les gens y planifient leurs projets&nbsp;: rénovation, mariage, déco — l'achat suit.",
+      "Les gens y planifient leurs projets&nbsp;: rénovation, mariage, déco. L'achat suit.",
       'Vos épingles continuent de travailler des mois après leur publication.',
       'Un public en mode découverte, ouvert aux nouvelles marques.',
     ],
@@ -355,7 +355,7 @@ export const industries = [
     body: 'Pendant que vous travaillez, vos campagnes Google et Meta font entrer les demandes de soumission et vous placent devant les clients de vos zones desservies.',
     bullets: ['Campagnes Google Ads sur les recherches «&nbsp;urgence&nbsp;» et devis', 'Annonces avant/après qui montrent vos réalisations', 'Ciblage géographique précis par zones desservies'],
     tags: [{ text: 'Meta + Google Ads', light: true }, { text: 'Essentiel Plus', solid: true }],
-    img: 'industrie-construction', imgAlt: 'Exemple d’annonce — construction', wrapBg: 'var(--lavande-100)', barBg: 'var(--violet)',
+    img: 'industrie-construction', imgAlt: 'Exemple d’annonce : construction', wrapBg: 'var(--lavande-100)', barBg: 'var(--violet)',
     challenges: [
       { problem: 'Le bouche-à-oreille plafonne', solution: 'Quand les référencements ralentissent, vos annonces prennent le relais et alimentent un flux constant de demandes.' },
       { problem: 'Trop de clics, peu de bons clients', solution: 'On cible par zone desservie et par type de projet pour ne payer que pour les demandes qui valent votre déplacement.' },
@@ -388,7 +388,7 @@ export const industries = [
     body: 'Des annonces Google au moment où les patients cherchent un soin, un ciblage local précis et un suivi rigoureux des demandes.',
     bullets: ['Annonces Google sur les recherches de soins près de vous', 'Ciblage par soin et par service, selon la demande', 'Consentement et suivi configurés correctement'],
     tags: [{ text: 'Meta + Google Ads', light: true }, { text: 'Essentiel Plus', solid: true }],
-    img: 'industrie-sante', imgAlt: 'Exemple d’annonce — clinique', wrapBg: 'var(--violet-100)', barBg: 'var(--violet-500)',
+    img: 'industrie-sante', imgAlt: 'Exemple d’annonce : clinique', wrapBg: 'var(--violet-100)', barBg: 'var(--violet-500)',
     challenges: [
       { problem: 'Des plages horaires vides', solution: 'On cible les patients qui cherchent activement vos soins pour remplir les rendez-vous disponibles.' },
       { problem: 'Une concurrence locale forte', solution: 'On vous place en tête des recherches dans votre quartier, au moment précis du besoin.' },
@@ -421,7 +421,7 @@ export const industries = [
     body: 'Vos campagnes locales sur Meta et Instagram tournent pendant que vous travaillez et remplissent votre agenda.',
     bullets: ['Campagnes Instagram et Facebook géolocalisées', 'Annonces visuelles qui mettent votre travail en valeur', 'Reciblage des visiteurs qui n’ont pas encore réservé'],
     tags: [{ text: 'Meta Ads', light: true }, { text: 'Essentiel', solid: true }],
-    img: 'industrie-beaute', imgAlt: 'Exemple d’annonce — salon de beauté', wrapBg: 'var(--lavande-50)', barBg: 'var(--lavande-700)',
+    img: 'industrie-beaute', imgAlt: 'Exemple d’annonce : salon de beauté', wrapBg: 'var(--lavande-50)', barBg: 'var(--lavande-700)',
     challenges: [
       { problem: 'Des trous dans l’agenda', solution: 'On pousse vos disponibilités et vos promotions au bon moment pour combler les plages libres.' },
       { problem: 'Instagram prend trop de temps', solution: 'On transforme vos plus belles réalisations en annonces qui tournent toutes seules.' },
@@ -454,7 +454,7 @@ export const industries = [
     body: 'Vos annonces Meta et Google ramènent les gens du quartier à votre porte, aux heures voulues.',
     bullets: ['Promotions et nouveautés mises en avant chaque semaine', 'Campagnes géolocalisées autour de votre restaurant', 'Annonces Google sur les recherches «&nbsp;resto près de moi&nbsp;»'],
     tags: [{ text: 'Meta Ads', light: true }, { text: 'Essentiel', solid: true }],
-    img: 'industrie-restauration', imgAlt: 'Exemple d’annonce — restaurant', wrapBg: 'var(--lavande-100)', barBg: 'var(--violet-700)',
+    img: 'industrie-restauration', imgAlt: 'Exemple d’annonce : restaurant', wrapBg: 'var(--lavande-100)', barBg: 'var(--violet-700)',
     challenges: [
       { problem: 'Des soirées trop tranquilles', solution: 'On pousse vos offres aux heures et aux jours où vous avez besoin de remplir la salle.' },
       { problem: 'Une visibilité noyée', solution: 'On vous fait ressortir dans les recherches « resto près de moi » de votre secteur.' },
@@ -487,7 +487,7 @@ export const industries = [
     body: 'Des campagnes LinkedIn et Google qui remplissent votre pipeline de clients d’affaires et bâtissent votre crédibilité.',
     bullets: ['Annonces Google sur les recherches de vos services', 'Contenu commandité qui bâtit votre crédibilité', 'Campagnes LinkedIn ciblées B2B'],
     tags: [{ text: 'Meta + Google Ads', light: true }, { text: 'Essentiel Plus', solid: true }],
-    img: 'industrie-services-pro', imgAlt: 'Exemple d’annonce — services professionnels', wrapBg: 'var(--violet-50)', barBg: 'var(--violet)',
+    img: 'industrie-services-pro', imgAlt: 'Exemple d’annonce : services professionnels', wrapBg: 'var(--violet-50)', barBg: 'var(--violet)',
     challenges: [
       { problem: 'Un pipeline irrégulier', solution: 'On capte les recherches de vos services pour un flux constant de mandats qualifiés.' },
       { problem: 'Se démarquer de la concurrence', solution: 'Contenu commandité et LinkedIn ciblé bâtissent votre crédibilité auprès des décideurs.' },
@@ -520,7 +520,7 @@ export const industries = [
     body: 'Gérer l’inventaire et les commandes, c’est déjà une journée complète. Le reciblage des paniers abandonnés et les campagnes d’acquisition, on s’en occupe.',
     bullets: ['Campagnes d’acquisition Meta et Google', 'Catalogue produits synchronisé avec vos annonces', 'Reciblage Meta des paniers abandonnés'],
     tags: [{ text: 'Meta + Google Ads', light: true }, { text: 'Essentiel Plus', solid: true }],
-    img: 'industrie-ecommerce', imgAlt: 'Exemple d’annonce — boutique en ligne', wrapBg: 'var(--violet-100)', barBg: 'var(--violet-500)',
+    img: 'industrie-ecommerce', imgAlt: 'Exemple d’annonce : boutique en ligne', wrapBg: 'var(--violet-100)', barBg: 'var(--violet-500)',
     challenges: [
       { problem: 'Des paniers abandonnés', solution: 'Le reciblage Meta ramène les acheteurs à un pas de la caisse pour finaliser l’achat.' },
       { problem: 'Un coût d’acquisition trop élevé', solution: 'On optimise vers l’achat, pas le clic, pour un retour sur investissement mesurable.' },
@@ -552,37 +552,37 @@ export const blogFeatured = {
   img: 'blog-vedette', imgAlt: 'Image de l’article vedette',
   badge: 'Article vedette', date: '8 juillet 2026 · 6 min',
   title: 'Combien coûte la publicité en ligne pour une PME au Québec&nbsp;?',
-  excerpt: 'Entre gérer soi-même, les agences à gros forfaits et les budgets média qui s’envolent, difficile de s’y retrouver. Voici les vraies fourchettes de prix en 2026 — et ce que chaque option vous donne réellement.',
+  excerpt: 'Entre gérer soi-même, les agences à gros forfaits et les budgets média qui s’envolent, difficile de s’y retrouver. Voici les vraies fourchettes de prix en 2026, et ce que chaque option vous donne réellement.',
 };
 
 export const blogArticles = [
   {
-    img: 'blog-reciblage', imgAlt: 'Image — reciblage', cat: 'Publicité', time: '5 min',
+    img: 'blog-reciblage', imgAlt: 'Image : reciblage', cat: 'Publicité', time: '5 min',
     title: 'Le reciblage&nbsp;: pourquoi vos visiteurs reviennent (et achètent)',
     excerpt: 'La plupart des gens n’achètent pas à la première visite. Comment ramener les bonnes personnes sans gaspiller de budget.',
   },
   {
-    img: 'blog-meta-google', imgAlt: 'Image — Meta vs Google', cat: 'Publicité', time: '7 min',
+    img: 'blog-meta-google', imgAlt: 'Image : Meta vs Google', cat: 'Publicité', time: '7 min',
     title: 'Meta ou Google Ads&nbsp;: où mettre votre premier budget pub&nbsp;?',
-    excerpt: 'Les deux fonctionnent — mais pas pour les mêmes entreprises. Un guide simple selon votre secteur et votre clientèle.',
+    excerpt: 'Les deux fonctionnent, mais pas pour les mêmes entreprises. Un guide simple selon votre secteur et votre clientèle.',
   },
   {
-    img: 'blog-fiche-google', imgAlt: 'Image — fiche Google', cat: 'Référencement local', time: '4 min',
+    img: 'blog-fiche-google', imgAlt: 'Image : fiche Google', cat: 'Référencement local', time: '4 min',
     title: 'Fiche Google&nbsp;: le guide du commerce local québécois',
     excerpt: 'La fiche Google amène souvent plus d’appels que la publicité payante. Comment la remplir, la garder à jour et récolter des avis.',
   },
   {
-    img: 'blog-signes', imgAlt: 'Image — site désuet', cat: 'Publicité', time: '5 min',
+    img: 'blog-signes', imgAlt: 'Image : site désuet', cat: 'Publicité', time: '5 min',
     title: '5 signes que vos publicités gaspillent votre budget',
     excerpt: 'Mauvais ciblage, annonces sans appel à l’action, budget mal réparti… Des erreurs faciles à repérer qui coûtent cher chaque semaine.',
   },
   {
-    img: 'blog-diy', imgAlt: 'Image — plateformes DIY', cat: 'Publicité', time: '6 min',
+    img: 'blog-diy', imgAlt: 'Image : plateformes DIY', cat: 'Publicité', time: '6 min',
     title: 'Gérer ses pubs soi-même&nbsp;: le vrai coût du «&nbsp;boost&nbsp;» Facebook',
-    excerpt: 'Le bouton «&nbsp;booster&nbsp;» semble simple — jusqu’à ce qu’on compte l’argent gaspillé. Le calcul honnête entre gérer soi-même et déléguer.',
+    excerpt: 'Le bouton «&nbsp;booster&nbsp;» semble simple, jusqu’à ce qu’on compte l’argent gaspillé. Le calcul honnête entre gérer soi-même et déléguer.',
   },
   {
-    img: 'blog-seo-local', imgAlt: 'Image — SEO local', cat: 'Référencement local', time: '8 min',
+    img: 'blog-seo-local', imgAlt: 'Image : SEO local', cat: 'Référencement local', time: '8 min',
     title: 'Être trouvé sur Google dans sa ville&nbsp;: le référencement local expliqué',
     excerpt: '«&nbsp;Plombier Laval&nbsp;», «&nbsp;coiffeur Limoilou&nbsp;»&nbsp;: comment vos annonces se placent sur les recherches qui comptent vraiment.',
   },

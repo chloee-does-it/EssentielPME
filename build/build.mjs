@@ -78,7 +78,7 @@ function header(active, root, pagePath, enPagePath) {
   return `  <a class="skip-link" href="#contenu">Aller au contenu</a>
   <header class="we-header">
     <div class="we-header-inner">
-      <a href="${root}" class="we-logo" style="border-bottom:none;" aria-label="Essentiel PME — Accueil">
+      <a href="${root}" class="we-logo" style="border-bottom:none;" aria-label="Essentiel PME (Accueil)">
         <img src="${root}assets/img/logo-h-fr-rgb.svg" alt="Essentiel PME" style="height:60px; width:auto;">
       </a>
       <nav class="we-nav" aria-label="Navigation principale">
@@ -141,7 +141,6 @@ function footer(root) {
       <div class="footer-brand">
         <img src="${root}assets/img/logo-h-fr-white.svg" alt="Essentiel PME" style="filter:none; height:32px;">
         <p>Publicité en ligne gérée pour les PME du Québec. Simple, efficace, rapide.</p>
-        <p style="margin-top:2px;">Fondé par <a href="https://www.linkedin.com/in/benoitarlabosse/" target="_blank" rel="noopener" style="color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px; border-bottom:none;">Benoit Arlabosse</a></p>
         <div style="display:flex; gap:12px; margin-top:4px;">
           <a href="${SITE.social.facebook}" target="_blank" rel="noopener" title="Facebook" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;">${socialIcon('facebook')}</a>
           <a href="${SITE.social.instagram}" target="_blank" rel="noopener" title="Instagram" style="width:38px; height:38px; border-radius:999px; background:var(--lavande-100); display:flex; align-items:center; justify-content:center; border-bottom:none;">${socialIcon('instagram')}</a>
@@ -253,7 +252,7 @@ ${footer(root)}
   <div class="consent-banner" role="dialog" aria-modal="true" aria-labelledby="consent-title">
     <h3 id="consent-title">Votre expérience, vos choix</h3>
     <div data-consent-main>
-      <p>On utilise trois types de témoins&nbsp;: <strong>fonctionnels</strong>, <strong>analytiques</strong> et <strong>publicitaires</strong> — pour offrir la meilleure expérience possible et améliorer nos services. Détails dans notre <a href="${root}mentions-legales/#temoins">politique de témoins</a>.</p>
+      <p>On utilise trois types de témoins&nbsp;: <strong>fonctionnels</strong>, <strong>analytiques</strong> et <strong>publicitaires</strong>, pour offrir la meilleure expérience possible et améliorer nos services. Détails dans notre <a href="${root}mentions-legales/#temoins">politique de témoins</a>.</p>
       <div class="consent-actions">
         <button type="button" data-consent-customize>Personnaliser</button>
         <button type="button" data-consent-accept>Tout accepter</button>
@@ -261,9 +260,9 @@ ${footer(root)}
     </div>
     <div data-consent-panel hidden style="display:none;">
       <div class="consent-choices">
-        <label><input type="checkbox" checked disabled> <span><strong>Fonctionnels</strong> — nécessaires au fonctionnement du site (toujours actifs)</span></label>
-        <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytiques</strong> — nous aident à comprendre comment le site est utilisé, pour l'améliorer</span></label>
-        <label><input type="checkbox" data-consent-ads checked> <span><strong>Publicitaires</strong> — servent à mesurer l'efficacité de nos publicités et à les rendre plus pertinentes</span></label>
+        <label><input type="checkbox" checked disabled> <span><strong>Fonctionnels</strong> : nécessaires au fonctionnement du site (toujours actifs)</span></label>
+        <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytiques</strong> : nous aident à comprendre comment le site est utilisé, pour l'améliorer</span></label>
+        <label><input type="checkbox" data-consent-ads checked> <span><strong>Publicitaires</strong> : servent à mesurer l'efficacité de nos publicités et à les rendre plus pertinentes</span></label>
       </div>
       <div class="consent-actions">
         <button type="button" data-consent-optional-refuse>Refuser les témoins optionnels</button>
@@ -522,7 +521,7 @@ ${faqList(faqHome, 'faq-home')}
 
   return shell({
     path: 'index.html', root, active: 'home', label: 'Accueil',
-    title: 'Essentiel PME — Publicité en ligne gérée pour les PME du Québec',
+    title: 'Essentiel PME | Publicité en ligne gérée pour les PME du Québec',
     desc: 'Publicité en ligne gérée de A à Z pour les PME québécoises : Meta, Google, LinkedIn, TikTok et plus. Prix fixes à partir de 695 $/mois, bilingue FR/EN, réponse en 24 h.',
     jsonld: [
       { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: SITE.baseUrl + '/', inLanguage: 'fr-CA' },
@@ -877,7 +876,7 @@ ${ctaBand({ h: 'Travaillons ensemble.', p: 'Un premier appel pour faire connaiss
 
   return shell({
     path: 'a-propos/index.html', root: '/', active: 'aboutGroup', label: 'À propos',
-    title: 'À propos — mission, valeurs et processus | Essentiel PME',
+    title: 'À propos : mission, valeurs et processus | Essentiel PME',
     desc: 'Essentiel PME rend la publicité en ligne accessible aux PME québécoises : mission, valeurs (simplicité, efficacité, rapidité) et un processus structuré en 6 étapes, sans surprise.',
     jsonld: [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'À propos d’Essentiel PME', url: `${SITE.baseUrl}/a-propos/` }],
     body,
@@ -940,7 +939,7 @@ ${field('Téléphone', 'phone', 'tel', 'tel')}
               </div>
               <label style="display:flex; gap:10px; align-items:flex-start; font-size:12.5px; color:var(--charbon-300); line-height:1.55; cursor:pointer;">
                 <input type="checkbox" name="marketing" style="accent-color:var(--violet); width:16px; height:16px; margin-top:1px; flex:none;">
-                <span><strong style="color:var(--violet);">Oui, envoyez-moi le conseil du mois&nbsp;!</strong> Des idées concrètes de publicité et de marketing pour votre PME — un seul courriel par mois, zéro pourriel, désabonnement en un clic. Retrait possible en tout temps.</span>
+                <span><strong style="color:var(--violet);">Oui, envoyez-moi le conseil du mois&nbsp;!</strong> Des idées concrètes de publicité et de marketing pour votre PME : un seul courriel par mois, zéro pourriel, désabonnement en un clic. Retrait possible en tout temps.</span>
               </label>
               <button type="submit" class="btn btn-primary btn-lg" style="align-self:flex-start;">Envoyer ma demande →</button>
               <p data-contact-error hidden style="margin:0; font-size:13.5px; color:var(--danger); font-weight:600;">Une erreur est survenue et votre message n'a pas été envoyé. Réessayez dans un moment ou écrivez-nous à info@essentielpme.com.</p>
@@ -973,11 +972,11 @@ ${field('Téléphone', 'phone', 'tel', 'tel')}
 
   return shell({
     path: 'contact/index.html', root: '/', active: 'contact', label: 'Contact',
-    title: 'Contact — réponse en 24 h ouvrables | Essentiel PME',
+    title: 'Contact : réponse en 24 h ouvrables | Essentiel PME',
     desc: 'Contactez Essentiel PME pour démarrer votre publicité en ligne : formulaire, info@essentielpme.com ou 1-844-763-3832. Réponse d’un humain en 24 heures ouvrables. Québec, QC.',
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'ContactPage',
-      name: 'Contact — Essentiel PME', url: `${SITE.baseUrl}/contact/`,
+      name: 'Contact | Essentiel PME', url: `${SITE.baseUrl}/contact/`,
     }],
     body,
   });
@@ -991,7 +990,7 @@ function bloguePage() {
         <div style="max-width:720px; margin:0 auto;">
           <span class="eyebrow" style="display:block; margin-bottom:14px;">BLOGUE</span>
           <h1 style="font-size:clamp(2.5rem, 3.5vw + 0.8rem, 3.75rem); margin:0 0 18px;">Des conseils clairs pour votre PME.</h1>
-          <p class="lead" style="margin:0 auto; max-width:560px;">Publicité en ligne et présence numérique — expliqués sans jargon, pour des gens occupés.</p>
+          <p class="lead" style="margin:0 auto; max-width:560px;">Publicité en ligne et présence numérique, expliqués sans jargon, pour des gens occupés.</p>
         </div>
       </section>
 
@@ -1038,7 +1037,7 @@ ${blogArticles.map((a) => `            <article style="background:#fff; border:1
               </div>
             </article>`).join('\n')}
           </div>
-          <p style="text-align:center; font-size:13px; color:var(--charbon-300); margin:36px 0 0;">Articles à venir — présentés à titre d'aperçu en attendant le lancement officiel.</p>
+          <p style="text-align:center; font-size:13px; color:var(--charbon-300); margin:36px 0 0;">Articles à venir, présentés à titre d'aperçu en attendant le lancement officiel.</p>
         </div>
       </section>
 
@@ -1046,7 +1045,7 @@ ${ctaBand({ h: 'Un conseil utile par mois, pas plus.', p: 'Recevez nos articles 
 
   return shell({
     path: 'blogue/index.html', root: '/', active: 'aboutGroup', label: 'Blogue',
-    title: 'Blogue — conseils publicité en ligne pour PME | Essentiel PME',
+    title: 'Blogue : conseils publicité en ligne pour PME | Essentiel PME',
     desc: 'Conseils clairs et sans jargon sur la publicité en ligne pour PME québécoises : coûts, Meta vs Google Ads, reciblage, fiche Google et référencement local.',
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'Blog',
@@ -1119,7 +1118,7 @@ ${ctaBand({ h: 'Pas certain de la bonne plateforme&nbsp;?', p: 'Parlez-nous de v
 
   return shell({
     path: 'plateformes/index.html', root: '/', active: 'aboutGroup', label: 'Plateformes',
-    title: 'Plateformes publicitaires — Meta, Google, LinkedIn, TikTok et plus | Essentiel PME',
+    title: 'Plateformes publicitaires : Meta, Google, LinkedIn, TikTok et plus | Essentiel PME',
     desc: 'Facebook, Instagram, LinkedIn, TikTok, YouTube, Pinterest, Reddit, Spotify, Google Ads et ChatGPT : chaque plateforme a sa force. Toutes incluses dans nos forfaits de publicité en ligne.',
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'ItemList',
@@ -1149,11 +1148,11 @@ const pilSecteurs = (intro) => `${pilP(intro)}
           </div>`;
 
 const pilAuthor = `<div style="margin-top:44px; padding:20px 24px; background:var(--blanc-casse); border:1px solid var(--border); border-radius:16px; font-size:13.5px; color:var(--charbon-500); line-height:1.7;">
-            <strong style="color:var(--charbon);">Rédigé par Benoit Arlabosse, fondateur d'Essentiel PME</strong> — plus de 15 ans en marketing numérique et gestion de publicité en ligne pour des entreprises québécoises, des PME aux grands comptes. <a href="https://www.linkedin.com/in/benoitarlabosse/" target="_blank" rel="noopener">LinkedIn</a> · Dernière révision&nbsp;: 15 juillet 2026 · Fourchettes de coûts&nbsp;: données internes Essentiel PME (comptes gérés 2025-2026) et documentations officielles des plateformes.
+            <strong style="color:var(--charbon);">Rédigé par Benoit Arlabosse, fondateur d'Essentiel PME</strong>. Plus de 15 ans en marketing numérique et gestion de publicité en ligne pour des entreprises québécoises, des PME aux grands comptes. <a href="https://www.linkedin.com/in/benoitarlabosse/" target="_blank" rel="noopener">LinkedIn</a> · Dernière révision&nbsp;: 15 juillet 2026 · Fourchettes de coûts&nbsp;: données internes Essentiel PME (comptes gérés 2025-2026) et documentations officielles des plateformes.
           </div>`;
 
 const pilAuthorEN = `<div style="margin-top:44px; padding:20px 24px; background:var(--blanc-casse); border:1px solid var(--border); border-radius:16px; font-size:13.5px; color:var(--charbon-500); line-height:1.7;">
-            <strong style="color:var(--charbon);">Written by Benoit Arlabosse, founder of SMB Essentials</strong> — 15+ years in digital marketing and online advertising management for Quebec businesses, from SMBs to major accounts. <a href="https://www.linkedin.com/in/benoitarlabosse/" target="_blank" rel="noopener">LinkedIn</a> · Last revised: July 15, 2026 · Cost ranges: SMB Essentials internal data (managed accounts, 2025-2026) and official platform documentation.
+            <strong style="color:var(--charbon);">Written by Benoit Arlabosse, founder of SMB Essentials</strong>. 15+ years in digital marketing and online advertising management for Quebec businesses, from SMBs to major accounts. <a href="https://www.linkedin.com/in/benoitarlabosse/" target="_blank" rel="noopener">LinkedIn</a> · Last revised: July 15, 2026 · Cost ranges: SMB Essentials internal data (managed accounts, 2025-2026) and official platform documentation.
           </div>`;
 
 const PIL_CTA_FR = { h: 'Les prix sont affichés. Le reste aussi.', p: "On s'occupe de votre publicité et de votre suivi. Réponse d'un humain en 24 heures ouvrables.", cta: 'Parler de mon projet →', href: '/contact/' };
@@ -1206,7 +1205,7 @@ function pilierPublicitePage() {
   const content = `
           ${pilH2('pourquoi', 'Pourquoi la publicité en ligne en 2026')}
           ${pilP("Parce que vos clients décident en ligne. Même quand ils achètent en personne. Une recherche «&nbsp;près de moi&nbsp;» le dimanche soir, une publication aperçue dans un fil Instagram, une fiche Google consultée deux minutes avant d'appeler&nbsp;: la décision se prend sur un écran, presque toujours un cellulaire.")}
-          ${pilP("Le bouche-à-oreille reste précieux. Mais il ne se contrôle pas. La publicité, elle, vous laisse choisir trois choses&nbsp;: le territoire, le budget, le message. Vous annoncez dans un rayon de 5&nbsp;km autour de votre porte ou dans toute la Montérégie, vous dépensez 500&nbsp;$ ou 5&nbsp;000&nbsp;$ par mois, et vous montrez ce que vous voulez montrer — votre savoir-faire, pas des rabais.")}
+          ${pilP("Le bouche-à-oreille reste précieux. Mais il ne se contrôle pas. La publicité, elle, vous laisse choisir trois choses&nbsp;: le territoire, le budget, le message. Vous annoncez dans un rayon de 5&nbsp;km autour de votre porte ou dans toute la Montérégie, vous dépensez 500&nbsp;$ ou 5&nbsp;000&nbsp;$ par mois, et vous montrez ce que vous voulez montrer : votre savoir-faire, pas des rabais.")}
           ${pilP("Et contrairement à une pancarte ou à une annonce dans l'hebdo régional, tout se mesure&nbsp;: qui a vu, qui a cliqué, qui a appelé, qui a réservé. Chaque dollar laisse une trace.")}
 
           ${pilH2('plateformes', 'Google, Meta ou TikTok : qui fait quoi')}
@@ -1222,7 +1221,7 @@ function pilierPublicitePage() {
           ${pilP("La combinaison gagnante pour la plupart des PME&nbsp;: Google pour capter la demande qui existe déjà, Meta pour en créer de la nouvelle, et TikTok seulement quand la clientèle et le contenu vidéo s'y prêtent vraiment. Une plateforme bien gérée bat trois plateformes négligées. Toujours. <a href='/plateformes/'>Le détail de chaque plateforme est ici.</a>")}
 
           ${pilH2('couts', 'Combien ça coûte, vraiment (repères 2026 par industrie)')}
-          ${pilP("Personne n'affiche ses prix dans cette industrie. Nous, oui. Voici les repères observés dans les comptes que nous gérons chez Essentiel PME, pour des PME québécoises, en 2025-2026 — en gardant en tête que vos coûts réels bougeront selon le quartier, la concurrence et la saison.")}
+          ${pilP("Personne n'affiche ses prix dans cette industrie. Nous, oui. Voici les repères observés dans les comptes que nous gérons chez Essentiel PME, pour des PME québécoises, en 2025-2026, en gardant en tête que vos coûts réels bougeront selon le quartier, la concurrence et la saison.")}
           ${pilTable(
             ['Industrie', 'CPC Google (approx.)', 'CPC Meta (approx.)', 'Coût par demande / réservation', 'Budget média minimum réaliste'],
             [
@@ -1238,7 +1237,7 @@ function pilierPublicitePage() {
           ${pilH3('La règle du ~2:1')}
           ${pilCallout("Un dollar de gestion, deux dollars de budget média. C'est la règle. Une gestion à 695&nbsp;$/mois s'accompagne donc d'environ 1&nbsp;400&nbsp;$/mois payés directement aux plateformes, parce que c'est à ce ratio que la gestion se rentabilise. En bas de ça, les frais fixes mangent la performance. <a href='/publicite/'>Nos forfaits et leurs budgets recommandés sont affichés ici.</a>")}
           ${pilH3('Le calcul qui compte : la valeur à vie')}
-          ${pilP("Une cliente de salon en coloration revient aux 6 semaines, à 120&nbsp;$ la visite. Mille dollars par année. Pendant des années. Son coût d'acquisition en publicité&nbsp;: 5 à 20&nbsp;$. Le même raisonnement s'applique partout — un contrat de rénovation à 40&nbsp;000&nbsp;$ justifie largement une soumission payée 100&nbsp;$, et il la justifierait encore à trois fois ce prix. Calculez ce que vaut un client sur 3&nbsp;ans. Pas ce que coûte un clic.")}
+          ${pilP("Une cliente de salon en coloration revient aux 6 semaines, à 120&nbsp;$ la visite. Mille dollars par année. Pendant des années. Son coût d'acquisition en publicité&nbsp;: 5 à 20&nbsp;$. Le même raisonnement s'applique partout : un contrat de rénovation à 40&nbsp;000&nbsp;$ justifie largement une soumission payée 100&nbsp;$, et il la justifierait encore à trois fois ce prix. Calculez ce que vaut un client sur 3&nbsp;ans. Pas ce que coûte un clic.")}
 
           ${pilH2('erreurs', "Les 5 erreurs qui gaspillent le budget d'une PME")}
           ${pilP('Nous auditons des comptes publicitaires de PME québécoises chaque mois. Les mêmes cinq erreurs reviennent. Dans toutes les industries.')}
@@ -1255,7 +1254,7 @@ function pilierPublicitePage() {
           ${pilCallout('Le suivi des conversions mérite son propre guide&nbsp;: <a href="/mesurer-ses-resultats/"><strong>Mesurer sa publicité&nbsp;: GA4, pixel Meta et conversions pour PME →</strong></a>')}
 
           ${pilH2('delai', 'Combien de temps avant des résultats')}
-          ${pilP("Quatre à six semaines d'apprentissage. Puis un régime de croisière vers le troisième mois. C'est mécanique&nbsp;: les algorithmes de Google et de Meta testent vos annonces sur différents profils, éliminent ce qui ne convertit pas, puis concentrent le budget sur ce qui fonctionne — et les plateformes le documentent elles-mêmes, <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta décrivant une phase d'apprentissage</a> qui exige un volume suffisant de conversions avant de stabiliser la diffusion, <a href='https://support.google.com/google-ads' target='_blank' rel='noopener'>Google Ads recommandant de laisser tourner les campagnes</a> avant d'en juger. Couper avant la fin de l'apprentissage, c'est payer pour la leçon sans jamais lire la réponse.")}
+          ${pilP("Quatre à six semaines d'apprentissage. Puis un régime de croisière vers le troisième mois. C'est mécanique&nbsp;: les algorithmes de Google et de Meta testent vos annonces sur différents profils, éliminent ce qui ne convertit pas, puis concentrent le budget sur ce qui fonctionne. Et les plateformes le documentent elles-mêmes, <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta décrivant une phase d'apprentissage</a> qui exige un volume suffisant de conversions avant de stabiliser la diffusion, <a href='https://support.google.com/google-ads' target='_blank' rel='noopener'>Google Ads recommandant de laisser tourner les campagnes</a> avant d'en juger. Couper avant la fin de l'apprentissage, c'est payer pour la leçon sans jamais lire la réponse.")}
           ${pilP("Google donne des signaux plus vite, parce qu'il capte une demande qui existe déjà. Meta prend plus de temps, mais construit un bassin de nouvelles clientèles. D'où notre engagement minimum de 3&nbsp;mois&nbsp;: pas pour vendre plus longtemps, mais parce qu'en deçà, les chiffres ne veulent rien dire. Rien du tout.")}
 
           ${pilH2('qui-gere', 'Interne, pigiste ou agence : qui devrait gérer vos campagnes')}
@@ -1269,7 +1268,7 @@ function pilierPublicitePage() {
               ['<strong>Essentiel PME</strong>', '695 à 1&nbsp;495&nbsp;$/mois, <a href="/publicite/">prix affichés</a>', 'Gestion complète, rapport mensuel en français, fait pour les PME d\'ici', 'Budget média minimum requis (~2:1) pour que la gestion se rentabilise'],
             ]
           )}
-          ${pilP("Le test est simple. Si gérer vos campagnes vous éloigne de ce qui fait rentrer l'argent — vos clients, vos chantiers, vos chaises —, déléguez. Si vous avez le temps et l'envie d'apprendre, commencez petit, sur une seule plateforme. Mais commencez.")}
+          ${pilP("Le test est simple. Si gérer vos campagnes vous éloigne de ce qui fait rentrer l'argent (vos clients, vos chantiers, vos chaises), déléguez. Si vous avez le temps et l'envie d'apprendre, commencez petit, sur une seule plateforme. Mais commencez.")}
 
           ${pilH2('par-secteur', 'La publicité de votre secteur, en détail')}
           ${pilSecteurs('Chaque industrie a ses coûts, son calendrier, ses pièges. Le guide de chaque secteur&nbsp;:')}`;
@@ -1302,7 +1301,7 @@ function pilierPublicitePage() {
 function pilierMesurePage() {
   const content = `
           ${pilH2('pourquoi-mesurer', "Pourquoi l'absence de mesure brûle le budget")}
-          ${pilP("Sans mesure, deux annonces se ressemblent. Avec la mesure, l'une amène des réservations à 8&nbsp;$ et l'autre à 45&nbsp;$ — et sur un budget de 1&nbsp;500&nbsp;$ par mois, cette différence-là, c'est le simple au quintuple en résultats, pour la même dépense. Exactement la même.")}
+          ${pilP("Sans mesure, deux annonces se ressemblent. Avec la mesure, l'une amène des réservations à 8&nbsp;$ et l'autre à 45&nbsp;$. Et sur un budget de 1&nbsp;500&nbsp;$ par mois, cette différence-là, c'est le simple au quintuple en résultats, pour la même dépense. Exactement la même.")}
           ${pilP("C'est aussi la raison du fameux «&nbsp;j'ai essayé la pub, ça ne marche pas&nbsp;». Dans nos audits chez Essentiel PME, la plupart des comptes abandonnés n'avaient aucun suivi de conversions&nbsp;: impossible de savoir ce qui fonctionnait, donc impossible d'optimiser. La campagne n'a pas échoué. Elle n'a jamais été pilotée.")}
           ${pilP("Et il y a plus. Les algorithmes de Google et de Meta optimisent vers ce que vous mesurez&nbsp;: pas de conversions déclarées, pas d'apprentissage. Votre concurrent qui mesure entraîne sa machine&nbsp;; vous, non. Le fossé se creuse chaque semaine.")}
 
@@ -1321,7 +1320,7 @@ function pilierMesurePage() {
 
           ${pilH2('pixel-meta', "Le pixel Meta et l'API Conversions : pourquoi vos pubs « ne marchent pas »")}
           ${pilP("Le pixel Meta est un code qui dit à Facebook et Instagram ce que font les visiteurs venus de vos pubs. Sans lui, Meta optimise à l'aveugle. Il montre vos annonces à des gens qui cliquent, pas à des gens qui réservent.")}
-          ${pilP("Le problème depuis quelques années&nbsp;: les bloqueurs de témoins et les restrictions d'iOS font perdre au pixel une partie des conversions. La réponse de Meta s'appelle l'API Conversions (CAPI)&nbsp;: les données partent de votre serveur ou de vos outils — formulaire, système de réservation, CRM — plutôt que du seul navigateur, ce qui donne une mesure plus complète, donc un algorithme mieux entraîné, donc un coût par résultat qui baisse. Une chaîne. Trois maillons.")}
+          ${pilP("Le problème depuis quelques années&nbsp;: les bloqueurs de témoins et les restrictions d'iOS font perdre au pixel une partie des conversions. La réponse de Meta s'appelle l'API Conversions (CAPI)&nbsp;: les données partent de votre serveur ou de vos outils (formulaire, système de réservation, CRM) plutôt que du seul navigateur, ce qui donne une mesure plus complète, donc un algorithme mieux entraîné, donc un coût par résultat qui baisse. Une chaîne. Trois maillons.")}
           ${pilCallout(`<strong>Minimum vital&nbsp;:</strong> pixel installé via GTM + événement de conversion sur l'action qui compte (formulaire, réservation, appel).<br><br>
             <strong>Niveau recommandé&nbsp;:</strong> pixel + API Conversions avec déduplication (les deux envoient, Meta élimine les doublons).<br><br>
             <strong>À vérifier chaque mois&nbsp;:</strong> le Gestionnaire d'événements Meta affiche-t-il vos conversions&nbsp;? Un pixel silencieux depuis trois semaines est une campagne qui vole à l'aveugle.`)}
@@ -1331,10 +1330,10 @@ function pilierMesurePage() {
           ${pilH3('1. Le consentement avant les témoins non essentiels')}
           ${pilP("Votre site doit afficher un bandeau de consentement, et GA4 comme le pixel Meta ne doivent s'activer qu'après un «&nbsp;oui&nbsp;». Les paramètres par défaut doivent être les plus protecteurs.")}
           ${pilH3('2. La transparence')}
-          ${pilP("Une politique de confidentialité claire (quelles données, pourquoi, avec qui elles sont partagées) et un responsable de la protection des renseignements personnels désigné — dans une PME, c'est souvent le dirigeant.")}
+          ${pilP("Une politique de confidentialité claire (quelles données, pourquoi, avec qui elles sont partagées) et un responsable de la protection des renseignements personnels désigné. Dans une PME, c'est souvent le dirigeant.")}
           ${pilH3('3. Les formulaires')}
           ${pilP("Ne collectez que le nécessaire, dites ce que vous ferez du courriel (ex.&nbsp;: recevoir le guide + l'infolettre), et offrez un désabonnement simple.")}
-          ${pilCallout("La bonne nouvelle&nbsp;: un site conforme n'est pas un site qui mesure moins bien. Le <a href='https://support.google.com/analytics' target='_blank' rel='noopener'>mode consentement de Google</a> et l'<a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>API Conversions de Meta</a> sont justement conçus pour travailler dans ce cadre — la conformité et la performance ne s'opposent pas, elles s'installent ensemble, une seule fois.")}
+          ${pilCallout("La bonne nouvelle&nbsp;: un site conforme n'est pas un site qui mesure moins bien. Le <a href='https://support.google.com/analytics' target='_blank' rel='noopener'>mode consentement de Google</a> et l'<a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>API Conversions de Meta</a> sont justement conçus pour travailler dans ce cadre : la conformité et la performance ne s'opposent pas, elles s'installent ensemble, une seule fois.")}
 
           ${pilH2('indicateurs', 'Le rapport mensuel qui compte : nos 6 indicateurs')}
           ${pilP("Un bon rapport tient sur une page. Il répond à une seule question&nbsp;: est-ce que la publicité rapporte&nbsp;? Voici les six indicateurs que nous suivons chez Essentiel PME, dans cet ordre.")}
@@ -1349,7 +1348,7 @@ function pilierMesurePage() {
               ['<strong>6. Tendance sur 3 mois</strong>', "Est-ce que ça s'améliore&nbsp;? (Un mois isolé ne prouve rien.)"],
             ]
           )}
-          ${pilP("Ce qui ne devrait jamais ouvrir un rapport&nbsp;: les impressions et la portée. Ce sont des chiffres de vanité — gros, flatteurs, et incapables de payer une facture. Ils servent au diagnostic. Pas au verdict.")}
+          ${pilP("Ce qui ne devrait jamais ouvrir un rapport&nbsp;: les impressions et la portée. Ce sont des chiffres de vanité : gros, flatteurs, et incapables de payer une facture. Ils servent au diagnostic. Pas au verdict.")}
 
           ${pilH2('par-secteur', 'La mesure de votre secteur')}
           ${pilSecteurs("Les trois conversions à suivre changent selon le métier&nbsp;: soumissions en construction, réservations en restauration, rendez-vous en clinique. Chaque page d'industrie détaille son approche&nbsp;:")}`;
@@ -1369,7 +1368,7 @@ function pilierMesurePage() {
     faqPrefix: 'faq-pilier-mesure',
     faq: [
       { q: 'GA4 est-il gratuit ?', a: "Oui, entièrement, pour les besoins d'une PME. L'installation via Google Tag Manager demande une à deux heures pour un suivi de base bien fait.", open: true },
-      { q: "Quelle est la différence entre le pixel Meta et l'API Conversions ?", a: "Le pixel mesure depuis le navigateur du visiteur ; l'API Conversions envoie les données depuis vos systèmes. Ensemble (avec déduplication), ils donnent la mesure la plus complète — et de meilleurs coûts par résultat." },
+      { q: "Quelle est la différence entre le pixel Meta et l'API Conversions ?", a: "Le pixel mesure depuis le navigateur du visiteur ; l'API Conversions envoie les données depuis vos systèmes. Ensemble (avec déduplication), ils donnent la mesure la plus complète, et de meilleurs coûts par résultat." },
       { q: "La Loi 25 s'applique-t-elle à ma petite entreprise ?", a: 'Oui : la loi vise toute entreprise qui recueille des renseignements personnels au Québec, sans seuil de taille. Bandeau de consentement, politique de confidentialité et responsable désigné sont le minimum.' },
       { q: 'Que suivre en priorité si je ne mesure rien aujourd\'hui ?', a: 'Trois actions : les clics sur votre numéro de téléphone, les envois de formulaire et les réservations en ligne. Avec ça, vous savez déjà quelle campagne travaille.' },
       { q: 'Le consentement fait-il perdre des données ?', a: "Une partie, oui, c'est le principe. Mais le mode consentement de Google et l'API Conversions compensent en partie, et une mesure conforme à 80 % bat une mesure illégale à 100 %." },
@@ -1383,7 +1382,7 @@ function pilierPubliciteEN() {
   const content = `
           ${pilH2('pourquoi', 'Why online advertising in 2026')}
           ${pilP("Because your customers decide online. Even when they buy in person. A “near me” search on a Sunday night, a post spotted in an Instagram feed, a Google listing checked two minutes before calling: the decision happens on a screen, almost always a phone.")}
-          ${pilP("Word of mouth is still precious. But you can't control it. Advertising lets you choose three things: the territory, the budget, the message. You advertise within a 5&nbsp;km radius of your front door or across the whole Montérégie, you spend $500 or $5,000 a month, and you show what you want to show — your craft, not discounts.")}
+          ${pilP("Word of mouth is still precious. But you can't control it. Advertising lets you choose three things: the territory, the budget, the message. You advertise within a 5&nbsp;km radius of your front door or across the whole Montérégie, you spend $500 or $5,000 a month, and you show what you want to show: your craft, not discounts.")}
           ${pilP("And unlike a billboard or an ad in the regional weekly, everything is measurable: who saw, who clicked, who called, who booked. Every dollar leaves a trace.")}
 
           ${pilH2('plateformes', 'Google, Meta or TikTok: who does what')}
@@ -1399,7 +1398,7 @@ function pilierPubliciteEN() {
           ${pilP("The winning combination for most SMBs: Google to capture the demand that already exists, Meta to create new demand, and TikTok only when the audience and video content truly fit. One well-managed platform beats three neglected ones. Always. <a href='/plateformes/'>The details of every platform are here.</a>")}
 
           ${pilH2('couts', 'What it really costs (2026 benchmarks by industry)')}
-          ${pilP("Nobody publishes their prices in this industry. We do. Here are the benchmarks observed in the accounts we manage at SMB Essentials, for Quebec SMBs, in 2025-2026 — keeping in mind that your actual costs will move with the neighbourhood, the competition and the season.")}
+          ${pilP("Nobody publishes their prices in this industry. We do. Here are the benchmarks observed in the accounts we manage at SMB Essentials, for Quebec SMBs, in 2025-2026, keeping in mind that your actual costs will move with the neighbourhood, the competition and the season.")}
           ${pilTable(
             ['Industry', 'Google CPC (approx.)', 'Meta CPC (approx.)', 'Cost per lead / booking', 'Realistic minimum media budget'],
             [
@@ -1415,7 +1414,7 @@ function pilierPubliciteEN() {
           ${pilH3('The ~2:1 rule')}
           ${pilCallout("One dollar of management, two dollars of media budget. That's the rule. A $695/mo management fee therefore comes with roughly $1,400/mo paid directly to the platforms, because that's the ratio at which management pays for itself. Below that, fixed fees eat the performance. <a href='/publicite/'>Our packages and their recommended budgets are published here.</a>")}
           ${pilH3('The math that matters: lifetime value')}
-          ${pilP("A salon colour client comes back every 6 weeks, at $120 a visit. A thousand dollars a year. For years. Her acquisition cost through advertising: $5 to $20. The same reasoning applies everywhere — a $40,000 renovation contract easily justifies a quote that cost $100 in advertising, and it would still justify it at three times that price. Calculate what a customer is worth over 3 years. Not what a click costs.")}
+          ${pilP("A salon colour client comes back every 6 weeks, at $120 a visit. A thousand dollars a year. For years. Her acquisition cost through advertising: $5 to $20. The same reasoning applies everywhere: a $40,000 renovation contract easily justifies a quote that cost $100 in advertising, and it would still justify it at three times that price. Calculate what a customer is worth over 3 years. Not what a click costs.")}
 
           ${pilH2('erreurs', "The 5 mistakes that waste an SMB's budget")}
           ${pilP('We audit Quebec SMB ad accounts every month. The same five mistakes come back. In every industry.')}
@@ -1432,7 +1431,7 @@ function pilierPubliciteEN() {
           ${pilCallout('Conversion tracking deserves its own guide: <a href="/mesurer-ses-resultats/"><strong>Measuring your advertising: GA4, Meta pixel and conversions for SMBs →</strong></a>')}
 
           ${pilH2('delai', 'How long before you see results')}
-          ${pilP("Four to six weeks of learning. Then cruising speed around the third month. It's mechanical: Google's and Meta's algorithms test your ads on different profiles, eliminate what doesn't convert, then concentrate the budget on what works — and the platforms document it themselves, <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta describing a learning phase</a> that requires a sufficient volume of conversions before delivery stabilizes, <a href='https://support.google.com/google-ads' target='_blank' rel='noopener'>Google Ads recommending that campaigns run</a> before judging them. Cutting before the learning ends means paying for the lesson without ever reading the answer.")}
+          ${pilP("Four to six weeks of learning. Then cruising speed around the third month. It's mechanical: Google's and Meta's algorithms test your ads on different profiles, eliminate what doesn't convert, then concentrate the budget on what works. And the platforms document it themselves, <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta describing a learning phase</a> that requires a sufficient volume of conversions before delivery stabilizes, <a href='https://support.google.com/google-ads' target='_blank' rel='noopener'>Google Ads recommending that campaigns run</a> before judging them. Cutting before the learning ends means paying for the lesson without ever reading the answer.")}
           ${pilP("Google gives signals faster, because it captures demand that already exists. Meta takes longer, but builds a pool of new customers. Hence our 3-month minimum commitment: not to sell longer, but because below that, the numbers mean nothing. Nothing at all.")}
 
           ${pilH2('qui-gere', 'In-house, freelancer or agency: who should manage your campaigns')}
@@ -1446,7 +1445,7 @@ function pilierPubliciteEN() {
               ['<strong>SMB Essentials</strong>', '$695 to $1,495/mo, <a href="/publicite/">published prices</a>', 'Full management, monthly report, built for local SMBs', 'Minimum media budget required (~2:1) so management pays for itself'],
             ]
           )}
-          ${pilP("The test is simple. If managing your campaigns pulls you away from what brings in the money — your customers, your job sites, your chairs — delegate. If you have the time and the desire to learn, start small, on a single platform. But start.")}
+          ${pilP("The test is simple. If managing your campaigns pulls you away from what brings in the money (your customers, your job sites, your chairs), delegate. If you have the time and the desire to learn, start small, on a single platform. But start.")}
 
           ${pilH2('par-secteur', "Your sector's advertising, in detail")}
           ${pilSecteurs('Every industry has its costs, its calendar, its traps. The guide for each sector:')}`;
@@ -1480,7 +1479,7 @@ function pilierPubliciteEN() {
 function pilierMesureEN() {
   const content = `
           ${pilH2('pourquoi-mesurer', 'Why the absence of measurement burns your budget')}
-          ${pilP("Without measurement, two ads look the same. With measurement, one brings bookings at $8 and the other at $45 — and on a $1,500 monthly budget, that difference is one-to-five in results, for the same spend. Exactly the same.")}
+          ${pilP("Without measurement, two ads look the same. With measurement, one brings bookings at $8 and the other at $45. And on a $1,500 monthly budget, that difference is one-to-five in results, for the same spend. Exactly the same.")}
           ${pilP("It's also the reason behind the famous “I tried ads, they don't work”. In our audits at SMB Essentials, most abandoned accounts had no conversion tracking at all: impossible to know what was working, therefore impossible to optimize. The campaign didn't fail. It was never steered.")}
           ${pilP("And there's more. Google's and Meta's algorithms optimize toward what you measure: no declared conversions, no learning. Your competitor who measures is training their machine; you aren't. The gap widens every week.")}
 
@@ -1499,20 +1498,20 @@ function pilierMesureEN() {
 
           ${pilH2('pixel-meta', "The Meta pixel and the Conversions API: why your ads “don't work”")}
           ${pilP("The Meta pixel is a piece of code that tells Facebook and Instagram what visitors from your ads actually do. Without it, Meta optimizes blindly. It shows your ads to people who click, not to people who book.")}
-          ${pilP("The problem in recent years: cookie blockers and iOS restrictions make the pixel lose part of the conversions. Meta's answer is the Conversions API (CAPI): the data leaves from your server or your tools — form, booking system, CRM — rather than only from the browser, which gives a more complete measurement, therefore a better-trained algorithm, therefore a lower cost per result. A chain. Three links.")}
+          ${pilP("The problem in recent years: cookie blockers and iOS restrictions make the pixel lose part of the conversions. Meta's answer is the Conversions API (CAPI): the data leaves from your server or your tools (form, booking system, CRM) rather than only from the browser, which gives a more complete measurement, therefore a better-trained algorithm, therefore a lower cost per result. A chain. Three links.")}
           ${pilCallout(`<strong>Bare minimum:</strong> pixel installed via GTM + a conversion event on the action that matters (form, booking, call).<br><br>
             <strong>Recommended level:</strong> pixel + Conversions API with deduplication (both send, Meta removes duplicates).<br><br>
             <strong>Check every month:</strong> does Meta Events Manager show your conversions? A pixel that's been silent for three weeks is a campaign flying blind.`)}
 
-          ${pilH2('loi-25', 'Law 25: consent and advertising — what an SMB must do')}
+          ${pilH2('loi-25', 'Law 25: consent and advertising, what an SMB must do')}
           ${pilP("Law 25 governs the protection of personal information in Quebec. For your marketing, it comes down to three concrete obligations. This summary is not legal advice; for specific cases, consult the <a href='https://www.cai.gouv.qc.ca' target='_blank' rel='noopener'>Commission d'accès à l'information (CAI)</a> or a legal advisor.")}
           ${pilH3('1. Consent before non-essential cookies')}
           ${pilP("Your site must display a consent banner, and GA4 and the Meta pixel must only activate after a “yes”. Default settings must be the most protective ones.")}
           ${pilH3('2. Transparency')}
-          ${pilP("A clear privacy policy (what data, why, who it's shared with) and a designated person responsible for the protection of personal information — in an SMB, that's often the owner.")}
+          ${pilP("A clear privacy policy (what data, why, who it's shared with) and a designated person responsible for the protection of personal information. In an SMB, that's often the owner.")}
           ${pilH3('3. Forms')}
           ${pilP("Collect only what's necessary, say what you'll do with the email address (e.g., receive the guide + the newsletter), and offer a simple unsubscribe.")}
-          ${pilCallout("The good news: a compliant site is not a site that measures worse. <a href='https://support.google.com/analytics' target='_blank' rel='noopener'>Google's consent mode</a> and <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta's Conversions API</a> are designed precisely to work within this framework — compliance and performance don't oppose each other, they get installed together, once.")}
+          ${pilCallout("The good news: a compliant site is not a site that measures worse. <a href='https://support.google.com/analytics' target='_blank' rel='noopener'>Google's consent mode</a> and <a href='https://www.facebook.com/business/help' target='_blank' rel='noopener'>Meta's Conversions API</a> are designed precisely to work within this framework: compliance and performance don't oppose each other, they get installed together, once.")}
 
           ${pilH2('indicateurs', 'The monthly report that matters: our 6 indicators')}
           ${pilP("A good report fits on one page. It answers a single question: is the advertising paying off? Here are the six indicators we track at SMB Essentials, in this order.")}
@@ -1527,7 +1526,7 @@ function pilierMesureEN() {
               ['<strong>6. 3-month trend</strong>', 'Is it improving? (A single month proves nothing.)'],
             ]
           )}
-          ${pilP("What should never open a report: impressions and reach. They're vanity metrics — big, flattering, and incapable of paying an invoice. They're for diagnosis. Not for the verdict.")}
+          ${pilP("What should never open a report: impressions and reach. They're vanity metrics: big, flattering, and incapable of paying an invoice. They're for diagnosis. Not for the verdict.")}
 
           ${pilH2('par-secteur', "Your sector's measurement")}
           ${pilSecteurs('The three conversions to track change with the trade: quotes in construction, bookings in restaurants, appointments in clinics. Each industry page details its approach:')}`;
@@ -1548,10 +1547,10 @@ function pilierMesureEN() {
     faqPrefix: 'faq-pilier-mesure',
     faq: [
       { q: 'Is GA4 free?', a: "Yes, entirely, for an SMB's needs. Installation via Google Tag Manager takes one to two hours for a solid basic setup.", open: true },
-      { q: 'What is the difference between the Meta pixel and the Conversions API?', a: "The pixel measures from the visitor's browser; the Conversions API sends data from your systems. Together (with deduplication), they give the most complete measurement — and better costs per result." },
+      { q: 'What is the difference between the Meta pixel and the Conversions API?', a: "The pixel measures from the visitor's browser; the Conversions API sends data from your systems. Together (with deduplication), they give the most complete measurement, and better costs per result." },
       { q: 'Does Law 25 apply to my small business?', a: 'Yes: the law covers any business that collects personal information in Quebec, with no size threshold. A consent banner, a privacy policy and a designated privacy officer are the minimum.' },
       { q: "What should I track first if I'm not measuring anything today?", a: 'Three actions: clicks on your phone number, form submissions and online bookings. With that, you already know which campaign is working.' },
-      { q: 'Does consent make you lose data?', a: "Some, yes — that's the principle. But Google's consent mode and the Conversions API partly compensate, and a measurement that's 80% compliant beats one that's 100% illegal." },
+      { q: 'Does consent make you lose data?', a: "Some, yes, that's the principle. But Google's consent mode and the Conversions API partly compensate, and a measurement that's 80% compliant beats one that's 100% illegal." },
     ],
   });
 }
@@ -1590,7 +1589,7 @@ function mentionsLegalesPage() {
           ${h3('2.2 Prix et offres')}
           ${p("Les prix affichés sur le Site font foi. Ils sont en dollars canadiens et peuvent être modifiés en tout temps&nbsp;; le prix applicable à votre entente est celui confirmé dans votre soumission ou votre contrat. Les informations du Site sont fournies à titre informatif et ne constituent pas une offre contractuelle.")}
           ${h3('2.3 Propriété intellectuelle')}
-          ${p('Le contenu du Site — textes, logo, éléments graphiques, maquettes et structure — appartient à Essentiel PME ou à ses concédants. Toute reproduction ou utilisation sans autorisation écrite préalable est interdite. Les marques et logos de tiers (notamment les plateformes publicitaires) appartiennent à leurs propriétaires respectifs.')}
+          ${p('Le contenu du Site (textes, logo, éléments graphiques, maquettes et structure) appartient à Essentiel PME ou à ses concédants. Toute reproduction ou utilisation sans autorisation écrite préalable est interdite. Les marques et logos de tiers (notamment les plateformes publicitaires) appartiennent à leurs propriétaires respectifs.')}
           ${h3('2.4 Limitation de responsabilité')}
           ${p("On s'efforce de maintenir le Site exact et à jour, mais Essentiel PME ne garantit pas que le contenu soit exempt d'erreurs ou que le Site soit accessible sans interruption. Dans la mesure permise par la loi, Essentiel PME décline toute responsabilité pour les dommages découlant de l'utilisation du Site ou de sites tiers vers lesquels il renvoie.")}
           ${h3('2.5 Liens externes')}
@@ -1616,7 +1615,7 @@ function mentionsLegalesPage() {
           ${h3('3.5 Communication à des tiers')}
           ${p("Vos renseignements peuvent être traités par des fournisseurs qui nous rendent des services (hébergement, infolettre, mesure d'audience, plateformes publicitaires comme Google et Meta). Certains de ces fournisseurs sont situés à l'extérieur du Québec&nbsp;; le cas échéant, on s'assure que les renseignements bénéficient d'une protection adéquate, conformément à la loi.")}
           ${h3('3.6 Conservation et sécurité')}
-          ${p("On conserve vos renseignements le temps nécessaire aux finalités décrites, puis on les détruit ou les anonymise de façon sécuritaire. Des mesures raisonnables — techniques et organisationnelles — protègent vos renseignements contre l'accès, l'utilisation ou la communication non autorisés.")}
+          ${p("On conserve vos renseignements le temps nécessaire aux finalités décrites, puis on les détruit ou les anonymise de façon sécuritaire. Des mesures raisonnables, techniques et organisationnelles, protègent vos renseignements contre l'accès, l'utilisation ou la communication non autorisés.")}
           ${h3('3.7 Vos droits')}
           ${p(`Vous pouvez en tout temps&nbsp;: demander l'accès à vos renseignements&nbsp;; en demander la rectification&nbsp;; retirer votre consentement&nbsp;; demander la cessation de leur diffusion&nbsp;; obtenir les renseignements informatisés que vous nous avez fournis dans un format technologique structuré et couramment utilisé, ou en demander le transfert à un autre organisme (droit à la portabilité). On répond à ces demandes dans un délai de 30 jours. Adressez votre demande au responsable identifié ci-dessus. Si vous êtes insatisfait du traitement de votre demande, vous pouvez déposer une plainte auprès de la <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener">Commission d'accès à l'information du Québec</a>.`)}
           ${h3('3.8 Incident de confidentialité')}
