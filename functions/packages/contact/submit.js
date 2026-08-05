@@ -67,7 +67,22 @@ async function main(args) {
   // Consentement LCAP/CASL aux communications (case facultative, non cochée par défaut)
   const marketing = data.marketing === true || data.marketing === 'true';
 
-  if (!name || !biz || !EMAIL_RE.test(email) || phone.replace(/[^0-9]/g, '').length < 10) {
+  // Landing pages guides : formulaire court (prénom + courriel seulement)
+  const GUIDE_LABELS = {
+    'construction': 'Construction',
+    'beaute': 'Beauté et bien-être',
+    'avocats-notaires': 'Avocats et notaires',
+    'pme': 'PME du Québec',
+  };
+  const isGuide = String(data.form_type || '') === 'guide';
+  const guide = GUIDE_LABELS[String(data.guide || '')] || '';
+
+  if (isGuide) {
+    if (!firstname || !EMAIL_RE.test(email) || !guide) {
+      console.error('Validation guide échouée — prénom:', !!firstname, '| courriel valide:', EMAIL_RE.test(email), '| guide:', data.guide);
+      return json(400, { error: 'Champs invalides' });
+    }
+  } else if (!name || !biz || !EMAIL_RE.test(email) || phone.replace(/[^0-9]/g, '').length < 10) {
     console.error('Validation échouée —',
       'nom:', !!name, '| entreprise:', !!biz,
       '| courriel valide:', EMAIL_RE.test(email),
@@ -113,8 +128,19 @@ async function main(args) {
     return rows.join('\n      ');
   };
 
-  const html = `
-    <h2 style="margin:0 0 12px;">Nouvelle demande de contact — essentielpme.com</h2>
+  const html = isGuide
+    ? `
+    <h2 style="margin:0 0 12px;">Guide téléchargé (${guide}) : essentielpme.com</h2>
+    <table style="border-collapse:collapse; font-size:15px;">
+      ${row('Guide', guide)}
+      ${row('Prénom', firstname)}
+      ${row('Courriel', email)}
+      ${row('Communications (LCAP)', marketing ? 'OUI, consentement exprès (case cochée par le visiteur)' : 'Non')}
+      <tr><td colspan="2" style="padding:14px 0 4px; font-weight:bold; border-top:1px solid #ddd;">Provenance</td></tr>
+      ${attributionRows(data.attribution)}
+    </table>`
+    : `
+    <h2 style="margin:0 0 12px;">Nouvelle demande de contact : essentielpme.com</h2>
     <table style="border-collapse:collapse; font-size:15px;">
       ${firstname ? row('Prénom', firstname) + row('Nom', lastname) : row('Nom', name)}
       ${row('Entreprise', biz)}
@@ -122,7 +148,7 @@ async function main(args) {
       ${row('Téléphone', phone)}
       ${row('Intérêt', interest || '—')}
       ${row('Message', message || '—')}
-      ${row('Communications (LCAP)', marketing ? 'OUI — consentement exprès (case cochée par le visiteur)' : 'Non')}
+      ${row('Communications (LCAP)', marketing ? 'OUI, consentement exprès (case cochée par le visiteur)' : 'Non')}
       <tr><td colspan="2" style="padding:14px 0 4px; font-weight:bold; border-top:1px solid #ddd;">Provenance</td></tr>
       ${attributionRows(data.attribution)}
     </table>`;
@@ -134,7 +160,9 @@ async function main(args) {
       from,
       to: [to],
       reply_to: email,
-      subject: `Demande de contact — ${name} (${biz})`,
+      subject: isGuide
+        ? `Guide téléchargé (${guide}) : ${firstname} <${email}>`
+        : `Demande de contact : ${name} (${biz})`,
       html,
     }),
   });

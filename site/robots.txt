@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 # Lien technique injecté par Cloudflare (protection des courriels), pas une page du site
 Disallow: /cdn-cgi/
+# PDF des guides : réservés aux visiteurs qui remplissent le formulaire
+Disallow: /assets/guides/
 
 Sitemap: https://essentielpme.com/sitemap.xml

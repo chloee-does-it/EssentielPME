@@ -75,11 +75,90 @@
     initMobileMenu();
     initFaq();
     initContactForm();
+    initGuideForm();
     initBlogSubscribe();
     initAnchorScroll();
     initConsent();
     initPlatformModals();
   });
+
+  /* ---------------- Landing pages guides : formulaire de téléchargement ---------------- */
+  function initGuideForm() {
+    var form = document.querySelector('[data-guide-form]');
+    if (!form) return;
+    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    var sending = false;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (sending) return;
+      var ok = true;
+      ok = validateField(form, 'firstname', function (v) { return v.trim().length > 0; }) && ok;
+      ok = validateField(form, 'email', function (v) { return emailRe.test(v.trim()); }) && ok;
+      if (!ok) return;
+
+      var btn = form.querySelector('button[type="submit"]');
+      var errBox = document.querySelector('[data-guide-error]');
+      var btnHTML = btn ? btn.innerHTML : '';
+      if (errBox) errBox.hidden = true;
+      if (btn) { btn.disabled = true; btn.textContent = 'Envoi en cours…'; }
+      sending = true;
+
+      var guide = form.getAttribute('data-guide') || '';
+      var marketing = form.querySelector('[name="marketing"]');
+      var payload = {
+        form_type: 'guide',
+        guide: guide,
+        firstname: form.querySelector('[data-field="firstname"]').value.trim(),
+        email: form.querySelector('[data-field="email"]').value.trim(),
+        marketing: !!(marketing && marketing.checked),
+        attribution: getAttribution(),
+      };
+
+      fetch(CONTACT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          if (window.dataLayer) {
+            var dl = {
+              event: 'lead-form_submission',
+              form_id: 'guide-' + guide,
+              form_interest: 'Guide ' + guide,
+              page_language: 'fr',
+            };
+            var consent = getConsent();
+            if (consent && consent.ads) {
+              dl.user_data = {
+                email: payload.email.toLowerCase(),
+                address: { first_name: payload.firstname },
+              };
+            }
+            window.dataLayer.push(dl);
+          }
+          form.style.display = 'none';
+          var success = document.querySelector('[data-guide-success]');
+          if (success) success.hidden = false;
+        })
+        .catch(function () {
+          if (errBox) errBox.hidden = false;
+        })
+        .then(function () {
+          sending = false;
+          if (btn) { btn.disabled = false; btn.innerHTML = btnHTML; }
+        });
+    });
+
+    form.querySelectorAll('[data-field]').forEach(function (input) {
+      input.addEventListener('input', function () {
+        input.style.borderColor = 'var(--border)';
+        var err = form.querySelector('[data-error="' + input.getAttribute('data-field') + '"]');
+        if (err) err.hidden = true;
+      });
+    });
+  }
 
   /* ---------------- Page Plateformes : fenêtre de détails ---------------- */
   function initPlatformModals() {
