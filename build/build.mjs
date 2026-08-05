@@ -1681,23 +1681,31 @@ ${GTM_NOSCRIPT}
             </div>
             <form data-guide-form data-guide="${g.slug}" novalidate style="display:flex; flex-direction:column; gap:16px;">
               <h3 style="margin:0; font-size:19px; font-weight:800; color:var(--charbon);">Recevez le guide gratuitement</h3>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                  <label for="g-firstname" style="font-size:13px; font-weight:700; color:var(--charbon);">Prénom *</label>
+                  <input id="g-firstname" name="firstname" type="text" autocomplete="given-name" data-field="firstname" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
+                  <span data-error="firstname" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">Veuillez indiquer votre prénom.</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                  <label for="g-lastname" style="font-size:13px; font-weight:700; color:var(--charbon);">Nom *</label>
+                  <input id="g-lastname" name="lastname" type="text" autocomplete="family-name" data-field="lastname" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
+                  <span data-error="lastname" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">Veuillez indiquer votre nom.</span>
+                </div>
+              </div>
               <div style="display:flex; flex-direction:column; gap:6px;">
-                <label for="g-firstname" style="font-size:13px; font-weight:700; color:var(--charbon);">Prénom *</label>
-                <input id="g-firstname" name="firstname" type="text" autocomplete="given-name" data-field="firstname" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
-                <span data-error="firstname" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">Veuillez indiquer votre prénom.</span>
+                <label for="g-biz" style="font-size:13px; font-weight:700; color:var(--charbon);">Nom de l'entreprise *</label>
+                <input id="g-biz" name="biz" type="text" autocomplete="organization" data-field="biz" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
+                <span data-error="biz" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">Veuillez indiquer le nom de votre entreprise.</span>
               </div>
               <div style="display:flex; flex-direction:column; gap:6px;">
                 <label for="g-email" style="font-size:13px; font-weight:700; color:var(--charbon);">Courriel *</label>
                 <input id="g-email" name="email" type="email" autocomplete="email" data-field="email" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
                 <span data-error="email" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">Veuillez entrer un courriel valide.</span>
               </div>
-              <label style="display:flex; gap:10px; align-items:flex-start; font-size:12.5px; color:var(--charbon-300); line-height:1.55; cursor:pointer;">
-                <input type="checkbox" name="marketing" style="accent-color:var(--violet); width:16px; height:16px; margin-top:1px; flex:none;">
-                <span><strong style="color:var(--violet);">Oui, envoyez-moi aussi le conseil du mois&nbsp;!</strong> Des idées concrètes de publicité pour votre PME : un seul courriel par mois, zéro pourriel, désabonnement en un clic.</span>
-              </label>
               <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Recevoir le guide gratuit →</button>
               <p data-guide-error hidden style="margin:0; font-size:13px; color:var(--danger); font-weight:600;">Une erreur est survenue. Réessayez dans un moment ou écrivez-nous à info@essentielpme.com.</p>
-              <p style="margin:0; font-size:12px; color:var(--charbon-300); line-height:1.55;">En soumettant, vous acceptez notre <a href="/mentions-legales/#politique-de-confidentialite" target="_blank" style="color:inherit;">politique de confidentialité</a>. Essentiel PME est un service de Solutions SuperQuanti inc., Brossard (Québec).</p>
+              <p style="margin:0; font-size:12px; color:var(--charbon-300); line-height:1.55;">En téléchargeant ce guide, vous acceptez de recevoir des communications d'Essentiel PME. Vous pouvez vous désabonner en tout temps, en un clic. Détails dans notre <a href="/mentions-legales/#politique-de-confidentialite" target="_blank" style="color:inherit;">politique de confidentialité</a>.</p>
             </form>
           </div>
           <p style="text-align:center; margin:16px 0 0; font-size:13px; color:var(--charbon-500);">On s'occupe de votre publicité. <a href="/contact/" style="font-weight:700;">Parler de mon projet →</a></p>

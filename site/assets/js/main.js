@@ -94,6 +94,8 @@
       if (sending) return;
       var ok = true;
       ok = validateField(form, 'firstname', function (v) { return v.trim().length > 0; }) && ok;
+      ok = validateField(form, 'lastname', function (v) { return v.trim().length > 0; }) && ok;
+      ok = validateField(form, 'biz', function (v) { return v.trim().length > 0; }) && ok;
       ok = validateField(form, 'email', function (v) { return emailRe.test(v.trim()); }) && ok;
       if (!ok) return;
 
@@ -105,13 +107,15 @@
       sending = true;
 
       var guide = form.getAttribute('data-guide') || '';
-      var marketing = form.querySelector('[name="marketing"]');
       var payload = {
         form_type: 'guide',
         guide: guide,
         firstname: form.querySelector('[data-field="firstname"]').value.trim(),
+        lastname: form.querySelector('[data-field="lastname"]').value.trim(),
+        biz: form.querySelector('[data-field="biz"]').value.trim(),
         email: form.querySelector('[data-field="email"]').value.trim(),
-        marketing: !!(marketing && marketing.checked),
+        // Mention affichée sous le bouton : le téléchargement vaut acceptation
+        marketing: true,
         attribution: getAttribution(),
       };
 
@@ -133,7 +137,7 @@
             if (consent && consent.ads) {
               dl.user_data = {
                 email: payload.email.toLowerCase(),
-                address: { first_name: payload.firstname },
+                address: { first_name: payload.firstname, last_name: payload.lastname },
               };
             }
             window.dataLayer.push(dl);

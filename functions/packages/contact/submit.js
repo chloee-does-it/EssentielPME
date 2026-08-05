@@ -78,8 +78,8 @@ async function main(args) {
   const guide = GUIDE_LABELS[String(data.guide || '')] || '';
 
   if (isGuide) {
-    if (!firstname || !EMAIL_RE.test(email) || !guide) {
-      console.error('Validation guide échouée — prénom:', !!firstname, '| courriel valide:', EMAIL_RE.test(email), '| guide:', data.guide);
+    if (!firstname || !lastname || !biz || !EMAIL_RE.test(email) || !guide) {
+      console.error('Validation guide échouée : prénom:', !!firstname, '| nom:', !!lastname, '| entreprise:', !!biz, '| courriel valide:', EMAIL_RE.test(email), '| guide:', data.guide);
       return json(400, { error: 'Champs invalides' });
     }
   } else if (!name || !biz || !EMAIL_RE.test(email) || phone.replace(/[^0-9]/g, '').length < 10) {
@@ -134,8 +134,10 @@ async function main(args) {
     <table style="border-collapse:collapse; font-size:15px;">
       ${row('Guide', guide)}
       ${row('Prénom', firstname)}
+      ${row('Nom', lastname)}
+      ${row('Entreprise', biz)}
       ${row('Courriel', email)}
-      ${row('Communications (LCAP)', marketing ? 'OUI, consentement exprès (case cochée par le visiteur)' : 'Non')}
+      ${row('Communications (LCAP)', marketing ? 'Oui, mention acceptée au téléchargement (désabonnement offert)' : 'Non')}
       <tr><td colspan="2" style="padding:14px 0 4px; font-weight:bold; border-top:1px solid #ddd;">Provenance</td></tr>
       ${attributionRows(data.attribution)}
     </table>`
