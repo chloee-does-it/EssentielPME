@@ -1564,163 +1564,324 @@ function pilierMesureEN() {
   });
 }
 
-/* ================= landing pages des guides (gated content, noindex) ================= */
+/* ================= landing pages des guides (gated content, noindex) =================
+   Design : kit « essentielpmelandingpages » (remise Claude Design).
+   Parcours : formulaire → Brevo (si configuré) + courriel de lead → redirection
+   vers la page merci à URL unique (?prenom=…) → téléchargement direct du PDF.   */
+
+const LP_ICONS = [
+  '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14z M21 21l-4.35-4.35"></path></svg>',
+  '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 13v-2z M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>',
+  '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>',
+  '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z M12 9v4 M12 17h.01"></path></svg>',
+  '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4 M16 2v4 M3 10h18 M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path></svg>',
+  '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2 M9 3h6v4H9z M9 14l2 2 4-4"></path></svg>',
+];
+
+const LP_KICKERS = ['01 · LE CONSTAT', '02 · LES RÉSEAUX', '03 · LES COÛTS', '04 · LES PIÈGES', '05 · LE CALENDRIER', '06 · AVANT DE LANCER'];
 
 const GUIDES = [
   {
-    slug: 'construction',
-    pdf: '/assets/guides/guide-construction.pdf',
-    label: 'Construction',
-    eyebrow: 'GUIDE GRATUIT 2026 · CONSTRUCTION',
-    title: 'Guide gratuit : la publicité en ligne pour un entrepreneur en construction',
-    h1: 'La publicité en ligne pour un entrepreneur en construction',
-    sub: 'Combien ça coûte, quel réseau choisir et quelles erreurs éviter, expliqué simplement, pour les entrepreneurs du Québec. Pas de jargon, pas de fla fla.',
-    bullets: [
-      'Pourquoi le bouche-à-oreille ne remplit plus le carnet (et où vos clients cherchent vraiment)',
-      'Google ou Facebook selon votre métier : urgences, toiture, rénovation, paysagement',
-      'Les coûts réels 2026 : 30 à 100&nbsp;$ par demande de soumission, budgets réalistes',
-      'Les 5 erreurs qui gaspillent votre budget, à commencer par le bouton «&nbsp;Boost&nbsp;»',
-      'Un exemple concret chiffré : viser 30 à 35 demandes de soumission par mois',
-    ],
-  },
-  {
-    slug: 'beaute',
+    slug: 'beaute', label: 'Beauté et bien-être',
     pdf: '/assets/guides/guide-beaute.pdf',
-    label: 'Beauté et bien-être',
-    eyebrow: 'GUIDE GRATUIT 2026 · BEAUTÉ ET BIEN-ÊTRE',
-    title: "Guide gratuit : la publicité en ligne pour votre salon, spa ou clinique d'esthétique",
-    h1: "La publicité en ligne pour votre salon, spa ou clinique d'esthétique",
-    sub: "Coiffure, esthétique, massothérapie, ongles, soins du corps : remplir l'agenda en début de semaine et éviter les erreurs qui gaspillent votre budget. Pas de jargon, pas de fla fla.",
-    bullets: [
-      'Remplir les lundis et mardis : pourquoi ça se joue en ligne, le dimanche soir',
-      'Instagram ou Google&nbsp;? Le rôle exact de chaque réseau pour un salon',
-      'Les coûts réels 2026 : 5 à 20&nbsp;$ par réservation, budgets réalistes',
-      "La valeur d'une cliente fidèle (et pourquoi l'acquisition est si payante)",
-      "Les 5 erreurs qui gaspillent le budget d'un salon",
+    pdfName: "Guide - La publicité en ligne pour votre salon, spa ou clinique d'esthétique.pdf",
+    cover: '/assets/img/cover-beaute.png',
+    title: "Guide gratuit : La publicité en ligne pour votre salon, spa ou clinique d'esthétique | Essentiel PME",
+    desc: "Coiffure, esthétique, massothérapie : remplir l'agenda en début de semaine et éviter les erreurs qui gaspillent votre budget. Guide gratuit de 8 pages.",
+    eyebrow: 'GUIDE GRATUIT · 2026 · BEAUTÉ ET BIEN-ÊTRE',
+    h1a: 'La publicité en ligne pour votre',
+    h1grad: "salon, spa ou clinique d'esthétique.",
+    lead: "Coiffure, esthétique, massothérapie, ongles, soins du corps : remplir l'agenda en début de semaine et éviter les erreurs qui gaspillent votre budget. Pas de jargon.",
+    points: ['Remplir les plages creuses du début de semaine', "Instagram pour créer l'envie, Google pour capter la recherche", 'Les 5 erreurs qui gaspillent votre budget', 'Le calendrier des occasions et la liste de vérification'],
+    compagniePh: 'Salon ou clinique *', compagnieErr: 'Le nom de votre salon.',
+    chaptersLead: "Six sections courtes, écrites pour quelqu'un qui passe ses journées derrière la chaise ou en cabine, pas devant un écran.",
+    chapters: [
+      ['Les lundis et mardis ne se remplissent pas tout seuls.', 'Vos prochaines clientes décident en ligne où prendre rendez-vous, souvent le soir même, sur leur cellulaire.'],
+      ['Instagram ou Google ? Les deux, mais pas pour la même chose.', "Instagram crée l'envie avec vos avant-après; Google capte « manucure près de moi ». Le dosage selon vos services."],
+      ['Combien ça coûte, vraiment.', "Personne n'affiche ses prix dans cette industrie. Nous, oui : les repères réalistes, service par service."],
+      ['Les 5 erreurs qui gaspillent votre budget.', 'Si vous avez déjà « boosté » un avant-après sans voir une seule réservation de plus, ce chapitre est pour vous.'],
+      ['Annoncer au bon moment de l\'année.', 'Mariages, bals, fêtes : la beauté vit au rythme des occasions. Lancez vos campagnes 4 à 6 semaines avant.'],
+      ["La liste de vérification avant d'investir un dollar.", 'Huit vérifications simples. Si vous cochez tout, votre budget travaillera. Sinon, chaque dollar fuit.'],
+    ],
+    statsHead: 'Les lundis et mardis ne se remplissent pas tout seuls.',
+    stats: [
+      ['Lundi et mardi', 'Des chaises vides en début de semaine, pendant que des milliers de recherches « près de moi » se font chaque semaine au Québec.'],
+      ["L'avant-après", "Le métier le plus visuel qui soit : un balayage ou une pose d'ongles impeccable convainc plus vite que n'importe quel texte."],
+      ['Aux 6 semaines', "Une cliente en coloration revient pendant des années. Chaque nouvelle cliente acquise, c'est du revenu récurrent pour longtemps."],
     ],
   },
   {
-    slug: 'avocats-notaires',
+    slug: 'construction', label: 'Construction',
+    pdf: '/assets/guides/guide-construction.pdf',
+    pdfName: 'Guide - La publicité en ligne pour un entrepreneur en construction.pdf',
+    cover: '/assets/img/cover-construction.png',
+    title: 'Guide gratuit : La publicité en ligne pour un entrepreneur en construction | Essentiel PME',
+    desc: 'Combien ça coûte, quel réseau choisir et quelles erreurs éviter, expliqué simplement pour les entrepreneurs du Québec. Guide gratuit de 8 pages.',
+    eyebrow: 'GUIDE GRATUIT · 2026 · CONSTRUCTION',
+    h1a: 'La publicité en ligne pour',
+    h1grad: 'votre entreprise de construction.',
+    lead: 'Combien ça coûte, quel réseau choisir et quelles erreurs éviter, expliqué simplement, pour les entrepreneurs du Québec. Pas de jargon.',
+    points: ['Apparaître quand on cherche un entrepreneur dans votre secteur', 'Google pour les urgences, Facebook pour vos réalisations', 'Les 5 erreurs qui gaspillent votre budget', 'Le calendrier des saisons et la liste de vérification'],
+    compagniePh: "Nom de l'entreprise *", compagnieErr: 'Le nom de votre entreprise.',
+    chaptersLead: "Six sections courtes, écrites pour quelqu'un qui passe ses journées sur les chantiers, pas devant un écran.",
+    chapters: [
+      ['Le bouche-à-oreille ne remplit plus le carnet.', "97 % des consommateurs cherchent une entreprise locale en ligne avant d'appeler. Vos prochains clients magasinent le soir, sur Facebook et Google."],
+      ['Google ou Facebook ? Les deux, mais pas pour la même chose.', 'Google capte « réparation toiture Laval »; Facebook fait connaître vos avant-après de chantiers. Le dosage selon votre métier.'],
+      ['Combien ça coûte, vraiment.', 'Les repères réalistes 2026 : 30 à 100 $ par demande de soumission, face à des contrats de 15 000 à 40 000 $.'],
+      ['Les 5 erreurs qui gaspillent votre budget.', 'Si vous avez déjà « boosté » une publication sans obtenir un seul appel, ce chapitre est pour vous.'],
+      ["Annoncer au bon moment de l'année.", 'Rénovation en janvier, toiture au dégel, déneigement dès septembre : lancez vos campagnes 6 à 8 semaines avant la haute saison.'],
+      ["La liste de vérification avant d'investir un dollar.", 'Huit vérifications simples, de la licence RBQ affichée au suivi des conversions. Si vous cochez tout, votre budget travaillera.'],
+    ],
+    statsHead: 'Le bouche-à-oreille ne remplit plus le carnet.',
+    stats: [
+      ['97 %', "des consommateurs cherchent une entreprise locale en ligne avant d'appeler. Votre réputation ne se rend pas jusqu'à eux si vous n'y êtes pas."],
+      ['3 à 5 soumissions', "C'est ce qu'un propriétaire demande en moyenne avant de choisir. Si vous n'êtes pas dans la liste, vous ne soumissionnez pas."],
+      ['2 mois d\'avance', 'Votre meilleur mois de publicité arrive toujours deux mois avant votre meilleur mois de chantier.'],
+    ],
+  },
+  {
+    slug: 'avocats-notaires', label: 'Avocats et notaires',
     pdf: '/assets/guides/guide-avocats-notaires.pdf',
-    label: 'Avocats et notaires',
-    eyebrow: 'GUIDE GRATUIT 2026 · SERVICES JURIDIQUES',
-    title: 'Guide gratuit : la publicité en ligne pour les avocats et notaires au Québec',
-    h1: 'La publicité en ligne pour les avocats et notaires au Québec',
-    sub: 'Droit familial, immobilier, affaires, successions : être trouvé au moment où le client a besoin de vous. Pas de jargon, pas de fla fla.',
-    bullets: [
-      'Personne ne magasine un avocat «&nbsp;au cas où&nbsp;» : capter le besoin le jour même',
-      'Google, LE canal du juridique, et le rôle de Facebook pour bâtir la confiance',
-      'Les coûts réels 2026 : 30 à 150&nbsp;$ par consultation demandée',
-      "Le calcul du client à vie : du testament d'aujourd'hui à la succession de demain",
-      "Les 5 erreurs qui gaspillent le budget d'un cabinet",
+    pdfName: 'Guide - La publicité en ligne pour les avocats et notaires au Québec.pdf',
+    cover: '/assets/img/cover-avocats.png',
+    title: 'Guide gratuit : La publicité en ligne pour les avocats et notaires au Québec | Essentiel PME',
+    desc: 'Droit familial, immobilier, affaires, successions : être trouvé au moment où le client a besoin de vous. Guide gratuit de 8 pages.',
+    eyebrow: 'GUIDE GRATUIT · 2026 · SERVICES JURIDIQUES',
+    h1a: 'La publicité en ligne pour',
+    h1grad: 'les avocats et notaires au Québec.',
+    lead: 'Droit familial, immobilier, affaires, successions : être trouvé au moment où le client a besoin de vous. Pas de jargon.',
+    points: ['Capter le besoin le jour où il surgit, sur Google', 'Facebook pour vulgariser et rester en tête', 'Les coûts réels 2026 : 30 à 150 $ par consultation demandée', "Les 5 erreurs qui gaspillent le budget d'un cabinet"],
+    compagniePh: 'Cabinet ou étude *', compagnieErr: 'Le nom de votre cabinet.',
+    chaptersLead: 'Six sections courtes, écrites pour des professionnels qui facturent à l\'heure et n\'ont pas de temps à perdre.',
+    chapters: [
+      ['Personne ne magasine un avocat « au cas où ».', 'La recherche se fait le jour du besoin, sur cellulaire. Le cabinet qui apparaît gagne le mandat; les autres n\'existent pas.'],
+      ['Google ou Facebook ? Les deux, mais pas pour la même chose.', 'Google capte « avocat divorce près de moi »; Facebook vulgarise et garde votre cabinet en tête aux moments de vie.'],
+      ['Combien ça coûte, vraiment.', "Le juridique est l'un des mots-clés les plus chers, parce que chaque mandat vaut cher : les repères réalistes 2026, sans détour."],
+      ['Les 5 erreurs qui gaspillent votre budget.', 'Le besoin juridique est confidentiel : ce qui fonctionne pour un restaurant ne fonctionne pas pour un cabinet.'],
+      ["Annoncer au bon moment de l'année.", "Impôts, transactions immobilières du printemps, rentrées : les besoins juridiques suivent aussi un calendrier."],
+      ["La liste de vérification avant d'investir un dollar.", "Huit vérifications simples, de la page d'atterrissage claire à la réponse en 24 h."],
+    ],
+    statsHead: 'Personne ne magasine un avocat « au cas où ».',
+    stats: [
+      ['Le jour même', "Entre la recherche et la demande de consultation, il s'écoule quelques heures, pas quelques semaines."],
+      ['2 à 3 cabinets', 'comparés en ligne avant d\'appeler : le site, les avis Google, la clarté. Le plus clair l\'emporte, pas le plus gros.'],
+      ['Confidentiel', 'On ne demande pas un avocat en divorce à son entourage. On le demande à Google : ces mandats vont au cabinet visible en ligne.'],
     ],
   },
   {
-    slug: 'pme',
+    slug: 'pme', label: 'PME du Québec',
     pdf: '/assets/guides/guide-pme.pdf',
-    label: 'PME du Québec',
-    eyebrow: 'GUIDE GRATUIT 2026 · PME DU QUÉBEC',
-    title: 'Guide gratuit : la publicité en ligne pour les PME du Québec',
-    h1: 'La publicité en ligne pour les PME du Québec',
-    sub: 'Restaurant, garage, clinique, boutique ou bureau : comment ça marche, combien ça coûte vraiment et les erreurs qui gaspillent votre budget. Pas de jargon, pas de fla fla.',
-    bullets: [
-      "97&nbsp;% de vos clients cherchent en ligne avant d'acheter : ce que ça change pour vous",
-      'Google ou Facebook selon ce que vous vendez : capter la demande ou la créer',
-      'Les coûts réels 2026 par industrie : de 5 à 150&nbsp;$ par client potentiel',
-      "La règle du ~2:1 et le calcul de la valeur d'un client",
-      "Les 5 erreurs qui gaspillent le budget d'une PME",
+    pdfName: 'Guide - La publicité en ligne pour les PME du Québec.pdf',
+    cover: '/assets/img/cover-pme.png',
+    title: 'Guide gratuit : La publicité en ligne pour les PME du Québec | Essentiel PME',
+    desc: 'Restaurant, garage, clinique, boutique ou bureau : comment ça marche, combien ça coûte vraiment et les erreurs à éviter. Guide gratuit de 8 pages.',
+    eyebrow: 'GUIDE GRATUIT · 2026 · PME DU QUÉBEC',
+    h1a: 'La publicité en ligne pour',
+    h1grad: 'les PME du Québec.',
+    lead: 'Restaurant, garage, clinique, boutique ou bureau : comment ça marche, combien ça coûte vraiment et les erreurs qui gaspillent votre budget. Pas de jargon.',
+    points: ["97 % de vos clients cherchent en ligne avant d'acheter", 'Google ou Facebook selon ce que vous vendez', 'Les coûts réels 2026, industrie par industrie', 'Les 5 erreurs qui gaspillent votre budget'],
+    compagniePh: "Nom de l'entreprise *", compagnieErr: 'Le nom de votre entreprise.',
+    chaptersLead: "Six sections courtes, écrites pour quelqu'un qui fait rouler une entreprise, pas pour un spécialiste du marketing.",
+    chapters: [
+      ['Vos clients décident en ligne. Tous.', 'Soupers, toitures, soins ou conseils : la décision se prend sur un écran, souvent le soir, souvent sur un cellulaire.'],
+      ['Google ou Facebook ? Ça dépend de ce que vous vendez.', 'Google capte la demande qui existe; Facebook crée celle qui dort. Le point de départ naturel de chaque industrie.'],
+      ['Combien ça coûte, vraiment.', 'De 5 à 150 $ par client potentiel selon le secteur, et la logique simple : plus le client vaut cher, plus il rapporte.'],
+      ['Les 5 erreurs qui gaspillent votre budget.', 'Le bouton « Boost », le ciblage trop large, l\'absence de mesure : les cinq pièges qui reviennent dans toutes les industries.'],
+      ["Annoncer au bon moment de l'année.", 'Chaque industrie a sa saison. Votre meilleur mois de publicité arrive toujours avant votre meilleur mois de ventes.'],
+      ["La liste de vérification avant d'investir un dollar.", 'Huit vérifications simples. Si vous cochez tout, votre budget travaillera. Sinon, chaque dollar fuit.'],
+    ],
+    statsHead: 'Vos clients décident en ligne. Tous.',
+    stats: [
+      ['97 %', "des consommateurs cherchent une entreprise locale en ligne avant d'acheter. Tout commence par une recherche."],
+      ['Soirs et week-ends', "C'est là que vos futurs clients magasinent, pendant que votre commerce est fermé. Votre publicité, elle, travaille à ces heures-là."],
+      ['2 à 3 options', "comparées avant d'appeler. Celle qui apparaît en premier, avec de bons avis, part avec une longueur d'avance."],
     ],
   },
 ];
+
+const lpCheckSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+const lpMetaSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+const lpPhoneSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>';
+
+function lpHeader(withCta) {
+  return `  <header class="lp-header">
+    <div class="lp-header-inner">
+      <a href="https://essentielpme.com" target="_blank" rel="noopener" class="lp-logo"><img src="/assets/img/logo-h-fr-rgb.svg" alt="Essentiel PME"></a>
+      <div class="lp-header-right">
+        <a href="tel:18447633832" class="lp-phone">
+          ${lpPhoneSvg}
+          <span class="lp-phone-num">1-844-763-3832</span>
+        </a>${withCta ? `
+        <a href="#guide-form" class="btn btn-primary">Recevoir mon guide</a>` : ''}
+      </div>
+    </div>
+  </header>`;
+}
+
+const lpFooter = `  <footer class="lp-footer">
+    <div class="lp-footer-inner">
+      <span>© 2026 Essentiel PME · Québec, QC</span>
+      <span>info@essentielpme.com · 1-844-763-3832</span>
+    </div>
+  </footer>`;
+
+function lpHead(title, desc) {
+  return `<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>${title}</title>
+<meta name="description" content="${jsonEsc(desc)}">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="/assets/css/landing.css">
+${GTM_HEAD}`;
+}
 
 function lpPage(g) {
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>${g.title} | Essentiel PME</title>
-  <meta name="description" content="${jsonEsc(g.sub)}">
-  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
-  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
-  <link rel="stylesheet" href="/assets/css/styles.css">
-${GTM_HEAD}
+${lpHead(g.title, g.desc)}
 </head>
 <body>
 ${GTM_NOSCRIPT}
 <div class="we-page">
-  <header style="background:#fff; border-bottom:1px solid var(--border); padding:16px 24px;">
-    <div style="max-width:1080px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px;">
-      <img src="/assets/img/logo-h-fr-rgb.svg" alt="Essentiel PME" style="height:48px; width:auto;">
-      <span style="font-size:13.5px; font-weight:700; color:var(--charbon-500); white-space:nowrap;">Réponse en 24&nbsp;h · Prix affichés</span>
-    </div>
-  </header>
-  <main id="contenu" data-screen-label="Guide ${g.label}" style="animation: epFadeUp 300ms cubic-bezier(0.2,0.7,0.2,1);">
-    <section style="background:var(--grad-hero); padding:56px 24px 72px;">
-      <div style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:44px; align-items:start;">
-        <div>
-          <span class="eyebrow" style="display:block; margin-bottom:14px;">${g.eyebrow}</span>
-          <h1 style="font-size:clamp(1.9rem, 2.4vw + 0.8rem, 2.75rem); margin:0 0 14px;">${g.h1}</h1>
-          <p class="lead" style="margin:0 0 22px;">${g.sub}</p>
-          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px;">
-            ${['Coûts réels affichés', 'Lecture de 10 minutes', 'Fait pour le Québec'].map((c) => `<span style="font-size:12px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; background:rgba(255,255,255,0.8); border:1px solid var(--lavande-200); border-radius:999px; padding:7px 13px; color:var(--violet);">${c}</span>`).join('\n            ')}
-          </div>
-          <h2 style="font-size:15px; font-weight:800; letter-spacing:var(--tracking-wide); text-transform:uppercase; color:var(--violet); margin:0 0 12px;">Dans ce guide</h2>
-          <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px;">
-            ${g.bullets.map((b) => `<li style="display:flex; gap:10px; align-items:flex-start; font-size:15px; color:var(--charbon); line-height:1.6;">${check(16, 'var(--violet)', 'flex:none; margin-top:3px;')}<span>${b}</span></li>`).join('\n            ')}
-          </ul>
-        </div>
-        <div style="position:sticky; top:24px;">
-          <div style="background:#fff; border-radius:22px; box-shadow:var(--shadow-lg); padding:30px 32px;">
-            <div data-guide-success hidden style="text-align:center; padding:10px 0;">
-              <div style="width:56px; height:56px; border-radius:999px; background:var(--violet); color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">${check(26)}</div>
-              <h3 style="margin:0 0 8px; color:var(--violet); font-weight:800; font-size:20px;">C'est fait&nbsp;!</h3>
-              <p style="margin:0 0 20px; color:var(--charbon-500); font-size:14.5px; line-height:1.6;">Votre guide est prêt. Bonne lecture, et si une question surgit en chemin, on y répond en 24&nbsp;h.</p>
-              <a href="${g.pdf}" target="_blank" rel="noopener" class="btn btn-primary btn-lg" style="width:100%; box-sizing:border-box;" data-guide-download>Télécharger le guide (PDF) →</a>
-            </div>
-            <form data-guide-form data-guide="${g.slug}" novalidate style="display:flex; flex-direction:column; gap:16px;">
-              <h3 style="margin:0; font-size:19px; font-weight:800; color:var(--charbon);">Recevez le guide gratuitement</h3>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-                <div style="display:flex; flex-direction:column; gap:6px;">
-                  <label for="g-firstname" style="font-size:13px; font-weight:700; color:var(--charbon);">Prénom *</label>
-                  <input id="g-firstname" name="firstname" type="text" autocomplete="given-name" data-field="firstname" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
-                  <span data-error="firstname" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">Veuillez indiquer votre prénom.</span>
-                </div>
-                <div style="display:flex; flex-direction:column; gap:6px;">
-                  <label for="g-lastname" style="font-size:13px; font-weight:700; color:var(--charbon);">Nom *</label>
-                  <input id="g-lastname" name="lastname" type="text" autocomplete="family-name" data-field="lastname" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
-                  <span data-error="lastname" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">Veuillez indiquer votre nom.</span>
-                </div>
-              </div>
-              <div style="display:flex; flex-direction:column; gap:6px;">
-                <label for="g-biz" style="font-size:13px; font-weight:700; color:var(--charbon);">Nom de l'entreprise *</label>
-                <input id="g-biz" name="biz" type="text" autocomplete="organization" data-field="biz" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
-                <span data-error="biz" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">Veuillez indiquer le nom de votre entreprise.</span>
-              </div>
-              <div style="display:flex; flex-direction:column; gap:6px;">
-                <label for="g-email" style="font-size:13px; font-weight:700; color:var(--charbon);">Courriel *</label>
-                <input id="g-email" name="email" type="email" autocomplete="email" data-field="email" style="padding:12px 16px; font:inherit; font-size:15px; border:1px solid var(--border); border-radius:12px; background:var(--blanc-casse); color:var(--charbon); outline:none; width:100%; box-sizing:border-box;">
-                <span data-error="email" hidden style="font-size:12.5px; color:var(--danger); font-weight:600;">Veuillez entrer un courriel valide.</span>
-              </div>
-              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Recevoir le guide gratuit →</button>
-              <p data-guide-error hidden style="margin:0; font-size:13px; color:var(--danger); font-weight:600;">Une erreur est survenue. Réessayez dans un moment ou écrivez-nous à info@essentielpme.com.</p>
-              <p style="margin:0; font-size:12px; color:var(--charbon-300); line-height:1.55;">En téléchargeant ce guide, vous acceptez de recevoir des communications d'Essentiel PME. Vous pouvez vous désabonner en tout temps, en un clic. Détails dans notre <a href="/mentions-legales/#politique-de-confidentialite" target="_blank" style="color:inherit;">politique de confidentialité</a>.</p>
-            </form>
-          </div>
-          <p style="text-align:center; margin:16px 0 0; font-size:13px; color:var(--charbon-500);">On s'occupe de votre publicité. <a href="/contact/" style="font-weight:700;">Parler de mon projet →</a></p>
+${lpHeader(true)}
+
+  <section class="lp-hero">
+    <div class="lp-hero-blob"></div>
+    <div class="lp-hero-grid">
+      <div class="lp-hero-copy">
+        <span class="hero-eyebrow"><span class="pulse"></span>${g.eyebrow}</span>
+        <h1>${g.h1a} <span class="grad">${g.h1grad}</span></h1>
+        <p class="lead">${g.lead}</p>
+        <ul class="lp-points">
+          ${g.points.map((pt) => `<li><span class="lp-check">${lpCheckSvg}</span>${pt}</li>`).join('\n          ')}
+        </ul>
+        <div class="hero-meta">
+          <span>${lpMetaSvg} Coûts réels affichés</span>
+          <span>${lpMetaSvg} Lecture de 10 minutes</span>
+          <span>${lpMetaSvg} Fait pour le Québec</span>
         </div>
       </div>
-    </section>
-  </main>
-  <footer style="background:var(--charbon-900); color:rgba(255,255,255,0.6); padding:22px 24px; font-size:12.5px;">
-    <div style="max-width:1080px; margin:0 auto; display:flex; flex-wrap:wrap; gap:14px; justify-content:space-between; align-items:center;">
-      <span>© 2026 Essentiel PME · essentielpme.com</span>
-      <a href="/mentions-legales/" style="color:inherit; border-bottom:none; text-decoration:underline; text-underline-offset:3px;">Mentions légales et confidentialité</a>
+
+      <div id="guide-form" class="lp-form-card">
+        <div class="lp-form-head">
+          <img src="${g.cover}" alt="Première page du guide">
+          <div>
+            <h2>Recevez votre exemplaire gratuit</h2>
+            <p>Remplissez le formulaire et téléchargez le guide immédiatement.</p>
+          </div>
+        </div>
+        <form class="lp-form" data-guide="${g.slug}" data-merci="/merci/${g.slug}/" novalidate>
+          <div class="lp-form-row">
+            <div class="lp-field">
+              <input type="text" name="prenom" class="lp-input" placeholder="Prénom *" autocomplete="given-name">
+              <span class="lp-error" data-error-for="prenom" hidden>Votre prénom.</span>
+            </div>
+            <div class="lp-field">
+              <input type="text" name="nom" class="lp-input" placeholder="Nom *" autocomplete="family-name">
+              <span class="lp-error" data-error-for="nom" hidden>Votre nom.</span>
+            </div>
+          </div>
+          <div class="lp-field">
+            <input type="text" name="compagnie" class="lp-input" placeholder="${g.compagniePh}" autocomplete="organization">
+            <span class="lp-error" data-error-for="compagnie" hidden>${g.compagnieErr}</span>
+          </div>
+          <div class="lp-field">
+            <input type="email" name="email" class="lp-input" placeholder="Courriel *" autocomplete="email">
+            <span class="lp-error" data-error-for="email" hidden>Veuillez entrer un courriel valide.</span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">Recevoir mon guide →</button>
+          <p class="lp-error" data-error-for="reseau" hidden>Une erreur est survenue. Réessayez ou écrivez-nous à info@essentielpme.com.</p>
+          <p class="lp-consent">En téléchargeant ce guide, vous acceptez de recevoir des communications d'Essentiel PME. Vous pouvez vous désabonner en tout temps, en un seul clic.</p>
+        </form>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <section class="section" style="background:#fff;">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="eyebrow">CE QUE CONTIENT LE GUIDE</span>
+        <h2>8 pages, droit à l'essentiel.</h2>
+        <p class="lead">${g.chaptersLead}</p>
+      </div>
+      <div class="lp-chapters">
+        ${g.chapters.map(([h, p], i) => `<div class="lp-chapter">
+          <div class="lp-chapter-top">
+            <div class="lp-chapter-icon">${LP_ICONS[i]}</div>
+            <div class="lp-chapter-kicker">${LP_KICKERS[i]}</div>
+          </div>
+          <h3>${h}</h3>
+          <p>${p}</p>
+        </div>`).join('\n        ')}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--blanc-casse);">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="eyebrow">LE CONSTAT</span>
+        <h2>${g.statsHead}</h2>
+      </div>
+      <div class="lp-stats">
+        ${g.stats.map(([n, p]) => `<div class="lp-stat">
+          <div class="lp-stat-n">${n}</div>
+          <p>${p}</p>
+        </div>`).join('\n        ')}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="cta-band-inner">
+      <h2>Votre exemplaire vous attend.</h2>
+      <p>Deux minutes pour le demander, dix minutes pour le lire. Gratuit, sans engagement.</p>
+      <a href="#guide-form" class="btn btn-on-violet btn-lg">Recevoir mon guide →</a>
+    </div>
+  </section>
+
+${lpFooter}
 </div>
 ${consentUI('/')}
+<script src="/assets/js/config.js"></script>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
+`;
+}
+
+function merciPage(g) {
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+${lpHead('Votre guide est prêt | Essentiel PME', 'Téléchargez votre exemplaire du guide.')}
+</head>
+<body>
+${GTM_NOSCRIPT}
+<div class="we-page lp-merci-page" data-guide="${g.slug}">
+${lpHeader(false)}
+
+  <section class="lp-merci-hero">
+    <div class="lp-hero-blob"></div>
+    <div class="lp-merci-wrap">
+      <div class="lp-merci-card">
+        <div class="lp-merci-check"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <h1>Votre guide est prêt&nbsp;!</h1>
+        <p class="lp-merci-text">Merci<span id="merci-prenom"></span>&nbsp;! Cliquez ci-dessous pour télécharger votre exemplaire.</p>
+        <a href="${g.pdf}" download="${g.pdfName}" class="btn btn-primary btn-lg">Télécharger le guide (PDF) →</a>
+        <p class="lp-merci-back">Envie d'aller plus loin&nbsp;? <a href="https://essentielpme.com" target="_blank" rel="noopener">Découvrez ce qu'Essentiel PME peut faire pour vous →</a></p>
+      </div>
+    </div>
+  </section>
+
+${lpFooter}
+</div>
+${consentUI('/')}
+<script src="/assets/js/config.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>
@@ -1986,10 +2147,11 @@ for (const [p, html] of pages) {
 
 /* Landing pages des guides : françaises, noindex, hors sitemap et hors nav */
 for (const g of GUIDES) {
-  const p = `guide/${g.slug}/index.html`;
-  mkdirSync(dirname(join(OUT, p)), { recursive: true });
-  writeFileSync(join(OUT, p), lpPage(g));
-  console.log('wrote', p, '(landing noindex)');
+  for (const [p, html] of [[`guide/${g.slug}/index.html`, lpPage(g)], [`merci/${g.slug}/index.html`, merciPage(g)]]) {
+    mkdirSync(dirname(join(OUT, p)), { recursive: true });
+    writeFileSync(join(OUT, p), html);
+    console.log('wrote', p, '(landing noindex)');
+  }
 }
 
 const sitemapPaths = pages

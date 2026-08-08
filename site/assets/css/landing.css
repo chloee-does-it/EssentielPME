@@ -1,0 +1,61 @@
+/* Essentiel PME — landing pages des guides (gated content) et pages merci */
+
+.lp-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.85); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+.lp-header-inner { max-width: 1140px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.lp-logo { border-bottom: none; }
+.lp-logo img { height: 46px; width: auto; display: block; }
+.lp-header-right { display: flex; align-items: center; gap: 18px; }
+.lp-phone { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 14.5px; color: var(--charbon); border-bottom: none; }
+
+.lp-hero { position: relative; background: var(--grad-hero); padding: 60px 24px 84px; overflow: hidden; }
+.lp-hero-blob { position: absolute; top: -180px; right: -140px; width: 540px; height: 540px; border-radius: 999px; background: radial-gradient(circle, rgba(175,164,255,0.5), transparent 65%); pointer-events: none; }
+.lp-hero-grid { position: relative; max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; }
+.lp-hero-copy h1 { font-size: clamp(2rem, 2.6vw + 0.8rem, 2.9rem); margin: 18px 0 14px; }
+.lp-points { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+.lp-points li { display: flex; gap: 11px; align-items: flex-start; font-size: 15.5px; color: var(--charbon); line-height: 1.55; font-weight: 600; }
+.lp-check { width: 22px; height: 22px; border-radius: 999px; background: var(--violet); color: #fff; display: inline-flex; align-items: center; justify-content: center; flex: none; margin-top: 1px; }
+.lp-hero-copy .hero-meta { margin-top: 24px; }
+
+.lp-form-card { position: sticky; top: 88px; background: #fff; border-radius: 22px; box-shadow: 0 24px 70px rgba(75,46,131,0.22); padding: 26px 28px; }
+.lp-form-head { display: flex; gap: 16px; align-items: center; margin-bottom: 18px; }
+.lp-form-head img { width: 86px; border-radius: 10px; box-shadow: var(--shadow-md); flex: none; }
+.lp-form-head h2 { margin: 0 0 4px; font-size: 19px; }
+.lp-form-head p { margin: 0; font-size: 13.5px; color: var(--charbon-500); line-height: 1.5; }
+.lp-form { display: flex; flex-direction: column; gap: 12px; }
+.lp-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.lp-field { display: flex; flex-direction: column; gap: 5px; }
+.lp-input { padding: 13px 16px; font: inherit; font-size: 15px; border: 1px solid var(--border); border-radius: 12px; background: var(--blanc-casse); color: var(--charbon); outline: none; width: 100%; box-sizing: border-box; }
+.lp-input:focus { border-color: var(--violet); background: #fff; }
+.lp-error { font-size: 12.5px; color: var(--danger); font-weight: 600; }
+.lp-form .btn-lg { width: 100%; }
+.lp-consent { margin: 2px 0 0; font-size: 11.5px; color: var(--charbon-300); line-height: 1.5; }
+
+.lp-chapters { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.lp-chapter { background: var(--blanc-casse); border: 1px solid var(--border); border-radius: 18px; padding: 24px; }
+.lp-chapter-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.lp-chapter-icon { width: 42px; height: 42px; border-radius: 12px; background: var(--lavande-100); color: var(--violet); display: flex; align-items: center; justify-content: center; flex: none; }
+.lp-chapter-kicker { font-size: 12px; font-weight: 800; letter-spacing: var(--tracking-wide); color: var(--violet); }
+.lp-chapter h3 { margin: 0 0 8px; font-size: 16.5px; }
+.lp-chapter p { margin: 0; font-size: 14px; color: var(--charbon-500); line-height: 1.6; }
+
+.lp-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.lp-stat { background: #fff; border: 1px solid var(--border); border-radius: 18px; padding: 26px; }
+.lp-stat-n { font-size: 21px; font-weight: 800; color: var(--violet); margin-bottom: 8px; }
+.lp-stat p { margin: 0; font-size: 14px; color: var(--charbon-500); line-height: 1.6; }
+
+.lp-footer { background: var(--charbon-900); color: rgba(255,255,255,0.65); padding: 22px 24px; font-size: 12.5px; }
+.lp-footer-inner { max-width: 1140px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
+
+.lp-merci-hero { position: relative; background: var(--grad-hero); padding: 90px 24px; overflow: hidden; min-height: calc(100vh - 220px); display: flex; align-items: center; box-sizing: border-box; }
+.lp-merci-wrap { position: relative; max-width: 620px; margin: 0 auto; width: 100%; }
+.lp-merci-card { background: #fff; border-radius: 24px; box-shadow: 0 30px 90px rgba(75,46,131,0.25); padding: 44px 40px; text-align: center; }
+.lp-merci-check { width: 64px; height: 64px; border-radius: 999px; background: var(--violet); color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+.lp-merci-card h1 { font-size: 28px; margin: 0 0 10px; }
+.lp-merci-text { margin: 0 0 24px; font-size: 15.5px; color: var(--charbon-500); }
+.lp-merci-back { margin: 20px 0 0; font-size: 13.5px; color: var(--charbon-500); }
+
+@media (max-width: 900px) {
+  .lp-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .lp-form-card { position: static; }
+  .lp-phone-num { display: none; }
+}

@@ -76,91 +76,96 @@
     initFaq();
     initContactForm();
     initGuideForm();
+    initMerci();
     initBlogSubscribe();
     initAnchorScroll();
     initConsent();
+    tryInitMetaPixel();
     initPlatformModals();
   });
 
-  /* ---------------- Landing pages guides : formulaire de téléchargement ---------------- */
+  /* ---------------- Landing pages guides (gated content) ----------------
+     Formulaire → Brevo (si configuré) + courriel de lead interne, en parallèle
+     → redirection vers la page merci (?prenom=…) où se fait le téléchargement. */
   function initGuideForm() {
-    var form = document.querySelector('[data-guide-form]');
+    var form = document.querySelector('form.lp-form');
     if (!form) return;
     var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    var cfg = window.EPME_LP || {};
     var sending = false;
+
+    function fieldVal(n) {
+      var el = form.querySelector('[name="' + n + '"]');
+      return el ? el.value.trim() : '';
+    }
+    function mark(n, good) {
+      var el = form.querySelector('[name="' + n + '"]');
+      var err = form.querySelector('[data-error-for="' + n + '"]');
+      if (el) el.style.borderColor = good ? 'var(--border)' : 'var(--danger)';
+      if (err) err.hidden = good;
+      return good;
+    }
+
+    form.querySelectorAll('.lp-input').forEach(function (input) {
+      input.addEventListener('input', function () { mark(input.getAttribute('name'), true); });
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (sending) return;
       var ok = true;
-      ok = validateField(form, 'firstname', function (v) { return v.trim().length > 0; }) && ok;
-      ok = validateField(form, 'lastname', function (v) { return v.trim().length > 0; }) && ok;
-      ok = validateField(form, 'biz', function (v) { return v.trim().length > 0; }) && ok;
-      ok = validateField(form, 'email', function (v) { return emailRe.test(v.trim()); }) && ok;
+      ok = mark('prenom', fieldVal('prenom').length > 0) && ok;
+      ok = mark('nom', fieldVal('nom').length > 0) && ok;
+      ok = mark('compagnie', fieldVal('compagnie').length > 0) && ok;
+      ok = mark('email', emailRe.test(fieldVal('email'))) && ok;
       if (!ok) return;
 
       var btn = form.querySelector('button[type="submit"]');
-      var errBox = document.querySelector('[data-guide-error]');
-      var btnHTML = btn ? btn.innerHTML : '';
-      if (errBox) errBox.hidden = true;
-      if (btn) { btn.disabled = true; btn.textContent = 'Envoi en cours…'; }
+      if (btn) { btn.disabled = true; btn.textContent = 'Un instant…'; }
       sending = true;
 
+      var prenom = fieldVal('prenom');
+      var merci = (form.getAttribute('data-merci') || '/') + '?prenom=' + encodeURIComponent(prenom);
       var guide = form.getAttribute('data-guide') || '';
-      var payload = {
-        form_type: 'guide',
-        guide: guide,
-        firstname: form.querySelector('[data-field="firstname"]').value.trim(),
-        lastname: form.querySelector('[data-field="lastname"]').value.trim(),
-        biz: form.querySelector('[data-field="biz"]').value.trim(),
-        email: form.querySelector('[data-field="email"]').value.trim(),
-        // Mention affichée sous le bouton : le téléchargement vaut acceptation
-        marketing: true,
-        attribution: getAttribution(),
-      };
+      var done = false;
+      function go() { if (!done) { done = true; location.href = merci; } }
+      // Le téléchargement promis passe avant tout : redirection garantie
+      setTimeout(go, 2500);
 
-      fetch(CONTACT_ENDPOINT, {
+      var jobs = [];
+
+      if (cfg.BREVO_ACTION) {
+        var f = cfg.BREVO_FIELDS || {};
+        var body = new URLSearchParams();
+        body.set(f.email || 'EMAIL', fieldVal('email'));
+        body.set(f.prenom || 'PRENOM', prenom);
+        body.set(f.nom || 'NOM', fieldVal('nom'));
+        body.set(f.compagnie || 'COMPAGNIE', fieldVal('compagnie'));
+        body.set('email_address_check', '');
+        body.set('locale', 'fr');
+        jobs.push(fetch(cfg.BREVO_ACTION, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString(),
+        }).catch(function () {}));
+      }
+
+      jobs.push(fetch(CONTACT_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          if (window.dataLayer) {
-            var dl = {
-              event: 'lead-form_submission',
-              form_id: 'guide-' + guide,
-              form_interest: 'Guide ' + guide,
-              page_language: 'fr',
-            };
-            var consent = getConsent();
-            if (consent && consent.ads) {
-              dl.user_data = {
-                email: payload.email.toLowerCase(),
-                address: { first_name: payload.firstname, last_name: payload.lastname },
-              };
-            }
-            window.dataLayer.push(dl);
-          }
-          form.style.display = 'none';
-          var success = document.querySelector('[data-guide-success]');
-          if (success) success.hidden = false;
-        })
-        .catch(function () {
-          if (errBox) errBox.hidden = false;
-        })
-        .then(function () {
-          sending = false;
-          if (btn) { btn.disabled = false; btn.innerHTML = btnHTML; }
-        });
-    });
+        body: JSON.stringify({
+          form_type: 'guide',
+          guide: guide,
+          firstname: prenom,
+          lastname: fieldVal('nom'),
+          biz: fieldVal('compagnie'),
+          email: fieldVal('email'),
+          marketing: true,
+          attribution: getAttribution(),
+        }),
+      }).catch(function () {}));
 
-    form.querySelectorAll('[data-field]').forEach(function (input) {
-      input.addEventListener('input', function () {
-        input.style.borderColor = 'var(--border)';
-        var err = form.querySelector('[data-error="' + input.getAttribute('data-field') + '"]');
-        if (err) err.hidden = true;
-      });
+      Promise.all(jobs).then(go, go);
     });
   }
 
@@ -199,6 +204,45 @@
     }
   }
 
+  /* ---------------- Page merci : personnalisation + conversion ---------------- */
+  function initMerci() {
+    var page = document.querySelector('.lp-merci-page');
+    if (!page) return;
+    var slug = page.getAttribute('data-guide') || '';
+    try {
+      var prenom = new URLSearchParams(location.search).get('prenom');
+      var span = document.getElementById('merci-prenom');
+      if (span && prenom) span.textContent = ' ' + prenom.slice(0, 60);
+    } catch (e) {}
+    // Conversion : une seule fois par session et par guide
+    var key = 'epme_lead_' + slug;
+    var already = false;
+    try { already = sessionStorage.getItem(key) === '1'; } catch (e) {}
+    if (!already && window.dataLayer) {
+      window.dataLayer.push({ event: 'lead-form_submission', form_id: 'guide-' + slug, page_language: 'fr' });
+      try { sessionStorage.setItem(key, '1'); } catch (e) {}
+      window.__epmeFireLead = true;   // relayé au pixel Meta s'il se charge
+    }
+  }
+
+  /* ---------------- Pixel Meta (chargé seulement avec consentement pub) ---------------- */
+  var pixelReady = false;
+  function tryInitMetaPixel() {
+    var cfg = window.EPME_LP || {};
+    if (pixelReady || !cfg.META_PIXEL_ID) return;
+    var consent = getConsent();
+    if (!consent || !consent.ads) return;
+    pixelReady = true;
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+      t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('init', cfg.META_PIXEL_ID);
+    window.fbq('track', 'PageView');
+    if (window.__epmeFireLead) window.fbq('track', 'Lead');
+  }
+
   /* ---------------- Bandeau de consentement aux témoins (Loi 25) ----------------
      Trois catégories : fonctionnels (toujours actifs), analytiques, publicitaires.
      Niveau 1 : « Tout accepter » ou « Personnaliser » ; le refus des témoins
@@ -219,6 +263,7 @@
       if (window.dataLayer) {
         window.dataLayer.push({ event: 'epme_consent', consent_analytics: !!c.analytics, consent_ads: !!c.ads });
       }
+      if (c.ads) setTimeout(tryInitMetaPixel, 0);   // consentement donné après coup : charger le pixel
     }
 
     // La modale bloque la page : défilement verrouillé tant qu'aucun choix n'est fait
