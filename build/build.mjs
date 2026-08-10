@@ -1650,7 +1650,7 @@ const GUIDES = [
     h1a: 'La publicité en ligne pour',
     h1grad: 'les avocats et notaires au Québec.',
     lead: 'Droit familial, immobilier, affaires, successions : être trouvé au moment où le client a besoin de vous. Pas de jargon.',
-    points: ['Capter le besoin le jour où il surgit, sur Google', 'Facebook pour vulgariser et rester en tête', 'Les coûts réels 2026 : 30 à 150 $ par consultation demandée', "Les 5 erreurs qui gaspillent le budget d'un cabinet"],
+    points: ['Capter le besoin le jour où il surgit, sur Google', 'Facebook pour vulgariser et rester en tête', 'Les coûts réels 2026 : 30 à 150 $ par consultation demandée', 'Des campagnes conformes aux règles du Barreau et de la Chambre des notaires'],
     compagniePh: 'Cabinet ou étude *', compagnieErr: 'Le nom de votre cabinet.',
     chaptersLead: 'Six sections courtes, écrites pour des professionnels qui facturent à l\'heure et n\'ont pas de temps à perdre.',
     chapters: [
@@ -1658,8 +1658,8 @@ const GUIDES = [
       ['Google ou Facebook ? Les deux, mais pas pour la même chose.', 'Google capte « avocat divorce près de moi »; Facebook vulgarise et garde votre cabinet en tête aux moments de vie.'],
       ['Combien ça coûte, vraiment.', "Le juridique est l'un des mots-clés les plus chers, parce que chaque mandat vaut cher : les repères réalistes 2026, sans détour."],
       ['Les 5 erreurs qui gaspillent votre budget.', 'Le besoin juridique est confidentiel : ce qui fonctionne pour un restaurant ne fonctionne pas pour un cabinet.'],
-      ["Annoncer au bon moment de l'année.", "Impôts, transactions immobilières du printemps, rentrées : les besoins juridiques suivent aussi un calendrier."],
-      ["La liste de vérification avant d'investir un dollar.", "Huit vérifications simples, de la page d'atterrissage claire à la réponse en 24 h."],
+      ["Annoncer au bon moment de l'année.", 'Séparations en janvier, immobilier au printemps, successions à la rentrée : le juridique a ses saisons. La constance bat l\'intensité.'],
+      ["La liste de vérification avant d'investir un dollar.", 'Neuf vérifications simples, de la page par domaine de droit aux règles du Barreau et de la Chambre des notaires : des campagnes conformes.'],
     ],
     statsHead: 'Personne ne magasine un avocat « au cas où ».',
     stats: [
@@ -1687,8 +1687,8 @@ const GUIDES = [
       ['Google ou Facebook ? Ça dépend de ce que vous vendez.', 'Google capte la demande qui existe; Facebook crée celle qui dort. Le point de départ naturel de chaque industrie.'],
       ['Combien ça coûte, vraiment.', 'De 5 à 150 $ par client potentiel selon le secteur, et la logique simple : plus le client vaut cher, plus il rapporte.'],
       ['Les 5 erreurs qui gaspillent votre budget.', 'Le bouton « Boost », le ciblage trop large, l\'absence de mesure : les cinq pièges qui reviennent dans toutes les industries.'],
-      ["Annoncer au bon moment de l'année.", 'Chaque industrie a sa saison. Votre meilleur mois de publicité arrive toujours avant votre meilleur mois de ventes.'],
-      ["La liste de vérification avant d'investir un dollar.", 'Huit vérifications simples. Si vous cochez tout, votre budget travaillera. Sinon, chaque dollar fuit.'],
+      ['Chaque industrie a sa saison. Annoncez avant la vôtre.', 'Votre meilleur mois de publicité arrive 4 à 8 semaines avant votre pic de ventes, quand les enchères sont encore basses.'],
+      ["La liste de vérification avant d'investir un dollar.", 'Huit vérifications, valables pour toutes les industries. Si vous cochez tout, votre budget travaillera. Sinon, chaque dollar fuit.'],
     ],
     statsHead: 'Vos clients décident en ligne. Tous.',
     stats: [
