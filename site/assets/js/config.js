@@ -5,8 +5,11 @@ window.EPME_LP = {
      Vide = l'envoi Brevo est simplement sauté (le lead part quand même par courriel). */
   BREVO_ACTION: 'https://97aaa67b.sibforms.com/v2/serve/MUIFAD-k5v7TFqtqCurN41Cfv4gcgNs9M_gHraWNVs_m4dpux6-HC3NmANBynpuwcdYUljTqBUmurvkyTJbDbuPDe08IAOnD_3Qvwite3eOYE5X0F-lwFsf4RpK72j4nLnAXmkmgfaJdjeBvHxz8upTtGhE6qcpC864wsZ0B9tPbTwNw45tWYQaSUqxJvNw-C5E-mcp_6Taj9FG4BA==',
 
-  /* Correspondance champs du formulaire → attributs name="…" du même code d'intégration */
-  BREVO_FIELDS: { email: 'EMAIL', prenom: 'PRENOM', nom: 'NOM', compagnie: 'COMPAGNIE' },
+  /* Correspondance champs du formulaire → attributs name="…" du même code
+     d'intégration. Noms confirmés par la réponse de Brevo au formulaire
+     EssentielPME_Ebook2026_Phase1_MoF : il attend les libellés anglais, et
+     l'entreprise passe par l'objet Société (COMPANY:name). */
+  BREVO_FIELDS: { email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name' },
 
   /* ID du pixel Meta. Chargé seulement si le visiteur a accepté les témoins
      publicitaires (Consent Mode / Loi 25). PageView partout, Lead sur les pages merci. */
