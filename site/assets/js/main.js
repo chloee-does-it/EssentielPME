@@ -84,6 +84,42 @@
     initPlatformModals();
   });
 
+  /* Traces de diagnostic, visibles seulement en mode DEBUG ou avec
+     ?epme_debug=1 dans l'URL. Sert à valider un envoi Brevo sans deviner. */
+  function isLpDebug() {
+    var cfg = window.EPME_LP || {};
+    return !!cfg.DEBUG || location.search.indexOf('epme_debug=1') !== -1;
+  }
+  function lpDebug() {
+    if (!isLpDebug()) return;
+    try {
+      console.log.apply(console, ['[Essentiel PME]'].concat([].slice.call(arguments)));
+    } catch (e) {}
+  }
+
+  /* Le point d'entrée des formulaires Brevo autorise la lecture de sa réponse
+     (leur propre widget en dépend), donc on envoie d'abord de façon lisible :
+     on sait si Brevo a accepté ou refusé. Si le navigateur bloque quand même
+     la lecture, on renvoie en aveugle pour ne pas perdre l'inscription. Une
+     adresse déjà connue est mise à jour par Brevo, jamais dupliquée, donc ce
+     second envoi est sans conséquence. */
+  function sendToBrevo(action, body) {
+    var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    lpDebug('Envoi Brevo →', action, body);
+    return fetch(action, { method: 'POST', headers: headers, body: body })
+      .then(function (res) {
+        return res.text().catch(function () { return ''; }).then(function (txt) {
+          lpDebug('Réponse Brevo : HTTP ' + res.status, txt.slice(0, 400));
+          return res;
+        });
+      })
+      .catch(function (err) {
+        lpDebug('Réponse Brevo illisible (' + err + '), renvoi en aveugle');
+        return fetch(action, { method: 'POST', mode: 'no-cors', headers: headers, body: body })
+          .catch(function () {});
+      });
+  }
+
   /* ---------------- Landing pages guides (gated content) ----------------
      Formulaire → Brevo (si configuré) + courriel de lead interne, en parallèle
      → redirection vers la page merci (?prenom=…) où se fait le téléchargement. */
@@ -127,8 +163,15 @@
       var prenom = fieldVal('prenom');
       var merci = (form.getAttribute('data-merci') || '/') + '?prenom=' + encodeURIComponent(prenom);
       var guide = form.getAttribute('data-guide') || '';
+      var debugging = isLpDebug();
       var done = false;
-      function go() { if (!done) { done = true; location.href = merci; } }
+      function go() {
+        if (done) return;
+        done = true;
+        // En diagnostic on reste sur place, sinon la console se vide au départ
+        if (debugging) { lpDebug('Redirection suspendue (diagnostic). Cible :', merci); return; }
+        location.href = merci;
+      }
       // Le téléchargement promis passe avant tout : redirection garantie
       setTimeout(go, 2500);
 
@@ -141,13 +184,9 @@
         body.set(f.prenom || 'PRENOM', prenom);
         body.set(f.nom || 'NOM', fieldVal('nom'));
         body.set(f.compagnie || 'COMPAGNIE', fieldVal('compagnie'));
-        body.set('email_address_check', '');
+        body.set('email_address_check', ''); // pot de miel anti-robot de Brevo
         body.set('locale', 'fr');
-        jobs.push(fetch(cfg.BREVO_ACTION, {
-          method: 'POST', mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: body.toString(),
-        }).catch(function () {}));
+        jobs.push(sendToBrevo(cfg.BREVO_ACTION, body.toString()));
       }
 
       jobs.push(fetch(CONTACT_ENDPOINT, {

@@ -3,7 +3,7 @@ window.EPME_LP = {
   /* URL d'action du formulaire Brevo : l'attribut action="…" du code
      d'intégration HTML (Brevo → Contacts → Formulaires → Partager → Intégrer).
      Vide = l'envoi Brevo est simplement sauté (le lead part quand même par courriel). */
-  BREVO_ACTION: '',
+  BREVO_ACTION: 'https://97aaa67b.sibforms.com/v2/serve/MUIFAD-k5v7TFqtqCurN41Cfv4gcgNs9M_gHraWNVs_m4dpux6-HC3NmANBynpuwcdYUljTqBUmurvkyTJbDbuPDe08IAOnD_3Qvwite3eOYE5X0F-lwFsf4RpK72j4nLnAXmkmgfaJdjeBvHxz8upTtGhE6qcpC864wsZ0B9tPbTwNw45tWYQaSUqxJvNw-C5E-mcp_6Taj9FG4BA==',
 
   /* Correspondance champs du formulaire → attributs name="…" du même code d'intégration */
   BREVO_FIELDS: { email: 'EMAIL', prenom: 'PRENOM', nom: 'NOM', compagnie: 'COMPAGNIE' },
@@ -11,4 +11,9 @@ window.EPME_LP = {
   /* ID du pixel Meta. Chargé seulement si le visiteur a accepté les témoins
      publicitaires (Consent Mode / Loi 25). PageView partout, Lead sur les pages merci. */
   META_PIXEL_ID: '',
+
+  /* Mode diagnostic. Mettre à true, ou ajouter ?epme_debug=1 à l'URL de la
+     landing page, pour voir le détail de l'envoi Brevo dans la console du
+     navigateur (F12 → Console). À laisser à false en campagne. */
+  DEBUG: false,
 };
