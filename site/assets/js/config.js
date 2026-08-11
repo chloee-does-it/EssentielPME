@@ -11,9 +11,9 @@ window.EPME_LP = {
      l'entreprise passe par l'objet Société (COMPANY:name). */
   BREVO_FIELDS: { email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name' },
 
-  /* ID du pixel Meta. Chargé seulement si le visiteur a accepté les témoins
-     publicitaires (Consent Mode / Loi 25). PageView partout, Lead sur les pages merci. */
-  META_PIXEL_ID: '',
+  /* Les pixels publicitaires (Meta, Google Ads) sont gérés dans Google Tag
+     Manager, pas ici. Le site leur fournit le signal Consent Mode et
+     l'événement lead-form_submission ; le déclenchement se configure dans GTM. */
 
   /* Mode diagnostic. Mettre à true, ou ajouter ?epme_debug=1 à l'URL de la
      landing page, pour voir le détail de l'envoi Brevo dans la console du

@@ -72,6 +72,10 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initAttribution();
+    // Le consentement en premier : GTM doit connaître l'état Consent Mode
+    // avant qu'un événement de conversion soit poussé, sinon les tags
+    // publicitaires sont bloqués au moment où ils comptent le plus.
+    initConsent();
     initMobileMenu();
     initFaq();
     initContactForm();
@@ -79,8 +83,6 @@
     initMerci();
     initBlogSubscribe();
     initAnchorScroll();
-    initConsent();
-    tryInitMetaPixel();
     initPlatformModals();
   });
 
@@ -260,26 +262,7 @@
     if (!already && window.dataLayer) {
       window.dataLayer.push({ event: 'lead-form_submission', form_id: 'guide-' + slug, page_language: 'fr' });
       try { sessionStorage.setItem(key, '1'); } catch (e) {}
-      window.__epmeFireLead = true;   // relayé au pixel Meta s'il se charge
     }
-  }
-
-  /* ---------------- Pixel Meta (chargé seulement avec consentement pub) ---------------- */
-  var pixelReady = false;
-  function tryInitMetaPixel() {
-    var cfg = window.EPME_LP || {};
-    if (pixelReady || !cfg.META_PIXEL_ID) return;
-    var consent = getConsent();
-    if (!consent || !consent.ads) return;
-    pixelReady = true;
-    !(function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
-      t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
-    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-    window.fbq('init', cfg.META_PIXEL_ID);
-    window.fbq('track', 'PageView');
-    if (window.__epmeFireLead) window.fbq('track', 'Lead');
   }
 
   /* ---------------- Bandeau de consentement aux témoins (Loi 25) ----------------
@@ -302,7 +285,6 @@
       if (window.dataLayer) {
         window.dataLayer.push({ event: 'epme_consent', consent_analytics: !!c.analytics, consent_ads: !!c.ads });
       }
-      if (c.ads) setTimeout(tryInitMetaPixel, 0);   // consentement donné après coup : charger le pixel
     }
 
     // La modale bloque la page : défilement verrouillé tant qu'aucun choix n'est fait
