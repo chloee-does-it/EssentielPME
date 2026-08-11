@@ -287,14 +287,20 @@
       }
     }
 
-    // La modale bloque la page : défilement verrouillé tant qu'aucun choix n'est fait
-    function show() { banner.hidden = false; document.body.style.overflow = 'hidden'; }
+    // Sur les landing pages le bandeau ne bloque pas : le visiteur venu d'une
+    // publicité doit pouvoir lire l'offre et s'inscrire sans répondre d'abord.
+    // Ailleurs, la modale verrouille le défilement jusqu'au choix.
+    var inline = banner.hasAttribute('data-consent-inline');
+    function show() {
+      banner.hidden = false;
+      if (!inline) document.body.style.overflow = 'hidden';
+    }
 
     function save(c) {
       try { localStorage.setItem('epme_consent', JSON.stringify(c)); } catch (e) {}
       apply(c);
       banner.hidden = true;
-      document.body.style.overflow = '';
+      if (!inline) document.body.style.overflow = '';
     }
 
     var main = banner.querySelector('[data-consent-main]');

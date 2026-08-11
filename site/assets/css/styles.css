@@ -492,6 +492,29 @@ img { max-width: 100%; }
 .consent-choices label { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; line-height: 1.5; color: var(--charbon-500); cursor: pointer; }
 .consent-choices input[type="checkbox"] { accent-color: var(--violet); width: 17px; height: 17px; margin-top: 1px; flex: none; }
 
+/* Variante non bloquante des landing pages : bandeau ancré au bas de l'écran.
+   Pas d'assombrissement ni de verrou, le visiteur venu d'une publicité lit
+   l'offre et remplit le formulaire sans avoir à répondre d'abord. */
+.consent-overlay.consent-inline { inset: auto 0 0 0; background: none; backdrop-filter: none; padding: 0; display: block; }
+.consent-inline .consent-banner { max-width: 1080px; margin: 0 auto; border-radius: 18px 18px 0 0; padding: 16px 24px 18px; border: 1px solid var(--border); border-bottom: none; box-shadow: 0 -14px 44px rgba(20,10,40,0.20); }
+.consent-inline .consent-banner h3 { font-size: 16px; margin-bottom: 5px; }
+.consent-inline .consent-banner p { font-size: 13.5px; margin-bottom: 0; }
+.consent-inline [data-consent-main] { display: flex; align-items: center; gap: 26px; }
+.consent-inline [data-consent-main] > p { flex: 1; }
+.consent-inline [data-consent-main] .consent-actions { flex: none; }
+.consent-inline [data-consent-accept] { padding: 12px 26px; font-size: 14.5px; }
+@media (max-width: 760px) {
+  .consent-inline [data-consent-main] { display: block; }
+  .consent-inline [data-consent-main] .consent-actions { margin-top: 12px; justify-content: space-between; }
+  .consent-inline [data-consent-accept] { flex: 1; padding: 12px 18px; }
+  /* Sur petit écran chaque pixel du bandeau est pris à l'offre : on resserre */
+  .consent-inline .consent-banner { padding: 13px 18px 15px; }
+  .consent-inline .consent-banner h3 { font-size: 15px; margin-bottom: 4px; }
+  .consent-inline .consent-banner p { font-size: 12.5px; line-height: 1.5; }
+}
+/* L'icône de réouverture ferait doublon pendant que le bandeau est affiché */
+.consent-overlay:not([hidden]) ~ .consent-reopen { display: none; }
+
 /* Skip link (a11y) */
 .skip-link { position: absolute; left: -9999px; top: 0; background: var(--violet); color: #fff; padding: 10px 16px; border-radius: 0 0 10px 0; z-index: 200; }
 .skip-link:focus { left: 0; }

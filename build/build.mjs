@@ -24,8 +24,13 @@ const GTM_NOSCRIPT = `<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->`;
 
-const consentUI = (root) => `<div class="consent-overlay" data-consent-banner hidden>
-  <div class="consent-banner" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+/* `inline` produit la variante non bloquante utilisée sur les landing pages :
+   même contenu et mêmes choix, mais en bandeau au bas de l'écran, sans
+   assombrissement ni verrou de défilement. Le trafic publicitaire atteint
+   l'offre et le formulaire tout de suite ; un visiteur qui ne répond pas
+   laisse quand même son inscription, au lieu d'être perdu. */
+const consentUI = (root, inline) => `<div class="consent-overlay${inline ? ' consent-inline' : ''}" data-consent-banner${inline ? ' data-consent-inline' : ''} hidden>
+  <div class="consent-banner" role="dialog"${inline ? '' : ' aria-modal="true"'} aria-labelledby="consent-title">
     <h3 id="consent-title">Votre expérience, vos choix</h3>
     <div data-consent-main>
       <p>On utilise trois types de témoins&nbsp;: <strong>fonctionnels</strong>, <strong>analytiques</strong> et <strong>publicitaires</strong>, pour offrir la meilleure expérience possible et améliorer nos services. Détails dans notre <a href="${root}mentions-legales/#temoins">politique de témoins</a>.</p>
@@ -1846,7 +1851,7 @@ ${lpHeader(true)}
 
 ${lpFooter}
 </div>
-${consentUI('/')}
+${consentUI('/', true)}
 <script src="/assets/js/config.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
@@ -1880,7 +1885,7 @@ ${lpHeader(false)}
 
 ${lpFooter}
 </div>
-${consentUI('/')}
+${consentUI('/', true)}
 <script src="/assets/js/config.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
