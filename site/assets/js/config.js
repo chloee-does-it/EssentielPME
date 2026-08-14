@@ -14,9 +14,15 @@ window.EPME_LP = {
   /* Formulaire Brevo distinct pour les demandes de contact. Séparé de celui
      des guides : une demande de soumission et un téléchargement d'ebook sont
      deux intentions différentes, les mélanger brouillerait les segments.
-     N'est appelé que si la personne a coché la case de communication. */
+     Brevo servant de CRM, toute demande y est enregistrée, avec ou sans
+     opt-in. C'est l'attribut OPT_IN qui porte le consentement : les
+     automatisations d'infolettre s'y conditionnent, côté Brevo. */
   BREVO_CONTACT_ACTION: 'https://97aaa67b.sibforms.com/serve/MUIFALVvjIK_laZhMsH_VVx_s-45T4h5iXpYVGnewLXd9osyYthfIRQMfigsSPz_qraAPI8Dpsj0ywQwQR460brVzoSZ8qUeVdhf_ZdY4FEiem0iRN59S9O23GEAI3s7WH0L-0hpIf-yiDVlM-091EBLBLnE8fEVWCn3HrhH72ftjckVFfvrwA8KGas8AT68eOq9MUd-ho6PA_GDww==',
-  BREVO_CONTACT_FIELDS: { email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name', telephone: 'SMS' },
+  BREVO_CONTACT_FIELDS: { email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name', telephone: 'SMS', optin: 'OPT_IN' },
+
+  /* Valeurs écrites dans l'attribut OPT_IN. À ajuster si l'attribut Brevo
+     n'est pas de type booléen (par exemple 'Oui' / 'Non' pour une liste). */
+  BREVO_OPTIN_VALUES: { oui: '1', non: '0' },
 
   /* Les pixels publicitaires (Meta, Google Ads) sont gérés dans Google Tag
      Manager, pas ici. Le site leur fournit le signal Consent Mode et

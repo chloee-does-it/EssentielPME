@@ -422,14 +422,17 @@
       payload.marketing = !!(marketing && marketing.checked);
       payload.attribution = getAttribution();
 
-      /* Inscription à la liste Brevo : uniquement si la personne a coché la
-         case de communication (exigence de la LCAP). L'appel part en parallèle
-         et n'influence jamais l'issue du formulaire : le courriel de lead est
-         le chemin critique, une panne chez Brevo ne doit pas faire échouer une
-         demande de soumission. */
+      /* Brevo est le CRM : toute demande de contact y est enregistrée, opt-in
+         ou non. Le consentement voyage comme donnée du contact, dans l'attribut
+         OPT_IN, et ce sont les automatisations Brevo qui s'y conditionnent pour
+         n'envoyer d'infolettre qu'aux personnes qui l'ont accepté.
+         L'appel part en parallèle et n'influence jamais l'issue du formulaire :
+         le courriel de lead est le chemin critique, une panne chez Brevo ne
+         doit pas faire échouer une demande de soumission. */
       var cfg = window.EPME_LP || {};
-      if (payload.marketing && cfg.BREVO_CONTACT_ACTION) {
+      if (cfg.BREVO_CONTACT_ACTION) {
         var bf = cfg.BREVO_CONTACT_FIELDS || {};
+        var bv = cfg.BREVO_OPTIN_VALUES || { oui: '1', non: '0' };
         var bBody = new URLSearchParams();
         bBody.set(bf.email || 'EMAIL', payload.email);
         bBody.set(bf.prenom || 'FIRSTNAME', payload.firstname);
@@ -438,12 +441,14 @@
         // Un numéro mal formé ferait rejeter toute la soumission par Brevo
         var tel = toE164(payload.phone);
         if (bf.telephone && tel) bBody.set(bf.telephone, tel);
+        // Écrit dans les deux sens : un refus doit pouvoir corriger un
+        // ancien oui, sans quoi le champ resterait figé sur le CRM.
+        if (bf.optin) bBody.set(bf.optin, payload.marketing ? bv.oui : bv.non);
         bBody.set('email_address_check', '');
         bBody.set('locale', EN ? 'en' : 'fr');
         sendToBrevo(cfg.BREVO_CONTACT_ACTION, bBody.toString());
       } else {
-        lpDebug('Brevo ignoré pour le contact : ' +
-          (payload.marketing ? 'aucune URL configurée' : 'case de communication non cochée'));
+        lpDebug('Brevo ignoré pour le contact : aucune URL configurée');
       }
 
       fetch(CONTACT_ENDPOINT, {
