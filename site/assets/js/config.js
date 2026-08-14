@@ -18,7 +18,26 @@ window.EPME_LP = {
      opt-in. C'est l'attribut OPT_IN qui porte le consentement : les
      automatisations d'infolettre s'y conditionnent, côté Brevo. */
   BREVO_CONTACT_ACTION: 'https://97aaa67b.sibforms.com/serve/MUIFALVvjIK_laZhMsH_VVx_s-45T4h5iXpYVGnewLXd9osyYthfIRQMfigsSPz_qraAPI8Dpsj0ywQwQR460brVzoSZ8qUeVdhf_ZdY4FEiem0iRN59S9O23GEAI3s7WH0L-0hpIf-yiDVlM-091EBLBLnE8fEVWCn3HrhH72ftjckVFfvrwA8KGas8AT68eOq9MUd-ho6PA_GDww==',
-  BREVO_CONTACT_FIELDS: { email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name', telephone: 'SMS', optin: 'OPT_IN' },
+  BREVO_CONTACT_FIELDS: {
+    email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name',
+    telephone: 'LANDLINE_NUMBER', message: 'MESSAGE', forfait: 'PACKAGES[]', optin: 'OPT_IN',
+  },
+
+  /* Correspondance entre les boutons de forfait du site et les options de
+     l'attribut PACKAGES dans Brevo. Les valeurs de droite doivent être écrites
+     exactement comme dans Brevo, à la lettre près, sinon toute la soumission
+     est refusée. Une valeur absente de cette table est transmise telle quelle. */
+  BREVO_PACKAGES: {
+    'Publicité : Essentiel (695 $/mois)': 'Essentiel',
+    'Publicité : Essentiel Plus (995 $/mois)': 'Essentiel Plus',
+    'Publicité : Essentiel Performance (1 495 $/mois)': 'Essentiel Performance',
+    'Aidez-moi à choisir': 'Aidez-moi à choisir',
+  },
+
+  /* MESSAGE est obligatoire côté Brevo alors qu'il est facultatif sur le site.
+     Sans texte de remplacement, une demande sans message serait refusée et le
+     contact perdu. À vider si le champ devient facultatif dans Brevo. */
+  BREVO_MESSAGE_VIDE: 'Aucun message laissé sur le formulaire',
 
   /* Valeur envoyée quand la case est cochée. OPT_IN étant une case à cocher
      dans Brevo, le champ est simplement absent de l'envoi quand elle ne l'est

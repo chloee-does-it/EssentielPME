@@ -440,6 +440,17 @@
         // Un numéro mal formé ferait rejeter toute la soumission par Brevo
         var tel = toE164(payload.phone);
         if (bf.telephone && tel) bBody.set(bf.telephone, tel);
+        // Obligatoire côté Brevo, facultatif ici : sans texte de remplacement,
+        // une demande sans message serait refusée et le contact perdu.
+        if (bf.message) {
+          bBody.set(bf.message, payload.message || cfg.BREVO_MESSAGE_VIDE || 'Aucun message');
+        }
+        // Attribut à choix multiple : les libellés du site sont traduits vers
+        // les options définies dans Brevo, qui seules sont acceptées.
+        if (bf.forfait && payload.interest) {
+          var pk = cfg.BREVO_PACKAGES || {};
+          bBody.append(bf.forfait, pk[payload.interest] || payload.interest);
+        }
         // OPT_IN est une case à cocher : on n'envoie le champ que s'il est
         // coché, comme le ferait une vraie case HTML. Envoyer une valeur
         // « fausse » exposerait à ce que Brevo lise la seule présence du
