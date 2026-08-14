@@ -432,7 +432,6 @@
       var cfg = window.EPME_LP || {};
       if (cfg.BREVO_CONTACT_ACTION) {
         var bf = cfg.BREVO_CONTACT_FIELDS || {};
-        var bv = cfg.BREVO_OPTIN_VALUES || { oui: '1', non: '0' };
         var bBody = new URLSearchParams();
         bBody.set(bf.email || 'EMAIL', payload.email);
         bBody.set(bf.prenom || 'FIRSTNAME', payload.firstname);
@@ -441,9 +440,11 @@
         // Un numéro mal formé ferait rejeter toute la soumission par Brevo
         var tel = toE164(payload.phone);
         if (bf.telephone && tel) bBody.set(bf.telephone, tel);
-        // Écrit dans les deux sens : un refus doit pouvoir corriger un
-        // ancien oui, sans quoi le champ resterait figé sur le CRM.
-        if (bf.optin) bBody.set(bf.optin, payload.marketing ? bv.oui : bv.non);
+        // OPT_IN est une case à cocher : on n'envoie le champ que s'il est
+        // coché, comme le ferait une vraie case HTML. Envoyer une valeur
+        // « fausse » exposerait à ce que Brevo lise la seule présence du
+        // champ comme un consentement, et écrive un oui sur un refus.
+        if (bf.optin && payload.marketing) bBody.set(bf.optin, cfg.BREVO_OPTIN_VALUE || '1');
         bBody.set('email_address_check', '');
         bBody.set('locale', EN ? 'en' : 'fr');
         sendToBrevo(cfg.BREVO_CONTACT_ACTION, bBody.toString());

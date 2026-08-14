@@ -20,9 +20,11 @@ window.EPME_LP = {
   BREVO_CONTACT_ACTION: 'https://97aaa67b.sibforms.com/serve/MUIFALVvjIK_laZhMsH_VVx_s-45T4h5iXpYVGnewLXd9osyYthfIRQMfigsSPz_qraAPI8Dpsj0ywQwQR460brVzoSZ8qUeVdhf_ZdY4FEiem0iRN59S9O23GEAI3s7WH0L-0hpIf-yiDVlM-091EBLBLnE8fEVWCn3HrhH72ftjckVFfvrwA8KGas8AT68eOq9MUd-ho6PA_GDww==',
   BREVO_CONTACT_FIELDS: { email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name', telephone: 'SMS', optin: 'OPT_IN' },
 
-  /* Valeurs écrites dans l'attribut OPT_IN. À ajuster si l'attribut Brevo
-     n'est pas de type booléen (par exemple 'Oui' / 'Non' pour une liste). */
-  BREVO_OPTIN_VALUES: { oui: '1', non: '0' },
+  /* Valeur envoyée quand la case est cochée. OPT_IN étant une case à cocher
+     dans Brevo, le champ est simplement absent de l'envoi quand elle ne l'est
+     pas : c'est le comportement d'une vraie case HTML, et le seul qui garantit
+     qu'un refus ne soit jamais lu comme un consentement. */
+  BREVO_OPTIN_VALUE: '1',
 
   /* Les pixels publicitaires (Meta, Google Ads) sont gérés dans Google Tag
      Manager, pas ici. Le site leur fournit le signal Consent Mode et
