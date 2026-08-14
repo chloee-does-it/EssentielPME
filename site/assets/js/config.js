@@ -28,16 +28,15 @@ window.EPME_LP = {
      exactement comme dans Brevo, à la lettre près, sinon toute la soumission
      est refusée. Une valeur absente de cette table est transmise telle quelle. */
   BREVO_PACKAGES: {
-    'Publicité : Essentiel (695 $/mois)': 'Essentiel',
-    'Publicité : Essentiel Plus (995 $/mois)': 'Essentiel Plus',
-    'Publicité : Essentiel Performance (1 495 $/mois)': 'Essentiel Performance',
+    'Publicité : Essentiel (695 $/mois)': 'Essential',
+    'Publicité : Essentiel Plus (995 $/mois)': 'Essential Plus',
+    'Publicité : Essentiel Performance (1 495 $/mois)': 'Essential Performance',
     'Aidez-moi à choisir': 'Aidez-moi à choisir',
   },
 
-  /* MESSAGE est obligatoire côté Brevo alors qu'il est facultatif sur le site.
-     Sans texte de remplacement, une demande sans message serait refusée et le
-     contact perdu. À vider si le champ devient facultatif dans Brevo. */
-  BREVO_MESSAGE_VIDE: 'Aucun message laissé sur le formulaire',
+  /* MESSAGE étant devenu facultatif dans Brevo, un message vide n'est plus
+     transmis du tout. Remettre un texte ici s'il redevenait obligatoire. */
+  BREVO_MESSAGE_VIDE: '',
 
   /* Valeur envoyée quand la case est cochée. OPT_IN étant une case à cocher
      dans Brevo, le champ est simplement absent de l'envoi quand elle ne l'est

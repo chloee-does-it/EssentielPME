@@ -440,11 +440,10 @@
         // Un numéro mal formé ferait rejeter toute la soumission par Brevo
         var tel = toE164(payload.phone);
         if (bf.telephone && tel) bBody.set(bf.telephone, tel);
-        // Obligatoire côté Brevo, facultatif ici : sans texte de remplacement,
-        // une demande sans message serait refusée et le contact perdu.
-        if (bf.message) {
-          bBody.set(bf.message, payload.message || cfg.BREVO_MESSAGE_VIDE || 'Aucun message');
-        }
+        // Facultatif des deux côtés : un message vide n'est pas transmis,
+        // plutôt que d'écrire un texte de remplissage dans le CRM.
+        var msgVal = payload.message || cfg.BREVO_MESSAGE_VIDE || '';
+        if (bf.message && msgVal) bBody.set(bf.message, msgVal);
         // Attribut à choix multiple : les libellés du site sont traduits vers
         // les options définies dans Brevo, qui seules sont acceptées.
         if (bf.forfait && payload.interest) {
