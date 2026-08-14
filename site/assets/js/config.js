@@ -11,6 +11,13 @@ window.EPME_LP = {
      l'entreprise passe par l'objet Société (COMPANY:name). */
   BREVO_FIELDS: { email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name' },
 
+  /* Formulaire Brevo distinct pour les demandes de contact. Séparé de celui
+     des guides : une demande de soumission et un téléchargement d'ebook sont
+     deux intentions différentes, les mélanger brouillerait les segments.
+     N'est appelé que si la personne a coché la case de communication. */
+  BREVO_CONTACT_ACTION: 'https://97aaa67b.sibforms.com/serve/MUIFALVvjIK_laZhMsH_VVx_s-45T4h5iXpYVGnewLXd9osyYthfIRQMfigsSPz_qraAPI8Dpsj0ywQwQR460brVzoSZ8qUeVdhf_ZdY4FEiem0iRN59S9O23GEAI3s7WH0L-0hpIf-yiDVlM-091EBLBLnE8fEVWCn3HrhH72ftjckVFfvrwA8KGas8AT68eOq9MUd-ho6PA_GDww==',
+  BREVO_CONTACT_FIELDS: { email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name', telephone: 'SMS' },
+
   /* Les pixels publicitaires (Meta, Google Ads) sont gérés dans Google Tag
      Manager, pas ici. Le site leur fournit le signal Consent Mode et
      l'événement lead-form_submission ; le déclenchement se configure dans GTM. */

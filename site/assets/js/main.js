@@ -422,6 +422,30 @@
       payload.marketing = !!(marketing && marketing.checked);
       payload.attribution = getAttribution();
 
+      /* Inscription à la liste Brevo : uniquement si la personne a coché la
+         case de communication (exigence de la LCAP). L'appel part en parallèle
+         et n'influence jamais l'issue du formulaire : le courriel de lead est
+         le chemin critique, une panne chez Brevo ne doit pas faire échouer une
+         demande de soumission. */
+      var cfg = window.EPME_LP || {};
+      if (payload.marketing && cfg.BREVO_CONTACT_ACTION) {
+        var bf = cfg.BREVO_CONTACT_FIELDS || {};
+        var bBody = new URLSearchParams();
+        bBody.set(bf.email || 'EMAIL', payload.email);
+        bBody.set(bf.prenom || 'FIRSTNAME', payload.firstname);
+        bBody.set(bf.nom || 'LASTNAME', payload.lastname);
+        bBody.set(bf.compagnie || 'COMPANY:name', payload.biz);
+        // Un numéro mal formé ferait rejeter toute la soumission par Brevo
+        var tel = toE164(payload.phone);
+        if (bf.telephone && tel) bBody.set(bf.telephone, tel);
+        bBody.set('email_address_check', '');
+        bBody.set('locale', EN ? 'en' : 'fr');
+        sendToBrevo(cfg.BREVO_CONTACT_ACTION, bBody.toString());
+      } else {
+        lpDebug('Brevo ignoré pour le contact : ' +
+          (payload.marketing ? 'aucune URL configurée' : 'case de communication non cochée'));
+      }
+
       fetch(CONTACT_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

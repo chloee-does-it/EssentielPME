@@ -288,6 +288,7 @@ ${body}
 ${footer(root)}
 </div>
 ${consentUI(root)}
+<script src="${root}assets/js/config.js"></script>
 <script src="${root}assets/js/main.js"></script>
 </body>
 </html>
