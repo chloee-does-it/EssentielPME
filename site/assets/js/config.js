@@ -19,7 +19,9 @@ window.EPME_LP = {
      automatisations d'infolettre s'y conditionnent, côté Brevo. */
   BREVO_CONTACT_ACTION: 'https://97aaa67b.sibforms.com/serve/MUIFALVvjIK_laZhMsH_VVx_s-45T4h5iXpYVGnewLXd9osyYthfIRQMfigsSPz_qraAPI8Dpsj0ywQwQR460brVzoSZ8qUeVdhf_ZdY4FEiem0iRN59S9O23GEAI3s7WH0L-0hpIf-yiDVlM-091EBLBLnE8fEVWCn3HrhH72ftjckVFfvrwA8KGas8AT68eOq9MUd-ho6PA_GDww==',
   BREVO_CONTACT_FIELDS: {
-    email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANY:name',
+    // COMPANYNAME ici, COMPANY:name sur le formulaire des guides : les deux
+    // formulaires Brevo nomment ce champ différemment, ne pas uniformiser.
+    email: 'EMAIL', prenom: 'FIRSTNAME', nom: 'LASTNAME', compagnie: 'COMPANYNAME',
     telephone: 'LANDLINE_NUMBER', message: 'MESSAGE', forfait: 'PACKAGES[]', optin: 'OPT_IN',
   },
 
