@@ -936,7 +936,7 @@ ${['On écoute vos objectifs et votre réalité de PME.',
             </div>
 
             <div style="background:#fff; border:1px solid var(--border); border-radius:16px; overflow:hidden;">
-              <iframe src="${SITE.bookingEmbed}" title="Calendrier de réservation d’Essentiel PME" loading="lazy" style="border:0; display:block; width:100%; height:640px;"></iframe>
+              <iframe src="${SITE.bookingEmbed}" title="Calendrier de réservation d’Essentiel PME" loading="lazy" style="border:0; display:block; width:100%; height:720px;"></iframe>
             </div>
             <p style="margin:16px 0 0; font-size:13px; color:var(--charbon-300);">Le calendrier ne s’affiche pas&nbsp;? <a href="${SITE.booking}" target="_blank" rel="noopener" data-booking>Ouvrez-le dans un nouvel onglet</a>.</p>
           </div>
