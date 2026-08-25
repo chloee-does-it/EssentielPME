@@ -88,13 +88,18 @@
   });
 
   /* ---------------- Prise de rendez-vous ----------------
-     La réservation se termine sur le calendrier de Google, hors du site :
-     le clic est donc le dernier signal mesurable ici. Il part sous un nom
-     distinct de lead-form_submission, une intention n'étant pas une
-     demande soumise ; à mapper en conversion dans GTM si voulu. */
+     Le calendrier Brevo Meetings vit dans un cadre servi par meet.brevo.com :
+     la page ne peut pas voir ce qui s'y passe (cross-origin), et Brevo ne
+     propose ni suivi GTM de la confirmation ni redirection après réservation.
+     Deux signaux sont donc émis d'ici :
+     - booking_click sur le lien de secours (intention, pas une réservation) ;
+     - brevo_booking_submitted SI le cadre publie un postMessage de
+       confirmation. Non documenté chez Brevo : à valider en réservant pour
+       vrai avec ?epme_debug=1, chaque message du cadre s'affiche en console.
+       Si rien n'y apparaît, le cadre n'expose rien et il n'existe aucune
+       solution côté page. */
   function initBooking() {
     var links = document.querySelectorAll('[data-booking]');
-    if (!links.length) return;
     Array.prototype.forEach.call(links, function (a) {
       a.addEventListener('click', function () {
         if (!window.dataLayer) return;
@@ -106,6 +111,28 @@
         lpDebug('Clic de réservation envoyé au dataLayer');
       });
     });
+
+    if (!document.querySelector('iframe[src*="meet.brevo.com"]')) return;
+    var bookingSent = false;
+    window.addEventListener('message', function (e) {
+      var host = '';
+      try { host = new URL(e.origin).hostname; } catch (err) { return; }
+      if (!/(^|\.)brevo\.com$/.test(host)) return;
+      var d;
+      try { d = typeof e.data === 'string' ? e.data : JSON.stringify(e.data); } catch (err) { d = ''; }
+      lpDebug('[Message du cadre Brevo]', d.slice(0, 500));
+      if (bookingSent || !/confirm|booked|success|scheduled/i.test(d)) return;
+      bookingSent = true;
+      window.dataLayer = window.dataLayer || [];
+      // Pas de données brutes dans l'événement : le message peut contenir
+      // les coordonnées de la personne, qui n'ont rien à faire dans GA4.
+      window.dataLayer.push({
+        event: 'brevo_booking_submitted',
+        booking_page: 'essentielpme',
+        page_language: EN ? 'en' : 'fr',
+      });
+      lpDebug('Confirmation de réservation détectée → brevo_booking_submitted');
+    }, false);
   }
 
   /* Traces de diagnostic, visibles seulement en mode DEBUG ou avec
