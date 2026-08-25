@@ -14,14 +14,18 @@ import { DICT, META_EN, norm } from './i18n-dict.mjs';
 
 const GTM_ID = 'GTM-NWFC4HHZ';
 
+/* GTM chargé via dat.essentielpme.com (tagging côté serveur) : le code du
+   chargeur vient tel quel de l'interface GTM, ne pas le modifier. Le réglage
+   par défaut du Consent Mode doit rester AVANT le chargeur, sinon les tags
+   partent avant de connaître l'état de consentement. */
 const GTM_HEAD = `  <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
   gtag('consent', 'default', {ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'denied'});</script>
   <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');</script>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://dat.essentielpme.com/66wtexrcmh.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','dmjkrd5=AQleNSwoWTk%2FKyBGMC0uUR5QUVxJQxAZVQgQAR0LAB4NARMfHUsXGAU%3D');</script>
   <!-- End Google Tag Manager -->`;
 
 const GTM_NOSCRIPT = `<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://dat.essentielpme.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->`;
 
 /* `inline` produit la variante non bloquante utilisée sur les landing pages :
