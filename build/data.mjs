@@ -9,6 +9,8 @@ export const SITE = {
   phone: '1-844-763-3832',
   phoneIntl: '+18447633832',
   location: 'Québec, QC',
+  booking: 'https://calendar.app.google/pXr3yLkroT65qT9aA',
+  bookingEmbed: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0xjxkbQBy4ctc9QxV6xIxkzPfBwv9Q0Rt4OXJC_vqlR0Hlaf91NwrbECp_1FkJBFOij7_zzLty?gv=true',
   social: {
     facebook: 'https://www.facebook.com/profile.php?id=61591838577895',
     instagram: 'https://www.instagram.com/essentielpme',

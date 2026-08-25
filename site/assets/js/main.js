@@ -76,6 +76,7 @@
     // avant qu'un événement de conversion soit poussé, sinon les tags
     // publicitaires sont bloqués au moment où ils comptent le plus.
     initConsent();
+    initBooking();
     initMobileMenu();
     initFaq();
     initContactForm();
@@ -85,6 +86,27 @@
     initAnchorScroll();
     initPlatformModals();
   });
+
+  /* ---------------- Prise de rendez-vous ----------------
+     La réservation se termine sur le calendrier de Google, hors du site :
+     le clic est donc le dernier signal mesurable ici. Il part sous un nom
+     distinct de lead-form_submission, une intention n'étant pas une
+     demande soumise ; à mapper en conversion dans GTM si voulu. */
+  function initBooking() {
+    var links = document.querySelectorAll('[data-booking]');
+    if (!links.length) return;
+    Array.prototype.forEach.call(links, function (a) {
+      a.addEventListener('click', function () {
+        if (!window.dataLayer) return;
+        window.dataLayer.push({
+          event: 'booking_click',
+          form_id: 'contact-booking',
+          page_language: EN ? 'en' : 'fr',
+        });
+        lpDebug('Clic de réservation envoyé au dataLayer');
+      });
+    });
+  }
 
   /* Traces de diagnostic, visibles seulement en mode DEBUG ou avec
      ?epme_debug=1 dans l'URL. Sert à valider un envoi Brevo sans deviner. */

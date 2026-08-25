@@ -860,3 +860,23 @@ Object.assign(DICT, {
   'En soumettant ce formulaire, vous acceptez notre': 'By submitting this form, you accept our',
   '. Essentiel PME est un service de Solutions SuperQuanti inc., 6000, boul. de Rome, bureau 300, Brossard (Québec) J4Y 0B6.': '. SMB Essentials is a service of Solutions SuperQuanti Inc., 6000 Rome Blvd., Suite 300, Brossard, Québec J4Y 0B6.',
 });
+
+/* Page de contact : prise de rendez-vous */
+Object.assign(DICT, {
+  'RENDEZ-VOUS': 'BOOK A CALL',
+  'Réservez votre appel découverte': 'Book your discovery call',
+  'Choisissez le moment qui vous convient et parlons de votre entreprise. Sans engagement.': 'Pick a time that suits you and let’s talk about your business. No commitment.',
+  'Un appel avec un humain pour comprendre vos objectifs et vous dire franchement si on peut vous aider. Aucune pression, aucun engagement.': 'A call with a real person to understand your goals and tell you honestly whether we can help. No pressure, no commitment.',
+  'On écoute vos objectifs et votre réalité de PME.': 'We listen to your goals and the reality of running a small business.',
+  'On regarde ce qui fonctionne déjà dans votre secteur.': 'We look at what already works in your industry.',
+  'On vous dit clairement si la publicité en ligne est le bon investissement pour vous.': 'We tell you plainly whether online advertising is the right investment for you.',
+  'Réserver mon appel →': 'Book my call →',
+  'Le calendrier s\'ouvre dans un nouvel onglet.': 'The calendar opens in a new tab.',
+  'Vous préférez nous joindre directement ?': 'Prefer to reach us directly?',
+  'Écrivez-nous ou appelez-nous. Une réponse d\'un humain dans un jour ouvrable.': 'Write or call us. A reply from a real person within one business day.',
+});
+
+Object.assign(DICT, {
+  "Le calendrier ne s'affiche pas ?": "Calendar not showing?",
+  'Ouvrez-le dans un nouvel onglet': 'Open it in a new tab',
+});
