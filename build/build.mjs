@@ -1845,6 +1845,45 @@ ${consentUI('/', true)}
 `;
 }
 
+/* Page de remerciement du formulaire de contact et de la prise de rendez-vous.
+   Sert de destination de redirection à Brevo : c'est son chargement qui marque
+   la conversion, la soumission se faisant chez Brevo et non sur le site.
+   Hors index et hors sitemap, comme les pages merci des guides. */
+function merciContactPage() {
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+${lpHead('Merci, votre demande est bien reçue | Essentiel PME', 'Votre demande a été transmise à l’équipe d’Essentiel PME.')}
+</head>
+<body>
+${GTM_NOSCRIPT}
+<div class="we-page lp-merci-page" data-form-id="contact">
+${lpHeader(false)}
+
+  <section class="lp-merci-hero">
+    <div class="lp-hero-blob"></div>
+    <div class="lp-merci-wrap">
+      <div class="lp-merci-card">
+        <div class="lp-merci-check"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <h1>C'est noté&nbsp;!</h1>
+        <p class="lp-merci-text">Merci<span id="merci-prenom"></span>&nbsp;! Votre demande est entre les mains d'un humain de notre équipe. Vous aurez une réponse dans un jour ouvrable.</p>
+        <p class="lp-merci-text" style="font-size:15px; color:var(--charbon-500);">Une question pressante&nbsp;? Écrivez-nous à <a href="mailto:${SITE.email}">${SITE.email}</a> ou appelez le <a href="tel:${SITE.phoneIntl}">${SITE.phone}</a>.</p>
+        <a href="/publicite-en-ligne/" class="btn btn-primary btn-lg">Lire notre guide de la publicité en ligne →</a>
+        <p class="lp-merci-back">Ou <a href="/">retournez à l'accueil</a> pour découvrir ce qu'Essentiel PME peut faire pour vous.</p>
+      </div>
+    </div>
+  </section>
+
+${lpFooter}
+</div>
+${consentUI('/', true)}
+<script src="/assets/js/config.js"></script>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
+`;
+}
+
 function merciPage(g) {
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -2143,6 +2182,14 @@ for (const g of GUIDES) {
     writeFileSync(join(OUT, p), html);
     console.log('wrote', p, '(landing noindex)');
   }
+}
+
+/* Remerciement du contact et des rendez-vous : destination de redirection Brevo */
+{
+  const p = 'merci/contact/index.html';
+  mkdirSync(dirname(join(OUT, p)), { recursive: true });
+  writeFileSync(join(OUT, p), merciContactPage());
+  console.log('wrote', p, '(merci contact, noindex)');
 }
 
 const sitemapPaths = pages

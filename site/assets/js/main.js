@@ -271,18 +271,20 @@
   function initMerci() {
     var page = document.querySelector('.lp-merci-page');
     if (!page) return;
+    // Les pages de guides portent data-guide, celle du contact data-form-id
     var slug = page.getAttribute('data-guide') || '';
+    var formId = page.getAttribute('data-form-id') || ('guide-' + slug);
     try {
       var prenom = new URLSearchParams(location.search).get('prenom');
       var span = document.getElementById('merci-prenom');
       if (span && prenom) span.textContent = ' ' + prenom.slice(0, 60);
     } catch (e) {}
     // Conversion : une seule fois par session et par guide
-    var key = 'epme_lead_' + slug;
+    var key = 'epme_lead_' + formId;
     var already = false;
     try { already = sessionStorage.getItem(key) === '1'; } catch (e) {}
     if (!already && window.dataLayer) {
-      window.dataLayer.push({ event: 'lead-form_submission', form_id: 'guide-' + slug, page_language: 'fr' });
+      window.dataLayer.push({ event: 'lead-form_submission', form_id: formId, page_language: 'fr' });
       try { sessionStorage.setItem(key, '1'); } catch (e) {}
     }
   }
