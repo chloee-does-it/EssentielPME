@@ -17,7 +17,7 @@ Version adaptée de la maquette pour être collée dans un **bloc de code** Squa
   conflit avec les styles du site Squarespace (et inversement).
 - **Image héro externalisée** : elle était intégrée en base64 (1,9 Mo, trop lourd pour
   un bloc de code). Elle est maintenant un JPEG optimisé de 181 Ko à héberger sur
-  Squarespace ; le code contient le jeton `HERO_IMAGE_URL` à remplacer par son URL.
+  Squarespace ; le code pointe maintenant directement vers le fichier `herosoiree.jpg` hébergé sur Squarespace.
 - **Pleine largeur** : la page « sort » des marges de la zone de contenu Squarespace
   pour occuper toute la largeur de l'écran.
 - Le logo (2 occurrences) reste intégré en base64 : aucun fichier à gérer pour lui.
