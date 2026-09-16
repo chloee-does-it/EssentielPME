@@ -5,6 +5,7 @@
   "engines": { "node": "22.x" },
   "scripts": {
     "build": "node build/build.mjs",
-    "build:staging": "node build/staging.mjs"
+    "build:staging": "node build/staging.mjs",
+    "test:booking": "node --test booking/schedule.test.mjs"
   }
 }
