@@ -9,6 +9,7 @@ import { bookingPage } from '../booking/pages.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const out = join(root, '_staging');
+const connected=process.env.BOOKING_CONNECTED==='1';
 mkdirSync(out, { recursive: true });
 cpSync(join(root, 'site'), out, { recursive: true });
 mkdirSync(join(out, 'assets/booking'), { recursive: true });
@@ -34,7 +35,7 @@ const pages = walk(out).filter(path => path.endsWith('.html'));
 for (const path of pages) {
   let html = readFileSync(path, 'utf8');
   const en = /<html[^>]*lang="en(?:-[^"]*)?"/i.test(html);
-  const label = en
+  const label = connected ? (en ? 'Private staging — test bookings send real calendar invitations.' : 'Staging privé — les rendez-vous test envoient de vraies invitations.') : en
     ? 'Test environment — no real bookings or messages are sent.'
     : 'Environnement de test — aucun rendez-vous ni message réel ne sera envoyé.';
   const bookingPath = en ? '/en/book/' : '/rendez-vous/';
@@ -59,6 +60,7 @@ for (const path of pages) {
 // remain blocked and all network connections are restricted to this origin.
 writeFileSync(join(out, 'assets/js/staging-guard.js'), `
 window.EPME_STAGING = true;
+window.EPME_BOOKING_CONNECTED = ${connected};
 window.addEventListener('submit', function (event) {
   if (event.target.matches('form[data-demo-booking]')) return;
   event.preventDefault();
@@ -72,7 +74,7 @@ window.addEventListener('submit', function (event) {
 writeFileSync(join(out, 'assets/js/config.js'), 'window.EPME_LP = { DEBUG: false };\n');
 writeFileSync(join(out, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
 writeFileSync(join(out, 'staging-status.json'), JSON.stringify({
-  environment: 'staging', bookingMode: 'demo',
+  environment: 'staging', bookingMode: connected?'connected':'demo',
   indexing: false, productionIntegrations: false, pages: pages.length
 }, null, 2) + '\n');
 console.log(`Staging ready: ${pages.length} noindex pages; production integrations disabled.`);

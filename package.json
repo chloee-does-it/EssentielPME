@@ -2,10 +2,18 @@
   "name": "essentielpme-site",
   "version": "1.0.0",
   "private": true,
-  "engines": { "node": "22.x" },
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "build": "node build/build.mjs",
     "build:staging": "node build/staging.mjs",
-    "test:booking": "node --test booking/schedule.test.mjs"
+    "test:booking": "node --test booking/schedule.test.mjs booking/server/*.test.mjs",
+    "build:connected": "BOOKING_CONNECTED=1 node build/staging.mjs",
+    "start:staging": "node booking/server/main.mjs"
+  },
+  "dependencies": {
+    "@google-cloud/firestore": "9.1.0",
+    "google-auth-library": "11.1.0"
   }
 }

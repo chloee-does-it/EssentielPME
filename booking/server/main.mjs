@@ -1,0 +1,11 @@
+import {config,vault} from './security.mjs';
+import {Store} from './store.mjs';
+import {GoogleCalendar} from './google.mjs';
+import {BookingService} from './service.mjs';
+import {makeServer} from './http.mjs';
+const settings=config(),store=new Store(settings.credentials);
+const calendar=new GoogleCalendar(settings,store,vault(settings.encryptionKey));
+const service=new BookingService({store,calendar,allowedEmails:settings.allowedEmails});
+const server=makeServer({config:settings,store,calendar,service});
+server.listen(settings.port,'0.0.0.0',()=>console.log('Protected staging server ready'));
+process.on('SIGTERM',()=>server.close(()=>process.exit(0)));

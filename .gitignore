@@ -3,3 +3,6 @@ _staging/
 .env
 .env.*
 !.env.example
+.secrets/
+client_secret_*.json
+essentielpme-reservations-*.json
