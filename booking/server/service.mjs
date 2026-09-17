@@ -1,5 +1,6 @@
 import {RULES,slots,validGuest} from '../schedule.mjs';
 import {PublicError,hash,equal} from './security.mjs';
+import {brevoJob} from './brevo.mjs';
 
 const idPattern=/^[a-f0-9]{48}$/;
 const keyPattern=/^[a-zA-Z0-9_-]{20,100}$/;
@@ -11,7 +12,7 @@ export function cleanGuest(input) {
   return guest;
 }
 export class BookingService {
-  constructor({store,calendar,allowedEmails,now=()=>Date.now()}) {Object.assign(this,{store,calendar,allowedEmails,now});}
+  constructor({store,calendar,allowedEmails,brevo=null,now=()=>Date.now()}) {Object.assign(this,{store,calendar,allowedEmails,brevo,now});}
   async get(id,token) {
     if(!idPattern.test(id||''))throw new PublicError('not_found',404);
     const record=await this.store.get('booking-'+id);
@@ -71,9 +72,18 @@ export class BookingService {
       } else record.meet=null;
       await this.store.atomic(async tx=>{
         const op=await tx.get('op-'+opId),lock=await tx.get('lock');
+        const tail=this.brevo?await tx.get('brevo-tail'):null;
         if(lock?.operation!==opId)throw new Error('Lost operation ownership');
         tx.put('booking-'+id,record);tx.put('op-'+opId,{...op,status:'done'});tx.put('lock',{operation:null});
+        if(this.brevo){
+          const outboxId='brevo-'+opId;
+          tx.put(outboxId,brevoJob(action,record,opId,tail?.id||null));
+          tx.put('brevo-tail',{id:outboxId});
+        }
       });
+      // Delivery is independent of the Google confirmation and durably queued.
+      // Never turn a confirmed calendar write into a failure due to Brevo.
+      try{this.brevo?.kick();}catch{console.warn('brevo_sync_pending');}
       return {record};
     } catch(error) {
       // A timeout/5xx after dispatch may have created the event. Keep the lock and

@@ -104,3 +104,46 @@ at 10:43:57 UTC on 2026-09-17, deployment
 `bookingMode: demo`; the production contact page also returned HTTP 200.
 The proposed service's exact resource price was verified in the DigitalOcean UI:
 USD 5.00/month, 512 MB, one shared CPU, one container, 40 GB bandwidth.
+
+## Connected server deployed — 2026-09-17 10:48:58 UTC
+
+After explicit approval of all four secrets and the test recipient, deployment
+`1233b415-da0e-4ea4-ad30-2b1dc6e84c83` went live with source commit `54440fb`.
+One `basic-xxs` web service now replaces the static component. Four secrets were
+provided as runtime-only SECRET variables; the test-email allowlist contains only
+`benoit.arlabosse@superquanti.com`. No secrets were committed to Git.
+
+Verified remotely: `/healthz` 200, unauthenticated booking page 303 to `/login`,
+API status 401, private-file request redirected to login, and noindex headers.
+Browser login succeeded, Firestore read succeeded, and the UI accurately reported
+that the calendar was not yet connected. The Google OAuth flow opens successfully
+and is handed to the user to sign in as `info@superquanti.com` and approve consent.
+No real invitation, calendar connection or end-to-end booking is claimed yet.
+
+## Real staging verification — 2026-09-17 11:04 UTC
+
+This section supersedes the earlier historical not-connected status above.
+The user completed Google consent for `info@superquanti.com`. The real browser
+flow created one test event, generated a Google Meet link and automatically
+displayed confirmation without a Proceed button. The authorized test recipient
+received the invitation at 10:56:26 UTC.
+
+The same event was moved from September 18 at 11:00 to September 21 at 09:00
+(America/Toronto); the calendar connector confirmed the unchanged event ID and
+updated time. The updated invitation was received at 10:57:56 UTC. This test
+exposed a same-fragment navigation bug: the backend move succeeded but the UI
+remained on the pending form. Commit `f801091` renders the saved confirmation
+directly on reschedule. Fourteen automated tests and the connected build passed.
+DigitalOcean deployment `0159f078-251e-4b02-a20a-9773ef0ac469` went live at
+11:00:26 UTC. A second real move back to September 18 at 11:00 verified that
+confirmation now updates automatically; its email arrived at 11:02:50 UTC.
+
+The test event was then cancelled through the booking UI. Cancellation
+confirmation displayed successfully, the calendar search returned no active
+matching event, the cancellation email arrived at 11:03:20 UTC, and a separate
+booking page showed the September 18 11:00 slot available again. No active test
+appointment remains. No management tokens or credentials are recorded here.
+
+Scope remains private staging with one authorized test recipient. Production
+was not modified. Public launch, reminder delivery, multiple-calendar rules,
+and production operational/privacy readiness are not covered by this test.

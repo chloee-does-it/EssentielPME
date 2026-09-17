@@ -49,7 +49,10 @@ export function makeServer({config,store,calendar,service,staticRoot=fileURLToPa
       }
       if(path==='/setup'&&req.method==='GET') {
         const host=await store.get('host');
-        return send(200,page('Connexion du calendrier',`<p>Calendrier prévu : <strong>${htmlEscape(config.host)}</strong>.</p><p>${host?.email===config.host?'Calendrier connecté.':'Calendrier non connecté.'}</p><form method="post" action="/api/booking/google/start"><input type="hidden" name="csrf" value="${session.csrf}"><button>Autoriser Google Calendar</button></form><p><a href="/rendez-vous/">Tester la réservation</a></p>`),'text/html; charset=utf-8');
+        const jobs=config.brevoApiKey?await store.brevoJobs():[];
+        const blocked=jobs.filter(j=>['blocked','event_sending'].includes(j.status)).length;
+        const brevoStatus=config.brevoApiKey?`Clé configurée. ${jobs.length} synchronisation(s) non terminée(s), dont ${blocked} à vérifier. Les champs et événements sont réservés au staging.`:'Non configuré : aucune donnée transmise à Brevo.';
+        return send(200,page('Connexions du staging',`<p>Calendrier prévu : <strong>${htmlEscape(config.host)}</strong>.</p><p>${host?.email===config.host?'Calendrier connecté.':'Calendrier non connecté.'}</p><form method="post" action="/api/booking/google/start"><input type="hidden" name="csrf" value="${session.csrf}"><button>Autoriser Google Calendar</button></form><h2>Brevo</h2><p>${brevoStatus}</p><p>Aucune inscription à une liste marketing et aucun changement du consentement.</p><p><a href="/rendez-vous/">Tester la réservation</a></p>`),'text/html; charset=utf-8');
       }
       if(path==='/api/booking/google/start'&&req.method==='POST') {
         const fields=new URLSearchParams(await body(req));

@@ -37,6 +37,7 @@ export function config(env=process.env) {
   if(host!=='info@superquanti.com') throw new Error('Unexpected host');
   return {origin:origin.origin, password:env.STAGING_PASSWORD, encryptionKey:env.TOKEN_ENCRYPTION_KEY,
     clientId:env.GOOGLE_CLIENT_ID, clientSecret:env.GOOGLE_CLIENT_SECRET, credentials, host,
+    brevoApiKey:env.BREVO_API_KEY||null,
     allowedEmails:(env.BOOKING_TEST_EMAILS||'').split(',').map(x=>x.trim().toLowerCase()).filter(Boolean),
     port:Number(env.PORT||8080), secure:origin.protocol==='https:'};
 }

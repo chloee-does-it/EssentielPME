@@ -4,11 +4,13 @@ import {randomBytes} from 'node:crypto';
 import {BookingService,cleanGuest,publicRecord} from './service.mjs';
 import {vault,hash,config} from './security.mjs';
 import {makeServer} from './http.mjs';
+import {BrevoSync} from './brevo.mjs';
 
 class MemoryStore {
   records=new Map();queue=Promise.resolve();
   async get(id){return structuredClone(this.records.get(id)||null);}
   async put(id,data){this.records.set(id,structuredClone(data));}
+  async brevoJobs(){return [...this.records].filter(([,j])=>j.kind==='brevo'&&j.status!=='done').map(([id,j])=>({id,...structuredClone(j)}));}
   async atomic(fn){
     const task=this.queue.then(async()=>{
       const writes=[];const result=await fn({get:id=>this.get(id),put:(id,value)=>writes.push([id,value])});
@@ -57,6 +59,27 @@ test('create, idempotent retry, private read, reschedule and cancel',async()=>{
 test('different payload with same key is rejected',async()=>{
   const {service,input}=fixture();await service.perform('create',input,'create-idempotency-key-1234');
   await assert.rejects(service.perform('create',{...input,start:'2026-09-18T14:00:00.000Z'},'create-idempotency-key-1234'),{code:'idempotency_conflict'});
+});
+test('Brevo outbox is atomic, ordered, deduplicated and independent of delivery',async()=>{
+  const {service,input,store}=fixture();let kicks=0;
+  service.brevo={kick(){kicks++;throw Error('Brevo unavailable');}};
+  const first=await service.perform('create',input,'create-idempotency-key-1234');
+  await service.perform('create',input,'create-idempotency-key-1234');
+  assert.equal((await store.brevoJobs()).length,1);assert.equal(first.record.status,'confirmed');assert.equal(kicks,1);
+  await service.perform('reschedule',{id:first.record.id,token:input.token,start:'2026-09-18T14:00:00.000Z'},'move-idempotency-key-123456');
+  await service.perform('cancel',{id:first.record.id,token:input.token},'cancel-idempotency-key-1234');
+  const jobs=await store.brevoJobs();assert.equal(jobs.length,3);
+  assert.equal(jobs[1].previous,jobs[0].id);assert.equal(jobs[2].previous,jobs[1].id);
+  const delivered=[];
+  const sync=new BrevoSync({store,allowedEmails:service.allowedEmails,client:{contact:async()=>{},event:async e=>delivered.push(e.event_name)}});
+  await sync.deliver(jobs[2].id);assert.equal(delivered.length,0);
+  await sync.drain();assert.deepEqual(delivered,['epme_staging_booking_created','epme_staging_booking_rescheduled','epme_staging_booking_cancelled']);
+  await sync.drain();assert.equal(delivered.length,3);
+});
+test('failed calendar mutations never enqueue a Brevo event',async()=>{
+  const {service,input,store}=fixture();service.brevo={kick(){}};
+  await assert.rejects(service.perform('create',{...input,start:'2026-09-17T11:00:00.000Z'},'create-idempotency-key-1111'));
+  assert.equal((await store.brevoJobs()).length,0);
 });
 test('concurrent requests on a single calendar cannot double-book',async()=>{
   const {service,input,calendar}=fixture();

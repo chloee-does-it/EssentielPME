@@ -22,7 +22,7 @@ else {
 }
 chmodSync(settingsPath,0o600);
 const spec=JSON.parse(readFileSync(path('.do/app-connected.json'),'utf8'));
-spec.services[0].envs=Object.entries(settings).map(([key,value])=>({key,value,scope:'RUN_TIME',type:['STAGING_PASSWORD','TOKEN_ENCRYPTION_KEY','GOOGLE_CLIENT_SECRET','GOOGLE_SERVICE_ACCOUNT_JSON'].includes(key)?'SECRET':'GENERAL'}));
+spec.services[0].envs=Object.entries(settings).map(([key,value])=>({key,value,scope:'RUN_TIME',type:['STAGING_PASSWORD','TOKEN_ENCRYPTION_KEY','GOOGLE_CLIENT_SECRET','GOOGLE_SERVICE_ACCOUNT_JSON','BREVO_API_KEY'].includes(key)?'SECRET':'GENERAL'}));
 const specPath=path('.secrets/app-connected.yaml');
 writeFileSync(specPath,JSON.stringify(spec,null,2)+'\n',{mode:0o600});chmodSync(specPath,0o600);
 console.log('Private runtime configuration and deployment spec prepared; no secrets logged.');

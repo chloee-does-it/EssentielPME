@@ -6,6 +6,11 @@ export class Store {
   }
   async get(id) { return (await this.collection.doc(id).get()).data()||null; }
   async put(id,value) { await this.collection.doc(id).set(value); }
+  async brevoJobs() {
+    const snapshot=await this.collection.where('kind','==','brevo').get();
+    return snapshot.docs.map(doc=>({id:doc.id,...doc.data()}))
+      .filter(job=>job.status!=='done').sort((a,b)=>a.createdAt.localeCompare(b.createdAt));
+  }
   async atomic(fn) {
     return this.db.runTransaction(tx=>fn({
       get:async id=>(await tx.get(this.collection.doc(id))).data()||null,
