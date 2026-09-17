@@ -110,6 +110,12 @@ function details(){
       if(connected){
         if(!managementToken)managementToken=crypto.randomUUID()+crypto.randomUUID();
         const data=await mutate(editing?'reservations/'+editing+'/reschedule':'reservations',{start:selectedSlot.start,guest:draft,zone,locale});
+        // A move keeps the same management URL (including its fragment), so
+        // assigning that URL does not reload the page. Render the saved result.
+        if(root.dataset.view==='confirmation'){
+          editing=null;attempt=null;busy=false;
+          await result(data.record.id);focusHeading();return;
+        }
         window.location.assign(confirmationPath+'#ref='+data.record.id+'&token='+encodeURIComponent(managementToken));return;
       }
       const all=records();if(storageError)throw Error('storage');
