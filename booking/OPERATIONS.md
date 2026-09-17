@@ -13,6 +13,10 @@ the production DigitalOcean application must remain unchanged.
 - Secret environment values are runtime-only, type `SECRET`; never commit the
   generated spec. Keep `TOKEN_ENCRYPTION_KEY` unchanged across deployments or the
   existing Google refresh token cannot be decrypted.
+- DigitalOcean's **Upload File → Replace applies and deploys immediately**. Do not
+  use it to preview a draft. Verify code is pushed, all runtime settings approved
+  and present, and resource pricing checked before clicking Replace.
+- `.do/app-static-recovery.yaml` restores the last verified static-only topology.
 - `/healthz` is public and reveals no credentials. Every other route requires
   the staging login code. `/setup` starts organizer consent for
   `info@superquanti.com` only. Client input can never choose the organizer/calendar.

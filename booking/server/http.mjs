@@ -26,6 +26,7 @@ export function makeServer({config,store,calendar,service,staticRoot=fileURLToPa
       // Native form POSTs need a non-null Origin. Other pages, especially the
       // OAuth callback and private management pages, disclose no referrer.
       if(path==='/login'||path==='/setup')headers['Referrer-Policy']='same-origin';
+      if(path==='/setup'||path==='/api/booking/google/start')headers['Content-Security-Policy']=headers['Content-Security-Policy'].replace("form-action 'self'","form-action 'self' https://accounts.google.com");
       if(path==='/healthz'&&req.method==='GET')return send(200,{ok:true,environment:'staging'});
       // Single small staging instance: bounded in-memory limiter, never trusts XFF.
       const bucketKey=(req.socket.remoteAddress||'unknown')+':'+(path==='/login'?'login':'all');

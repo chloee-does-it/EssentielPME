@@ -92,3 +92,15 @@ until operator reconciliation. See OPERATIONS.md for limits and recovery rules.
 DigitalOcean still serves the static demo. A non-secret one-service deployment
 spec is prepared; transfer of all four runtime secrets awaits explicit approval.
 Google host consent and end-to-end real booking verification remain outstanding.
+
+The server implementation was pushed to `staging` as `6f587f8`. During deployment
+preparation, DigitalOcean's upload **Replace** button applied a non-secret spec
+immediately (it is NOT a draft-only action). Deployment `9a0ad77b-94b1-4479-8993-37132403fb09`
+failed because it used the prior commit without `build:connected`. The subsequent
+new-code build passed; its incomplete deployment was intentionally canceled.
+No secrets were transmitted. The static topology was restored and verified live
+at 10:43:57 UTC on 2026-09-17, deployment
+`467b28fa-b125-4c23-8641-4428197429b3`. Public staging status returned HTTP 200,
+`bookingMode: demo`; the production contact page also returned HTTP 200.
+The proposed service's exact resource price was verified in the DigitalOcean UI:
+USD 5.00/month, 512 MB, one shared CPU, one container, 40 GB bandwidth.
