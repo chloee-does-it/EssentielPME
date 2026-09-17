@@ -311,7 +311,12 @@
     var already = false;
     try { already = sessionStorage.getItem(key) === '1'; } catch (e) {}
     if (!already && window.dataLayer) {
-      window.dataLayer.push({ event: 'lead-form_submission', form_id: formId, page_language: 'fr' });
+      window.dataLayer.push({
+        event: 'lead-form_submission',
+        event_id: crypto.randomUUID(),
+        form_id: formId,
+        page_language: document.documentElement.lang === 'en' ? 'en' : 'fr',
+      });
       try { sessionStorage.setItem(key, '1'); } catch (e) {}
     }
   }
@@ -523,6 +528,7 @@
           if (window.dataLayer) {
             var dlEvent = {
               event: 'lead-form_submission',
+              event_id: crypto.randomUUID(),
               form_id: 'contact',
               form_interest: payload.interest,
               page_language: EN ? 'en' : 'fr',

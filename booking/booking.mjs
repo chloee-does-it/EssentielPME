@@ -1,4 +1,5 @@
 import {slots,dateKey,validGuest,RULES} from './schedule.mjs';
+import {bookingTrackingEvent} from './tracking.mjs';
 
 const root=document.querySelector('[data-booking-app]');
 const en=document.documentElement.lang.startsWith('en');
@@ -30,6 +31,28 @@ const t=en?{
 };
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const connected=window.EPME_BOOKING_CONNECTED===true;
+const trackingEnvironment=window.EPME_STAGING===true?'staging':'production';
+const TRACKING_PENDING='epme-booking-tracking-pending-v1';
+function eventId(){return crypto.randomUUID();}
+function track(kind,id=eventId()){
+  window.dataLayer=window.dataLayer||[];
+  window.dataLayer.push(bookingTrackingEvent(kind,{locale,environment:trackingEnvironment,eventId:id}));
+}
+function trackOnce(kind){
+  const key='epme-booking-track-'+kind;
+  try{if(sessionStorage.getItem(key)==='1')return;sessionStorage.setItem(key,'1');}catch{}
+  track(kind);
+}
+function rememberConfirmation(id){
+  try{sessionStorage.setItem(TRACKING_PENDING,JSON.stringify({bookingId:id,eventId:eventId()}));}catch{}
+}
+function trackPendingConfirmation(record){
+  let pending=null;
+  try{pending=JSON.parse(sessionStorage.getItem(TRACKING_PENDING)||'null');}catch{}
+  if(!pending||pending.bookingId!==record.id||record.status!=='confirmed')return;
+  track('confirmed',pending.eventId);
+  try{sessionStorage.removeItem(TRACKING_PENDING);}catch{}
+}
 if(connected)Object.assign(t,en?{
   demo:'Connected staging',demoText:'Real Google Calendar availability. Invitations are sent only to approved test addresses.',
   privacy:'Required fields are marked *. Private staging: use only the approved test address. Your details are stored securely for this test.',
@@ -97,6 +120,7 @@ function calendar(){
   root.querySelectorAll('[data-slot]').forEach(el=>el.onclick=()=>{selectedSlot=available().find(s=>s.start===el.dataset.slot);if(!selectedSlot){start();error(t.unavailable);return;}details();focusHeading();});
 }
 function details(){
+  trackOnce('start');
   const field=(key,type='text',wide=false)=>`<label class="bk-field ${wide?'wide':''}">${t[key]}${['first','last','company','email'].includes(key)?' *':''}<input name="${key}" type="${type}" ${['first','last','company','email'].includes(key)?'required':''} maxlength="${key==='email'?254:key==='phone'?40:120}" autocomplete="${({first:'given-name',last:'family-name',email:'email',company:'organization',phone:'tel'})[key]}" value="${escape(draft[key]||'')}"></label>`;
   shell(1,`<button class="bk-back" type="button" data-back>${t.back}</button><h3 data-heading tabindex="-1">${t.details}</h3><div class="bk-selected">${longDate(selectedSlot.start)}<br>${time(selectedSlot.start)} – ${time(selectedSlot.end)} <span class="bk-small">(${zone.replaceAll('_',' ')})</span></div><form data-demo-booking><div class="bk-fields">${field('first')}${field('last')}${field('email','email',true)}${field('company','text',true)}${field('phone','tel',true)}<label class="bk-field wide">${t.message}<textarea name="message" maxlength="2000">${escape(draft.message||'')}</textarea></label></div><p class="bk-small">${t.privacy}</p><button type="submit" class="bk-primary">${t.submit}</button></form>`);
   const form=root.querySelector('form');
@@ -109,13 +133,15 @@ function details(){
     try{
       if(connected){
         if(!managementToken)managementToken=crypto.randomUUID()+crypto.randomUUID();
+        const action=editing?'rescheduled':'confirmed';
         const data=await mutate(editing?'reservations/'+editing+'/reschedule':'reservations',{start:selectedSlot.start,guest:draft,zone,locale});
         // A move keeps the same management URL (including its fragment), so
         // assigning that URL does not reload the page. Render the saved result.
         if(root.dataset.view==='confirmation'){
           editing=null;attempt=null;busy=false;
-          await result(data.record.id);focusHeading();return;
+          await result(data.record.id);track(action);focusHeading();return;
         }
+        rememberConfirmation(data.record.id);
         window.location.assign(confirmationPath+'#ref='+data.record.id+'&token='+encodeURIComponent(managementToken));return;
       }
       const all=records();if(storageError)throw Error('storage');
@@ -137,13 +163,17 @@ async function result(id){
     const locationRow=root.querySelectorAll('.bk-details p')[3];
     locationRow.innerHTML=`<strong>${t.where}</strong><br><a href="${escape(record.meet)}" target="_blank" rel="noopener noreferrer">Google Meet</a>`;
   }
+  trackPendingConfirmation(record);
   root.querySelector('[data-move]').onclick=async()=>{editing=record.id;draft=record.guest;attempt=null;await start();focusHeading();};
   root.querySelector('[data-cancel]').onclick=()=>{root.querySelector('[data-cancel-confirm]').hidden=false;root.querySelector('[data-keep]').focus();};
   root.querySelector('[data-keep]').onclick=()=>{root.querySelector('[data-cancel-confirm]').hidden=true;root.querySelector('[data-cancel]').focus();};
-  root.querySelector('[data-cancel-yes]').onclick=async()=>{if(busy)return;busy=true;try{if(connected)await mutate('reservations/'+id+'/cancel',{});else save(records().map(b=>b.id===id?{...b,status:'cancelled'}:b));await result(id);}catch(e){error(connected?e.message:t.storage);}finally{busy=false;}};
+  root.querySelector('[data-cancel-yes]').onclick=async()=>{if(busy)return;busy=true;try{if(connected)await mutate('reservations/'+id+'/cancel',{});else save(records().map(b=>b.id===id?{...b,status:'cancelled'}:b));await result(id);track('cancelled');}catch(e){error(connected?e.message:t.storage);}finally{busy=false;}};
 }
-if(root){
-  const params=new URLSearchParams(connected?location.hash.slice(1):location.search),id=params.get('ref');
+async function initBookingApp(){
+  trackOnce('view');
+  let fragment=window.EPME_BOOKING_FRAGMENT||location.hash.slice(1);
+  if(connected&&root.dataset.view==='confirmation'&&!fragment){try{fragment=sessionStorage.getItem('epme-booking-link-v1')||'';}catch{}}
+  const params=new URLSearchParams(connected?fragment:location.search),id=params.get('ref');
   managementToken=params.get('token')||'';
   if(connected){
     try{
@@ -152,4 +182,8 @@ if(root){
       else if(root.dataset.view==='confirmation')await result(id);else await start();
     }catch(e){shell(0,'');error(e.message);}
   }else if(root.dataset.view==='confirmation')result(id);else start();
+}
+if(root){
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initBookingApp,{once:true});
+  else void initBookingApp();
 }

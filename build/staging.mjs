@@ -13,7 +13,7 @@ const connected=process.env.BOOKING_CONNECTED==='1';
 mkdirSync(out, { recursive: true });
 cpSync(join(root, 'site'), out, { recursive: true });
 mkdirSync(join(out, 'assets/booking'), { recursive: true });
-for (const file of ['schedule.mjs', 'booking.mjs', 'booking.css']) {
+for (const file of ['schedule.mjs', 'tracking.mjs', 'booking.mjs', 'booking.css']) {
   cpSync(join(root, 'booking', file), join(out, 'assets/booking', file));
 }
 for (const [route, en, confirmation] of [
