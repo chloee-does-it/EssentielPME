@@ -8,7 +8,7 @@
   "scripts": {
     "build": "node build/build.mjs",
     "build:staging": "node build/staging.mjs",
-    "test:booking": "node --test booking/schedule.test.mjs booking/tracking.test.mjs booking/server/*.test.mjs",
+    "test:booking": "node --test booking/schedule.test.mjs booking/tracking.test.mjs booking/pages.test.mjs booking/site-bridge.test.mjs booking/server/*.test.mjs",
     "build:connected": "BOOKING_CONNECTED=1 node build/staging.mjs",
     "build:booking": "node build/booking.mjs",
     "start:staging": "node booking/server/main.mjs",

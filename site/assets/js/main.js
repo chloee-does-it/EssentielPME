@@ -112,6 +112,33 @@
       });
     });
 
+    // The custom booking iframe has no marketing tags or second consent
+    // banner. Only the parent page may forward its anonymous events to GTM,
+    // and only after both measurement and advertising were accepted here.
+    var bookingFrame = document.querySelector('iframe[src^="https://booking.essentielpme.com/"]');
+    if (bookingFrame) {
+      var receivedBookingEvents = Object.create(null);
+      window.addEventListener('message', function (e) {
+        if (e.origin !== 'https://booking.essentielpme.com' || e.source !== bookingFrame.contentWindow) return;
+        var d = e.data;
+        if (!d || typeof d !== 'object' || d.source !== 'epme-booking' || d.booking_environment !== 'production') return;
+        if (!/^(epme_booking_view|epme_booking_start|epme_booking_confirmed|epme_booking_rescheduled|epme_booking_cancelled)$/.test(d.event)) return;
+        if (typeof d.event_id !== 'string' || !/^[a-f0-9-]{36}$/i.test(d.event_id)) return;
+        if (receivedBookingEvents[d.event_id]) return;
+        var consent = getConsent();
+        if (!consent || consent.analytics !== true || consent.ads !== true) return;
+        receivedBookingEvents[d.event_id] = true;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: d.event,
+          event_id: d.event_id,
+          booking_type: 'discovery_call',
+          booking_language: d.booking_language === 'en' ? 'en' : 'fr',
+          booking_environment: 'production',
+        });
+      }, false);
+    }
+
     if (!document.querySelector('iframe[src*="meet.brevo.com"]')) return;
     var bookingSent = false;
     window.addEventListener('message', function (e) {
