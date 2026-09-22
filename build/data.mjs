@@ -9,10 +9,9 @@ export const SITE = {
   phone: '1-844-763-3832',
   phoneIntl: '+18447633832',
   location: 'Québec, QC',
-  /* Brevo Meetings plutôt que Google Calendar : chaque réservation crée ou
-     met à jour le contact directement dans le CRM, sans connecteur tiers. */
-  booking: 'https://meet.brevo.com/essentielpme/borderless?l=appel-essentielpme',
-  bookingEmbed: 'https://meet.brevo.com/essentielpme/borderless?l=appel-essentielpme',
+  /* Outil de réservation Essentiel PME, relié au calendrier de l’organisateur. */
+  booking: 'https://booking.essentielpme.com/rendez-vous/',
+  bookingEmbed: 'https://booking.essentielpme.com/rendez-vous/',
   social: {
     facebook: 'https://www.facebook.com/profile.php?id=61591838577895',
     instagram: 'https://www.instagram.com/essentielpme',

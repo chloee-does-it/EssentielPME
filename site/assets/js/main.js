@@ -214,6 +214,8 @@
       var prenom = fieldVal('prenom');
       var merci = (form.getAttribute('data-merci') || '/') + '?prenom=' + encodeURIComponent(prenom);
       var guide = form.getAttribute('data-guide') || '';
+      var conversionId = crypto.randomUUID();
+      try { sessionStorage.setItem('epme_lead_pending_guide-' + guide, conversionId); } catch (e) {}
       var debugging = isLpDebug();
       var done = false;
       function go() {
@@ -309,10 +311,23 @@
     // Conversion : une seule fois par session et par guide
     var key = 'epme_lead_' + formId;
     var already = false;
-    try { already = sessionStorage.getItem(key) === '1'; } catch (e) {}
-    if (!already && window.dataLayer) {
-      window.dataLayer.push({ event: 'lead-form_submission', form_id: formId, page_language: 'fr' });
-      try { sessionStorage.setItem(key, '1'); } catch (e) {}
+    var pendingKey = 'epme_lead_pending_' + formId;
+    var pendingId = '';
+    try {
+      already = sessionStorage.getItem(key) === '1';
+      pendingId = sessionStorage.getItem(pendingKey) || '';
+    } catch (e) {}
+    if (!already && pendingId && window.dataLayer) {
+      window.dataLayer.push({
+        event: 'lead-form_submission',
+        event_id: pendingId,
+        form_id: formId,
+        page_language: document.documentElement.lang === 'en' ? 'en' : 'fr',
+      });
+      try {
+        sessionStorage.setItem(key, '1');
+        sessionStorage.removeItem(pendingKey);
+      } catch (e) {}
     }
   }
 
@@ -523,6 +538,7 @@
           if (window.dataLayer) {
             var dlEvent = {
               event: 'lead-form_submission',
+              event_id: crypto.randomUUID(),
               form_id: 'contact',
               form_interest: payload.interest,
               page_language: EN ? 'en' : 'fr',

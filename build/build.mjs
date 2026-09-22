@@ -2140,6 +2140,7 @@ function toEnglish(html, pagePath) {
   for (const [fr, en] of Object.entries(EN_SLUGS)) {
     if (fr !== en) html = html.split(`href="/en/${fr}/`).join(`href="/en/${en}/`);
   }
+  html = html.split('https://booking.essentielpme.com/rendez-vous/').join('https://booking.essentielpme.com/en/book/');
 
   // 8. Restaurer les scripts
   html = html.replace(/@@SCRIPT(\d+)@@/g, (m, i) => guards[+i]);

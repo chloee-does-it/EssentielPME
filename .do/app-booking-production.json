@@ -1,0 +1,25 @@
+{
+  "name": "essentielpme-staging",
+  "region": "tor",
+  "features": ["buildpack-stack=ubuntu-22"],
+  "alerts": [{"rule":"DEPLOYMENT_FAILED"},{"rule":"DOMAIN_FAILED"}],
+  "ingress": {"rules":[{"component":{"name":"essentielpme-preview"},"match":{"authority":{"exact":""},"path":{"prefix":"/"}}}]},
+  "services": [{
+    "name": "essentielpme-preview",
+    "github": {"repo":"chloee-does-it/EssentielPME","branch":"main","deploy_on_push":true},
+    "source_dir": "/",
+    "environment_slug": "node-js",
+    "build_command": "npm run test:booking && npm run build:booking",
+    "run_command": "npm run start:booking",
+    "http_port": 8080,
+    "instance_count": 1,
+    "instance_size_slug": "basic-xxs",
+    "health_check": {"http_path":"/healthz"},
+    "envs": [
+      {"key":"BOOKING_ENVIRONMENT","scope":"RUN_TIME","value":"production"},
+      {"key":"BOOKING_ORIGIN","scope":"RUN_TIME","value":"https://booking.essentielpme.com"},
+      {"key":"BOOKING_COLLECTION","scope":"RUN_TIME","value":"booking-production"},
+      {"key":"BOOKING_MIGRATE_COLLECTION","scope":"RUN_TIME","value":"booking-staging"}
+    ]
+  }]
+}
