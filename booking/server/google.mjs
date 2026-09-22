@@ -58,8 +58,9 @@ export class GoogleCalendar {
   }
   async create(record,operation) {
     const manage=this.config.origin+(record.locale==='en-CA'?'/en/booking-confirmed/':'/merci/rendez-vous/')+'#ref='+record.id+'&token='+record.token;
-    const body={id:record.id,summary:'[TEST STAGING] Appel découverte — Essentiel PME',
-      description:`Réservation de test / Test booking\n${record.guest.first} ${record.guest.last} — ${record.guest.company}\n${record.guest.message||''}\nGérer / Manage: ${manage}`,
+    const staging=this.config.environment!=='production';
+    const body={id:record.id,summary:`${staging?'[TEST STAGING] ':''}Appel découverte — Essentiel PME`,
+      description:`${staging?'Réservation de test / Test booking':'Réservation en ligne / Online booking'}\n${record.guest.first} ${record.guest.last} — ${record.guest.company}\n${record.guest.message||''}\nGérer / Manage: ${manage}`,
       start:{dateTime:record.start,timeZone:RULES.zone},end:{dateTime:record.end,timeZone:RULES.zone},
       attendees:[{email:record.guest.email}],guestsCanModify:false,guestsCanInviteOthers:false,visibility:'private',
       conferenceData:{createRequest:{requestId:record.id,conferenceSolutionKey:{type:'hangoutsMeet'}}},

@@ -7,8 +7,8 @@ import {publicRecord} from './service.mjs';
 import {SCOPES} from './google.mjs';
 
 const htmlEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const page=(title,body)=>`<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${title} — Essentiel PME staging</title><style>body{font:18px system-ui;max-width:640px;margin:8vh auto;padding:24px;color:#302443}input,button{font:inherit;padding:12px;margin:8px 0}button{background:#4b2e83;color:white;border:0;border-radius:6px}label{display:block}</style><h1>${title}</h1>${body}</html>`;
-export function makeServer({config,store,calendar,service,staticRoot=fileURLToPath(new URL('../../_staging/',import.meta.url))}) {
+const page=(title,body)=>`<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${title} — Essentiel PME</title><style>body{font:18px system-ui;max-width:640px;margin:8vh auto;padding:24px;color:#302443}input,button{font:inherit;padding:12px;margin:8px 0}button{background:#4b2e83;color:white;border:0;border-radius:6px}label{display:block}</style><h1>${title}</h1>${body}</html>`;
+export function makeServer({config,store,calendar,service,staticRoot=fileURLToPath(new URL(config.production?'../../_booking/':'../../_staging/',import.meta.url))}) {
   const vault=makeVault(config.encryptionKey),rates=new Map();
   function cookie(name,value,age=43200) {return `${name}=${value}; HttpOnly; Path=/; SameSite=Lax; Max-Age=${age}${config.secure?'; Secure':''}`;}
   function readCookie(req,name) {try {return vault.open((req.headers.cookie||'').split(';').map(s=>s.trim()).find(s=>s.startsWith(name+'='))?.slice(name.length+1)||'');}catch{return null;}}
@@ -16,8 +16,10 @@ export function makeServer({config,store,calendar,service,staticRoot=fileURLToPa
     let value='';for await(const chunk of req){value+=chunk;if(Buffer.byteLength(value)>12000)throw new PublicError('request_too_large',413);}return value;
   }
   const server=createServer(async(req,res)=>{
-    const headers={'Cache-Control':'no-store','X-Robots-Tag':'noindex, nofollow, noarchive','Referrer-Policy':'no-referrer','X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY',
-      'Content-Security-Policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"};
+    const headers={'Cache-Control':'no-store','Referrer-Policy':'no-referrer','X-Content-Type-Options':'nosniff',
+      'Content-Security-Policy':config.production?"default-src 'self'; script-src 'self' 'unsafe-inline' https://dat.essentielpme.com https://connect.facebook.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://dat.essentielpme.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.facebook.com; frame-src https://dat.essentielpme.com; frame-ancestors 'self' https://www.essentielpme.com https://essentielpme.com; object-src 'none'; base-uri 'self'; form-action 'self'":
+        "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"};
+    if(!config.production){headers['X-Robots-Tag']='noindex, nofollow, noarchive';headers['X-Frame-Options']='DENY';}
     if(config.secure)headers['Strict-Transport-Security']='max-age=31536000';
     const send=(status,data,type='application/json; charset=utf-8',extra={})=>{res.writeHead(status,{...headers,'Content-Type':type,...extra});res.end(type.startsWith('application/json')?JSON.stringify(data):data);};
     const redirect=(url,cookies)=>send(303,'','text/plain',{Location:url,...(cookies?{'Set-Cookie':cookies}:{})});
@@ -26,33 +28,46 @@ export function makeServer({config,store,calendar,service,staticRoot=fileURLToPa
       // Native form POSTs need a non-null Origin. Other pages, especially the
       // OAuth callback and private management pages, disclose no referrer.
       if(path==='/login'||path==='/setup')headers['Referrer-Policy']='same-origin';
+      if(path.startsWith('/api/')||path==='/login'||path==='/setup')headers['X-Robots-Tag']='noindex, nofollow, noarchive';
       if(path==='/setup'||path==='/api/booking/google/start')headers['Content-Security-Policy']=headers['Content-Security-Policy'].replace("form-action 'self'","form-action 'self' https://accounts.google.com");
-      if(path==='/healthz'&&req.method==='GET')return send(200,{ok:true,environment:'staging'});
-      // Single small staging instance: bounded in-memory limiter, never trusts XFF.
-      const bucketKey=(req.socket.remoteAddress||'unknown')+':'+(path==='/login'?'login':'all');
-      const now=Date.now();if(rates.size>1000)rates.clear();
+      if(path==='/healthz'&&req.method==='GET')return send(200,{ok:true,environment:config.environment});
+      // DigitalOcean appends the trusted client hop to X-Forwarded-For.
+      const forwarded=String(req.headers['x-forwarded-for']||'').split(',').map(x=>x.trim()).filter(Boolean);
+      const address=config.production&&forwarded.length?forwarded.at(-1):(req.socket.remoteAddress||'unknown');
+      const group=path==='/login'?'login':path==='/api/booking/reservations'&&req.method==='POST'?'create':'all';
+      const windowMs=group==='create'?3600000:60000,limit=group==='login'?20:group==='create'?5:600;
+      const bucketKey=address+':'+group,now=Date.now();if(rates.size>5000)rates.clear();
       const bucket=rates.get(bucketKey)||{at:now,count:0};
-      if(now-bucket.at>60000){bucket.at=now;bucket.count=0;}bucket.count++;rates.set(bucketKey,bucket);
-      if(bucket.count>(path==='/login'?20:600))return send(429,{error:'rate_limited'},undefined,{'Retry-After':'60'});
+      if(now-bucket.at>windowMs){bucket.at=now;bucket.count=0;}bucket.count++;rates.set(bucketKey,bucket);
+      if(bucket.count>limit)return send(429,{error:'rate_limited'},undefined,{'Retry-After':String(Math.ceil(windowMs/1000))});
       if(req.method==='POST'&&req.headers.origin!==config.origin)throw new PublicError('origin_rejected',403);
       if(path==='/login') {
-        if(req.method==='GET')return send(200,page('Accès au staging',`<p>Environnement privé de test. Les réservations connectées envoient de vraies invitations aux seules adresses autorisées.</p><form method="post"><label>Code d’accès <input name="password" type="password" required autocomplete="current-password"></label><button>Ouvrir le staging</button></form>`),'text/html; charset=utf-8');
+        if(req.method==='GET')return send(200,page(config.production?'Administration des réservations':'Accès au staging',`<p>${config.production?'Accès réservé à la connexion du calendrier.':'Environnement privé de test. Les réservations connectées envoient de vraies invitations aux seules adresses autorisées.'}</p><form method="post"><label>Code d’accès <input name="password" type="password" required autocomplete="current-password"></label><button>Ouvrir</button></form>`),'text/html; charset=utf-8');
         if(req.method!=='POST')throw new PublicError('method_not_allowed',405);
         const fields=new URLSearchParams(await body(req));
         if(!equal(fields.get('password'),config.password))throw new PublicError('access_denied',401);
         return redirect('/rendez-vous/',cookie('epme_stage',vault.seal({csrf:random(),exp:Date.now()+12*3600000})));
       }
-      const session=readCookie(req,'epme_stage');
-      if(!session?.csrf||session.exp<Date.now()) {
+      const admin=readCookie(req,'epme_stage');
+      const adminPath=path==='/setup'||path==='/api/booking/google/start'||path==='/api/booking/google/callback';
+      if((!config.production||adminPath)&&(!admin?.csrf||admin.exp<Date.now())) {
         if(path.startsWith('/api/'))throw new PublicError('login_required',401);
         return redirect('/login');
+      }
+      let session=admin;
+      if(config.production&&!adminPath){
+        session=readCookie(req,'epme_booking');
+        if(!session?.csrf||session.exp<Date.now()){
+          session={csrf:random(),exp:Date.now()+2*3600000};
+          res.setHeader('Set-Cookie',cookie('epme_booking',vault.seal(session),7200));
+        }
       }
       if(path==='/setup'&&req.method==='GET') {
         const host=await store.get('host');
         const jobs=config.brevoApiKey?await store.brevoJobs():[];
         const blocked=jobs.filter(j=>['blocked','event_sending'].includes(j.status)).length;
-        const brevoStatus=config.brevoApiKey?`Clé configurée. ${jobs.length} synchronisation(s) non terminée(s), dont ${blocked} à vérifier. Les champs et événements sont réservés au staging.`:'Non configuré : aucune donnée transmise à Brevo.';
-        return send(200,page('Connexions du staging',`<p>Calendrier prévu : <strong>${htmlEscape(config.host)}</strong>.</p><p>${host?.email===config.host?'Calendrier connecté.':'Calendrier non connecté.'}</p><form method="post" action="/api/booking/google/start"><input type="hidden" name="csrf" value="${session.csrf}"><button>Autoriser Google Calendar</button></form><h2>Brevo</h2><p>${brevoStatus}</p><p>Aucune inscription à une liste marketing et aucun changement du consentement.</p><p><a href="/rendez-vous/">Tester la réservation</a></p>`),'text/html; charset=utf-8');
+        const brevoStatus=config.brevoApiKey&&!config.production?`Clé configurée. ${jobs.length} synchronisation(s) non terminée(s), dont ${blocked} à vérifier. Les champs et événements sont réservés au staging.`:'Désactivé pour cet environnement.';
+        return send(200,page('Connexions des réservations',`<p>Calendrier prévu : <strong>${htmlEscape(config.host)}</strong>.</p><p>${host?.email===config.host?'Calendrier connecté.':'Calendrier non connecté.'}</p><form method="post" action="/api/booking/google/start"><input type="hidden" name="csrf" value="${admin.csrf}"><button>Autoriser Google Calendar</button></form><h2>Brevo</h2><p>${brevoStatus}</p><p>Aucune inscription à une liste marketing et aucun changement du consentement.</p><p><a href="/rendez-vous/">Ouvrir la réservation</a></p>`),'text/html; charset=utf-8');
       }
       if(path==='/api/booking/google/start'&&req.method==='POST') {
         const fields=new URLSearchParams(await body(req));

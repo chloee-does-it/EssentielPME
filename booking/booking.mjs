@@ -31,6 +31,7 @@ const t=en?{
 };
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const connected=window.EPME_BOOKING_CONNECTED===true;
+const production=connected&&window.EPME_STAGING!==true;
 const trackingEnvironment=window.EPME_STAGING===true?'staging':'production';
 const TRACKING_PENDING='epme-booking-tracking-pending-v1';
 function eventId(){return crypto.randomUUID();}
@@ -53,7 +54,22 @@ function trackPendingConfirmation(record){
   track('confirmed',pending.eventId);
   try{sessionStorage.removeItem(TRACKING_PENDING);}catch{}
 }
-if(connected)Object.assign(t,en?{
+if(production)Object.assign(t,en?{
+  demo:'Online booking',demoText:'Live availability from the organizer’s calendar.',submit:'Confirm my appointment',
+  privacy:'Required fields are marked *. Your details are used to arrange and manage this appointment.',
+  success:'Your appointment is confirmed.',successNote:'Your calendar invitation and unique Google Meet link are being sent by Google.',
+  videoPending:'Google Meet link is being prepared. Reload this page shortly.',cancelNote:'The cancellation has been sent to Google Calendar.',
+  cancelPrompt:'Cancel this appointment?',cancelled:'Appointment cancelled',new:'Book another appointment',moved:'Your appointment has been rescheduled.',
+  expired:'Appointment not found.',expiredNote:'Use your private management link or contact the organizer.',ref:'Reference'
+}:{
+  demo:'Réservation en ligne',demoText:'Disponibilités réelles du calendrier de l’organisateur.',submit:'Confirmer mon rendez-vous',
+  privacy:'Les champs marqués * sont obligatoires. Vos coordonnées servent à organiser et à gérer ce rendez-vous.',
+  success:'Votre rendez-vous est confirmé.',successNote:'Votre invitation et votre lien Google Meet unique sont en cours d’envoi par Google.',
+  videoPending:'Le lien Google Meet est en préparation. Actualisez cette page dans un instant.',cancelNote:'L’annulation a été transmise à Google Calendar.',
+  cancelPrompt:'Annuler ce rendez-vous ?',cancelled:'Rendez-vous annulé',new:'Réserver un autre rendez-vous',moved:'Votre rendez-vous a été déplacé.',
+  expired:'Rendez-vous introuvable.',expiredNote:'Utilisez votre lien de gestion privé ou contactez l’organisateur.',ref:'Référence'
+});
+else if(connected)Object.assign(t,en?{
   demo:'Connected staging',demoText:'Real Google Calendar availability. Invitations are sent only to approved test addresses.',
   privacy:'Required fields are marked *. Private staging: use only the approved test address. Your details are stored securely for this test.',
   success:'Your test appointment is confirmed.',successNote:'The appointment exists in Google Calendar. Google has been asked to send the invitation.',
@@ -90,7 +106,7 @@ async function mutate(path,payload) {
 const KEY='epme-booking-demo-v1';
 const bookingPath=en?'/en/book/':'/rendez-vous/';
 const confirmationPath=en?'/en/booking-confirmed/':'/merci/rendez-vous/';
-let zone='America/Toronto', selectedDay='', selectedSlot=null, draft={}, editing=null, busy=false, currentMonth='';
+let zone='America/Toronto', selectedDay='', selectedSlot=null, draft={}, editing=null, busy=false, currentMonth='',formStartedAt=0;
 let storageError=false;
 function records(){if(connected)return remoteRecords;try{return JSON.parse(sessionStorage.getItem(KEY)||'[]').filter(b=>b&&b.id&&b.start);}catch{storageError=true;return [];}}
 function save(items){sessionStorage.setItem(KEY,JSON.stringify(items));}
@@ -120,9 +136,10 @@ function calendar(){
   root.querySelectorAll('[data-slot]').forEach(el=>el.onclick=()=>{selectedSlot=available().find(s=>s.start===el.dataset.slot);if(!selectedSlot){start();error(t.unavailable);return;}details();focusHeading();});
 }
 function details(){
+  formStartedAt=Date.now();
   trackOnce('start');
   const field=(key,type='text',wide=false)=>`<label class="bk-field ${wide?'wide':''}">${t[key]}${['first','last','company','email'].includes(key)?' *':''}<input name="${key}" type="${type}" ${['first','last','company','email'].includes(key)?'required':''} maxlength="${key==='email'?254:key==='phone'?40:120}" autocomplete="${({first:'given-name',last:'family-name',email:'email',company:'organization',phone:'tel'})[key]}" value="${escape(draft[key]||'')}"></label>`;
-  shell(1,`<button class="bk-back" type="button" data-back>${t.back}</button><h3 data-heading tabindex="-1">${t.details}</h3><div class="bk-selected">${longDate(selectedSlot.start)}<br>${time(selectedSlot.start)} – ${time(selectedSlot.end)} <span class="bk-small">(${zone.replaceAll('_',' ')})</span></div><form data-demo-booking><div class="bk-fields">${field('first')}${field('last')}${field('email','email',true)}${field('company','text',true)}${field('phone','tel',true)}<label class="bk-field wide">${t.message}<textarea name="message" maxlength="2000">${escape(draft.message||'')}</textarea></label></div><p class="bk-small">${t.privacy}</p><button type="submit" class="bk-primary">${t.submit}</button></form>`);
+  shell(1,`<button class="bk-back" type="button" data-back>${t.back}</button><h3 data-heading tabindex="-1">${t.details}</h3><div class="bk-selected">${longDate(selectedSlot.start)}<br>${time(selectedSlot.start)} – ${time(selectedSlot.end)} <span class="bk-small">(${zone.replaceAll('_',' ')})</span></div><form data-demo-booking><div class="bk-fields">${field('first')}${field('last')}${field('email','email',true)}${field('company','text',true)}${field('phone','tel',true)}<label class="bk-field wide">${t.message}<textarea name="message" maxlength="2000">${escape(draft.message||'')}</textarea></label></div><div aria-hidden="true" style="position:absolute;left:-10000px"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><p class="bk-small">${t.privacy}</p><button type="submit" class="bk-primary">${t.submit}</button></form>`);
   const form=root.querySelector('form');
   const read=()=>Object.fromEntries([...new FormData(form)].map(([k,v])=>[k,String(v).trim()]));
   root.querySelector('[data-back]').onclick=()=>{draft=read();calendar();focusHeading();};
@@ -134,7 +151,8 @@ function details(){
       if(connected){
         if(!managementToken)managementToken=crypto.randomUUID()+crypto.randomUUID();
         const action=editing?'rescheduled':'confirmed';
-        const data=await mutate(editing?'reservations/'+editing+'/reschedule':'reservations',{start:selectedSlot.start,guest:draft,zone,locale});
+        const payload={start:selectedSlot.start,guest:draft,zone,locale,...(!editing?{startedAt:formStartedAt,website:draft.website||''}:{})};
+        const data=await mutate(editing?'reservations/'+editing+'/reschedule':'reservations',payload);
         // A move keeps the same management URL (including its fragment), so
         // assigning that URL does not reload the page. Render the saved result.
         if(root.dataset.view==='confirmation'){

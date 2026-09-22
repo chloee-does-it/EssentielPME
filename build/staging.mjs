@@ -71,6 +71,7 @@ window.addEventListener('submit', function (event) {
   notice.scrollIntoView({ behavior: 'smooth' });
 }, true);
 `);
+writeFileSync(join(out, 'assets/booking/environment.js'), `window.EPME_STAGING = true;\nwindow.EPME_BOOKING_CONNECTED = ${connected};\n`);
 writeFileSync(join(out, 'assets/js/config.js'), 'window.EPME_LP = { DEBUG: false };\n');
 writeFileSync(join(out, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
 writeFileSync(join(out, 'staging-status.json'), JSON.stringify({

@@ -12,7 +12,7 @@ export function cleanGuest(input) {
   return guest;
 }
 export class BookingService {
-  constructor({store,calendar,allowedEmails,brevo=null,now=()=>Date.now()}) {Object.assign(this,{store,calendar,allowedEmails,brevo,now});}
+  constructor({store,calendar,allowedEmails,allowAll=false,environment='staging',brevo=null,now=()=>Date.now()}) {Object.assign(this,{store,calendar,allowedEmails,allowAll,environment,brevo,now});}
   async get(id,token) {
     if(!idPattern.test(id||''))throw new PublicError('not_found',404);
     const record=await this.store.get('booking-'+id);
@@ -26,9 +26,10 @@ export class BookingService {
   }
   async perform(action,input,key) {
     if(!['create','reschedule','cancel'].includes(action)||!keyPattern.test(key||''))throw new PublicError('invalid_request');
+    if(action==='create'&&this.allowAll&&(input.website||!Number.isFinite(input.startedAt)||this.now()-input.startedAt<2000||this.now()-input.startedAt>7200000))throw new PublicError('invalid_request');
     const previous=action==='create'?null:await this.get(input.id,input.token);
     const guest=previous?.guest||cleanGuest(input.guest);
-    if(!this.allowedEmails.includes(guest.email))throw new PublicError('test_email_not_allowed',403);
+    if(!this.allowAll&&!this.allowedEmails.includes(guest.email))throw new PublicError('test_email_not_allowed',403);
     if(action==='create'&&!keyPattern.test(input.token||''))throw new PublicError('invalid_request');
     const id=previous?.id||hash('booking:'+key).slice(0,48);
     const opId=hash(action+':'+key);
@@ -77,7 +78,7 @@ export class BookingService {
         tx.put('booking-'+id,record);tx.put('op-'+opId,{...op,status:'done'});tx.put('lock',{operation:null});
         if(this.brevo){
           const outboxId='brevo-'+opId;
-          tx.put(outboxId,brevoJob(action,record,opId,tail?.id||null));
+          tx.put(outboxId,brevoJob(action,record,opId,tail?.id||null,this.environment));
           tx.put('brevo-tail',{id:outboxId});
         }
       });

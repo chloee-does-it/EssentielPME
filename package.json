@@ -10,7 +10,9 @@
     "build:staging": "node build/staging.mjs",
     "test:booking": "node --test booking/schedule.test.mjs booking/tracking.test.mjs booking/server/*.test.mjs",
     "build:connected": "BOOKING_CONNECTED=1 node build/staging.mjs",
-    "start:staging": "node booking/server/main.mjs"
+    "build:booking": "node build/booking.mjs",
+    "start:staging": "node booking/server/main.mjs",
+    "start:booking": "node booking/server/main.mjs"
   },
   "dependencies": {
     "@google-cloud/firestore": "9.1.0",
