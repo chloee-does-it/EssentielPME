@@ -7,8 +7,7 @@ import {BrevoClient,BrevoSync} from './brevo.mjs';
 const settings=config(),store=new Store(settings.credentials,settings.collection);
 if(settings.production&&settings.migrateCollection)await store.migrateHostFrom(settings.migrateCollection);
 const calendar=new GoogleCalendar(settings,store,vault(settings.encryptionKey));
-// Production Brevo sync stays opt-in because it transmits visitor contact data.
-const brevo=settings.brevoApiKey&&!settings.production?new BrevoSync({store,client:new BrevoClient(settings.brevoApiKey),allowedEmails:settings.allowedEmails}):null;
+const brevo=settings.brevoApiKey?new BrevoSync({store,client:new BrevoClient(settings.brevoApiKey),allowedEmails:settings.allowedEmails,allowAll:settings.production}):null;
 const service=new BookingService({store,calendar,brevo,allowedEmails:settings.allowedEmails,allowAll:settings.production,environment:settings.environment});
 const server=makeServer({config:settings,store,calendar,service});
 server.listen(settings.port,'0.0.0.0',()=>console.log(`Booking server ready (${settings.environment})`));
