@@ -148,6 +148,9 @@ test('production booking pages and session are public while setup stays private'
   t.after(async()=>{await new Promise(resolve=>server.close(resolve));await rm(staticRoot,{recursive:true,force:true});});settings.origin='http://127.0.0.1:'+server.address().port;
   const request=(path,options={})=>fetch(settings.origin+path,{redirect:'manual',...options});
   const page=await request('/rendez-vous/');assert.equal(page.status,200);assert.equal(page.headers.get('x-robots-tag'),null);
+  const csp=page.headers.get('content-security-policy');
+  assert.match(csp,/frame-ancestors 'self' https:\/\/www\.essentielpme\.com https:\/\/essentielpme\.com/);
+  assert.doesNotMatch(csp,/dat\.essentielpme\.com|facebook\.net|googletagmanager/);
   const status=await request('/api/booking/status');assert.equal(status.status,200);assert.match(status.headers.get('set-cookie'),/^epme_booking=/);
   assert.equal((await request('/setup')).status,303);
 });

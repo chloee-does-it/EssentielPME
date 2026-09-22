@@ -36,8 +36,16 @@ const trackingEnvironment=window.EPME_STAGING===true?'staging':'production';
 const TRACKING_PENDING='epme-booking-tracking-pending-v1';
 function eventId(){return crypto.randomUUID();}
 function track(kind,id=eventId()){
+  const event=bookingTrackingEvent(kind,{locale,environment:trackingEnvironment,eventId:id});
   window.dataLayer=window.dataLayer||[];
-  window.dataLayer.push(bookingTrackingEvent(kind,{locale,environment:trackingEnvironment,eventId:id}));
+  window.dataLayer.push(event);
+  // The booking domain has no non-essential tags or consent banner. The site
+  // that embeds it decides whether this anonymous event may reach its GTM.
+  if(production&&window.parent!==window){
+    for(const origin of ['https://www.essentielpme.com','https://essentielpme.com']){
+      window.parent.postMessage({source:'epme-booking',...event},origin);
+    }
+  }
 }
 function trackOnce(kind){
   const key='epme-booking-track-'+kind;
