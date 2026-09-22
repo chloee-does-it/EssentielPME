@@ -1,6 +1,9 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomBytes} from 'node:crypto';
+import {mkdir, mkdtemp, realpath, rm, writeFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {BookingService,cleanGuest,publicRecord} from './service.mjs';
 import {vault,hash,config} from './security.mjs';
 import {makeServer} from './http.mjs';
@@ -138,8 +141,11 @@ test('HTTP requires access, same origin, CSRF, tokens and blocks secret paths',a
 });
 test('production booking pages and session are public while setup stays private',async t=>{
   const f=fixture(),settings={encryptionKey:randomBytes(32).toString('base64'),password:'test-password-long-enough-12345',origin:'http://127.0.0.1',secure:false,host:'info@superquanti.com',allowedEmails:[],production:true,environment:'production'};
-  const server=makeServer({config:settings,...f});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-  t.after(()=>new Promise(resolve=>server.close(resolve)));settings.origin='http://127.0.0.1:'+server.address().port;
+  const staticRoot=await realpath(await mkdtemp(join(tmpdir(),'epme-booking-test-')));
+  await mkdir(join(staticRoot,'rendez-vous'),{recursive:true});
+  await writeFile(join(staticRoot,'rendez-vous','index.html'),'<!doctype html><title>Réservation</title>');
+  const server=makeServer({config:settings,staticRoot,...f});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  t.after(async()=>{await new Promise(resolve=>server.close(resolve));await rm(staticRoot,{recursive:true,force:true});});settings.origin='http://127.0.0.1:'+server.address().port;
   const request=(path,options={})=>fetch(settings.origin+path,{redirect:'manual',...options});
   const page=await request('/rendez-vous/');assert.equal(page.status,200);assert.equal(page.headers.get('x-robots-tag'),null);
   const status=await request('/api/booking/status');assert.equal(status.status,200);assert.match(status.headers.get('set-cookie'),/^epme_booking=/);
