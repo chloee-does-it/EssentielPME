@@ -139,6 +139,29 @@ test('HTTP requires access, same origin, CSRF, tokens and blocks secret paths',a
   const page=await request('/login');assert.equal(page.headers.get('referrer-policy'),'same-origin');assert.match(page.headers.get('x-robots-tag'),/noindex/);
   assert.equal((await request('/api/booking/status',{headers:{Cookie:cookie}})).headers.get('referrer-policy'),'no-referrer');
 });
+
+test('production accepts native site API requests with credentials but no admin access',async t=>{
+  const f=fixture(),settings={encryptionKey:randomBytes(32).toString('base64'),password:'test-password-long-enough-12345',origin:'http://127.0.0.1',secure:false,production:true,host:'info@superquanti.com',allowedEmails:[]};
+  const server=makeServer({config:settings,...f});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  t.after(()=>new Promise(resolve=>server.close(resolve)));settings.origin='http://127.0.0.1:'+server.address().port;
+  const request=(path,options={})=>fetch(settings.origin+path,{redirect:'manual',...options});
+  const origin='https://essentielpme.com';
+  const preflight=await request('/api/booking/reservations',{method:'OPTIONS',headers:{Origin:origin,'Access-Control-Request-Method':'POST','Access-Control-Request-Headers':'content-type,x-csrf-token,x-booking-token,idempotency-key'}});
+  assert.equal(preflight.status,204);
+  assert.equal(preflight.headers.get('access-control-allow-origin'),origin);
+  assert.equal(preflight.headers.get('access-control-allow-credentials'),'true');
+  const status=await request('/api/booking/status',{headers:{Origin:origin}});
+  assert.equal(status.status,200);
+  assert.equal(status.headers.get('access-control-allow-origin'),origin);
+  assert.match(status.headers.get('set-cookie'),/SameSite=Lax/);
+  const csrf=(await status.json()).csrf,cookie=status.headers.get('set-cookie').split(';')[0];
+  const post={method:'POST',headers:{Origin:origin,Cookie:cookie,'Content-Type':'application/json','X-CSRF-Token':csrf},body:'{}'};
+  assert.equal((await request('/api/booking/reservations',post)).status,400);
+  assert.equal((await request('/api/booking/reservations',{...post,headers:{...post.headers,Origin:'https://evil.example'}})).status,403);
+  const admin=await request('/api/booking/google/start',{method:'POST',headers:{...post.headers},body:'csrf='+csrf});
+  assert.equal(admin.headers.get('access-control-allow-origin'),null);
+  assert.equal(admin.status,403);
+});
 test('production booking pages and session are public while setup stays private',async t=>{
   const f=fixture(),settings={encryptionKey:randomBytes(32).toString('base64'),password:'test-password-long-enough-12345',origin:'http://127.0.0.1',secure:false,host:'info@superquanti.com',allowedEmails:[],production:true,environment:'production'};
   const staticRoot=await realpath(await mkdtemp(join(tmpdir(),'epme-booking-test-')));

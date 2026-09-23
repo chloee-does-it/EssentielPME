@@ -671,6 +671,8 @@ export const DICT = {
 /* Métadonnées (balises <title> et meta descriptions) — utilisées uniquement
    par le générateur pour les pages EN ; jamais affichées dans la page. */
 export const META_EN = {
+  'Confirmation de rendez-vous | Essentiel PME':
+    'Appointment confirmation | SMB Essentials',
   'Essentiel PME | Publicité en ligne gérée pour les PME du Québec':
     'SMB Essentials | Managed online advertising for Quebec SMBs',
   'Publicité en ligne gérée de A à Z pour les PME québécoises : Meta, Google, LinkedIn, TikTok et plus. Prix fixes à partir de 695 $ / mois, bilingue FR/EN, réponse en 24 h.':
@@ -879,4 +881,9 @@ Object.assign(DICT, {
 Object.assign(DICT, {
   "Le calendrier ne s'affiche pas ?": "Calendar not showing?",
   'Ouvrez-le dans un nouvel onglet': 'Open it in a new tab',
+  'Chargement du calendrier…': 'Loading the calendar…',
+  'Votre rendez-vous': 'Your appointment',
+  'Chargement de la confirmation…': 'Loading confirmation…',
+  'Confirmation de rendez-vous': 'Appointment confirmation',
+  'Consultez ou gérez votre rendez-vous avec Essentiel PME.': 'View or manage your appointment with SMB Essentials.',
 });

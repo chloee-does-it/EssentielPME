@@ -25,6 +25,23 @@ export function makeServer({config,store,calendar,service,staticRoot=fileURLToPa
     const redirect=(url,cookies)=>send(303,'','text/plain',{Location:url,...(cookies?{'Set-Cookie':cookies}:{})});
     try {
       const url=new URL(req.url,config.origin),path=url.pathname;
+      const siteOrigin=String(req.headers.origin||'');
+      const publicBookingApi=path==='/api/booking/status'||path==='/api/booking/slots'||
+        path==='/api/booking/reservations'||/^\/api\/booking\/reservations\/[a-f0-9]{48}(?:\/(?:reschedule|cancel))?$/.test(path);
+      const nativeSiteOrigin=config.production&&publicBookingApi&&
+        ['https://essentielpme.com','https://www.essentielpme.com'].includes(siteOrigin);
+      if(nativeSiteOrigin){
+        headers['Access-Control-Allow-Origin']=siteOrigin;
+        headers['Access-Control-Allow-Credentials']='true';
+        headers.Vary='Origin';
+      }
+      if(req.method==='OPTIONS'&&nativeSiteOrigin){
+        if(!['GET','POST'].includes(String(req.headers['access-control-request-method']||'')))
+          throw new PublicError('method_not_allowed',405);
+        headers['Access-Control-Allow-Methods']='GET, POST';
+        headers['Access-Control-Allow-Headers']='Content-Type, X-Booking-Token, X-CSRF-Token, Idempotency-Key';
+        return send(204,'','text/plain');
+      }
       // Native form POSTs need a non-null Origin. Other pages, especially the
       // OAuth callback and private management pages, disclose no referrer.
       if(path==='/login'||path==='/setup')headers['Referrer-Policy']='same-origin';
@@ -40,7 +57,7 @@ export function makeServer({config,store,calendar,service,staticRoot=fileURLToPa
       const bucket=rates.get(bucketKey)||{at:now,count:0};
       if(now-bucket.at>windowMs){bucket.at=now;bucket.count=0;}bucket.count++;rates.set(bucketKey,bucket);
       if(bucket.count>limit)return send(429,{error:'rate_limited'},undefined,{'Retry-After':String(Math.ceil(windowMs/1000))});
-      if(req.method==='POST'&&req.headers.origin!==config.origin)throw new PublicError('origin_rejected',403);
+      if(req.method==='POST'&&siteOrigin!==config.origin&&!nativeSiteOrigin)throw new PublicError('origin_rejected',403);
       if(path==='/login') {
         if(req.method==='GET')return send(200,page(config.production?'Administration des réservations':'Accès au staging',`<p>${config.production?'Accès réservé à la connexion du calendrier.':'Environnement privé de test. Les réservations connectées envoient de vraies invitations aux seules adresses autorisées.'}</p><form method="post"><label>Code d’accès <input name="password" type="password" required autocomplete="current-password"></label><button>Ouvrir</button></form>`),'text/html; charset=utf-8');
         if(req.method!=='POST')throw new PublicError('method_not_allowed',405);

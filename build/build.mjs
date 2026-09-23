@@ -2,7 +2,7 @@
    Emits site/*.html + industries/*.html + sitemap.xml + robots.txt + llms.txt
    Run: node build/build.mjs                                                */
 
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, cpSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -239,7 +239,7 @@ function footer(root) {
   </footer>`;
 }
 
-function shell({ path, title, desc, active, jsonld = [], body, label, frOnly = false }) {
+function shell({ path, title, desc, active, jsonld = [], body, label, frOnly = false, headExtras = '' }) {
   const root = '/';
   const pagePath = '/' + path.replace(/index\.html$/, '');
   const enPagePath = frOnly ? '/en/' : enPagePathOf(pagePath);
@@ -279,7 +279,7 @@ function shell({ path, title, desc, active, jsonld = [], body, label, frOnly = f
   <meta property="og:image" content="${SITE.baseUrl}/assets/img/og-cover.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="${root}assets/css/styles.css">
-${GTM_HEAD}
+${headExtras?headExtras+'\n':''}${GTM_HEAD}
 ${blocks}
 </head>
 <body>
@@ -902,6 +902,30 @@ ${ctaBand({ h: 'Travaillons ensemble.', p: 'Un premier appel pour faire connaiss
   });
 }
 
+function bookingHead({confirmation=false}={}) {
+  // The private management token lives in the URL fragment. Remove it before
+  // GTM or any other site script can inspect the location.
+  const capture=confirmation?`<script>(function(){var raw=location.hash.slice(1),p=new URLSearchParams(raw);if(!p.get('ref')||!p.get('token'))return;window.EPME_BOOKING_FRAGMENT=raw;try{sessionStorage.setItem('epme-booking-link-v1',raw)}catch(e){}history.replaceState(null,'',location.pathname+location.search)})();</script>`:'';
+  return `${capture}<link rel="stylesheet" href="/assets/booking/booking.css">
+  <script src="/assets/booking/environment.js"></script>
+  <script type="module" src="/assets/booking/booking.mjs"></script>`;
+}
+
+function bookingConfirmationPage() {
+  return shell({
+    path:'merci/rendez-vous/index.html', active:'contact', label:'Confirmation de rendez-vous',
+    title:'Confirmation de rendez-vous | Essentiel PME',
+    desc:'Consultez ou gérez votre rendez-vous avec Essentiel PME.',
+    noindex:true, headExtras:bookingHead({confirmation:true}),
+    body:`<section class="section" style="background:var(--grad-hero); min-height:60vh;">
+      <div class="section-inner" style="max-width:860px;">
+        <h1 style="text-align:center; margin:0 0 32px;">Votre rendez-vous</h1>
+        <div class="bk-root" data-booking-app data-embedded data-native data-view="confirmation"><p>Chargement de la confirmation…</p></div>
+      </div>
+    </section>`,
+  });
+}
+
 function contactPage() {
   const field = (label, name, type, autocomplete = '') => `                <div style="display:flex; flex-direction:column; gap:6px;">
                   <label for="f-${name}" style="font-size:13px; font-weight:700; color:var(--charbon);">${label} *</label>
@@ -940,7 +964,7 @@ ${['On écoute vos objectifs et votre réalité de PME.',
             </div>
 
             <div style="background:#fff; border:1px solid var(--border); border-radius:16px; overflow:hidden;">
-              <iframe src="${SITE.bookingEmbed}" title="Calendrier de réservation d’Essentiel PME" loading="lazy" style="border:0; display:block; width:100%; height:720px;"></iframe>
+              <div class="bk-root" data-booking-app data-embedded data-native><p>Chargement du calendrier…</p></div>
             </div>
             <p style="margin:16px 0 0; font-size:13px; color:var(--charbon-300);">Le calendrier ne s’affiche pas&nbsp;? <a href="${SITE.booking}" target="_blank" rel="noopener" data-booking>Ouvrez-le dans un nouvel onglet</a>.</p>
           </div>
@@ -983,6 +1007,7 @@ ${['On écoute vos objectifs et votre réalité de PME.',
       name: 'Contact | Essentiel PME', url: `${SITE.baseUrl}/contact/`,
     }],
     body,
+    headExtras: bookingHead(),
   });
 }
 
@@ -2179,6 +2204,23 @@ for (const [p, html] of pages) {
   writeFileSync(join(OUT, enFile), en);
   console.log('wrote', p, `(${html.length} o)`, '+', enFile, `(${en.length} o)`);
 }
+
+// Private booking confirmation is deliberately absent from the sitemap.
+for(const [p,html] of [
+  ['merci/rendez-vous/index.html',bookingConfirmationPage()
+    .replaceAll('/en/merci/rendez-vous/','/en/booking-confirmed/')],
+  ['en/booking-confirmed/index.html',toEnglish(bookingConfirmationPage(),'/merci/rendez-vous/')
+    .replaceAll('/en/merci/rendez-vous/','/en/booking-confirmed/')],
+]){
+  mkdirSync(dirname(join(OUT,p)),{recursive:true});
+  writeFileSync(join(OUT,p),html);
+}
+
+mkdirSync(join(OUT,'assets/booking'),{recursive:true});
+for(const file of ['schedule.mjs','tracking.mjs','booking.mjs','booking.css'])
+  cpSync(join(ROOT,'booking',file),join(OUT,'assets/booking',file));
+writeFileSync(join(OUT,'assets/booking/environment.js'),
+  "window.EPME_STAGING = false;\nwindow.EPME_BOOKING_CONNECTED = true;\nwindow.EPME_BOOKING_API_ORIGIN = 'https://booking.essentielpme.com';\n");
 
 /* Landing pages des guides : françaises, noindex, hors sitemap et hors nav */
 for (const g of GUIDES) {
