@@ -10,6 +10,8 @@ test('both contact pages render the booking app in their own DOM',()=>{
     assert.match(html,/<div class="bk-root" data-booking-app data-embedded data-native>/);
     assert.match(html,/src="\/assets\/booking\/booking\.mjs"/);
     assert.doesNotMatch(html,/<iframe[^>]+booking\.essentielpme\.com/);
+    assert.doesNotMatch(html,/Calendar not showing\?|Le calendrier ne s’affiche pas/);
+    assert.doesNotMatch(html,/booking\.essentielpme\.com\/(?:rendez-vous|en\/book)\//);
   }
 });
 

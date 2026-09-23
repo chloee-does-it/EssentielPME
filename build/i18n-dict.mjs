@@ -879,8 +879,6 @@ Object.assign(DICT, {
 });
 
 Object.assign(DICT, {
-  "Le calendrier ne s'affiche pas ?": "Calendar not showing?",
-  'Ouvrez-le dans un nouvel onglet': 'Open it in a new tab',
   'Chargement du calendrier…': 'Loading the calendar…',
   'Votre rendez-vous': 'Your appointment',
   'Chargement de la confirmation…': 'Loading confirmation…',
