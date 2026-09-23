@@ -15,6 +15,7 @@ class MemoryStore {
   async put(id,data){this.records.set(id,structuredClone(data));}
   async brevoJobs(){return [...this.records].filter(([,j])=>j.kind==='brevo'&&j.status!=='done').map(([id,j])=>({id,...structuredClone(j)}));}
   async alertJobs(){return [...this.records].filter(([,j])=>j.kind==='alert'&&j.status!=='done').map(([id,j])=>({id,...structuredClone(j)}));}
+  async internalCalendarJobs(){return [...this.records].filter(([,j])=>j.kind==='internal-calendar'&&j.status!=='done').map(([id,j])=>({id,...structuredClone(j)}));}
   async atomic(fn){
     const task=this.queue.then(async()=>{
       const writes=[];const result=await fn({get:id=>this.get(id),put:(id,value)=>writes.push([id,value])});
@@ -102,11 +103,31 @@ test('internal alerts are queued once after each confirmed production calendar c
   assert.equal(kicks,3);
   for(const job of jobs)assert.ok(!JSON.stringify(job).includes(input.token));
 });
+test('private staff invitations are queued once and ordered on create, move and cancel',async()=>{
+  const {service,input,store}=fixture();let kicks=0;
+  const bookingInput={...input,guest:{...input.guest,message:'private guest message'}};
+  service.allowAll=true;service.environment='production';
+  service.internalCalendar={kick(){kicks++;throw Error('Google temporarily unavailable');}};
+  const first=await service.perform('create',{...bookingInput,startedAt:service.now()-3000},'create-internal-idempotency-1234');
+  await service.perform('create',{...bookingInput,startedAt:service.now()-3000},'create-internal-idempotency-1234');
+  await service.perform('reschedule',{id:first.record.id,token:input.token,start:'2026-09-18T14:00:00.000Z'},'move-internal-idempotency-12345');
+  await service.perform('cancel',{id:first.record.id,token:input.token},'cancel-internal-idempotency-1234');
+  const jobs=await store.internalCalendarJobs();
+  assert.deepEqual(jobs.map(j=>j.action),['create','reschedule','cancel']);
+  assert.equal(jobs[1].previous,jobs[0].id);assert.equal(jobs[2].previous,jobs[1].id);
+  assert.equal(kicks,3);
+  for(const job of jobs){
+    assert.ok(!JSON.stringify(job).includes(input.token));
+    assert.ok(!JSON.stringify(job).includes('private guest message'));
+  }
+});
 test('failed calendar mutations never enqueue a Brevo event',async()=>{
-  const {service,input,store}=fixture();service.brevo={kick(){}};service.alerts={kick(){}};service.environment='production';
+  const {service,input,store}=fixture();service.brevo={kick(){}};service.alerts={kick(){}};
+  service.internalCalendar={kick(){}};service.environment='production';
   await assert.rejects(service.perform('create',{...input,start:'2026-09-17T11:00:00.000Z'},'create-idempotency-key-1111'));
   assert.equal((await store.brevoJobs()).length,0);
   assert.equal((await store.alertJobs()).length,0);
+  assert.equal((await store.internalCalendarJobs()).length,0);
 });
 test('concurrent requests on a single calendar cannot double-book',async()=>{
   const {service,input,calendar}=fixture();

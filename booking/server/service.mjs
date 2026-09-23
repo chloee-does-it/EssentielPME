@@ -2,6 +2,7 @@ import {RULES,slots,validGuest} from '../schedule.mjs';
 import {PublicError,hash,equal} from './security.mjs';
 import {brevoJob} from './brevo.mjs';
 import {alertJob} from './alerts.mjs';
+import {internalCalendarJob} from './internal-calendar.mjs';
 
 const idPattern=/^[a-f0-9]{48}$/;
 const keyPattern=/^[a-zA-Z0-9_-]{20,100}$/;
@@ -13,7 +14,7 @@ export function cleanGuest(input) {
   return guest;
 }
 export class BookingService {
-  constructor({store,calendar,allowedEmails,allowAll=false,environment='staging',brevo=null,alerts=null,now=()=>Date.now()}) {Object.assign(this,{store,calendar,allowedEmails,allowAll,environment,brevo,alerts,now});}
+  constructor({store,calendar,allowedEmails,allowAll=false,environment='staging',brevo=null,alerts=null,internalCalendar=null,now=()=>Date.now()}) {Object.assign(this,{store,calendar,allowedEmails,allowAll,environment,brevo,alerts,internalCalendar,now});}
   async get(id,token) {
     if(!idPattern.test(id||''))throw new PublicError('not_found',404);
     const record=await this.store.get('booking-'+id);
@@ -75,6 +76,7 @@ export class BookingService {
       await this.store.atomic(async tx=>{
         const op=await tx.get('op-'+opId),lock=await tx.get('lock');
         const tail=this.brevo?await tx.get('brevo-tail'):null;
+        const internalTail=this.internalCalendar?await tx.get('internal-tail-'+id):null;
         if(lock?.operation!==opId)throw new Error('Lost operation ownership');
         tx.put('booking-'+id,record);tx.put('op-'+opId,{...op,status:'done'});tx.put('lock',{operation:null});
         if(this.brevo){
@@ -83,11 +85,17 @@ export class BookingService {
           tx.put('brevo-tail',{id:outboxId});
         }
         if(this.alerts&&this.environment==='production')tx.put('alert-'+opId,alertJob(action,record,opId,previous));
+        if(this.internalCalendar&&this.environment==='production'){
+          const outboxId='internal-'+opId;
+          tx.put(outboxId,internalCalendarJob(action,record,opId,internalTail?.id||null));
+          tx.put('internal-tail-'+id,{id:outboxId});
+        }
       });
-      // Delivery is independent of the Google confirmation and durably queued.
-      // Never turn a confirmed calendar write into a failure due to Brevo.
+      // Downstream delivery is independent of the Google customer confirmation.
+      // Brevo or a staff invitation must not undo a confirmed booking.
       try{this.brevo?.kick();}catch{console.warn('brevo_sync_pending');}
       try{this.alerts?.kick();}catch{console.warn('booking_alert_sync_pending');}
+      try{this.internalCalendar?.kick();}catch{console.warn('internal_calendar_sync_pending');}
       return {record};
     } catch(error) {
       // A timeout/5xx after dispatch may have created the event. Keep the lock and

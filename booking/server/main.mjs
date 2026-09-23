@@ -5,6 +5,7 @@ import {BookingService} from './service.mjs';
 import {makeServer} from './http.mjs';
 import {BrevoClient,BrevoSync} from './brevo.mjs';
 import {AlertSync} from './alerts.mjs';
+import {InternalCalendarSync} from './internal-calendar.mjs';
 const settings=config(),store=new Store(settings.credentials,settings.collection);
 if(settings.production&&settings.migrateCollection)await store.migrateHostFrom(settings.migrateCollection);
 const calendar=new GoogleCalendar(settings,store,vault(settings.encryptionKey));
@@ -12,10 +13,15 @@ const brevoClient=settings.brevoApiKey?new BrevoClient(settings.brevoApiKey):nul
 const brevo=brevoClient?new BrevoSync({store,client:brevoClient,allowedEmails:settings.allowedEmails,allowAll:settings.production}):null;
 const alerts=settings.alertRecipients.length?new AlertSync({store,client:brevoClient,
   sender:'info@essentielpme.com',recipients:settings.alertRecipients}):null;
-const service=new BookingService({store,calendar,brevo,alerts,allowedEmails:settings.allowedEmails,allowAll:settings.production,environment:settings.environment});
+const internalCalendar=settings.production&&settings.alertRecipients.length?
+  new InternalCalendarSync({store,calendar,recipients:settings.alertRecipients}):null;
+const service=new BookingService({store,calendar,brevo,alerts,internalCalendar,allowedEmails:settings.allowedEmails,allowAll:settings.production,environment:settings.environment});
 const server=makeServer({config:settings,store,calendar,service});
 server.listen(settings.port,'0.0.0.0',()=>console.log(`Booking server ready (${settings.environment})`));
-const syncTimer=brevo||alerts?setInterval(()=>{brevo?.kick();alerts?.kick();},60000):null;
+const syncTimer=brevo||alerts||internalCalendar?setInterval(()=>{
+  brevo?.kick();alerts?.kick();internalCalendar?.kick();
+},60000):null;
 brevo?.kick();
 alerts?.kick();
+internalCalendar?.kick();
 process.on('SIGTERM',()=>{if(syncTimer)clearInterval(syncTimer);server.close(()=>process.exit(0));});
