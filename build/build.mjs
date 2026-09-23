@@ -966,7 +966,6 @@ ${['On écoute vos objectifs et votre réalité de PME.',
             <div style="background:#fff; border:1px solid var(--border); border-radius:16px; overflow:hidden;">
               <div class="bk-root" data-booking-app data-embedded data-native><p>Chargement du calendrier…</p></div>
             </div>
-            <p style="margin:16px 0 0; font-size:13px; color:var(--charbon-300);">Le calendrier ne s’affiche pas&nbsp;? <a href="${SITE.booking}" target="_blank" rel="noopener" data-booking>Ouvrez-le dans un nouvel onglet</a>.</p>
           </div>
 
           <div style="margin-top:44px; text-align:center;">
