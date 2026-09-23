@@ -34,6 +34,7 @@ export class BrevoClient {
   }
   contact(data){return this.post('contacts',data);}
   event(data){return this.post('events',data);}
+  email(data){return this.post('smtp/email',data);}
 }
 export class BrevoSync {
   constructor({store,client,allowedEmails,allowAll=false,now=()=>Date.now()}){Object.assign(this,{store,client,allowedEmails,allowAll,now});this.running=false;}
