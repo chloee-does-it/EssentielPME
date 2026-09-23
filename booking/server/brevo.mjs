@@ -1,17 +1,25 @@
 // Server-only integration. No list enrollment, marketing consent or email sends.
 export const BREVO_ATTRIBUTES=['FIRSTNAME','LASTNAME','COMPANY','BOOKING_ID','STATUS','START','END','TIMEZONE','LANGUAGE'].map(x=>'EPME_STG_'+x);
-const names={create:'epme_staging_booking_created',reschedule:'epme_staging_booking_rescheduled',cancel:'epme_staging_booking_cancelled'};
-export function brevoJob(action,record,operation,previous=null) {
+const eventNames={
+  staging:{create:'epme_staging_booking_created',reschedule:'epme_staging_booking_rescheduled',cancel:'epme_staging_booking_cancelled'},
+  production:{create:'epme_booking_created',reschedule:'epme_booking_rescheduled',cancel:'epme_booking_cancelled'}
+};
+export function brevoJob(action,record,operation,previous=null,environment='staging') {
+  const names=eventNames[environment]||eventNames.staging;
   if(!names[action])throw new Error('Unknown booking action');
   const {guest}=record;
+  const attributes=environment==='production'?{
+    FIRSTNAME:guest.first,LASTNAME:guest.last,COMPANY:guest.company
+  }:{
+    EPME_STG_FIRSTNAME:guest.first,EPME_STG_LASTNAME:guest.last,EPME_STG_COMPANY:guest.company,
+    EPME_STG_BOOKING_ID:record.id,EPME_STG_STATUS:action==='cancel'?'cancelled':'confirmed',
+    EPME_STG_START:record.start,EPME_STG_END:record.end,EPME_STG_TIMEZONE:record.zone,EPME_STG_LANGUAGE:record.locale
+  };
   return {kind:'brevo',status:'pending',phase:'contact',attempts:0,nextAt:0,previous,
     operation,createdAt:record.updatedAt,
-    contact:{email:guest.email,updateEnabled:true,attributes:{
-      EPME_STG_FIRSTNAME:guest.first,EPME_STG_LASTNAME:guest.last,EPME_STG_COMPANY:guest.company,
-      EPME_STG_BOOKING_ID:record.id,EPME_STG_STATUS:action==='cancel'?'cancelled':'confirmed',
-      EPME_STG_START:record.start,EPME_STG_END:record.end,EPME_STG_TIMEZONE:record.zone,EPME_STG_LANGUAGE:record.locale}},
+    contact:{email:guest.email,updateEnabled:true,attributes},
     event:{event_name:names[action],identifiers:{email_id:guest.email},event_date:record.updatedAt,
-      event_properties:{environment:'staging',booking_id:record.id,operation_id:operation,
+      event_properties:{environment,booking_id:record.id,operation_id:operation,
         status:record.status,start:record.start,end:record.end,timezone:record.zone,language:record.locale}}
   };
 }
@@ -28,13 +36,13 @@ export class BrevoClient {
   event(data){return this.post('events',data);}
 }
 export class BrevoSync {
-  constructor({store,client,allowedEmails,now=()=>Date.now()}){Object.assign(this,{store,client,allowedEmails,now});this.running=false;}
+  constructor({store,client,allowedEmails,allowAll=false,now=()=>Date.now()}){Object.assign(this,{store,client,allowedEmails,allowAll,now});this.running=false;}
   async deliver(id) {
     let job=await this.store.atomic(async tx=>{
       const value=await tx.get(id);
       if(!value||value.kind!=='brevo'||!['pending','contact_sending'].includes(value.status)||value.nextAt>this.now())return null;
       if(value.previous&&(await tx.get(value.previous))?.status!=='done')return null;
-      if(!this.allowedEmails.includes(value.contact.email)||value.event.identifiers.email_id!==value.contact.email){
+      if((!this.allowAll&&!this.allowedEmails.includes(value.contact.email))||value.event.identifiers.email_id!==value.contact.email){
         tx.put(id,{...value,status:'blocked',error:'recipient_not_allowed'});return null;
       }
       // Contact upserts can be retried after a crash. Event dispatches cannot:

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {bookingTrackingEvent} from './tracking.mjs';
+import {bookingTrackingEvent,nativeBookingTrackingAllowed} from './tracking.mjs';
 
 test('booking tracking uses a platform-neutral event with no guest data',()=>{
   const event=bookingTrackingEvent('confirmed',{
@@ -21,3 +21,9 @@ test('booking tracking keeps lifecycle events distinct from the conversion',()=>
   assert.throws(()=>bookingTrackingEvent('lead',{eventId:'bad'}),/unknown_booking_tracking_event/);
 });
 
+test('native booking sends marketing events only with both consent choices',()=>{
+  for(const consent of [null,'denied','invalid','{}',JSON.stringify({analytics:true,ads:false}),JSON.stringify({analytics:false,ads:true})])
+    assert.equal(nativeBookingTrackingAllowed(consent),false);
+  assert.equal(nativeBookingTrackingAllowed('granted'),true);
+  assert.equal(nativeBookingTrackingAllowed(JSON.stringify({analytics:true,ads:true})),true);
+});

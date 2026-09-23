@@ -1,6 +1,9 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomBytes} from 'node:crypto';
+import {mkdir, mkdtemp, realpath, rm, writeFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {BookingService,cleanGuest,publicRecord} from './service.mjs';
 import {vault,hash,config} from './security.mjs';
 import {makeServer} from './http.mjs';
@@ -43,6 +46,14 @@ test('guest input types and unsupported test recipients fail closed',async()=>{
   const {service,input,calendar}=fixture();
   await assert.rejects(service.perform('create',{...input,guest:{...input.guest,email:'someone@example.com'}},'idempotency-key-123456789'),{code:'test_email_not_allowed'});
   assert.equal(calendar.creates,0);
+});
+test('production accepts valid visitors only after the anti-bot delay',async()=>{
+  const {store,calendar,input}=fixture(),now=Date.parse('2026-09-17T10:00:00Z');
+  const service=new BookingService({store,calendar,allowedEmails:[],allowAll:true,environment:'production',now:()=>now});
+  await assert.rejects(service.perform('create',{...input,startedAt:now-1000},'production-too-fast-key-1234'),{code:'invalid_request'});
+  await assert.rejects(service.perform('create',{...input,startedAt:now-3000,website:'bot'},'production-honeypot-key-1234'),{code:'invalid_request'});
+  const result=await service.perform('create',{...input,startedAt:now-3000},'production-valid-key-123456');
+  assert.equal(result.record.guest.email,input.guest.email);assert.equal(calendar.creates,1);
 });
 test('create, idempotent retry, private read, reschedule and cancel',async()=>{
   const {service,input,calendar}=fixture();
@@ -127,4 +138,42 @@ test('HTTP requires access, same origin, CSRF, tokens and blocks secret paths',a
   assert.equal((await request('/api/booking/reservations',{...post,headers:{...post.headers,'X-CSRF-Token':status.csrf}})).status,400);
   const page=await request('/login');assert.equal(page.headers.get('referrer-policy'),'same-origin');assert.match(page.headers.get('x-robots-tag'),/noindex/);
   assert.equal((await request('/api/booking/status',{headers:{Cookie:cookie}})).headers.get('referrer-policy'),'no-referrer');
+});
+
+test('production accepts native site API requests with credentials but no admin access',async t=>{
+  const f=fixture(),settings={encryptionKey:randomBytes(32).toString('base64'),password:'test-password-long-enough-12345',origin:'http://127.0.0.1',secure:false,production:true,host:'info@superquanti.com',allowedEmails:[]};
+  const server=makeServer({config:settings,...f});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  t.after(()=>new Promise(resolve=>server.close(resolve)));settings.origin='http://127.0.0.1:'+server.address().port;
+  const request=(path,options={})=>fetch(settings.origin+path,{redirect:'manual',...options});
+  const origin='https://essentielpme.com';
+  const preflight=await request('/api/booking/reservations',{method:'OPTIONS',headers:{Origin:origin,'Access-Control-Request-Method':'POST','Access-Control-Request-Headers':'content-type,x-csrf-token,x-booking-token,idempotency-key'}});
+  assert.equal(preflight.status,204);
+  assert.equal(preflight.headers.get('access-control-allow-origin'),origin);
+  assert.equal(preflight.headers.get('access-control-allow-credentials'),'true');
+  const status=await request('/api/booking/status',{headers:{Origin:origin}});
+  assert.equal(status.status,200);
+  assert.equal(status.headers.get('access-control-allow-origin'),origin);
+  assert.match(status.headers.get('set-cookie'),/SameSite=Lax/);
+  const csrf=(await status.json()).csrf,cookie=status.headers.get('set-cookie').split(';')[0];
+  const post={method:'POST',headers:{Origin:origin,Cookie:cookie,'Content-Type':'application/json','X-CSRF-Token':csrf},body:'{}'};
+  assert.equal((await request('/api/booking/reservations',post)).status,400);
+  assert.equal((await request('/api/booking/reservations',{...post,headers:{...post.headers,Origin:'https://evil.example'}})).status,403);
+  const admin=await request('/api/booking/google/start',{method:'POST',headers:{...post.headers},body:'csrf='+csrf});
+  assert.equal(admin.headers.get('access-control-allow-origin'),null);
+  assert.equal(admin.status,403);
+});
+test('production booking pages and session are public while setup stays private',async t=>{
+  const f=fixture(),settings={encryptionKey:randomBytes(32).toString('base64'),password:'test-password-long-enough-12345',origin:'http://127.0.0.1',secure:false,host:'info@superquanti.com',allowedEmails:[],production:true,environment:'production'};
+  const staticRoot=await realpath(await mkdtemp(join(tmpdir(),'epme-booking-test-')));
+  await mkdir(join(staticRoot,'rendez-vous'),{recursive:true});
+  await writeFile(join(staticRoot,'rendez-vous','index.html'),'<!doctype html><title>Réservation</title>');
+  const server=makeServer({config:settings,staticRoot,...f});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  t.after(async()=>{await new Promise(resolve=>server.close(resolve));await rm(staticRoot,{recursive:true,force:true});});settings.origin='http://127.0.0.1:'+server.address().port;
+  const request=(path,options={})=>fetch(settings.origin+path,{redirect:'manual',...options});
+  const page=await request('/rendez-vous/');assert.equal(page.status,200);assert.equal(page.headers.get('x-robots-tag'),null);
+  const csp=page.headers.get('content-security-policy');
+  assert.match(csp,/frame-ancestors 'self' https:\/\/www\.essentielpme\.com https:\/\/essentielpme\.com/);
+  assert.doesNotMatch(csp,/dat\.essentielpme\.com|facebook\.net|googletagmanager/);
+  const status=await request('/api/booking/status');assert.equal(status.status,200);assert.match(status.headers.get('set-cookie'),/^epme_booking=/);
+  assert.equal((await request('/setup')).status,303);
 });

@@ -1,5 +1,6 @@
 node_modules/
 _staging/
+_booking/
 .env
 .env.*
 !.env.example

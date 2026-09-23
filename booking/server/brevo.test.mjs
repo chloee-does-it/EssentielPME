@@ -19,6 +19,12 @@ test('Brevo payload is staging-only and excludes consent, lists, secrets and fre
   for(const value of ['private','secret','token','OPT_IN','listIds','emailBlacklisted','SMS'])assert.ok(!JSON.stringify(job).includes(value));
   assert.equal(job.event.identifiers.email_id,record.guest.email);
 });
+test('production Brevo payload uses standard contact fields and production events',()=>{
+  const job=brevoJob('create',record,'operation',null,'production');
+  assert.deepEqual(job.contact.attributes,{FIRSTNAME:'Test',LASTNAME:'Person',COMPANY:'Sandbox'});
+  assert.equal(job.event.event_name,'epme_booking_created');assert.equal(job.event.event_properties.environment,'production');
+  for(const value of ['private','secret','listIds','emailBlacklisted'])assert.ok(!JSON.stringify(job).includes(value));
+});
 test('Brevo transport confines credentials to official HTTPS API with redirects disabled',async()=>{
   let sent;
   const client=new BrevoClient('private-api-key',async(url,options)=>{sent={url,options};return {ok:true};});
