@@ -14,6 +14,7 @@ class MemoryStore {
   async get(id){return structuredClone(this.records.get(id)||null);}
   async put(id,data){this.records.set(id,structuredClone(data));}
   async brevoJobs(){return [...this.records].filter(([,j])=>j.kind==='brevo'&&j.status!=='done').map(([id,j])=>({id,...structuredClone(j)}));}
+  async alertJobs(){return [...this.records].filter(([,j])=>j.kind==='alert'&&j.status!=='done').map(([id,j])=>({id,...structuredClone(j)}));}
   async atomic(fn){
     const task=this.queue.then(async()=>{
       const writes=[];const result=await fn({get:id=>this.get(id),put:(id,value)=>writes.push([id,value])});
@@ -87,10 +88,25 @@ test('Brevo outbox is atomic, ordered, deduplicated and independent of delivery'
   await sync.drain();assert.deepEqual(delivered,['epme_staging_booking_created','epme_staging_booking_rescheduled','epme_staging_booking_cancelled']);
   await sync.drain();assert.equal(delivered.length,3);
 });
+test('internal alerts are queued once after each confirmed production calendar change',async()=>{
+  const {service,input,store}=fixture();let kicks=0;
+  service.allowAll=true;service.environment='production';
+  service.alerts={kick(){kicks++;throw Error('Email unavailable');}};
+  const first=await service.perform('create',{...input,startedAt:service.now()-3000},'create-alert-idempotency-key-1234');
+  await service.perform('create',{...input,startedAt:service.now()-3000},'create-alert-idempotency-key-1234');
+  await service.perform('reschedule',{id:first.record.id,token:input.token,start:'2026-09-18T14:00:00.000Z'},'move-alert-idempotency-key-123456');
+  await service.perform('cancel',{id:first.record.id,token:input.token},'cancel-alert-idempotency-key-1234');
+  const jobs=await store.alertJobs();assert.equal(jobs.length,3);
+  assert.deepEqual(jobs.map(j=>j.action),['create','reschedule','cancel']);
+  assert.equal(jobs[1].previousStart,first.record.start);
+  assert.equal(kicks,3);
+  for(const job of jobs)assert.ok(!JSON.stringify(job).includes(input.token));
+});
 test('failed calendar mutations never enqueue a Brevo event',async()=>{
-  const {service,input,store}=fixture();service.brevo={kick(){}};
+  const {service,input,store}=fixture();service.brevo={kick(){}};service.alerts={kick(){}};service.environment='production';
   await assert.rejects(service.perform('create',{...input,start:'2026-09-17T11:00:00.000Z'},'create-idempotency-key-1111'));
   assert.equal((await store.brevoJobs()).length,0);
+  assert.equal((await store.alertJobs()).length,0);
 });
 test('concurrent requests on a single calendar cannot double-book',async()=>{
   const {service,input,calendar}=fixture();
@@ -119,6 +135,17 @@ test('configuration refuses missing protection and wrong projects',()=>{
   assert.throws(()=>config({}));
   const env={BOOKING_ORIGIN:'https://test.invalid',STAGING_PASSWORD:'x'.repeat(30),TOKEN_ENCRYPTION_KEY:'x',GOOGLE_CLIENT_ID:'x',GOOGLE_CLIENT_SECRET:'x',GOOGLE_SERVICE_ACCOUNT_JSON:'{"project_id":"production"}'};
   assert.throws(()=>config(env),/Wrong Google project/);
+});
+test('internal alert recipients are limited to production SuperQuanti mailboxes',()=>{
+  const base={BOOKING_ORIGIN:'https://booking.essentielpme.com',STAGING_PASSWORD:'x'.repeat(30),
+    TOKEN_ENCRYPTION_KEY:randomBytes(32).toString('base64'),GOOGLE_CLIENT_ID:'x',GOOGLE_CLIENT_SECRET:'x',
+    GOOGLE_SERVICE_ACCOUNT_JSON:'{"project_id":"essentielpme-reservations"}',BREVO_API_KEY:'x'};
+  assert.throws(()=>config({...base,BOOKING_ALERT_RECIPIENTS:'other@example.com'}),/Invalid internal alert recipients/);
+  assert.throws(()=>config({...base,BOOKING_ALERT_RECIPIENTS:'a@superquanti.com,a@superquanti.com'}),/Invalid internal alert recipients/);
+  assert.throws(()=>config({...base,BOOKING_ALERT_RECIPIENTS:'a@superquanti.com'}),/Internal alerts require production/);
+  assert.deepEqual(config({...base,BOOKING_ENVIRONMENT:'production',
+    BOOKING_ALERT_RECIPIENTS:'Benoit@superquanti.com, chloee.bonneau@superquanti.com'}).alertRecipients,
+  ['benoit@superquanti.com','chloee.bonneau@superquanti.com']);
 });
 test('HTTP requires access, same origin, CSRF, tokens and blocks secret paths',async t=>{
   const f=fixture(),settings={encryptionKey:randomBytes(32).toString('base64'),password:'test-password-long-enough-12345',origin:'http://127.0.0.1',secure:false,host:'info@superquanti.com',allowedEmails:[]};

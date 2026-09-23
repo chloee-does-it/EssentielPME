@@ -1,6 +1,7 @@
 import {RULES,slots,validGuest} from '../schedule.mjs';
 import {PublicError,hash,equal} from './security.mjs';
 import {brevoJob} from './brevo.mjs';
+import {alertJob} from './alerts.mjs';
 
 const idPattern=/^[a-f0-9]{48}$/;
 const keyPattern=/^[a-zA-Z0-9_-]{20,100}$/;
@@ -12,7 +13,7 @@ export function cleanGuest(input) {
   return guest;
 }
 export class BookingService {
-  constructor({store,calendar,allowedEmails,allowAll=false,environment='staging',brevo=null,now=()=>Date.now()}) {Object.assign(this,{store,calendar,allowedEmails,allowAll,environment,brevo,now});}
+  constructor({store,calendar,allowedEmails,allowAll=false,environment='staging',brevo=null,alerts=null,now=()=>Date.now()}) {Object.assign(this,{store,calendar,allowedEmails,allowAll,environment,brevo,alerts,now});}
   async get(id,token) {
     if(!idPattern.test(id||''))throw new PublicError('not_found',404);
     const record=await this.store.get('booking-'+id);
@@ -81,10 +82,12 @@ export class BookingService {
           tx.put(outboxId,brevoJob(action,record,opId,tail?.id||null,this.environment));
           tx.put('brevo-tail',{id:outboxId});
         }
+        if(this.alerts&&this.environment==='production')tx.put('alert-'+opId,alertJob(action,record,opId,previous));
       });
       // Delivery is independent of the Google confirmation and durably queued.
       // Never turn a confirmed calendar write into a failure due to Brevo.
       try{this.brevo?.kick();}catch{console.warn('brevo_sync_pending');}
+      try{this.alerts?.kick();}catch{console.warn('booking_alert_sync_pending');}
       return {record};
     } catch(error) {
       // A timeout/5xx after dispatch may have created the event. Keep the lock and

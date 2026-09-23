@@ -11,6 +11,11 @@ export class Store {
     return snapshot.docs.map(doc=>({id:doc.id,...doc.data()}))
       .filter(job=>job.status!=='done').sort((a,b)=>a.createdAt.localeCompare(b.createdAt));
   }
+  async alertJobs() {
+    const snapshot=await this.collection.where('kind','==','alert').get();
+    return snapshot.docs.map(doc=>({id:doc.id,...doc.data()}))
+      .filter(job=>job.status!=='done').sort((a,b)=>a.createdAt.localeCompare(b.createdAt));
+  }
   async atomic(fn) {
     return this.db.runTransaction(tx=>fn({
       get:async id=>(await tx.get(this.collection.doc(id))).data()||null,

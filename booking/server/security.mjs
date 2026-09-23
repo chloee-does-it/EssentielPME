@@ -36,6 +36,12 @@ export function config(env=process.env) {
   const host=env.GOOGLE_HOST_EMAIL||'info@superquanti.com';
   if(host!=='info@superquanti.com') throw new Error('Unexpected host');
   const environment=env.BOOKING_ENVIRONMENT==='production'?'production':'staging';
+  const alertRecipients=(env.BOOKING_ALERT_RECIPIENTS||'').split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);
+  if(alertRecipients.length>5||new Set(alertRecipients).size!==alertRecipients.length||
+    alertRecipients.some(email=>!/^[a-z0-9._%+-]+@superquanti\.com$/.test(email)))
+    throw new Error('Invalid internal alert recipients');
+  if(alertRecipients.length&&(environment!=='production'||!env.BREVO_API_KEY))
+    throw new Error('Internal alerts require production and Brevo');
   const collection=env.BOOKING_COLLECTION||(environment==='production'?'booking-production':'booking-staging');
   const migrateCollection=env.BOOKING_MIGRATE_COLLECTION||null;
   if(!/^booking-[a-z0-9-]+$/.test(collection)||migrateCollection&&!/^booking-[a-z0-9-]+$/.test(migrateCollection))throw new Error('Invalid booking collection');
@@ -43,6 +49,7 @@ export function config(env=process.env) {
     clientId:env.GOOGLE_CLIENT_ID, clientSecret:env.GOOGLE_CLIENT_SECRET, credentials, host,
     environment,production:environment==='production',collection,migrateCollection,
     brevoApiKey:env.BREVO_API_KEY||null,
+    alertRecipients,
     allowedEmails:(env.BOOKING_TEST_EMAILS||'').split(',').map(x=>x.trim().toLowerCase()).filter(Boolean),
     port:Number(env.PORT||8080), secure:origin.protocol==='https:'};
 }
