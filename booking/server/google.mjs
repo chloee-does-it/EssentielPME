@@ -3,6 +3,7 @@ import {RULES,torontoInstant} from '../schedule.mjs';
 import {PublicError} from './security.mjs';
 
 export const SCOPES=['openid','email','https://www.googleapis.com/auth/calendar.events.owned','https://www.googleapis.com/auth/calendar.freebusy'];
+export const internalEventId=id=>'epmeinternal'+id;
 export class GoogleCalendar {
   constructor(config,store,vault) { this.config=config;this.store=store;this.vault=vault; }
   oauth() { return new OAuth2Client({clientId:this.config.clientId,clientSecret:this.config.clientSecret,redirectUri:this.config.origin+'/api/booking/google/callback'}); }
@@ -77,5 +78,47 @@ export class GoogleCalendar {
   async cancel(id,etag) {
     try{return await this.request('/calendars/primary/events/'+id+'?sendUpdates=all',{method:'DELETE',etag});}
     catch(error){if(![404,410].includes(error.googleStatus))throw error;}
+  }
+  async internal(job,recipients) {
+    const {booking,action,operation}=job,id=internalEventId(booking.id);
+    const current=await this.event(id);
+    if(current&&current.status!=='cancelled'&&
+      (current.extendedProperties?.private?.epmeBooking!==booking.id||
+       current.extendedProperties?.private?.epmeInternal!=='1'))
+      throw new PublicError('calendar_event_changed',409);
+    if(action==='cancel') {
+      if(!current||current.status==='cancelled')return null;
+      return this.cancel(id,current.etag);
+    }
+    if(current?.status!=='cancelled'&&current?.extendedProperties?.private?.epmeOperation===operation)return current;
+    let meet=booking.meet;
+    if(!meet){
+      const primary=await this.event(booking.id);
+      if(primary?.extendedProperties?.private?.epmeBooking===booking.id)
+        meet=primary.hangoutLink||primary.conferenceData?.entryPoints?.find(x=>x.entryPointType==='video')?.uri||null;
+      if(!meet)throw new PublicError('meet_pending',503);
+    }
+    const guest=booking.guest;
+    const body={summary:`Suivi interne — Appel découverte — ${guest.first} ${guest.last}`,
+      description:[`Client : ${guest.first} ${guest.last}`,`Entreprise : ${guest.company}`,
+        `Courriel : ${guest.email}`,...(guest.phone?[`Téléphone : ${guest.phone}`]:[]),
+        `Google Meet : ${meet}`].join('\n'),
+      start:{dateTime:booking.start,timeZone:RULES.zone},end:{dateTime:booking.end,timeZone:RULES.zone},
+      visibility:'private',guestsCanModify:false,guestsCanInviteOthers:false,
+      guestsCanSeeOtherGuests:false,transparency:'transparent',
+      extendedProperties:{private:{epmeBooking:booking.id,epmeInternal:'1',epmeOperation:operation}}};
+    if(current&&current.status!=='cancelled')
+      return this.request('/calendars/primary/events/'+id+'?sendUpdates=all',{method:'PATCH',etag:current.etag,body});
+    body.id=id;body.attendees=recipients.map(email=>({email}));
+    try{return await this.request('/calendars/primary/events?sendUpdates=all',{method:'POST',body});}
+    catch(error){
+      if(error.googleStatus===409){
+        const existing=await this.event(id);
+        if(existing?.extendedProperties?.private?.epmeBooking===booking.id&&
+          existing.extendedProperties.private.epmeInternal==='1'&&
+          existing.extendedProperties.private.epmeOperation===operation)return existing;
+      }
+      throw error;
+    }
   }
 }
