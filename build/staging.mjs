@@ -16,12 +16,11 @@ mkdirSync(join(out, 'assets/booking'), { recursive: true });
 for (const file of ['schedule.mjs', 'tracking.mjs', 'booking.mjs', 'booking.css']) {
   cpSync(join(root, 'booking', file), join(out, 'assets/booking', file));
 }
-for (const [route, en, confirmation] of [
-  ['rendez-vous', false, false], ['en/book', true, false],
-  ['merci/rendez-vous', false, true], ['en/booking-confirmed', true, true]
+for (const [route, en] of [
+  ['rendez-vous', false], ['en/book', true]
 ]) {
   mkdirSync(join(out, route), { recursive: true });
-  writeFileSync(join(out, route, 'index.html'), bookingPage(en, confirmation));
+  writeFileSync(join(out, route, 'index.html'), bookingPage(en, false));
 }
 
 function walk(dir) {
@@ -49,6 +48,7 @@ for (const path of pages) {
     .replace(/<iframe\b[^>]*src=["']https:\/\/meet\.brevo\.com[^"']*["'][^>]*>[\s\S]*?<\/iframe>/gi,
       `<div class="bk-root" data-booking-app data-embedded><p>${en ? 'Loading the calendar…' : 'Chargement du calendrier…'}</p></div>`)
     .replace(/href=["']https:\/\/meet\.brevo\.com[^"']*["']/gi, `href="${bookingPath}"`)
+    .replace(/href=["']https:\/\/booking\.essentielpme\.com\/(?:rendez-vous|en\/book)\/["']/gi, `href="${bookingPath}"`)
     .replace(/<head>/i, `<head>\n<meta name="robots" content="noindex, nofollow, noarchive">\n<meta http-equiv="Content-Security-Policy" content="connect-src 'self'; frame-src 'none'; form-action 'none'; object-src 'none'; base-uri 'self'">\n<script src="/assets/js/staging-guard.js"></script>`)
     .replace(/<body([^>]*)>/i, `<body$1><aside id="staging-notice" role="note" style="position:relative;z-index:9999;background:#4B2E83;color:white;padding:12px 20px;text-align:center;font:600 14px system-ui">${label}</aside>`);
   assert.match(html, /noindex, nofollow, noarchive/);
