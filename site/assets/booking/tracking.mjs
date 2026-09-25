@@ -20,9 +20,37 @@ export function bookingTrackingEvent(kind,{locale='fr-CA',environment='productio
 
 export function nativeBookingTrackingAllowed(rawConsent){
   if(!rawConsent)return false;
-  if(rawConsent==='granted')return true;
   try{
     const consent=JSON.parse(rawConsent);
-    return consent?.analytics===true&&consent?.ads===true;
+    // Older consent predates disclosure of booking identity sharing with Meta.
+    return consent?.version===2&&(consent?.analytics===true||consent?.ads===true);
   }catch{return false;}
+}
+
+export function nativeBookingAdvertisingAllowed(rawConsent){
+  if(!rawConsent)return false;
+  try{
+    const consent=JSON.parse(rawConsent);
+    return consent?.version===2&&consent?.ads===true;
+  }catch{return false;}
+}
+
+export function bookingMetaUserData(guest){
+  if(!guest||typeof guest!=='object')return null;
+  const first=String(guest.first||'').trim();
+  const last=String(guest.last||'').trim();
+  const email=String(guest.email||'').trim().toLowerCase();
+  if(!first||!last||!email)return null;
+  const rawPhone=String(guest.phone||'').trim();
+  const digits=rawPhone.replace(/[^0-9]/g,'');
+  const phone=digits.length===10?'+1'+digits:
+    digits.length===11&&digits[0]==='1'?'+'+digits:
+    rawPhone.startsWith('+')&&digits.length>=8&&digits.length<=15?'+'+digits:'';
+  return {
+    email,
+    ...(phone?{phone_number:phone}:{}),
+    first_name:first,
+    last_name:last,
+    address:{first_name:first,last_name:last}
+  };
 }

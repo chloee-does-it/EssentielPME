@@ -24,3 +24,14 @@ test('private confirmation pages remove the management token before GTM loads',(
     assert.doesNotMatch(html,/<iframe[^>]+booking\.essentielpme\.com/);
   }
 });
+
+test('site consent discloses Meta booking identity sharing in both languages',()=>{
+  const fr=site('contact/index.html');
+  const en=site('en/contact/index.html');
+  assert.match(fr,/data-consent-reject/);
+  assert.match(en,/data-consent-reject/);
+  assert.match(fr,/transmettons aussi à Meta la confirmation, vos prénom, nom, courriel et téléphone/);
+  assert.match(en,/send Meta the confirmation, your first and last name, email, and phone/);
+  assert.match(fr,/La réservation reste possible sans cet accord/);
+  assert.match(en,/You can still book without this choice/);
+});

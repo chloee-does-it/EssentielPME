@@ -7,14 +7,21 @@
   var HEADER_OFFSET = 84;
   var EN = document.documentElement.getAttribute('lang') === 'en';
 
-  /* Consentement mémorisé ({analytics, ads}) ou null. Formats hérités : granted/denied. */
+  /* Consentement mémorisé ({version, analytics, ads}) ou null.
+     Un ancien accord publicitaire doit être redemandé après la nouvelle
+     divulgation sur les coordonnées de réservation transmises à Meta. */
   function getConsent() {
     var raw = null;
     try { raw = localStorage.getItem('epme_consent'); } catch (e) {}
     if (!raw) return null;
-    if (raw === 'granted') return { analytics: true, ads: true };
     if (raw === 'denied') return { analytics: false, ads: false };
-    try { var c = JSON.parse(raw); if (c && typeof c === 'object') return c; } catch (e) {}
+    try {
+      var c = JSON.parse(raw);
+      if (c && typeof c === 'object' && typeof c.analytics === 'boolean' && typeof c.ads === 'boolean') {
+        if (c.ads && c.version !== 2) return null;
+        return c;
+      }
+    } catch (e) {}
     return null;
   }
 
@@ -363,6 +370,7 @@
     }
 
     function save(c) {
+      c.version = 2;
       try { localStorage.setItem('epme_consent', JSON.stringify(c)); } catch (e) {}
       apply(c);
       banner.hidden = true;
@@ -381,6 +389,9 @@
 
     banner.querySelector('[data-consent-accept]').addEventListener('click', function () {
       save({ analytics: true, ads: true });
+    });
+    banner.querySelector('[data-consent-reject]').addEventListener('click', function () {
+      save({ analytics: false, ads: false });
     });
     banner.querySelector('[data-consent-customize]').addEventListener('click', openPanel);
     banner.querySelector('[data-consent-optional-refuse]').addEventListener('click', function () {
