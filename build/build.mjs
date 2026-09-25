@@ -11,6 +11,8 @@ import {
   industries, blogFeatured, blogArticles,
 } from './data.mjs';
 import { DICT, META_EN, norm } from './i18n-dict.mjs';
+import { landingContent, landingHeader, landingFooter, landingTranslations } from './industry-landing.mjs';
+
 
 const GTM_ID = 'GTM-NWFC4HHZ';
 
@@ -239,7 +241,7 @@ function footer(root) {
   </footer>`;
 }
 
-function shell({ path, title, desc, active, jsonld = [], body, label, frOnly = false, headExtras = '' }) {
+function shell({ path, title, desc, active, jsonld = [], body, label, frOnly = false, headExtras = '', landing = false }) {
   const root = '/';
   const pagePath = '/' + path.replace(/index\.html$/, '');
   const enPagePath = frOnly ? '/en/' : enPagePathOf(pagePath);
@@ -282,16 +284,16 @@ function shell({ path, title, desc, active, jsonld = [], body, label, frOnly = f
 ${headExtras?headExtras+'\n':''}${GTM_HEAD}
 ${blocks}
 </head>
-<body>
+<body${landing ? ' class="industry-lp"' : ''}>
 ${GTM_NOSCRIPT}
 <div class="we-page">
-${header(active, root, pagePath, enPagePath)}
+${landing ? landingHeader(pagePath, enPagePath) : header(active, root, pagePath, enPagePath)}
   <main id="contenu" data-screen-label="${label}" style="animation: epFadeUp 300ms cubic-bezier(0.2,0.7,0.2,1);">
 ${body}
   </main>
-${footer(root)}
+${landing ? landingFooter() : footer(root)}
 </div>
-${consentUI(root)}
+${consentUI(root, landing)}
 <script src="${root}assets/js/config.js"></script>
 <script src="${root}assets/js/main.js"></script>
 </body>
@@ -645,6 +647,14 @@ ${ctaBand({ h: 'Prêt à démarrer vos pubs&nbsp;?', p: 'On configure tout&nbsp;
 }
 
 function industryPage(ind) {
+  if (['construction', 'services-pro'].includes(ind.key)) {
+    const content = landingContent(ind.key);
+    return shell({ path: `industries/${ind.key}/index.html`, active: 'industries', label: ind.label,
+      ...content, landing: true,
+      jsonld: [{ '@context': 'https://schema.org', '@type': 'Service', name: content.title,
+        description: content.desc, provider: { '@type': 'Organization', name: SITE.name }, areaServed: 'Québec, CA' }],
+    });
+  }
   const root = '/';
   const pills = industries.map((x) =>
     `            <a href="/industries/${x.key}/" class="btn ${x.key === ind.key ? 'btn-primary' : 'btn-secondary'}" style="padding:9px 16px; font-size:13.5px;">${x.label}</a>`
@@ -2112,14 +2122,15 @@ const decodeEnt = (s) => s
   .replace(/&nbsp;/g, ' ').replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&');
 const encodeEnt = (s) => s.replace(/&/g, '&amp;');
 
-function trText(txt) {
-  const en = DICT[norm(decodeEnt(txt))];
+function trText(txt, dictionary = DICT) {
+  const en = dictionary[norm(decodeEnt(txt))];
   if (en == null) return txt;
   return txt.match(/^\s*/)[0] + encodeEnt(en) + txt.match(/\s*$/)[0];
 }
 
 /* Produit la version anglaise d'une page française générée. */
 function toEnglish(html, pagePath) {
+  const dictionary = html.includes('class="industry-lp"') ? { ...DICT, ...Object.fromEntries(landingTranslations.map(([fr,en]) => [norm(fr),en])) } : DICT;
   const frCanon = `${SITE.baseUrl}${pagePath}`;
   const enCanon = `${SITE.baseUrl}${enPagePathOf(pagePath)}`;
 
@@ -2128,19 +2139,19 @@ function toEnglish(html, pagePath) {
   html = html.replace(/<script[\s\S]*?<\/script>/g, (m) => `@@SCRIPT${guards.push(m) - 1}@@`);
 
   // 2. Nœuds texte (entre balises)
-  html = html.replace(/>([^<]+)</g, (m, txt) => (txt.trim() ? `>${trText(txt)}<` : m));
+  html = html.replace(/>([^<]+)</g, (m, txt) => (txt.trim() ? `>${trText(txt, dictionary)}<` : m));
 
   // 3. Attributs traduisibles
   html = html.replace(/(placeholder|alt|aria-label|title)="([^"]*)"/g, (m, attr, val) => {
-    const en = DICT[norm(decodeEnt(val))];
+    const en = dictionary[norm(decodeEnt(val))];
     return en == null ? m : `${attr}="${encodeEnt(en).replace(/"/g, '&quot;')}"`;
   });
 
   // 4. Métadonnées (title, descriptions, OG)
-  html = html.replace(/<title>([^<]*)<\/title>/, (m, t) => `<title>${META_EN[norm(decodeEnt(t))] || t}</title>`);
+  html = html.replace(/<title>([^<]*)<\/title>/, (m, t) => `<title>${META_EN[norm(decodeEnt(t))] || dictionary[norm(decodeEnt(t))] || t}</title>`);
   html = html.replace(/((?:name="description"|property="og:title"|property="og:description") content=")([^"]*)"/g,
     (m, pre, val) => {
-      const en = META_EN[norm(decodeEnt(val))] || DICT[norm(decodeEnt(val))];
+      const en = META_EN[norm(decodeEnt(val))] || dictionary[norm(decodeEnt(val))];
       return en == null ? m : `${pre}${encodeEnt(en).replace(/"/g, '&quot;')}"`;
     });
 
