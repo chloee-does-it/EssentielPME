@@ -35,3 +35,15 @@ test('site consent discloses Meta booking identity sharing in both languages',()
   assert.match(fr,/La réservation reste possible sans cet accord/);
   assert.match(en,/You can still book without this choice/);
 });
+
+test('native booking form keeps a short privacy note while site consent remains the disclosure',()=>{
+  const script=site('assets/booking/booking.mjs');
+  assert.match(script,/privacy:'Les champs marqués \* sont obligatoires\. Vos coordonnées servent à organiser et à gérer ce rendez-vous\.'/);
+  assert.match(script,/privacy:'Required fields are marked \*\. Your details are used to arrange and manage this appointment\.'/);
+  assert.doesNotMatch(script,/privacy:'[^']*(?:transmis à Meta|sent to Meta)/);
+  for(const path of ['industries/construction/index.html','en/industries/construction/index.html']){
+    const html=site(path);
+    assert.match(html,/class="lp-booking-dialog"/);
+    assert.match(html,/data-booking-app data-embedded data-native/);
+  }
+});

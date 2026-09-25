@@ -85,14 +85,14 @@ function trackPendingConfirmation(record){
 }
 if(production)Object.assign(t,en?{
   demo:'Online booking',demoText:'Live availability from the organizer’s calendar.',submit:'Confirm my appointment',
-  privacy:'Required fields are marked *. Your details are used to arrange and manage this appointment. If you accepted “Advertising” on this site, the booking confirmation and your first name, last name, email and phone (if provided) are also sent to Meta to measure ads. Booking works without this choice.',
+  privacy:'Required fields are marked *. Your details are used to arrange and manage this appointment.',
   success:'Your appointment is confirmed.',successNote:'Your calendar invitation and unique Google Meet link are being sent by Google.',
   videoPending:'Google Meet link is being prepared. Reload this page shortly.',cancelNote:'The cancellation has been sent to Google Calendar.',
   cancelPrompt:'Cancel this appointment?',cancelled:'Appointment cancelled',new:'Book another appointment',moved:'Your appointment has been rescheduled.',
   expired:'Appointment not found.',expiredNote:'Use your private management link or contact the organizer.',ref:'Reference'
 }:{
   demo:'Réservation en ligne',demoText:'Disponibilités réelles du calendrier de l’organisateur.',submit:'Confirmer mon rendez-vous',
-  privacy:'Les champs marqués * sont obligatoires. Vos coordonnées servent à organiser et à gérer ce rendez-vous. Si vous avez accepté « Publicitaires » sur ce site, la confirmation et vos prénom, nom, courriel et téléphone (si fourni) sont aussi transmis à Meta pour mesurer nos publicités. La réservation fonctionne sans cet accord.',
+  privacy:'Les champs marqués * sont obligatoires. Vos coordonnées servent à organiser et à gérer ce rendez-vous.',
   success:'Votre rendez-vous est confirmé.',successNote:'Votre invitation et votre lien Google Meet unique sont en cours d’envoi par Google.',
   videoPending:'Le lien Google Meet est en préparation. Actualisez cette page dans un instant.',cancelNote:'L’annulation a été transmise à Google Calendar.',
   cancelPrompt:'Annuler ce rendez-vous ?',cancelled:'Rendez-vous annulé',new:'Réserver un autre rendez-vous',moved:'Votre rendez-vous a été déplacé.',
