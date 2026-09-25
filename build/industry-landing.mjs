@@ -10,7 +10,7 @@ const shared = {
 const sectors = {
   construction: {
     title: 'Publicité en construction au Québec | Essentiel PME',
-    desc: 'Confiez vos campagnes publicitaires à EPME. Gestion de publicité en ligne pour entrepreneurs en construction et métiers au Québec. Réservez un appel découverte.',
+    desc: 'Confiez vos campagnes publicitaires à Essentiel PME. Gestion de publicité en ligne pour entrepreneurs en construction et métiers au Québec. Réservez un appel découverte.',
     eyebrow: 'CONSTRUCTION ET MÉTIERS',
     heading: 'Votre publicité en construction, gérée pour vous.',
     intro: 'Des campagnes adaptées à vos travaux, à votre territoire et à votre budget.',
@@ -30,7 +30,7 @@ const sectors = {
   },
   'services-pro': {
     title: 'Publicité pour services professionnels | Essentiel PME',
-    desc: 'Confiez la publicité de votre entreprise de services à EPME. Des campagnes adaptées à votre expertise, à votre clientèle et à votre budget. Parlons de vos objectifs.',
+    desc: 'Confiez la publicité de votre entreprise de services à Essentiel PME. Des campagnes adaptées à votre expertise, à votre clientèle et à votre budget. Parlons de vos objectifs.',
     eyebrow: 'PROFESSIONNELS ET ENTREPRISES DE SERVICES',
     heading: 'Vous offrez les services. On gère votre publicité.',
     intro: 'Des campagnes adaptées à votre expertise, à vos clients et à votre budget.',
@@ -57,7 +57,7 @@ export function landingHeader(fr, en) {
   return `<a class="skip-link" href="#contenu">Aller au contenu</a>
   <header class="lp-header"><div class="lp-container lp-header-inner">
     <a class="lp-logo" href="/" aria-label="Essentiel PME (Accueil)"><img src="/assets/img/logo-h-fr-rgb.svg" alt="Essentiel PME" width="200" height="60"></a>
-    <nav aria-label="Navigation principale"><a href="#accompagnement">L’accompagnement</a><a href="#pourquoi">Pourquoi EPME</a><a href="#faq">FAQ</a><a href="/contact/" data-lp-book="navigation">Prendre rendez-vous</a></nav>
+    <nav aria-label="Navigation principale"><a href="#accompagnement">L’accompagnement</a><a href="#pourquoi">Pourquoi Essentiel PME</a><a href="#faq">FAQ</a><a href="/contact/" data-lp-book="navigation">Prendre rendez-vous</a></nav>
     <div class="lp-language"><a data-lang-link="fr" href="${fr}" class="active" hreflang="fr-CA">FR</a><span>·</span><a data-lang-link="en" href="${en}" hreflang="en-CA">EN</a></div>
   </div></header>`;
 }
@@ -109,7 +109,7 @@ export function landingContent(key) {
 export const landingTranslations = [
   ['Publicité en construction au Québec | Essentiel PME','Construction advertising in Quebec | SMB Essentials'],
   ['Publicité pour services professionnels | Essentiel PME','Advertising for service businesses | SMB Essentials'],
-  ['L’accompagnement','Our service'],['Pourquoi EPME','Why choose us'],['Prendre rendez-vous','Book a call'],['Liens utiles','Useful links'],['Nos forfaits','Our packages'],['Nous joindre','Contact us'],['Confidentialité','Privacy'],
+  ['L’accompagnement','Our service'],['Pourquoi Essentiel PME','Why choose us'],['Prendre rendez-vous','Book a call'],['Liens utiles','Useful links'],['Nos forfaits','Our packages'],['Nous joindre','Contact us'],['Confidentialité','Privacy'],
   ['Réserver mon appel découverte','Book my discovery call'],['Fermer le calendrier','Close the calendar'],
   ['CONSTRUCTION ET MÉTIERS','CONSTRUCTION AND TRADES'],['PROFESSIONNELS ET ENTREPRISES DE SERVICES','PROFESSIONALS AND SERVICE BUSINESSES'],
   ['Votre publicité en construction, gérée pour vous.','Your construction advertising, managed for you.'],
@@ -132,6 +132,6 @@ export const landingTranslations = [
   ['Est-ce adapté à mon entreprise de services ?','Is this right for my service business?'],['Notre accompagnement s’adresse aux professionnels autonomes et aux entreprises de services : consultation, design, formation et autres expertises. On évalue avec vous les services à promouvoir, la clientèle à rejoindre et le budget disponible.','We support independent professionals and service businesses, including consulting, design, training and other areas of expertise. Together, we assess the services to promote, the clients to reach and the available budget.'],
   ['Comment se déroule le premier appel ?','What happens during the first call?'],['On discute de vos services, de vos objectifs, de votre clientèle et de votre budget. Cet échange permet de voir si notre accompagnement convient à votre entreprise et de vous expliquer les prochaines étapes.','We discuss your services, goals, clients and budget. This conversation helps us see whether our service fits your business and explain the next steps.'],
   ['Entrepreneur en construction qui consulte des plans sur un chantier résidentiel','Construction contractor reviewing plans on a residential job site'],['Entrepreneur qui consulte une campagne publicitaire sur son ordinateur','Contractor reviewing an advertising campaign on a laptop'],['Professionnel autonome qui prépare un mandat client à son bureau','Independent professional preparing client work at a desk'],['Professionnel qui examine sa publicité en ligne, avec ses notes de travail','Professional reviewing online advertising alongside work notes'],
-  ['Confiez vos campagnes publicitaires à EPME. Gestion de publicité en ligne pour entrepreneurs en construction et métiers au Québec. Réservez un appel découverte.','Delegate your advertising campaigns to SMB Essentials. Online advertising management for construction contractors and trades in Quebec. Book a discovery call.'],
-  ['Confiez la publicité de votre entreprise de services à EPME. Des campagnes adaptées à votre expertise, à votre clientèle et à votre budget. Parlons de vos objectifs.','Delegate your service business advertising to SMB Essentials. Campaigns tailored to your expertise, clients and budget. Let’s discuss your goals.'],
+  ['Confiez vos campagnes publicitaires à Essentiel PME. Gestion de publicité en ligne pour entrepreneurs en construction et métiers au Québec. Réservez un appel découverte.','Delegate your advertising campaigns to SMB Essentials. Online advertising management for construction contractors and trades in Quebec. Book a discovery call.'],
+  ['Confiez la publicité de votre entreprise de services à Essentiel PME. Des campagnes adaptées à votre expertise, à votre clientèle et à votre budget. Parlons de vos objectifs.','Delegate your service business advertising to SMB Essentials. Campaigns tailored to your expertise, clients and budget. Let’s discuss your goals.'],
 ];
