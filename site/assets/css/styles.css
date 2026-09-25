@@ -496,6 +496,7 @@ img { max-width: 100%; }
    Pas d'assombrissement ni de verrou, le visiteur venu d'une publicité lit
    l'offre et remplit le formulaire sans avoir à répondre d'abord. */
 .consent-overlay.consent-inline { inset: auto 0 0 0; background: none; backdrop-filter: none; padding: 0; display: block; }
+.consent-overlay.consent-inline[hidden] { display: none; }
 .consent-inline .consent-banner { max-width: 1080px; margin: 0 auto; border-radius: 18px 18px 0 0; padding: 16px 24px 18px; border: 1px solid var(--border); border-bottom: none; box-shadow: 0 -14px 44px rgba(20,10,40,0.20); }
 .consent-inline .consent-banner h3 { font-size: 16px; margin-bottom: 5px; }
 .consent-inline .consent-banner p { font-size: 13.5px; margin-bottom: 0; }

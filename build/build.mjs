@@ -11,7 +11,7 @@ import {
   industries, blogFeatured, blogArticles,
 } from './data.mjs';
 import { DICT, META_EN, norm } from './i18n-dict.mjs';
-import { landingContent, landingHeader, landingFooter, landingTranslations } from './industry-landing.mjs';
+import { landingContent, landingFooter, landingTranslations } from './industry-landing.mjs';
 
 
 const GTM_ID = 'GTM-NWFC4HHZ';
@@ -67,6 +67,7 @@ const consentUI = (root, inline) => `<div class="consent-overlay${inline ? ' con
 
 /* Slugs anglais des pages (les URLs /en/ utilisent des mots anglais) */
 const EN_SLUGS = {
+  'publicite-pme-quebec': 'advertising-quebec-small-businesses',
   'publicite': 'advertising',
   'plateformes': 'platforms',
   'a-propos': 'about',
@@ -280,14 +281,14 @@ function shell({ path, title, desc, active, jsonld = [], body, label, frOnly = f
   <meta property="og:url" content="${canonical}">
   <meta property="og:image" content="${SITE.baseUrl}/assets/img/og-cover.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="${root}assets/css/styles.css">
+  <link rel="stylesheet" href="${root}assets/css/styles.css${landing ? '?v=20260925-consent' : ''}">
 ${headExtras?headExtras+'\n':''}${GTM_HEAD}
 ${blocks}
 </head>
 <body${landing ? ' class="industry-lp"' : ''}>
 ${GTM_NOSCRIPT}
 <div class="we-page">
-${landing ? landingHeader(pagePath, enPagePath) : header(active, root, pagePath, enPagePath)}
+${header(active, root, pagePath, enPagePath)}
   <main id="contenu" data-screen-label="${label}" style="animation: epFadeUp 300ms cubic-bezier(0.2,0.7,0.2,1);">
 ${body}
   </main>
@@ -2185,6 +2186,13 @@ function toEnglish(html, pagePath) {
 /* ================= emit ================= */
 
 const pages = [
+  ['publicite-pme-quebec/index.html', shell({
+    path: 'publicite-pme-quebec/index.html', active: '', label: 'PME du Québec',
+    ...landingContent('pme-quebec'), landing: true,
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'Service',
+      name: landingContent('pme-quebec').title, description: landingContent('pme-quebec').desc,
+      provider: { '@type': 'Organization', name: SITE.name }, areaServed: 'Québec, CA' }],
+  })],
   ['index.html', homePage()],
   ['publicite/index.html', publicitePage()],
   ['plateformes/index.html', plateformesPage()],

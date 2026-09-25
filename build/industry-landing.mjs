@@ -1,4 +1,4 @@
-// The two approved BoF landing pages. Other industries retain their template.
+// Approved BoF landing pages. Other industries retain their template.
 const shared = {
   why: [
     ['Une offre pensée pour les PME', 'Un accompagnement adapté à vos priorités.'],
@@ -50,6 +50,25 @@ const sectors = {
   },
 };
 
+sectors['pme-quebec'] = {
+  ...sectors['services-pro'],
+  imageKey: 'services-pro',
+  title: 'Publicité en ligne pour PME au Québec | Essentiel PME',
+  desc: 'Gestion de publicité en ligne pour les PME du Québec. Des campagnes adaptées à vos objectifs et à votre budget. Réservez votre appel découverte avec Essentiel PME.',
+  eyebrow: 'PME DU QUÉBEC',
+  heading: 'Votre publicité en ligne, gérée pour vous.',
+  intro: 'Des campagnes adaptées à votre entreprise, à vos clients et à votre budget.',
+  approach: 'Vous gérez votre PME. On gère vos campagnes.',
+  rows: [
+    ['Une stratégie adaptée', 'On part de votre offre et des clients que vous voulez rejoindre.'],
+    ['Des annonces qui vous ressemblent', 'Vous validez les messages avant leur diffusion.'],
+    ['Un suivi clair', 'On suit les campagnes et on les ajuste avec vous.'],
+  ],
+  closing: 'Un premier échange pour discuter de votre entreprise et de vos objectifs publicitaires.',
+  sectorQuestion: 'Est-ce adapté à mon secteur d’activité ?',
+  sectorAnswer: 'Nous accompagnons les PME du Québec, qu’elles vendent des produits ou des services. Le premier appel sert à évaluer votre offre, votre marché et votre budget, puis à déterminer si notre accompagnement vous convient.',
+};
+
 const cta = (placement) => `<a class="lp-cta" href="/contact/" data-lp-book="${placement}">Réserver mon appel découverte</a>`;
 const rows = (items) => `<dl class="lp-rows">${items.map(([title, text]) => `<div><dt>${title}</dt><dd>${text}</dd></div>`).join('')}</dl>`;
 
@@ -72,6 +91,7 @@ export function landingFooter() {
 
 export function landingContent(key) {
   const s = sectors[key];
+  const imageKey = s.imageKey || key;
   const faq = [
     ['Le budget publicitaire est-il inclus ?', 'Non. Les frais de gestion couvrent notre accompagnement. Le budget média est payé séparément aux plateformes.'],
     ['Que comprend la gestion des campagnes ?', 'Selon le forfait choisi, on prend en charge la configuration, la rédaction des annonces, le ciblage, l’optimisation et les rapports. Le nombre de plateformes et la fréquence du suivi sont précisés avant de commencer.'],
@@ -86,11 +106,11 @@ export function landingContent(key) {
     body: `<div class="lp-content" data-lp-sector="${key}">
       <section class="lp-hero lp-container lp-split" aria-labelledby="lp-title">
         <div class="lp-hero-copy"><p class="lp-eyebrow">${s.eyebrow}</p><h1 id="lp-title">${s.heading}</h1><p class="lp-intro">${s.intro}</p>${cta('hero')}</div>
-        <img class="lp-photo lp-hero-photo" src="/assets/img/lp-${key}-hero.webp" alt="${s.heroAlt}" width="1200" height="900" fetchpriority="high" decoding="async">
+        <img class="lp-photo lp-hero-photo" src="/assets/img/lp-${imageKey}-hero.webp" alt="${s.heroAlt}" width="1200" height="900" fetchpriority="high" decoding="async">
       </section>
       <section class="lp-container lp-section lp-split" id="accompagnement" aria-labelledby="approach-title"><h2 id="approach-title">${s.approach}</h2>${rows(s.rows)}</section>
       <section class="lp-container lp-section lp-split lp-why" id="pourquoi" aria-labelledby="why-title">
-        <img class="lp-photo" src="/assets/img/lp-${key}-detail.webp" alt="${s.detailAlt}" width="1200" height="900" loading="lazy" decoding="async">
+        <img class="lp-photo" src="/assets/img/lp-${imageKey}-detail.webp" alt="${s.detailAlt}" width="1200" height="900" loading="lazy" decoding="async">
         <div><h2 id="why-title">Pourquoi choisir Essentiel PME ?</h2>${rows(shared.why)}</div>
       </section>
       <section class="lp-price-band" aria-labelledby="price-title"><div class="lp-container lp-split">
@@ -107,6 +127,16 @@ export function landingContent(key) {
 }
 
 export const landingTranslations = [
+  ['Publicité en ligne pour PME au Québec | Essentiel PME', 'Online advertising for Quebec small businesses | SMB Essentials'],
+  ['Gestion de publicité en ligne pour les PME du Québec. Des campagnes adaptées à vos objectifs et à votre budget. Réservez votre appel découverte avec Essentiel PME.', 'Online advertising management for Quebec small businesses. Campaigns tailored to your goals and budget. Book your discovery call with SMB Essentials.'],
+  ['PME DU QUÉBEC', 'QUEBEC SMALL BUSINESSES'],
+  ['Votre publicité en ligne, gérée pour vous.', 'Your online advertising, managed for you.'],
+  ['Des campagnes adaptées à votre entreprise, à vos clients et à votre budget.', 'Campaigns tailored to your business, your customers and your budget.'],
+  ['Vous gérez votre PME. On gère vos campagnes.', 'You run your business. We manage your campaigns.'],
+  ['On part de votre offre et des clients que vous voulez rejoindre.', 'We start with what you offer and the customers you want to reach.'],
+  ['Un premier échange pour discuter de votre entreprise et de vos objectifs publicitaires.', 'An initial conversation about your business and your advertising goals.'],
+  ['Est-ce adapté à mon secteur d’activité ?', 'Is this right for my industry?'],
+  ['Nous accompagnons les PME du Québec, qu’elles vendent des produits ou des services. Le premier appel sert à évaluer votre offre, votre marché et votre budget, puis à déterminer si notre accompagnement vous convient.', 'We support Quebec small businesses that sell products or services. The first call helps us assess your offering, market and budget, and determine whether our service is right for you.'],
   ['Publicité en construction au Québec | Essentiel PME','Construction advertising in Quebec | SMB Essentials'],
   ['Publicité pour services professionnels | Essentiel PME','Advertising for service businesses | SMB Essentials'],
   ['L’accompagnement','Our service'],['Pourquoi Essentiel PME','Why choose us'],['Prendre rendez-vous','Book a call'],['Liens utiles','Useful links'],['Nos forfaits','Our packages'],['Nous joindre','Contact us'],['Confidentialité','Privacy'],
