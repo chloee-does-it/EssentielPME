@@ -484,8 +484,8 @@ img { max-width: 100%; }
 .consent-banner button { cursor: pointer; font: inherit; font-weight: 700; border-radius: 999px; }
 .consent-banner [data-consent-accept], .consent-banner [data-consent-save] { background: var(--violet); color: #fff; border: none; font-size: 15px; padding: 13px 30px; box-shadow: var(--shadow-md); }
 .consent-banner [data-consent-accept]:hover, .consent-banner [data-consent-save]:hover { background: var(--lavande-700, #5C3D9E); }
-.consent-banner [data-consent-customize], .consent-banner [data-consent-optional-refuse] { background: none; color: var(--charbon-300); border: none; font-size: 13px; padding: 8px 10px; text-decoration: underline; text-underline-offset: 3px; }
-.consent-banner [data-consent-customize]:hover, .consent-banner [data-consent-optional-refuse]:hover { color: var(--charbon); }
+.consent-banner [data-consent-customize], .consent-banner [data-consent-reject], .consent-banner [data-consent-optional-refuse] { background: none; color: var(--charbon-300); border: none; font-size: 13px; padding: 8px 10px; text-decoration: underline; text-underline-offset: 3px; }
+.consent-banner [data-consent-customize]:hover, .consent-banner [data-consent-reject]:hover, .consent-banner [data-consent-optional-refuse]:hover { color: var(--charbon); }
 .consent-reopen { position: fixed; left: 16px; bottom: 16px; z-index: 80; width: 44px; height: 44px; border-radius: 999px; background: #fff; color: var(--violet); border: 1px solid var(--border); box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
 .consent-reopen:hover { background: var(--lavande-50); }
 .consent-choices { display: flex; flex-direction: column; gap: 10px; margin: 0 0 14px; }

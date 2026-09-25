@@ -586,8 +586,10 @@
     <h3 id="consent-title">Your experience, your choices</h3>
     <div data-consent-main>
       <p>We use three types of cookies: <strong>functional</strong>, <strong>analytics</strong> and <strong>advertising</strong>, to give you the best possible experience and improve our services. Details in our <a href="/en/legal/#temoins">cookie policy</a>.</p>
+      <p>If you accept Advertising and book an appointment, we also send Meta the confirmation, your first and last name, email, and phone (if provided) to measure our ads. You can still book without this choice.</p>
       <div class="consent-actions">
         <button type="button" data-consent-customize>Customize</button>
+        <button type="button" data-consent-reject>Reject all</button>
         <button type="button" data-consent-accept>Accept all</button>
       </div>
     </div>
@@ -595,7 +597,7 @@
       <div class="consent-choices">
         <label><input type="checkbox" checked disabled> <span><strong>Functional</strong> : required for the site to work (always on)</span></label>
         <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytics</strong> : help us understand how the site is used, so we can improve it</span></label>
-        <label><input type="checkbox" data-consent-ads checked> <span><strong>Advertising</strong> : used to measure how effective our advertising is and make it more relevant</span></label>
+        <label><input type="checkbox" data-consent-ads> <span><strong>Advertising</strong> : measure our campaigns and, after a booking, send Meta the confirmation and your first and last name, email, and phone (if provided) to associate the appointment with an ad</span></label>
       </div>
       <div class="consent-actions">
         <button type="button" data-consent-optional-refuse>Refuse optional cookies</button>

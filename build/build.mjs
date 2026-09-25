@@ -38,8 +38,10 @@ const consentUI = (root, inline) => `<div class="consent-overlay${inline ? ' con
     <h3 id="consent-title">Votre expérience, vos choix</h3>
     <div data-consent-main>
       <p>On utilise trois types de témoins&nbsp;: <strong>fonctionnels</strong>, <strong>analytiques</strong> et <strong>publicitaires</strong>, pour offrir la meilleure expérience possible et améliorer nos services. Détails dans notre <a href="${root}mentions-legales/#temoins">politique de témoins</a>.</p>
+      <p>Si vous acceptez « Publicitaires » et réservez un rendez-vous, nous transmettons aussi à Meta la confirmation, vos prénom, nom, courriel et téléphone (si fourni) pour mesurer nos publicités. La réservation reste possible sans cet accord.</p>
       <div class="consent-actions">
         <button type="button" data-consent-customize>Personnaliser</button>
+        <button type="button" data-consent-reject>Tout refuser</button>
         <button type="button" data-consent-accept>Tout accepter</button>
       </div>
     </div>
@@ -47,7 +49,7 @@ const consentUI = (root, inline) => `<div class="consent-overlay${inline ? ' con
       <div class="consent-choices">
         <label><input type="checkbox" checked disabled> <span><strong>Fonctionnels</strong> : nécessaires au fonctionnement du site (toujours actifs)</span></label>
         <label><input type="checkbox" data-consent-analytics checked> <span><strong>Analytiques</strong> : nous aident à comprendre comment le site est utilisé, pour l'améliorer</span></label>
-        <label><input type="checkbox" data-consent-ads checked> <span><strong>Publicitaires</strong> : servent à mesurer l'efficacité de nos publicités et à les rendre plus pertinentes</span></label>
+        <label><input type="checkbox" data-consent-ads> <span><strong>Publicitaires</strong> : mesurent nos campagnes et, après une réservation, transmettent à Meta la confirmation et vos prénom, nom, courriel et téléphone (si fourni) pour associer le rendez-vous à une publicité</span></label>
       </div>
       <div class="consent-actions">
         <button type="button" data-consent-optional-refuse>Refuser les témoins optionnels</button>
@@ -1960,7 +1962,7 @@ function mentionsLegalesPage() {
         <div style="max-width:760px; margin:0 auto;">
           <p style="margin:0 0 12px; font-weight:800; font-size:13px; letter-spacing:var(--tracking-wide); text-transform:uppercase; color:var(--violet);">Informations légales</p>
           <h1 style="font-size:clamp(2.2rem, 3vw + 0.8rem, 3.2rem); margin:0 0 14px;">Mentions légales et confidentialité</h1>
-          <p style="margin:0; color:var(--charbon-500);">Dernière mise à jour&nbsp;: 14 juillet 2026</p>
+          <p style="margin:0; color:var(--charbon-500);">Dernière mise à jour&nbsp;: 25 septembre 2026</p>
         </div>
       </section>
       <section class="section" style="background:#fff;">
@@ -2000,11 +2002,11 @@ function mentionsLegalesPage() {
             "<strong>Ce qui est recueilli automatiquement&nbsp;:</strong> données de navigation (pages visitées, durée, type d'appareil, adresse IP abrégée) via des témoins et outils de mesure décrits à la section 4.",
           ])}
           ${h3('3.3 Finalités')}
-          ${p("On utilise vos renseignements uniquement pour&nbsp;: répondre à vos demandes et préparer des soumissions&nbsp;; fournir et facturer nos services&nbsp;; mesurer et améliorer le Site et nos campagnes&nbsp;; respecter nos obligations légales. On ne vend jamais vos renseignements personnels.")}
+          ${p("On utilise vos renseignements pour répondre à vos demandes, organiser vos rendez-vous, préparer des soumissions, fournir et facturer nos services, améliorer le Site et respecter nos obligations légales. Avec votre choix « Publicitaires », nous mesurons aussi nos campagnes et associons une réservation à une publicité. On ne vend jamais vos renseignements personnels.")}
           ${h3('3.4 Consentement')}
-          ${p(`En nous transmettant vos renseignements, vous consentez à leur utilisation pour ces finalités. Vous pouvez retirer votre consentement en tout temps en écrivant à ${SITE.email}&nbsp;; on donnera suite dans les meilleurs délais.`)}
+          ${p(`La réservation ne dépend pas de l'acceptation des témoins publicitaires. Si vous acceptez « Publicitaires », nous pouvons transmettre à Meta la confirmation du rendez-vous, vos prénom, nom, courriel et téléphone (si fourni) pour mesurer et optimiser nos publicités. Un ancien choix publicitaire doit être confirmé de nouveau avant ce partage. Vous pouvez modifier votre choix avec l'icône de gestion des témoins ou retirer votre consentement en écrivant à ${SITE.email}&nbsp;; on donnera suite dans les meilleurs délais.`)}
           ${h3('3.5 Communication à des tiers')}
-          ${p("Vos renseignements peuvent être traités par des fournisseurs qui nous rendent des services (hébergement, infolettre, mesure d'audience, plateformes publicitaires comme Google et Meta). Certains de ces fournisseurs sont situés à l'extérieur du Québec&nbsp;; le cas échéant, on s'assure que les renseignements bénéficient d'une protection adéquate, conformément à la loi.")}
+          ${p("Vos renseignements peuvent être traités par des fournisseurs qui nous rendent des services (hébergement, infolettre, mesure d'audience et, selon votre choix publicitaire, Meta). Certains fournisseurs sont situés à l'extérieur du Québec. La communication de renseignements à l'extérieur du Québec doit faire l'objet des vérifications et protections requises par la loi.")}
           ${h3('3.6 Conservation et sécurité')}
           ${p("On conserve vos renseignements le temps nécessaire aux finalités décrites, puis on les détruit ou les anonymise de façon sécuritaire. Des mesures raisonnables, techniques et organisationnelles, protègent vos renseignements contre l'accès, l'utilisation ou la communication non autorisés.")}
           ${h3('3.7 Vos droits')}
@@ -2017,7 +2019,7 @@ function mentionsLegalesPage() {
           ${ul([
             '<strong>Essentiels&nbsp;:</strong> nécessaires au fonctionnement du Site.',
             "<strong>Mesure d'audience&nbsp;:</strong> Google Analytics 4 et Google Tag Manager, pour comprendre l'utilisation du Site.",
-            '<strong>Publicité&nbsp;:</strong> pixel Meta et balises Google Ads, pour mesurer nos campagnes et présenter des publicités pertinentes.',
+            '<strong>Publicité&nbsp;:</strong> pixel Meta et balises Google Ads pour mesurer nos campagnes et présenter des publicités pertinentes. Si vous acceptez « Publicitaires » et réservez, Meta reçoit aussi les données de confirmation et d’identification décrites à la section 3.4.',
           ])}
           ${p("À votre première visite, un bandeau vous permet d'accepter ou de refuser les témoins non essentiels. Vous pouvez aussi les gérer dans les paramètres de votre navigateur.")}
 

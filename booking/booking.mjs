@@ -1,5 +1,5 @@
 import {slots,dateKey,validGuest,RULES} from './schedule.mjs';
-import {bookingTrackingEvent,nativeBookingTrackingAllowed} from './tracking.mjs';
+import {bookingTrackingEvent,nativeBookingTrackingAllowed,nativeBookingAdvertisingAllowed,bookingMetaUserData} from './tracking.mjs';
 
 const root=document.querySelector('[data-booking-app]');
 const en=document.documentElement.lang.startsWith('en');
@@ -37,16 +37,29 @@ const apiOrigin=window.EPME_BOOKING_API_ORIGIN||location.origin;
 const trackingEnvironment=window.EPME_STAGING===true?'staging':'production';
 const TRACKING_PENDING='epme-booking-tracking-pending-v1';
 function eventId(){return crypto.randomUUID();}
-function track(kind,id=eventId()){
+function track(kind,id=eventId(),guest=null){
   const event=bookingTrackingEvent(kind,{locale,environment:trackingEnvironment,eventId:id});
-  // The native form shares the main site's consent. No optional event enters
-  // GTM before both measurement and advertising have been accepted.
+  // The native form shares the main site's consent. A visitor may allow
+  // analytics, advertising, or both; GTM enforces each tag's own consent.
   let mayTrack=!production||!native;
+  let maySendIdentity=false;
   if(production&&native){
-    try{mayTrack=nativeBookingTrackingAllowed(localStorage.getItem('epme_consent'));}
-    catch{mayTrack=false;}
+    try{
+      const consent=localStorage.getItem('epme_consent');
+      mayTrack=nativeBookingTrackingAllowed(consent);
+      maySendIdentity=nativeBookingAdvertisingAllowed(consent);
+    }catch{mayTrack=false;}
   }
-  if(mayTrack){window.dataLayer=window.dataLayer||[];window.dataLayer.push(event);}
+  if(mayTrack){
+    // Only the native production confirmation can include booking identity.
+    // GA4's booking tag maps neutral fields; Meta's Schedule tag reads user_data.
+    if(kind==='confirmed'&&production&&native&&maySendIdentity&&guest){
+      const userData=bookingMetaUserData(guest);
+      if(userData)event.user_data=userData;
+    }
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push(event);
+  }
   // The booking domain has no non-essential tags or consent banner. The site
   // that embeds it decides whether this anonymous event may reach its GTM.
   if(production&&window.parent!==window){
@@ -67,19 +80,19 @@ function trackPendingConfirmation(record){
   let pending=null;
   try{pending=JSON.parse(sessionStorage.getItem(TRACKING_PENDING)||'null');}catch{}
   if(!pending||pending.bookingId!==record.id||record.status!=='confirmed')return;
-  track('confirmed',pending.eventId);
+  track('confirmed',pending.eventId,record.guest);
   try{sessionStorage.removeItem(TRACKING_PENDING);}catch{}
 }
 if(production)Object.assign(t,en?{
   demo:'Online booking',demoText:'Live availability from the organizer’s calendar.',submit:'Confirm my appointment',
-  privacy:'Required fields are marked *. Your details are used to arrange and manage this appointment.',
+  privacy:'Required fields are marked *. Your details are used to arrange and manage this appointment. If you accepted “Advertising” on this site, the booking confirmation and your first name, last name, email and phone (if provided) are also sent to Meta to measure ads. Booking works without this choice.',
   success:'Your appointment is confirmed.',successNote:'Your calendar invitation and unique Google Meet link are being sent by Google.',
   videoPending:'Google Meet link is being prepared. Reload this page shortly.',cancelNote:'The cancellation has been sent to Google Calendar.',
   cancelPrompt:'Cancel this appointment?',cancelled:'Appointment cancelled',new:'Book another appointment',moved:'Your appointment has been rescheduled.',
   expired:'Appointment not found.',expiredNote:'Use your private management link or contact the organizer.',ref:'Reference'
 }:{
   demo:'Réservation en ligne',demoText:'Disponibilités réelles du calendrier de l’organisateur.',submit:'Confirmer mon rendez-vous',
-  privacy:'Les champs marqués * sont obligatoires. Vos coordonnées servent à organiser et à gérer ce rendez-vous.',
+  privacy:'Les champs marqués * sont obligatoires. Vos coordonnées servent à organiser et à gérer ce rendez-vous. Si vous avez accepté « Publicitaires » sur ce site, la confirmation et vos prénom, nom, courriel et téléphone (si fourni) sont aussi transmis à Meta pour mesurer nos publicités. La réservation fonctionne sans cet accord.',
   success:'Votre rendez-vous est confirmé.',successNote:'Votre invitation et votre lien Google Meet unique sont en cours d’envoi par Google.',
   videoPending:'Le lien Google Meet est en préparation. Actualisez cette page dans un instant.',cancelNote:'L’annulation a été transmise à Google Calendar.',
   cancelPrompt:'Annuler ce rendez-vous ?',cancelled:'Rendez-vous annulé',new:'Réserver un autre rendez-vous',moved:'Votre rendez-vous a été déplacé.',
