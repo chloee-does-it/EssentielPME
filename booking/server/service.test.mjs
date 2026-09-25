@@ -41,7 +41,8 @@ test('encryption authenticates data, wrong keys and tampering fail',()=>{
   const v=vault(randomBytes(32).toString('base64')),encoded=v.seal({refresh:'private'});
   assert.deepEqual(v.open(encoded),{refresh:'private'});assert.ok(!encoded.includes('private'));
   assert.throws(()=>vault(randomBytes(32).toString('base64')).open(encoded));
-  assert.throws(()=>v.open('x'+encoded.slice(1)));
+  const changedFirstCharacter=encoded[0]==='x'?'y':'x';
+  assert.throws(()=>v.open(changedFirstCharacter+encoded.slice(1)));
 });
 test('guest input types and unsupported test recipients fail closed',async()=>{
   assert.throws(()=>cleanGuest({first:{},last:'x',company:'x',email:'a@b.co'}));
