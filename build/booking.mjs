@@ -9,7 +9,7 @@ const out=join(root,'_booking');
 rmSync(out,{recursive:true,force:true});
 mkdirSync(join(out,'assets/booking'),{recursive:true});
 cpSync(join(root,'site/assets'),join(out,'assets'),{recursive:true});
-for(const file of ['schedule.mjs','tracking.mjs','booking.mjs','booking.css']){
+for(const file of ['schedule.mjs','tracking.mjs','plan-context.mjs','booking.mjs','booking.css']){
   cpSync(join(root,'booking',file),join(out,'assets/booking',file));
 }
 writeFileSync(join(out,'assets/booking/environment.js'),'window.EPME_STAGING = false;\nwindow.EPME_BOOKING_CONNECTED = true;\n');

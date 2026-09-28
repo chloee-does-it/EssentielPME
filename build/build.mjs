@@ -115,7 +115,7 @@ const socialIcon = (key) => {
 
 /* ================= chrome ================= */
 
-function header(active, root, pagePath, enPagePath) {
+function header(active, root, pagePath, enPagePath, landing = false) {
   const a = (k) => (active === k ? ' class="active"' : '');
   const drop = (label, href, activeCls, items) => `
         <div class="we-navdrop" style="position:relative; display:flex; align-items:center;">
@@ -155,7 +155,7 @@ ${drop('Ressources', `${root}publicite-en-ligne/`, active === 'guides', [
           <span class="sep">·</span>
           <a data-lang-link="en" href="${enPagePath}" hreflang="en-CA">EN</a>
         </div>
-        <a href="${root}contact/" class="btn btn-primary" style="padding:10px 18px; font-size:14px;">Démarrer ma publicité en ligne</a>
+        <a href="${root}contact/" class="btn btn-primary"${landing ? ' data-lp-book="navigation"' : ''} style="padding:10px 18px; font-size:14px;">${landing ? 'Réserver mon appel découverte' : 'Démarrer ma publicité en ligne'}</a>
         <button type="button" class="we-burger" aria-label="Ouvrir le menu" aria-expanded="false">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
@@ -183,7 +183,7 @@ ${drop('Ressources', `${root}publicite-en-ligne/`, active === 'guides', [
         <a href="${root}contact/">Contact</a>
       </nav>
       <div class="we-mobile-cta">
-        <a href="${root}contact/" class="btn btn-primary">Démarrer ma publicité en ligne</a>
+        <a href="${root}contact/" class="btn btn-primary"${landing ? ' data-lp-book="navigation-mobile"' : ''}>${landing ? 'Réserver mon appel découverte' : 'Démarrer ma publicité en ligne'}</a>
       </div>
     </div>
   </div>`;
@@ -290,7 +290,7 @@ ${blocks}
 <body${landing ? ' class="industry-lp"' : ''}>
 ${GTM_NOSCRIPT}
 <div class="we-page">
-${header(active, root, pagePath, enPagePath)}
+${header(active, root, pagePath, enPagePath, landing)}
   <main id="contenu" data-screen-label="${label}" style="animation: epFadeUp 300ms cubic-bezier(0.2,0.7,0.2,1);">
 ${body}
   </main>
@@ -2237,7 +2237,7 @@ for(const [p,html] of [
 }
 
 mkdirSync(join(OUT,'assets/booking'),{recursive:true});
-for(const file of ['schedule.mjs','tracking.mjs','booking.mjs','booking.css'])
+for(const file of ['schedule.mjs','tracking.mjs','plan-context.mjs','booking.mjs','booking.css'])
   cpSync(join(ROOT,'booking',file),join(OUT,'assets/booking',file));
 writeFileSync(join(OUT,'assets/booking/environment.js'),
   "window.EPME_STAGING = false;\nwindow.EPME_BOOKING_CONNECTED = true;\nwindow.EPME_BOOKING_API_ORIGIN = 'https://booking.essentielpme.com';\n");

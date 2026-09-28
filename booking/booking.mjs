@@ -1,4 +1,5 @@
 import {slots,dateKey,validGuest,RULES} from './schedule.mjs';
+import {messageWithPlan,validPlan} from './plan-context.mjs';
 import {bookingTrackingEvent,nativeBookingTrackingAllowed,nativeBookingAdvertisingAllowed,bookingMetaUserData} from './tracking.mjs';
 
 const root=document.querySelector('[data-booking-app]');
@@ -136,6 +137,15 @@ const KEY='epme-booking-demo-v1';
 const bookingPath=native?(en?'/en/contact/':'/contact/'):(en?'/en/book/':'/rendez-vous/');
 const confirmationPath=en?'/en/booking-confirmed/':'/merci/rendez-vous/';
 let zone='America/Toronto', selectedDay='', selectedSlot=null, draft={}, editing=null, busy=false, currentMonth='',formStartedAt=0;
+let selectedPlan='';
+export function setBookingPlan(plan) {
+  if (!native || editing || busy) return;
+  const next=validPlan(plan);
+  const textarea=root.querySelector('textarea[name="message"]');
+  draft.message=messageWithPlan(textarea ? textarea.value : draft.message,next,selectedPlan,en);
+  selectedPlan=next;
+  if(textarea) textarea.value=draft.message;
+}
 let storageError=false;
 function records(){if(connected)return remoteRecords;try{return JSON.parse(sessionStorage.getItem(KEY)||'[]').filter(b=>b&&b.id&&b.start);}catch{storageError=true;return [];}}
 function save(items){sessionStorage.setItem(KEY,JSON.stringify(items));}

@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+import { renderPlans } from './landing-plans.mjs';
+import { sectionTranslations } from './landing-translations.mjs';
 // Approved BoF landing pages. Other industries retain their template.
 const shared = {
   why: [
@@ -91,42 +94,21 @@ export function landingFooter() {
 
 export function landingContent(key) {
   const s = sectors[key];
-  const imageKey = s.imageKey || key;
-  const faq = [
-    ['Le budget publicitaire est-il inclus ?', 'Non. Les frais de gestion couvrent notre accompagnement. Le budget média est payé séparément aux plateformes.'],
-    ['Que comprend la gestion des campagnes ?', 'Selon le forfait choisi, on prend en charge la configuration, la rédaction des annonces, le ciblage, l’optimisation et les rapports. Le nombre de plateformes et la fréquence du suivi sont précisés avant de commencer.'],
-    [s.sectorQuestion, s.sectorAnswer],
-    ['Comment se déroule le premier appel ?', 'On discute de vos services, de vos objectifs, de votre clientèle et de votre budget. Cet échange permet de voir si notre accompagnement convient à votre entreprise et de vous expliquer les prochaines étapes.'],
-  ];
+  const body = readFileSync(new URL(`./landing-pages/${key}.html`, import.meta.url), 'utf8').replace('{{plans}}', () => renderPlans());
   return { title: s.title, desc: s.desc,
-    headExtras: `<link rel="stylesheet" href="/assets/css/industry-landing.css?v=20260925">
+    headExtras: `<link rel="stylesheet" href="/assets/css/industry-landing.css?v=20260928">
+  <link rel="stylesheet" href="/assets/css/landing-sections.css?v=20260928">
+  <link rel="stylesheet" href="/assets/css/landing-plans.css?v=20260928">
   <link rel="stylesheet" href="/assets/booking/booking.css">
   <script src="/assets/booking/environment.js"></script>
-  <script type="module" src="/assets/js/industry-landing.mjs?v=20260925"></script>`,
-    body: `<div class="lp-content" data-lp-sector="${key}">
-      <section class="lp-hero lp-container lp-split" aria-labelledby="lp-title">
-        <div class="lp-hero-copy"><p class="lp-eyebrow">${s.eyebrow}</p><h1 id="lp-title">${s.heading}</h1><p class="lp-intro">${s.intro}</p>${cta('hero')}</div>
-        <img class="lp-photo lp-hero-photo" src="/assets/img/lp-${imageKey}-hero.webp" alt="${s.heroAlt}" width="1200" height="900" fetchpriority="high" decoding="async">
-      </section>
-      <section class="lp-container lp-section lp-split" id="accompagnement" aria-labelledby="approach-title"><h2 id="approach-title">${s.approach}</h2>${rows(s.rows)}</section>
-      <section class="lp-container lp-section lp-split lp-why" id="pourquoi" aria-labelledby="why-title">
-        <img class="lp-photo" src="/assets/img/lp-${imageKey}-detail.webp" alt="${s.detailAlt}" width="1200" height="900" loading="lazy" decoding="async">
-        <div><h2 id="why-title">Pourquoi choisir Essentiel PME ?</h2>${rows(shared.why)}</div>
-      </section>
-      <section class="lp-price-band" aria-labelledby="price-title"><div class="lp-container lp-split">
-        <div><h2 id="price-title">${s.priceHeading}</h2>${s.priceIntro ? `<p>${s.priceIntro}</p>` : ''}</div>
-        <div class="lp-price"><p class="lp-eyebrow">FORFAIT DE GESTION</p><p class="lp-price-value"><span>Dès</span> 695 $ <small>/ mois</small></p><p>Frais de gestion · Budget publicitaire en sus</p><p>Installation : 600 $ · Engagement initial de 3 mois</p></div>
-      </div></section>
-      <section class="lp-container lp-section lp-split lp-closing" id="rendez-vous" aria-labelledby="closing-title"><div><h2 id="closing-title">Voyons comment la publicité peut soutenir votre entreprise.</h2><p>${s.closing}</p></div><div class="lp-closing-action">${cta('closing')}</div></section>
-      <section class="lp-container lp-faq" id="faq" aria-labelledby="faq-title"><h2 id="faq-title">Questions fréquentes</h2>
-        ${faq.map(([q,a],i) => `<details${i === 0 ? ' open' : ''}><summary>${q}<span aria-hidden="true"></span></summary><p>${a}</p></details>`).join('')}
-      </section>
-      <dialog class="lp-booking-dialog" aria-labelledby="booking-title"><div class="lp-dialog-head"><h2 id="booking-title">Réserver mon appel découverte</h2><button type="button" data-lp-close aria-label="Fermer le calendrier">×</button></div><div class="bk-root" data-booking-app data-embedded data-native><p>Chargement du calendrier…</p></div><p class="lp-booking-help"><a href="/contact/">Nous joindre</a></p></dialog>
-    </div>`,
+  <script type="module" src="/assets/js/industry-landing.mjs?v=20260928"></script>`,
+    body: `<div class="lp-content" data-lp-sector="${key}">${body}
+      <dialog class="lp-booking-dialog" aria-labelledby="booking-title"><div class="lp-dialog-head"><h2 id="booking-title">Réserver mon appel découverte</h2><button type="button" data-lp-close aria-label="Fermer le calendrier">×</button></div><div class="bk-root" data-booking-app data-embedded data-native><p>Chargement du calendrier…</p></div><p class="lp-booking-help"><a href="/contact/">Nous joindre</a></p></dialog></div>`,
   };
 }
 
 export const landingTranslations = [
+  ...sectionTranslations,
   ['Publicité en ligne pour PME au Québec | Essentiel PME', 'Online advertising for Quebec small businesses | SMB Essentials'],
   ['Gestion de publicité en ligne pour les PME du Québec. Des campagnes adaptées à vos objectifs et à votre budget. Réservez votre appel découverte avec Essentiel PME.', 'Online advertising management for Quebec small businesses. Campaigns tailored to your goals and budget. Book your discovery call with SMB Essentials.'],
   ['PME DU QUÉBEC', 'QUEBEC SMALL BUSINESSES'],
