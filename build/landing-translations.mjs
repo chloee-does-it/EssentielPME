@@ -1,4 +1,11 @@
 export const sectionTranslations = [
+  ["Vous conseillez vos clients.", "You advise your clients."],
+  ["Faites connaître vos services en comptabilité, en droit ou en conseil avec des campagnes adaptées à votre clientèle. On s’occupe de leur préparation, de leur diffusion et de leur suivi.", "Promote your accounting, legal or consulting services with campaigns tailored to your clients. We take care of preparation, delivery and ongoing management."],
+  ["Comptables · Notaires · Avocats · Conseillers marketing", "Accountants · Notaries · Lawyers · Marketing consultants"],
+  ["Comptabilité, accompagnement juridique, stratégie marketing : on met de l’avant les services que vous souhaitez développer.", "Accounting, legal advice, marketing strategy: we highlight the services you want to grow."],
+  ["Prise de rendez-vous, demande de consultation ou appel : on définit l’action attendue sur votre site.", "A booking, consultation request or call: we define the action visitors should take on your site."],
+  ["Des messages fidèles à votre expertise, que vous validez avant leur diffusion.", "Messaging that reflects your expertise, which you approve before it goes live."],
+  ["Oui. Comptables, notaires, avocats, conseillers marketing et autres experts-conseils : on adapte les campagnes à vos services et à votre clientèle. Le premier appel permet de préciser vos objectifs et votre budget.", "Yes. We tailor campaigns to the services and clients of accountants, notaries, lawyers, marketing consultants and other advisors. The first call helps clarify your goals and budget."],
   ['Faites connaître vos services dans les régions que vous desservez. On prépare et on gère vos campagnes pendant que vous vous concentrez sur vos chantiers.', 'Promote your services in the areas you serve. We prepare and manage your campaigns while you focus on your projects.'],
   ['Pour les entreprises d’ici', 'For local businesses'],
   ['Construction résidentielle · Rénovation · Métiers spécialisés', 'Residential construction · Renovation · Skilled trades'],

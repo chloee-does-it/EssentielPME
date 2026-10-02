@@ -33,7 +33,7 @@ const sectors = {
   },
   'services-pro': {
     title: 'Publicité pour services professionnels | Essentiel PME',
-    desc: 'Confiez la publicité de votre entreprise de services à Essentiel PME. Des campagnes adaptées à votre expertise, à votre clientèle et à votre budget. Parlons de vos objectifs.',
+    desc: 'Publicité en ligne pour comptables, notaires, avocats et conseillers marketing au Québec. Confiez vos campagnes à Essentiel PME.',
     eyebrow: 'PROFESSIONNELS ET ENTREPRISES DE SERVICES',
     heading: 'Vous offrez les services. On gère votre publicité.',
     intro: 'Des campagnes adaptées à votre expertise, à vos clients et à votre budget.',
@@ -145,5 +145,5 @@ export const landingTranslations = [
   ['Comment se déroule le premier appel ?','What happens during the first call?'],['On discute de vos services, de vos objectifs, de votre clientèle et de votre budget. Cet échange permet de voir si notre accompagnement convient à votre entreprise et de vous expliquer les prochaines étapes.','We discuss your services, goals, clients and budget. This conversation helps us see whether our service fits your business and explain the next steps.'],
   ['Entrepreneur en construction qui consulte des plans sur un chantier résidentiel','Construction contractor reviewing plans on a residential job site'],['Entrepreneur qui consulte une campagne publicitaire sur son ordinateur','Contractor reviewing an advertising campaign on a laptop'],['Professionnel autonome qui prépare un mandat client à son bureau','Independent professional preparing client work at a desk'],['Professionnel qui examine sa publicité en ligne, avec ses notes de travail','Professional reviewing online advertising alongside work notes'],
   ['Confiez vos campagnes publicitaires à Essentiel PME. Gestion de publicité en ligne pour entrepreneurs en construction et métiers au Québec. Réservez un appel découverte.','Delegate your advertising campaigns to SMB Essentials. Online advertising management for construction contractors and trades in Quebec. Book a discovery call.'],
-  ['Confiez la publicité de votre entreprise de services à Essentiel PME. Des campagnes adaptées à votre expertise, à votre clientèle et à votre budget. Parlons de vos objectifs.','Delegate your service business advertising to SMB Essentials. Campaigns tailored to your expertise, clients and budget. Let’s discuss your goals.'],
+  ['Publicité en ligne pour comptables, notaires, avocats et conseillers marketing au Québec. Confiez vos campagnes à Essentiel PME.','Online advertising for accountants, notaries, lawyers and marketing consultants in Quebec. Delegate your campaigns to SMB Essentials.'],
 ];
