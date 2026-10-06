@@ -1,4 +1,5 @@
 export const sectionTranslations = [
+  ['Vous préférez nous appeler ?', 'Prefer to call us?'],
   ["Vous conseillez vos clients.", "You advise your clients."],
   ["Faites connaître vos services en comptabilité, en droit ou en conseil avec des campagnes adaptées à votre clientèle. On s’occupe de leur préparation, de leur diffusion et de leur suivi.", "Promote your accounting, legal or consulting services with campaigns tailored to your clients. We take care of preparation, delivery and ongoing management."],
   ["Comptables · Notaires · Avocats · Conseillers marketing", "Accountants · Notaries · Lawyers · Marketing consultants"],

@@ -95,10 +95,12 @@ export function landingFooter() {
 
 export function landingContent(key) {
   const s = sectors[key];
-  const body = readFileSync(new URL(`./landing-pages/${key}.html`, import.meta.url), 'utf8').replace('{{plans}}', () => renderPlans());
+  const body = readFileSync(new URL(`./landing-pages/${key}.html`, import.meta.url), 'utf8')
+    .replace('{{plans}}', () => renderPlans())
+    .replace('{{phone-contact}}', () => `<p class="call-phone">Vous préférez nous appeler ?<br><a href="tel:${SITE.phoneIntl}">${SITE.phone}</a></p>`);
   return { title: s.title, desc: s.desc,
     headExtras: `<link rel="stylesheet" href="/assets/css/industry-landing.css?v=20260928">
-  <link rel="stylesheet" href="/assets/css/landing-sections.css?v=20260928">
+  <link rel="stylesheet" href="/assets/css/landing-sections.css?v=20261006-phone">
   <link rel="stylesheet" href="/assets/css/landing-plans.css?v=20260928">
   <link rel="stylesheet" href="/assets/booking/booking.css">
   <script src="/assets/booking/environment.js"></script>

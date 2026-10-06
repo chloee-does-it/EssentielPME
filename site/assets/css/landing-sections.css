@@ -56,6 +56,9 @@
 .contact-band .lp-cta{background:#fff;color:#4b2e83!important}
 .contact-grid>div:last-child{text-align:center}
 .contact-band .call-topics{font-size:12px;margin-top:15px;text-wrap:balance}
+.contact-band .call-phone{font-size:1rem;margin-top:24px}
+.contact-band .call-phone a{display:inline-block;color:#fff;font-size:1.25rem;font-weight:800;margin-top:4px;border-bottom:1px solid currentColor}
+.contact-band .call-phone a:focus-visible{outline:3px solid #cabdff;outline-offset:5px}
 .faq-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:64px}
 .faq-list-preview details{border-bottom:1px solid #dfdbe7;padding:20px 0}
 .faq-list-preview details:first-child{padding-top:0}
