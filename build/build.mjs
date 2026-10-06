@@ -216,6 +216,7 @@ function footer(root) {
           <li><a href="${root}industries/construction/">Industries</a></li>
           <li><a href="${root}blogue/">Blogue</a></li>
           <li><a href="${root}contact/">Contact</a></li>
+          <li><a href="tel:${SITE.phoneIntl}">${SITE.phone}</a></li>
         </ul>
       </div>
       <div>
@@ -1753,7 +1754,7 @@ function lpHeader(withCta) {
 const lpFooter = `  <footer class="lp-footer">
     <div class="lp-footer-inner">
       <span>© 2026 Essentiel PME · Québec, QC</span>
-      <span>info@essentielpme.com · 1-844-763-3832</span>
+      <span>${SITE.email} · <a href="tel:${SITE.phoneIntl}" style="color:inherit;">${SITE.phone}</a></span>
     </div>
   </footer>`;
 

@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { SITE } from './data.mjs';
 import { renderPlans } from './landing-plans.mjs';
 import { sectionTranslations } from './landing-translations.mjs';
 // Approved BoF landing pages. Other industries retain their template.
@@ -87,7 +88,7 @@ export function landingHeader(fr, en) {
 export function landingFooter() {
   return `<footer class="lp-footer"><div class="lp-container lp-footer-inner">
     <a class="lp-logo" href="/" aria-label="Essentiel PME (Accueil)"><img src="/assets/img/logo-h-fr-rgb.svg" alt="Essentiel PME" width="180" height="54" loading="lazy"></a>
-    <nav aria-label="Liens utiles"><a href="/publicite/">Nos forfaits</a><a href="/a-propos/">À propos</a><a href="/mentions-legales/#politique-de-confidentialite">Confidentialité</a><a href="/contact/">Nous joindre</a></nav>
+    <nav aria-label="Liens utiles"><a href="/publicite/">Nos forfaits</a><a href="/a-propos/">À propos</a><a href="/mentions-legales/#politique-de-confidentialite">Confidentialité</a><a href="/contact/">Nous joindre</a><a href="tel:${SITE.phoneIntl}">${SITE.phone}</a></nav>
     <small>© 2026 Essentiel PME</small>
   </div></footer>`;
 }
