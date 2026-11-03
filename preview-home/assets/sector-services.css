@@ -1,2 +1,13 @@
 .sector-actions{display:flex;gap:12px;flex-wrap:wrap}.sector-secondary{background:transparent!important;color:#4b2e83!important;border:1px solid #4b2e83!important}.sector-web-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.sector-web-plans article{background:white;border:1px solid #ded5eb;border-radius:18px;padding:26px}.sector-web-plans article:nth-child(2){border:2px solid #4b2e83}.sector-web-plans h3{font-size:21px}.sector-price{font-size:32px!important;font-weight:900;color:#4b2e83}.sector-price small{font-size:13px;font-weight:600}.sector-web-plans p,.sector-note{font-size:15px;line-height:1.7}.sector-note{margin:24px 0}.hero-photo{object-fit:cover}.contact-grid>.lp-cta{align-self:center;justify-self:start}@media(max-width:700px){.sector-web-plans{grid-template-columns:1fr}.sector-actions .lp-cta{font-size:14px}}
 .lp-content .section-pad{padding-block:64px}.lp-content .section-soft{background:#f0edf5}.lp-content .section-white{background:white}@media(max-width:640px){.lp-content .section-pad{padding-block:42px}}
+/* Give the website offer room between cards, inclusions and action. */
+.lp-content .sector-web-plans{gap:30px;margin-top:40px}
+.lp-content .sector-web-plans article{padding:32px}
+.lp-content .sector-web-plans h3{margin:0 0 20px}
+.lp-content .sector-web-plans .sector-price{margin:0 0 16px}
+.lp-content .sector-note{margin:32px 0 28px;line-height:1.8}
+@media(max-width:700px){
+ .lp-content .sector-web-plans{gap:24px;margin-top:32px}
+ .lp-content .sector-web-plans article{padding:28px}
+ .lp-content .sector-note{margin:28px 0 24px}
+}
