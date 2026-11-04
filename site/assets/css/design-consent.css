@@ -1,0 +1,42 @@
+:root{--violet:#4b2e83;--charbon:#292929;--charbon-500:#5a5a5a;--charbon-300:#777;--border:#ded5eb;--lavande-50:#f5f1fa;--shadow-md:0 5px 20px #24123318}
+.consent-overlay { position: fixed; inset: 0; z-index: 95; background: rgba(35,25,60,0.62); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; animation: epFadeUp 200ms ease; }
+.consent-overlay[hidden] { display: none; }
+.consent-banner { max-width: 560px; width: 100%; background: #fff; border-radius: 20px; box-shadow: 0 30px 90px rgba(20,10,40,0.45); padding: 28px 30px 26px; }
+.consent-banner h3 { margin: 0 0 12px; font-size: 20px; font-weight: 800; color: var(--violet); }
+.consent-banner p { margin: 0 0 20px; font-size: 14.5px; line-height: 1.6; color: var(--charbon-500); }
+.consent-banner .consent-actions { display: flex; gap: 12px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+.consent-banner button { cursor: pointer; font: inherit; font-weight: 700; border-radius: 999px; }
+.consent-banner [data-consent-accept], .consent-banner [data-consent-save] { background: var(--violet); color: #fff; border: none; font-size: 15px; padding: 13px 30px; box-shadow: var(--shadow-md); }
+.consent-banner [data-consent-accept]:hover, .consent-banner [data-consent-save]:hover { background: var(--lavande-700, #5C3D9E); }
+.consent-banner [data-consent-customize], .consent-banner [data-consent-reject], .consent-banner [data-consent-optional-refuse] { background: none; color: var(--charbon-300); border: none; font-size: 13px; padding: 8px 10px; text-decoration: underline; text-underline-offset: 3px; }
+.consent-banner [data-consent-customize]:hover, .consent-banner [data-consent-reject]:hover, .consent-banner [data-consent-optional-refuse]:hover { color: var(--charbon); }
+.consent-reopen { position: fixed; left: 16px; bottom: 16px; z-index: 80; width: 44px; height: 44px; border-radius: 999px; background: #fff; color: var(--violet); border: 1px solid var(--border); box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
+.consent-reopen:hover { background: var(--lavande-50); }
+.consent-choices { display: flex; flex-direction: column; gap: 10px; margin: 0 0 14px; }
+.consent-choices label { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; line-height: 1.5; color: var(--charbon-500); cursor: pointer; }
+.consent-choices input[type="checkbox"] { accent-color: var(--violet); width: 17px; height: 17px; margin-top: 1px; flex: none; }
+
+/* Variante non bloquante des landing pages : bandeau ancré au bas de l'écran.
+   Pas d'assombrissement ni de verrou, le visiteur venu d'une publicité lit
+   l'offre et remplit le formulaire sans avoir à répondre d'abord. */
+.consent-overlay.consent-inline { inset: auto 0 0 0; background: none; backdrop-filter: none; padding: 0; display: block; }
+.consent-overlay.consent-inline[hidden] { display: none; }
+.consent-inline .consent-banner { max-width: 1080px; margin: 0 auto; border-radius: 18px 18px 0 0; padding: 16px 24px 18px; border: 1px solid var(--border); border-bottom: none; box-shadow: 0 -14px 44px rgba(20,10,40,0.20); }
+.consent-inline .consent-banner h3 { font-size: 16px; margin-bottom: 5px; }
+.consent-inline .consent-banner p { font-size: 13.5px; margin-bottom: 0; }
+.consent-inline [data-consent-main] { display: flex; align-items: center; gap: 26px; }
+.consent-inline [data-consent-main] > p { flex: 1; }
+.consent-inline [data-consent-main] .consent-actions { flex: none; }
+.consent-inline [data-consent-accept] { padding: 12px 26px; font-size: 14.5px; }
+@media (max-width: 760px) {
+  .consent-inline [data-consent-main] { display: block; }
+  .consent-inline [data-consent-main] .consent-actions { margin-top: 12px; justify-content: space-between; }
+  .consent-inline [data-consent-accept] { flex: 1; padding: 12px 18px; }
+  /* Sur petit écran chaque pixel du bandeau est pris à l'offre : on resserre */
+  .consent-inline .consent-banner { padding: 13px 18px 15px; }
+  .consent-inline .consent-banner h3 { font-size: 15px; margin-bottom: 4px; }
+  .consent-inline .consent-banner p { font-size: 12.5px; line-height: 1.5; }
+}
+/* L'icône de réouverture ferait doublon pendant que le bandeau est affiché */
+.consent-overlay:not([hidden]) ~ .consent-reopen { display: none; }
+

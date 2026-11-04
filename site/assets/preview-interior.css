@@ -1,0 +1,28 @@
+/* The new homepage's visual language, shared by the non-industry pages. */
+:root{--ep-ink:#2e2e2e;--ep-muted:#615b69;--ep-violet:#4b2e83;--ep-paper:#fbfafc;--ep-lilac:#eeebf8;--ep-border:#e5dfed}
+.ep-harmonized .we-page{background:var(--ep-paper);color:var(--ep-ink)}
+.ep-harmonized .we-page main{font-size:16px;line-height:1.7}
+.ep-harmonized .we-page main>section{padding-block:clamp(42px,6vw,72px)!important}
+.ep-harmonized .we-page main>section:first-child{background:linear-gradient(110deg,var(--ep-paper),var(--ep-lilac))!important}
+.ep-harmonized .we-page main>section:first-child>div:has(>h1){max-width:1088px!important;margin-inline:auto!important;text-align:left}
+.ep-harmonized .we-page main>section:first-child>div>p.lead{margin-inline:0!important}
+.ep-harmonized .we-page h1{font-family:Nunito,sans-serif;font-size:clamp(32px,4vw,48px)!important;font-weight:900;line-height:1.12;letter-spacing:-1.35px;color:var(--ep-ink)}
+.ep-harmonized .we-page h2{font-family:Nunito,sans-serif;font-weight:850;line-height:1.2;letter-spacing:-.6px}
+.ep-harmonized .we-page .lead{font-size:clamp(16px,1.5vw,18px)!important;line-height:1.65;color:var(--ep-muted)}
+.ep-harmonized .we-page .eyebrow,.ep-harmonized .we-page .lp-eyebrow{font-size:12px;font-weight:900;letter-spacing:.11em;color:var(--ep-violet)}
+.ep-harmonized .we-page main :is(.btn,.lp-cta){border-radius:999px;font-size:14px;font-weight:850}
+.ep-harmonized .we-page :is(.pkg,.faq-item,.plat-tile,.lp-form-card,.lp-merci-card,.ep-demo-box){border-color:var(--ep-border);border-radius:16px;box-shadow:none}
+.ep-harmonized .we-page .pkg.featured{border-color:var(--ep-violet)}
+.ep-harmonized .we-page .pkg-price{color:var(--ep-violet)}
+.ep-harmonized .we-page :is(.pkg-list,.faq-a){font-size:15px}
+.ep-harmonized .we-page .cta-band{background:var(--ep-violet)}
+.ep-harmonized .we-page :is(.lp-hero,.hero-band){background:var(--ep-lilac)}
+.ep-harmonized .we-page .lp-hero-blob{display:none}
+.ep-harmonized .we-page main a:focus-visible{outline:3px solid #afa4ff;outline-offset:4px}
+.ep-harmonized .ep-resource p,.ep-harmonized .ep-about p{font-size:15px}
+.ep-harmonized .ep-footer a{font-size:13px}
+.ep-harmonized :is(.plan li,.plan p,.service-card li,.service-card p,.faq details p){font-size:15px}
+.ep-harmonized :is(.shared,.scope,.step p,.section-head>p){font-size:14px}
+.ep-harmonized .values p{font-size:14px}
+.ep-harmonized .hero-meta{font-size:12px}
+@media(max-width:620px){.ep-harmonized .we-page main>section:first-child>div:has(>h1){text-align:left}.ep-harmonized .we-page h1{letter-spacing:-.8px}.ep-harmonized .we-page .section-inner{min-width:0}.ep-harmonized .we-page .lead{max-width:100%}}

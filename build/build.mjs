@@ -2270,3 +2270,6 @@ writeFileSync(join(OUT, 'sitemap.xml'), sitemap(sitemapPaths));
 writeFileSync(join(OUT, 'robots.txt'), robots);
 writeFileSync(join(OUT, 'llms.txt'), llms);
 console.log('wrote sitemap.xml, robots.txt, llms.txt');
+
+// Apply approved design while retaining generated production integrations.
+await import('./design-release.mjs');
