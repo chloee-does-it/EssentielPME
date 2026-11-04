@@ -76,6 +76,7 @@ for(const f of files(design).filter(f=>f.endsWith('.html'))){
  }
  // Production shell has no preview submit handlers or demo styling.
  html=html.replaceAll('/assets/preview-shell.css"','/assets/preview-shell.css?v=20261104"');
+ html=html.replace(/^[ \t]+$/gm,'');
  mkdirSync(dirname(target),{recursive:true});write(target,html);
 }
 const sitemap=join(out,'sitemap.xml');let xml=read(sitemap,'utf8');
